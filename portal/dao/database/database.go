@@ -15,6 +15,7 @@ import (
 
 const (
 	sqlUserSelect                   = "SELECT * FROM user WHERE id = ?"
+	sqlSelectAllUserInCache         = "SELECT * FROM user_cache"
 	sqlUserSelectByUsername         = "SELECT * FROM user WHERE username = ?"
 	sqlUserSecSelectByUsername      = "SELECT * FROM user_security WHERE username = ?"
 	sqlUserInsert                   = "INSERT INTO user (username, status, checksum, name, role, dob, sex, phonenumber) VALUES (?,?,?,?,?,?,?,?)"
@@ -42,6 +43,9 @@ type IUserDAO interface {
 	UpdateStatus(ctx context.Context, db *mssqlx.DBs, id uint64, status byte) (err error)
 	// UpdatePasswordCounter update user password counter
 	UpdatePasswordCounter(ctx context.Context, db *mssqlx.DBs, id uint64, counter int) (err error)
+
+	//---------------------------------------------Cache ----------------------------
+	SelectAllUserFromCache(ctx context.Context, db *mssqlx.DBs) (result []*model.User, err error)
 }
 
 type userDAO struct{}
@@ -60,6 +64,17 @@ func (c *userDAO) Select(ctx context.Context, db *mssqlx.DBs, id uint64) (result
 		return
 	}
 
+	return
+}
+
+func (c *userDAO) SelectAllUserFromCache(ctx context.Context, db *mssqlx.DBs) (result []*model.User, err error) {
+	// Validate input
+	if db == nil {
+		err = core.ErrDBObjNull
+		return
+	}
+
+	err = db.SelectContext(ctx, result, sqlSelectAllUserInCache)
 	return
 }
 

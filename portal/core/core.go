@@ -3,6 +3,7 @@ package core
 import (
 	"context"
 	"fmt"
+	"hash/fnv"
 	"sync"
 	"sync/atomic"
 	"time"
@@ -62,6 +63,19 @@ var (
 	lg             *model.LogFormat
 	numShard       uint64
 )
+
+// ------------------------- Sharding ---------------------------
+
+//getHash hash string to uint64
+func GetHash(s string) uint64 {
+	h := fnv.New64a()
+	h.Write([]byte(s))
+	return h.Sum64()
+}
+
+func GetShardID(i uint64) uint64 {
+	return i % numShard
+}
 
 type CassandraCache struct {
 	Cluster  string `json:"Cluster"`
