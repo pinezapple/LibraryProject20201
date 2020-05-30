@@ -121,7 +121,7 @@
     <!-- Topnav -->
     <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
       <div class="container-fluid">
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent" style ="padding: 10px;">
           <!-- Search form -->
           <!-- <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">
             <div class="form-group mb-0">
@@ -269,18 +269,6 @@
                 </form>
               </div>
             </div>
-            <!-- <table class="table table-striped mt-5">
-              <thead>
-                <tr>
-                  <th>Documnt name</th>
-                  <th>Author</th>
-                  <th>Type</th>
-                  <th>Description</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody id="doc-list"></tbody>
-            </table> -->
             </div>
           </div>
 
@@ -312,152 +300,11 @@
   <script src="../../assets/vendor/datatables.net-select/js/dataTables.select.min.js"></script>
   <!-- Argon JS -->
   <script src="../../assets/js/argon.js?v=1.1.0"></script>
-  <!-- Demo JS - remove this in your project -->
-  <script src="../../assets/js/demo.min.js"></script>
   
   <script>
   function reset() {
   document.getElementById("myForm").reset();
   }
-
-// class Document {
-//   constructor(name, author, type, description) {
-//     this.name = name;
-//     this.author = author;
-//     this.type = type;
-//     this.description =description;
-//   }
-// }
-
-// // UI Class: Handle UI Tasks
-// class UI {
-//   static displayDoc() {
-//     const docs = Store.getDoc();
-
-//     docs.forEach((doc) => UI.addDocToList(doc));
-//   }
-
-//   static addDocToList(doc) {
-//     const list = document.querySelector('#doc-list');
-
-//     const row = document.createElement('tr');
-
-//     row.innerHTML = `
-//       <td>${doc.name}</td>
-//       <td>${doc.author}</td>
-//       <td>${doc.type}</td>
-//       <td>${doc.description}</td>
-//       <td><a href="#" class="btn btn-danger btn-sm delete">X</a></td>
-//     `;
-
-//     list.appendChild(row);
-//   }
-
-//   static deleteDoc(el) {
-//     if(el.classList.contains('delete')) {
-//       el.parentElement.parentElement.remove();
-//     }
-//   }
-
-//   static showAlert(message, className) {
-//     const div = document.createElement('div');
-//     div.className = `alert alert-${className}`;
-//     div.appendChild(document.createTextNode(message));
-//     const container = document.querySelector('.container-fluid');
-//     const form = document.querySelector('#myForm');
-//     container.insertBefore(div, form);
-
-//     // Vanish in 3 seconds
-//     setTimeout(() => document.querySelector('.alert').remove(), 3000);
-//   }
-
-//   static clearFields() {
-//     document.querySelector('#name').value = '';
-//     document.querySelector('#author').value = '';
-//     document.querySelector('#type').value = '';
-//     document.querySelector('#description').value = '';
-//   }
-// }
-
-// // Store Class: Handles Storage
-// class Store {
-//   static getDoc() {
-//     let docs;
-//     if(localStorage.getItem('docs') === null) {
-//       docs = [];
-//     } else {
-//       docs = JSON.parse(localStorage.getItem('docs'));
-//     }
-
-//     return docs;
-//   }
-
-//   static addDoc(doc) {
-//     const docs = Store.getDoc();
-//     docs.push(doc);
-//     localStorage.setItem('docs', JSON.stringify(docs));
-//   }
-
-//   static removeDoc(name) {
-//     const docs = Store.getDoc();
-
-//     docs.forEach((doc, index) => {
-//       if(doc.name == name) {
-//         doc.splice(index, 1);
-//       }
-//     });
-
-//     localStorage.setItem('doc', JSON.stringify(docs));
-//   }
-// }
-
-// // Event: Display Books
-// document.addEventListener('DOMContentLoaded', UI.displayDoc);
-
-// // Event: Add a Book
-// document.querySelector('#myForm').addEventListener('submit', (e) => {
-//   // Prevent actual submit
-//   e.preventDefault();
-
-//   // Get form values
-//   const name = document.querySelector('#name').value;
-//   const author = document.querySelector('#author').value;
-//   const type = document.querySelector('#type').value;
-//   const description = document.querySelector('#description').value;
-
-
-//   // Validate
-//   // if(name === '' || author === '' || type === '') {
-//   //   UI.showAlert('Please fill in all fields', 'danger');
-//   // } else {
-//     // Instatiate book
-//     const doc = new Document(name, author, type, description);
-
-//     // Add Book to UI
-//     UI.addDocToList(doc);
-
-//     // Add book to store
-//     Store.addDoc(doc);
-
-//     // Show success message
-//     UI.showAlert('Document Added', 'success');
-
-//     // Clear fields
-//     UI.clearFields();
-//   // }
-// });
-
-// // Event: Remove a Book
-// document.querySelector('#doc-list').addEventListener('click', (e) => {
-//   // Remove book from UI
-//   UI.deleteDoc(e.target);
-
-//   // Remove book from store
-//   Store.removeDoc(e.target.parentElement.previousElementSibling.textContent);
-
-//   // Show success message
-//   UI.showAlert('Document Removed', 'success');
-// });
   
 </script>
   </script>
