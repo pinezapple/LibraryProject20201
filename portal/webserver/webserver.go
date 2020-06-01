@@ -10,6 +10,8 @@ import (
 	"github.com/labstack/echo"
 	mw "github.com/labstack/echo/middleware"
 	"github.com/pinezapple/LibraryProject20201/portal/controller/authen"
+	"github.com/pinezapple/LibraryProject20201/portal/controller/doc"
+	"github.com/pinezapple/LibraryProject20201/portal/controller/user"
 	"github.com/pinezapple/LibraryProject20201/portal/core"
 	dao "github.com/pinezapple/LibraryProject20201/portal/dao/database"
 	"github.com/pinezapple/LibraryProject20201/skeleton/logger"
@@ -56,16 +58,20 @@ func WebServer(ctx context.Context) (fn model.Daemon, err error) {
 	e.Use(mw.Secure())
 
 	// Restricted group of URIs for
-	r := e.Group("/r")
-	r.Use(mw.JWTWithConfig(mw.JWTConfig{
-		Claims:      &model.Claim{},
-		ContextKey:  mainConf.WebServer.Secure.JWT.ContextKey,
-		SigningKey:  []byte(mainConf.WebServer.Secure.JWT.SecretKey),
-		TokenLookup: "header:authorization",
-	}))
+	/*
+		r := e.Group("/r")
+		r.Use(mw.JWTWithConfig(mw.JWTConfig{
+			Claims:      &model.Claim{},
+			ContextKey:  mainConf.WebServer.Secure.JWT.ContextKey,
+			SigningKey:  []byte(mainConf.WebServer.Secure.JWT.SecretKey),
+			TokenLookup: "header:authorization",
+		}))
+	*/
 
 	// init router
-	initRouter(e, r)
+	//initRouter(e, r)
+	initUserRouter(e)
+	initDocRouter(e)
 
 	//	core.Logger().Infof("HTTP Server is starting on :%d", httpServerConf.Port)
 	logger.LogInfo(lg, "HTTP Server is starting on "+strconv.Itoa(httpServerConf.Port))
@@ -90,6 +96,30 @@ func WebServer(ctx context.Context) (fn model.Daemon, err error) {
 		}
 	}
 	return
+}
+
+func initDocRouter(e *echo.Echo) {
+	d := e.Group("/doc")
+	d.POST("/save", doc.SaveDoc)
+	d.POST("/delete", doc.DelDoc)
+	d.POST("/update", doc.UpdateDoc)
+	d.POST("/alldoc", doc.SelectAllDoc)
+	d.POST("/onedoc", doc.SelectDocByID)
+
+	d.POST("/saveForm", doc.SaveForm)
+	d.POST("/allform", doc.SelectAllForm)
+	d.POST("/oneform", doc.SelectFormByID)
+
+	d.POST("/updateStatus", doc.UpdateStatus)
+}
+
+func initUserRouter(e *echo.Echo) {
+	u := e.Group("/user")
+	u.POST("/save", user.SaveUser)
+	u.POST("/delete", user.DeleteUser)
+	u.POST("/update", user.UpdateUser)
+	u.POST("/alluser", user.SelectAllUser)
+	u.POST("/oneuser", user.SelectUserByID)
 }
 
 func initRouter(e *echo.Echo, r *echo.Group) {

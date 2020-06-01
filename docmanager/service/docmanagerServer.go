@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/pinezapple/LibraryProject20201/docmanager/core"
 	"github.com/pinezapple/LibraryProject20201/docmanager/dao"
@@ -30,6 +31,7 @@ func (d *docmanagerServer) SelectAllDoc(ctx context.Context, req *docmanagerMode
 func (d *docmanagerServer) SelectDocByID(ctx context.Context, req *docmanagerModel.SelectDocByIDReq) (resp *docmanagerModel.SelectDocByIDResp, err error) {
 	logger.LogInfo(d.lg, "rpc Select Doc By ID Req")
 
+	fmt.Println(req.DocID)
 	doc, err := dao.GetDocDAO().SelectDocByID(ctx, core.GetDB(), req.DocID)
 	if err != nil {
 		logger.LogErr(d.lg, err)

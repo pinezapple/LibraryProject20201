@@ -35,6 +35,7 @@ func saveDoc(c echo.Context, request interface{}) (statusCode int, data interfac
 	req := request.(*reqDoc)
 	ctx := c.Request().Context()
 	lg = &model.LogFormat{Source: c.Request().RemoteAddr, Action: "Save Doc", Data: req}
+	fmt.Println(req)
 	// generate ID
 	id := core.GetHash(req.Name + req.Author)
 	shardID := core.GetShardID(id)
@@ -52,18 +53,21 @@ func saveDoc(c echo.Context, request interface{}) (statusCode int, data interfac
 	}
 	er := dDAO.SaveDoc(ctx, db, docObj)
 	if er != nil {
+		fmt.Println(er)
 		statusCode, err = http.StatusInternalServerError, er
 		return
 	}
 	// save Doc to docmanager
 	shardService := microservice.GetDocmanagerShardServices()
 	if shardService == nil {
+		fmt.Println("nil shardService")
 		statusCode, err = http.StatusInternalServerError, fmt.Errorf("nil shardService")
 		return
 	}
 
 	ser, ok := shardService[shardID]
 	if !ok {
+		fmt.Println("nil shardID")
 		statusCode, err = http.StatusInternalServerError, fmt.Errorf("no shard id")
 		return
 

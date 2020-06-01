@@ -2,6 +2,7 @@ package dao
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/linxGnu/mssqlx"
@@ -51,7 +52,9 @@ func (d *docDAO) SelectDocByID(ctx context.Context, db *mssqlx.DBs, id uint64) (
 		return nil, core.ErrDBObjNull
 	}
 
-	err = db.SelectContext(ctx, result, sqlSelectByID, id)
+	result = &docmanagerModel.Doc{}
+	err = db.GetContext(ctx, result, sqlSelectByID, id)
+	fmt.Println("db err")
 	return
 }
 
@@ -60,7 +63,7 @@ func (d *docDAO) SaveDoc(ctx context.Context, db *mssqlx.DBs, doc *docmanagerMod
 		return core.ErrDBObjNull
 	}
 
-	_, err = db.ExecContext(ctx, sqlSave, doc.ID, doc.Name, doc.Author, doc.Type, doc.Descriptor, doc.Status, doc.Fee)
+	_, err = db.ExecContext(ctx, sqlSave, doc.ID, doc.Name, doc.Author, doc.Type, doc.Description, doc.Status, doc.Fee)
 	return
 }
 
@@ -69,7 +72,7 @@ func (d *docDAO) UpdateDoc(ctx context.Context, db *mssqlx.DBs, doc *docmanagerM
 		return core.ErrDBObjNull
 	}
 
-	_, err = db.ExecContext(ctx, sqlUpdate, doc.Name, doc.Author, doc.Type, doc.Descriptor, doc.Status, doc.Fee, time.Now(), doc.ID)
+	_, err = db.ExecContext(ctx, sqlUpdate, doc.Name, doc.Author, doc.Type, doc.Description, doc.Status, doc.Fee, time.Now(), doc.ID)
 	return
 }
 
@@ -129,7 +132,8 @@ func (d *docDAO) SelectBorrowFormByID(ctx context.Context, db *mssqlx.DBs, id ui
 		return nil, core.ErrDBObjNull
 	}
 
-	err = db.SelectContext(ctx, result, sqlSelectBorrowFormByID, id)
+	result = &docmanagerModel.BorrowForm{}
+	err = db.GetContext(ctx, result, sqlSelectBorrowFormByID, id)
 	return
 }
 

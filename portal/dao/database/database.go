@@ -1,4 +1,4 @@
-package dao
+package database
 
 import (
 	"context"
@@ -79,7 +79,7 @@ func (c *userDAO) SelectAllUserFromCache(ctx context.Context, db *mssqlx.DBs) (r
 		return
 	}
 
-	err = db.SelectContext(ctx, result, sqlSelectAllUserInCache)
+	err = db.SelectContext(ctx, &result, sqlSelectAllUserInCache)
 	return
 }
 

@@ -57,8 +57,7 @@ func ExecHandler(c echo.Context, expect interface{}, invoke func(c echo.Context,
 	fmt.Println(reflect.TypeOf(expect))
 	if expect != nil { // parse req
 		if err = json.Unmarshal(payload, expect); err != nil {
-			fmt.Println("Im here 2")
-
+			fmt.Println("parse erro")
 			return c.JSON(http.StatusOK, &Response{
 				Error: ResponseError{
 					Code:    http.StatusBadRequest,
@@ -67,6 +66,7 @@ func ExecHandler(c echo.Context, expect interface{}, invoke func(c echo.Context,
 		}
 	}
 
+	fmt.Println(expect)
 	statusCode, data, lg, logRespData, err := invoke(c, expect)
 	if err != nil {
 		if lg != nil {

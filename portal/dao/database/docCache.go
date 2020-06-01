@@ -1,4 +1,4 @@
-package dao
+package database
 
 import (
 	"context"
@@ -13,7 +13,7 @@ const (
 	sqlSelectAllDocInCache       = "SELECT * FROM doc"
 	sqlSelectAllFormInCache      = "SELECT * FROM borrowform"
 	sqlSelectFormInCacheByStatus = "SELECT * FROM borrowform WHERE status = ?"
-	sqlSaveDocToCache            = "INSERT INTO doc(id_doc,doc_name,doc_author,doc_type,doc_description,status,fee) VALUES (?,?,?,?,?,?,?)"
+	sqlSaveDocToCache            = "INSERT INTO doc(id_doc, doc_name, doc_author, doc_type, doc_description, fee) VALUES (?,?,?,?,?,?)"
 	sqlDeleteDocToCache          = "DELETE FROM doc WHERE id_doc = ?"
 	sqlUpdateStatusDocToCache    = "UPDATE doc SET status = ?, id_borrow = ?,updated_at = ? WHERE id_doc= ?"
 	sqlUpdateDocToCache          = "UPDATE doc SET doc_name = ?, doc_author = ?, doc_type =?, doc_description = ?, fee = ?, updated_at = ? WHERE id_doc = ?"
@@ -46,7 +46,7 @@ func (d *docCacheDAO) SelectAllDocFromCache(ctx context.Context, db *mssqlx.DBs)
 		return
 	}
 
-	err = db.SelectContext(ctx, result, sqlSelectAllDocInCache)
+	err = db.SelectContext(ctx, &result, sqlSelectAllDocInCache)
 	return
 }
 
@@ -57,7 +57,7 @@ func (d *docCacheDAO) SelectAllFormFromCache(ctx context.Context, db *mssqlx.DBs
 		return
 	}
 
-	err = db.SelectContext(ctx, result, sqlSelectAllFormInCache)
+	err = db.SelectContext(ctx, &result, sqlSelectAllFormInCache)
 	return
 }
 
@@ -66,7 +66,7 @@ func (d *docCacheDAO) SaveDoc(ctx context.Context, db *mssqlx.DBs, doc *docmanag
 		return core.ErrDBObjNull
 	}
 
-	_, err = db.ExecContext(ctx, sqlSaveDocToCache, doc.ID, doc.Name, doc.Author, doc.Type, doc.Descriptor, doc.Status, doc.Fee)
+	_, err = db.ExecContext(ctx, sqlSaveDocToCache, doc.ID, doc.Name, doc.Author, doc.Type, doc.Description, doc.Fee)
 	return
 }
 
@@ -75,7 +75,7 @@ func (d *docCacheDAO) UpdateDoc(ctx context.Context, db *mssqlx.DBs, doc *docman
 		return core.ErrDBObjNull
 	}
 
-	_, err = db.ExecContext(ctx, sqlUpdateDocToCache, doc.Name, doc.Author, doc.Type, doc.Descriptor, doc.Fee, time.Now(), doc.ID)
+	_, err = db.ExecContext(ctx, sqlUpdateDocToCache, doc.Name, doc.Author, doc.Type, doc.Description, doc.Fee, time.Now(), doc.ID)
 	return
 }
 
@@ -121,7 +121,7 @@ func (d *docCacheDAO) UpdateBorrowFormStatus(ctx context.Context, db *mssqlx.DBs
 		return err
 	}
 	var id_doc uint64
-	err = db.SelectContext(ctx, &id_doc, sqlSelecetIdDoc, id)
+	err = db.GetContext(ctx, &id_doc, sqlSelecetIdDoc, id)
 	if err != nil {
 		return err
 	}
