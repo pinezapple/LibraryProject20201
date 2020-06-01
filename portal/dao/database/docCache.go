@@ -16,9 +16,10 @@ const (
 	sqlSaveDocToCache            = "INSERT INTO doc(id_doc,doc_name,doc_author,doc_type,doc_description,status,fee) VALUES (?,?,?,?,?,?,?)"
 	sqlDeleteDocToCache          = "DELETE FROM doc WHERE id_doc = ?"
 	sqlUpdateStatusDocToCache    = "UPDATE doc SET status = ?, id_borrow = ?,updated_at = ? WHERE id_doc= ?"
-	sqlUpdateDocToCache          = "UPDATE doc SET doc_name = ?, doc_author = ?, doc_type =?, doc_description = ?, status = ?, fee = ?, updated_at = ? WHERE id_doc = ?"
+	sqlUpdateDocToCache          = "UPDATE doc SET doc_name = ?, doc_author = ?, doc_type =?, doc_description = ?, fee = ?, updated_at = ? WHERE id_doc = ?"
 	sqlSaveBorrowForm            = "INSERT INTO borrowform(id_borrow, id_doc, id_cus, id_lib, status, start_at, end_at) VALUE (?,?,?,?,?,?,?)"
 	sqlUpdateBorrowFormStatus    = "UPDATE borrowform SET status = ?, updated_at = ? WHERE id_borrow = ?"
+	sqlUpdateDocStatus           = "UPDATE doc SET status = ? WHERE id_doc = ?"
 	sqlSelectBorrowFormByID      = "SELECT * FROM borrowform WHERE id_borrow = ?"
 	sqlSelecetIdDoc              = "SELECT id_doc FROM doc WHERE id_borrow = ?"
 )
@@ -74,7 +75,7 @@ func (d *docCacheDAO) UpdateDoc(ctx context.Context, db *mssqlx.DBs, doc *docman
 		return core.ErrDBObjNull
 	}
 
-	_, err = db.ExecContext(ctx, sqlUpdateDocToCache, doc.Name, doc.Author, doc.Type, doc.Descriptor, doc.Status, doc.Fee, time.Now(), doc.ID)
+	_, err = db.ExecContext(ctx, sqlUpdateDocToCache, doc.Name, doc.Author, doc.Type, doc.Descriptor, doc.Fee, time.Now(), doc.ID)
 	return
 }
 
@@ -107,7 +108,7 @@ func (d *docCacheDAO) SaveBorrowForm(ctx context.Context, db *mssqlx.DBs, form *
 		return err
 	}
 
-	_, err = db.ExecContext(ctx, sqlUpdateStatusDocToCache, form.Status, form.ID, time.Now(), form.DocID)
+	_, err = db.ExecContext(ctx, sqlUpdateStatusDocToCache, form.Status, form.ID, form.DocID)
 	return
 }
 
@@ -124,8 +125,12 @@ func (d *docCacheDAO) UpdateBorrowFormStatus(ctx context.Context, db *mssqlx.DBs
 	if err != nil {
 		return err
 	}
+	_, err = db.ExecContext(ctx, sqlUpdateDocStatus, status, id_doc)
+	if err != nil {
+		return err
+	}
 
-	_, err = db.ExecContext(ctx, sqlUpdateStatusDocToCache, status, id, time.Now(), id_doc)
+	_, err = db.ExecContext(ctx, sqlUpdateStatusDocToCache, status, id, id_doc)
 	return
 }
 

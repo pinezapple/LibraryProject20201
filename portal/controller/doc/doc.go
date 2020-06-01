@@ -2,15 +2,21 @@ package doc
 
 import (
 	"github.com/labstack/echo"
+	"github.com/pinezapple/LibraryProject20201/portal/controller"
 )
 
 type reqSelectByID struct {
 	ID uint64 `json:"id"`
 }
 
+type reqSelectFormByID struct {
+	FormID uint64 `json:"form_id"`
+	DocID  uint64 `json:"doc_id"`
+}
 type reqUpdateStatus struct {
-	BorrowFormID uint64 `json:"id"`
-	Status       int    `json:"status"`
+	FormID uint64 `json:"form_id"`
+	DocID  uint64 `json:"doc_id"`
+	Status int    `json:"status"`
 }
 
 type reqDoc struct {
@@ -34,37 +40,38 @@ type reqSaveBorrowForm struct {
 }
 
 func SelectAllDoc(c echo.Context) (erro error) {
-	return
+	return controller.ExecHandler(c, nil, selectAllDoc)
 }
 
 func SelectDocByID(c echo.Context) (erro error) {
-	return
+	return controller.ExecHandler(c, &reqSelectByID{}, selectDocByID)
 }
 
 func SaveDoc(c echo.Context) (erro error) {
-	return
+	return controller.ExecHandler(c, &reqDoc{}, saveDoc)
 }
 
 func DelDoc(c echo.Context) (erro error) {
-	return
+	return controller.ExecHandler(c, &reqSelectByID{}, delDoc)
 }
 
 func UpdateDoc(c echo.Context) (erro error) {
-	return
+	return controller.ExecHandler(c, &reqDoc{}, updateDoc)
 }
 
 func UpdateStatus(c echo.Context) (erro error) {
-	return
+	return controller.ExecHandler(c, &reqUpdateStatus{}, updateStatus)
+
 }
 
 func SelectAllForm(c echo.Context) (erro error) {
-	return
+	return controller.ExecHandler(c, nil, selectAllForm)
 }
 
 func SaveForm(c echo.Context) (erro error) {
-	return
+	return controller.ExecHandler(c, &reqSaveBorrowForm{}, saveForm)
 }
 
 func SelectFormByID(c echo.Context) (erro error) {
-	return
+	return controller.ExecHandler(c, &reqSelectFormByID{}, selectFormByID)
 }

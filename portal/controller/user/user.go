@@ -1,6 +1,9 @@
 package user
 
-import "github.com/labstack/echo"
+import (
+	"github.com/labstack/echo"
+	"github.com/pinezapple/LibraryProject20201/portal/controller"
+)
 
 type reqUser struct {
 	ID          uint64 `json:"id_user" db:"id_user"`
@@ -15,25 +18,26 @@ type reqUser struct {
 }
 
 type reqUserID struct {
-	ID uint64 `json:"id"`
+	ID       uint64 `json:"id"`
+	Username string `json:"username"`
 }
 
-func SelectAllUser(c echo.Context) {
-	return
+func SelectAllUser(c echo.Context) (erro error) {
+	return controller.ExecHandler(c, nil, selectAllUser)
 }
 
-func SelectUserByID(c echo.Context) {
-	return
+func SelectUserByID(c echo.Context) (erro error) {
+	return controller.ExecHandler(c, &reqUserID{}, selectUserByID)
 }
 
-func SaveUser(c echo.Context) {
-	return
+func SaveUser(c echo.Context) (erro error) {
+	return controller.ExecHandler(c, &reqUser{}, saveUser)
 }
 
-func UpdateUser(c echo.Context) {
-	return
+func UpdateUser(c echo.Context) (erro error) {
+	return controller.ExecHandler(c, &reqUser{}, updateUser)
 }
 
-func DeleteUser(c echo.Context) {
-	return
+func DeleteUser(c echo.Context) (erro error) {
+	return controller.ExecHandler(c, &reqUserID{}, deleteUser)
 }

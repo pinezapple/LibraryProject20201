@@ -25,6 +25,9 @@ const (
 	sqlUserSecUpdateWithoutPassword = "UPDATE user_security SET checksum = ?, updated_at = ? WHERE username = ?"
 	sqlUserUpdateStatus             = "UPDATE user SET status = ?, updated_at = ? WHERE id = ?"
 	sqlUserUpdatePasswordCounter    = "UPDATE user SET pwd_counter = ?, updated_at = ? WHERE id = ?"
+	sqlUserDetailDelete             = "DELETE FROM user WHERE id = ?"
+	sqlUserDelete                   = "DELETE FROM user WHERE username = ?"
+	sqlUserDeleteSec                = "DELETE FROM user_security WHERE username = ?"
 )
 
 // IUserDAO userDAO interface
@@ -46,6 +49,8 @@ type IUserDAO interface {
 
 	//---------------------------------------------Cache ----------------------------
 	SelectAllUserFromCache(ctx context.Context, db *mssqlx.DBs) (result []*model.User, err error)
+	// Delete delete user
+	Delete(ctx context.Context, db *mssqlx.DBs, username string, id uint64) (err error)
 }
 
 type userDAO struct{}
@@ -246,6 +251,18 @@ func (c *userDAO) UpdateStatus(ctx context.Context, db *mssqlx.DBs, id uint64, s
 // UpdatePasswordCounter update password counter
 func (c *userDAO) UpdatePasswordCounter(ctx context.Context, db *mssqlx.DBs, id uint64, counter int) (err error) {
 	_, err = db.ExecContext(ctx, sqlUserUpdatePasswordCounter, counter, time.Now(), id)
+	return
+}
+
+func (c *userDAO) Delete(ctx context.Context, db *mssqlx.DBs, username string, id uint64) (err error) {
+	// Validate input
+	if db == nil {
+		err = core.ErrDBObjNull
+		return
+	}
+	_, err = db.Exec(sqlUserDetailDelete, id)
+	_, err = db.Exec(sqlUserDelete, username)
+	_, err = db.Exec(sqlUserDeleteSec, username)
 	return
 }
 

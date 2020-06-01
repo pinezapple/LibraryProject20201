@@ -213,7 +213,7 @@ func saveForm(c echo.Context, request interface{}) (statusCode int, data interfa
 	shardID := core.GetShardID(req.DocID)
 	id := core.GetHash(strconv.Itoa(int(req.DocID)) + strconv.Itoa(int(req.CusID)) + strconv.Itoa(rand.Int()))
 
-	// save Doc to cache
+	// save form to cache
 	db := core.GetDB()
 	dDAO := dao.GetDocCacheDAO()
 	formObj := &docmanagerModel.BorrowForm{
@@ -254,20 +254,67 @@ func saveForm(c echo.Context, request interface{}) (statusCode int, data interfa
 }
 
 func selectFormByID(c echo.Context, request interface{}) (statusCode int, data interface{}, lg *model.LogFormat, logResponse bool, err error) {
-	//get doc id from cache
-	//get shard id by doc_id
-	//get from from docmanager
-	return
+	req := request.(*reqSelectFormByID)
+	ctx := c.Request().Context()
+	lg = &model.LogFormat{Source: c.Request().RemoteAddr, Action: "Select Form By ID", Data: req}
+	// get shard ID
+	shardID := core.GetShardID(req.DocID)
+	shardService := microservice.GetDocmanagerShardServices()
+	if shardService == nil {
+		statusCode, err = http.StatusInternalServerError, fmt.Errorf("nil shardService")
+		return
+	}
+
+	ser, ok := shardService[shardID]
+	if !ok {
+		statusCode, err = http.StatusInternalServerError, fmt.Errorf("no shard id")
+		return
+
+	}
+
+	resp, err := ser.Docmanager.SelectBorrowFormByID(ctx, &docmanagerModel.SelectBorrowFormByIDReq{FormID: req.FormID})
+	if err != nil || resp.Code != 0 {
+		statusCode, err = http.StatusInternalServerError, fmt.Errorf("grpc Error")
+		return
+	}
+
+	return http.StatusOK, resp.Borrowform, lg, false, nil
 }
 
 func updateStatus(c echo.Context, request interface{}) (statusCode int, data interface{}, lg *model.LogFormat, logResponse bool, err error) {
+	req := request.(*reqUpdateStatus)
+	ctx := c.Request().Context()
+	lg = &model.LogFormat{Source: c.Request().RemoteAddr, Action: "Update status", Data: req}
+	//get shard id
+	shardID := core.GetShardID(req.DocID)
+	shardService := microservice.GetDocmanagerShardServices()
+	if shardService == nil {
+		statusCode, err = http.StatusInternalServerError, fmt.Errorf("nil shardService")
+		return
+	}
+
+	ser, ok := shardService[shardID]
+	if !ok {
+		statusCode, err = http.StatusInternalServerError, fmt.Errorf("no shard id")
+		return
+
+	}
+	db := core.GetDB()
+	dDAO := dao.GetDocCacheDAO()
 	//update status on cache
 	//update doc status
 	//update borrowform status
-	//get shard id
-	//update status on docmanager
-	//update doc status
-	//update borrowform status
+	er := dDAO.UpdateBorrowFormStatus(ctx, db, req.FormID, req.Status)
+	if er != nil {
+		statusCode, err = http.StatusInternalServerError, er
+		return
+	}
 
-	return
+	resp, err := ser.Docmanager.UpdateBorrowFormStatus(ctx, &docmanagerModel.UpdateBorrowFormStatusReq{FormID: req.FormID, Status: int32(req.Status)})
+	if err != nil || resp.Code != 0 {
+		statusCode, err = http.StatusInternalServerError, fmt.Errorf("grpc Error")
+		return
+	}
+
+	return http.StatusOK, nil, lg, false, nil
 }

@@ -14,7 +14,7 @@ const (
 	sqlSelectByID             = "SELECT * FROM doc WHERE id_doc = ?"
 	sqlSave                   = "INSERT INTO doc(id_doc,doc_name,doc_author,doc_type,doc_description,status,fee) VALUES (?,?,?,?,?,?,?)"
 	sqlDelete                 = "DELETE FROM doc WHERE id_doc = ?"
-	sqlUpdateStatus           = "UPDATE doc SET status = ?, id_borrow = ?,updated_at = ? WHERE id_doc= ?"
+	sqlUpdateStatus           = "UPDATE doc SET status = ?, id_borrow = ? WHERE id_doc= ?"
 	sqlUpdate                 = "UPDATE doc SET doc_name = ?, doc_author = ?, doc_type =?, doc_description = ?, status = ?, fee = ?, updated_at = ? WHERE id_doc = ?"
 	sqlSaveBorrowForm         = "INSERT INTO borrowform(id_borrow, id_doc, id_cus, id_lib, status, start_at, end_at) VALUE (?,?,?,?,?,?,?)"
 	sqlUpdateBorrowFormStatus = "UPDATE borrowform SET status = ?, updated_at = ? WHERE id_borrow = ?"
@@ -102,7 +102,7 @@ func (d *docDAO) SaveBorrowForm(ctx context.Context, db *mssqlx.DBs, form *docma
 		return err
 	}
 
-	_, err = db.ExecContext(ctx, sqlUpdateStatus, form.Status, form.ID, time.Now(), form.DocID)
+	_, err = db.ExecContext(ctx, sqlUpdateStatus, form.Status, form.ID, form.DocID)
 	return
 }
 
@@ -120,7 +120,7 @@ func (d *docDAO) UpdateBorrowFormStatus(ctx context.Context, db *mssqlx.DBs, id 
 		return err
 	}
 
-	_, err = db.ExecContext(ctx, sqlUpdateStatus, status, id, time.Now(), id_doc)
+	_, err = db.ExecContext(ctx, sqlUpdateStatus, status, id, id_doc)
 	return
 }
 
