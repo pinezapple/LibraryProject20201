@@ -215,7 +215,20 @@
               </div>
               <!-- Card body -->
               <div class="card-body">
-                <form id='myForm'>
+                <form id='newDoc'>
+                  <!-- delete later -->
+                  <!-- <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <div class="input-group input-group-merge">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="ni ni-books"></i></span>
+                          </div>
+                          <input class="form-control" id="id" placeholder="Document id" type="text" required>
+                        </div>
+                      </div>
+                    </div>
+                  </div> -->
                   <!-- Input groups with icon -->
                   <div class="row">
                     <div class="col-md-6">
@@ -300,11 +313,13 @@
   <script src="../../assets/vendor/datatables.net-select/js/dataTables.select.min.js"></script>
   <!-- Argon JS -->
   <script src="../../assets/js/argon.js?v=1.1.0"></script>
+  <script src="../../assets/js/docList.js"></script>
   
   <script>
   function reset() {
-  document.getElementById("myForm").reset();
+  document.getElementById("newDoc").reset();
   }
+  document.getElementById('newDoc').addEventListener('submit', newDoc);
   
 </script>
   </script>

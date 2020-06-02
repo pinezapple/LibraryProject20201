@@ -224,7 +224,7 @@
                           <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-id-card-alt"></i></span>
                           </div>
-                          <input class="form-control" placeholder="Librarian ID" type="text" required>
+                          <input class="form-control" id='librarian' placeholder="Librarian ID" type="text" required>
                         </div>
                       </div>
                     </div>
@@ -234,7 +234,7 @@
                           <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-id-card"></i></span>
                           </div>
-                          <input class="form-control" placeholder="Student ID" type="text" required>
+                          <input class="form-control" id="studentId" placeholder="Student ID" type="text" required>
                         </div>
                       </div>
                     </div>
@@ -299,7 +299,7 @@
                           <div class="input-group-prepend">
                             <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
                           </div>
-                          <input class="form-control" placeholder="Duration" type="number" min="1" required>
+                          <input class="form-control" placeholder="Duration" id='days' type="number" min="1" required>
                           <div class="input-group-append">
                             <span class="input-group-text">day(s)</span>
                           </div>
@@ -312,7 +312,7 @@
                           <div class="input-group-prepend">
                             <span class="input-group-text"><i class="ni ni-book-bookmark"></i></span>
                           </div>
-                          <input class="form-control" id=docId placeholder="Document_ID" type="text">
+                          <input class="form-control" id='docId' placeholder="Document_ID" type="text" required readonly>
                         </div>
                       </div>
                     </div>
@@ -326,7 +326,7 @@
                           <div class="input-group-prepend">
                             <span class="input-group-text"><i class="ni ni-books"></i></span>
                           </div>
-                          <input class="form-control" id="docName" placeholder="Document name" type="text" readonly>
+                          <input class="form-control" id="docName" placeholder="Document name" type="text" disabled>
                         </div>
                       </div>
                     </div>
@@ -336,7 +336,7 @@
                           <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-users"></i></span>
                           </div>
-                          <input class="form-control" id="author" placeholder="Author" type="text"  readonly>
+                          <input class="form-control" id="author" placeholder="Author" type="text"  disabled>
                         </div>
                       </div>
                     </div>
@@ -346,7 +346,7 @@
                           <div class="input-group-prepend">
                             <span class="input-group-text"><i class="ni ni-archive-2"></i></span>
                           </div>
-                          <input class="form-control" id= "docType" placeholder="Type" type="text" readonly>
+                          <input class="form-control" id= "docType" placeholder="Type" type="text" disabled>
                         </div>
                       </div>
                     </div> 
@@ -373,7 +373,7 @@
                 <table class="table table-flush " id="datatable-basic">
                   <div class="col text-center">
                     <div class="btn-group">
-                      <button type="button" id="add" class="btn btn-primary">Add</button>
+                      <button type="button" id="add" class="btn btn-outline-primary">Add</button>
                     </div>
                   </div>
                   <thead class="thead-light">
@@ -396,40 +396,7 @@
                     <th>Status</th>
                     </tr>
                   </tfoot>
-                  <tbody>
-                    <tr>
-                      <td>01</td>
-                      <td>System Architect</td>
-                      <td>John Snow</td>
-                      <td>Software</td>
-                      <td>2019/04/25</td>
-                      <td>80</td>
-                    </tr>
-                      
-                      <tr>
-                        <td>02</td>
-                        <td>Accountant</td>
-                        <td>Somebody</td>
-                        <td>Math</td>
-                        <td>2019/07/25</td>
-                        <td>50</td>   
-                      </tr>
-                      <tr>
-                        <td>03</td>
-                        <td>Junior Technical Author</td>
-                        <td>Ashton Cox</td>
-                        <td>Software</td>
-                        <td>2009/01/12</td>
-                        <td>86</td>
-                      </tr>
-                      <tr>
-                        <td>04</td>
-                        <td>Senior Javascript Developer</td>
-                        <td>Idk</td>
-                        <td>Horror</td>
-                        <td>2019/03/29</td>
-                        <td>60</td>
-                      </tr>
+                  <tbody id="docList">
                   </tbody>
                 </table>
               </div>
@@ -467,44 +434,46 @@
   <script src="../../assets/vendor/datatables.net-select/js/dataTables.select.min.js"></script>
   <!-- Argon JS -->
   <script src="../../assets/js/argon.js?v=1.1.0"></script>
+  <script src="../../assets/js/docList.js"></script>
+
 
   <script>
-  function reset() {
-  document.getElementById("borrowForm").reset();
-  }
- 
+    document.getElementById('borrowForm').addEventListener('submit', newForm);
+  // function reset() {
+  // document.getElementById("borrowForm").reset();
+  // }
 
-  $(document).ready(function() {
-  document.getElementById("add").disabled = true;
-  var table = $('#datatable-basic').DataTable();
+  // $(document).ready(function() {
+  // document.getElementById("add").disabled = true;
+  // var table = $('#datatable-basic').DataTable();
 
-  $('#datatable-basic tbody').on( 'click', 'tr', function () {
-        if ( $(this).hasClass('selected') ) {
-            $(this).removeClass('selected');
-             document.getElementById("add").disabled = true;
-            // button.disabled = true
-        }
-        else {
-            table.$('tr.selected').removeClass('selected');
-            $(this).addClass('selected');
-            document.getElementById("add").disabled = false;
-            // button.disabled = false
-        }
-    });
+  // $('#datatable-basic tbody').on( 'click', 'tr', function () {
+  //       if ( $(this).hasClass('selected') ) {
+  //           $(this).removeClass('selected');
+  //            document.getElementById("add").disabled = true;
+  //           // button.disabled = true
+  //       }
+  //       else {
+  //           table.$('tr.selected').removeClass('selected');
+  //           $(this).addClass('selected');
+  //           document.getElementById("add").disabled = false;
+  //           // button.disabled = false
+  //       }
+  //   });
 
-    // add docId to form
-    $('#add').click( function () {
-      var docId =  table.row('.selected').data()[0]
-      var docName =  table.row('.selected').data()[1]
-      var author =  table.row('.selected').data()[2]
-      var docType =  table.row('.selected').data()[3]
-      // display document
-      $("#docId").val(docId)
-      $("#docName").val(docName)
-      $("#author").val(author)
-      $("#docType").val(docType)
-    });
-  })
+  //   // add docId to form
+  //   $('#add').click( function () {
+  //     var docId =  table.row('.selected').data()[0]
+  //     var docName =  table.row('.selected').data()[1]
+  //     var author =  table.row('.selected').data()[2]
+  //     var docType =  table.row('.selected').data()[3]
+  //     // display document
+  //     $("#docId").val(docId)
+  //     $("#docName").val(docName)
+  //     $("#author").val(author)
+  //     $("#docType").val(docType)
+  //   });
+  // })
   </script>
 </body>
 

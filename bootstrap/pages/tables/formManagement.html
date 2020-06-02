@@ -19,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
   <meta name="author" content="Creative Tim">
-  <title>Returned document Report</title>
+  <title>Library Mangament | Borrow Form Mangament </title>
   <!-- Favicon -->
   <link rel="icon" href="../../assets/img/brand/favicon.png" type="image/png">
   <!-- Fonts -->
@@ -67,7 +67,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link " href="../../pages/tables/formManagement.html" role="button" aria-expanded="true" aria-controls="navbar-dashboards" style="transform:none;">
+                <a class="nav-link active " href="../../pages/tables/formManagement.html" role="button" aria-expanded="true" aria-controls="navbar-dashboards" style="transform:none;">
                   <i class="ni ni-archive-2 text-muted"></i>
                   <span class="nav-link-text">Borrow form mangament</span>
                 </a>
@@ -90,7 +90,7 @@
                 </div>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" href="#navbar-tables" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-tables">
+                <a class="nav-link " href="#navbar-tables" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-tables">
                   <i class="ni ni-align-left-2 text-default"></i>
                   <span class="nav-link-text">Reports</span>
                 </a>
@@ -106,7 +106,7 @@
                 </div>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="../../pages/tables/users.html" role="button" aria-expanded="true" aria-controls="navbar-dashboards" style="transform:none;">
+                <a class="nav-link " href="../../pages/tables/users.html" role="button" aria-expanded="true" aria-controls="navbar-dashboards" style="transform:none;">
                   <i class="ni ni-circle-08 text-info"></i>
                   <span class="nav-link-text">Users</span>
                 </a>
@@ -122,7 +122,7 @@
       <!-- Topnav -->
       <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
         <div class="container-fluid">
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <div class="collapse navbar-collapse" id="navbarSupportedContent" style ="padding: 10px;">
             <!-- Search form -->
             <!-- <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">
               <div class="form-group mb-0">
@@ -224,7 +224,7 @@
                 <thead class="thead-light">
                   <div class="col text-center">
                     <div class="btn-group">
-                      <button type="button" id="update" class="btn btn-primary" data-toggle="modal" data-target="#modal-form">Update</button>
+                      <button type="button" id="update" class="btn btn-outline-primary" data-toggle="modal" data-target="#modal-form">Update</button>
                     </div>
                   </div>
                   <tr>
@@ -246,39 +246,7 @@
                     <th>Fee</th>
                   </tr>
                 </tfoot>
-                <tbody>
-                  <tr>
-                    <td>01</td>
-                    <td>System Architect</td>
-                    <td>20176628</td>
-                    <td>Returned</td>
-                    <td>2011/04/25</td>
-                    <td>$0</td>
-                  </tr>
-                  <tr>
-                    <td>02</td>
-                    <td>Accountant</td>
-                    <td>2923912</td>
-                    <td>Borrowing</td>
-                    <td>2011/07/25</td>
-                    <td>$10</td>
-                  </tr>
-                  <tr>
-                    <td>03</td>
-                    <td>Junior Technical Author</td>
-                    <td>2921398</td>
-                    <td>Overdue</td>
-                    <td>2009/01/12</td>
-                    <td>$0</td>
-                  </tr>
-                  <tr>
-                    <td>04</td>
-                    <td>Senior Javascript Developer</td>
-                    <td>221903109</td>
-                    <td>Returned</td>
-                    <td>2012/03/29</td>
-                    <td>$0</td>
-                  </tr>
+                <tbody id="docManagement">
                 </tbody>
               </table>
             </div>
@@ -382,25 +350,26 @@
   <script src='https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js'></script>
   <!-- Argon JS -->
   <script src="../../assets/js/argon.js?v=1.1.0"></script>
+  <!-- <script src="../../assets/js/main.js"></script> -->
   <script>
-     $(document).ready(function() {
-      document.getElementById("update").disabled = true;
-      var table = $('#datatable-basic').DataTable();
+    //  $(document).ready(function() {
+    //   document.getElementById("update").disabled = true;
+    //   var table = $('#datatable-basic').DataTable();
 
-      $('#datatable-basic tbody').on( 'click', 'tr', function () {
-        if ( $(this).hasClass('selected') ) {
-            $(this).removeClass('selected');
-            document.getElementById("update").disabled = true;
-            // button.disabled = true
-        }
-        else {
-            table.$('tr.selected').removeClass('selected');
-            $(this).addClass('selected');
-            document.getElementById("update").disabled = false;
-            // button.disabled = false
-        }
-    } );
-     })
+    //   $('#datatable-basic tbody').on( 'click', 'tr', function () {
+    //     if ( $(this).hasClass('selected') ) {
+    //         $(this).removeClass('selected');
+    //         document.getElementById("update").disabled = true;
+    //         // button.disabled = true
+    //     }
+    //     else {
+    //         table.$('tr.selected').removeClass('selected');
+    //         $(this).addClass('selected');
+    //         document.getElementById("update").disabled = false;
+    //         // button.disabled = false
+    //     }
+    // } );
+    //  })
   </script>
 
 </body>

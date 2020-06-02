@@ -218,9 +218,9 @@
                 <thead class="thead-light">
                 <div class="col text-center">
                   <div class="btn-group">
-                    <button type="button" id="delete" class="btn btn-primary">Delete</button>
-                    <button type="button" id="edit" class="btn btn-primary" data-toggle="modal" data-target="#modal-form">Edit</button>
-                    <button type="button" class="btn btn-primary"  data-toggle="modal" data-target="#modal-form">New</button>
+                    <button type="button" id="delete" class="btn btn-outline-primary">Delete</button>
+                    <button type="button" id="edit" class="btn btn-outline-primary" data-toggle="modal" data-target="#modal-form">Edit</button>
+                    <!-- <button type="button" class="btn btn-primary"  data-toggle="modal" data-target="#modal-form">New</button> -->
                   </div>
                 </div>
                   <tr>
@@ -228,6 +228,7 @@
                     <th>Document name</th>
                     <th>Author</th>
                     <th>Type</th>
+                    <th>Description</th>
                     <th>Updated at</th>
                     <th>Status</th>
                   </tr>
@@ -238,44 +239,12 @@
                     <th>Document name</th>
                     <th>Author</th>
                     <th>Type</th>
+                    <th>Description</th>
                     <th>Updated at</th>
                     <th>Status</th>
                   </tr>
                 </tfoot>
-                <tbody>
-                  <tr>
-                    <td>01</td>
-                    <td>System Architect</td>
-                    <td>John Snow</td>
-                    <td>Software</td>
-                    <td>2019/04/25</td>
-                    <td>80</td>
-                  </tr>
-                    <tr>
-                      <td>02</td>
-                      <td>Accountant</td>
-                      <td>Somebody</td>
-                      <td>Math</td>
-                      <td>2019/07/25</td>
-                      <td>50</td>
-                    </tr>
-                    <tr>
-                      <td>03</td>
-                      <td>Junior Technical Author</td>
-                      <td>Ashton Cox</td>
-                      <td>Software</td>
-                      <td>2009/01/12</td>
-                      <td>86</td>
-                    </tr>
-                    <tr>
-                      <td>04</td>
-                      <td>Senior Javascript Developer</td>
-                      <td>Idk</td>
-                      <td>Horror</td>
-                      <td>2019/03/29</td>
-                      <td>60</td>
-                     
-                    </tr>
+                <tbody id=docList>
                 </tbody>
               </table>
             </div>
@@ -289,7 +258,7 @@
               </p>
             </div>
             <div class="table-responsive py-4">
-              <table class="table table-flush display" id="datatable-buttons">
+              <table class="table table-flush display" id="datatable">
                 <thead class="thead-light">
                   <tr>
                     <th>Document_ID</th>
@@ -310,39 +279,7 @@
                     <th>Fee</th>
                   </tr>
                 </tfoot>
-                <tbody>
-                  <tr>
-                    <td>01</td>
-                    <td>System Architect</td>
-                    <td>20176628</td>
-                    <td>Returned</td>
-                    <td>2011/04/25</td>
-                    <td>$0</td>
-                  </tr>
-                  <tr>
-                    <td>02</td>
-                    <td>Accountant</td>
-                    <td>2923912</td>
-                    <td>Overdue</td>
-                    <td>2011/07/25</td>
-                    <td>$10</td>
-                  </tr>
-                  <tr>
-                    <td>03</td>
-                    <td>Junior Technical Author</td>
-                    <td>2921398</td>
-                    <td>Borrowing</td>
-                    <td>2009/01/12</td>
-                    <td>$0</td>
-                  </tr>
-                  <tr>
-                    <td>04</td>
-                    <td>Senior Javascript Developer</td>
-                    <td>221903109</td>
-                    <td>Returned</td>
-                    <td>2012/03/29</td>
-                    <td>$0</td>
-                  </tr>
+                <tbody id="docManagement">
                 </tbody>
               </table>
             </div>
@@ -365,7 +302,15 @@
                       <div class="text-center text-muted mb-4">
                           <small>Edit document</small>
                       </div>
-                      <form role="form">
+                      <form role="editDoc" >
+                        <div class="form-group mb-3">
+                          <div class="input-group input-group-merge input-group-alternative">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text"><i class="ni ni-books"></i></span>
+                              </div>
+                              <input class="form-control" id="id" placeholder="Document Id" type="text" readonly>
+                          </div>
+                      </div>
                           <div class="form-group mb-3">
                               <div class="input-group input-group-merge input-group-alternative">
                                   <div class="input-group-prepend">
@@ -393,11 +338,19 @@
                           <div class="form-group">
                             <div class="input-group input-group-merge input-group-alternative">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="ni ni-folder-17"></i></span>
+                                    <span class="input-group-text"><i class="ni ni-collection"></i></span>
                                 </div>
                               <input class="form-control" id= "status" placeholder="Status" type="text">
                             </div>
-                          </div>                          
+                          </div>  
+                          <div class="form-group">
+                            <div class="input-group input-group-merge input-group-alternative">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="ni ni-folder-17"></i></span>
+                                </div>
+                              <input class="form-control" id= "description" placeholder="description" type="text">
+                            </div>
+                          </div>                     
                           <!-- <div class="form-group">
                             <div class="input-group input-group-merge input-group-alternative">
                                 <div class="input-group-prepend">
@@ -407,7 +360,7 @@
                             </div>
                           </div> -->
                           <div class="text-center">
-                              <button type="button" class="btn btn-primary my-4">Save</button>
+                              <button type="sumbit" id="sumbit" class="btn btn-primary my-4">Save</button>
                               <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">Close</button>
                           </div>
                       </form>
@@ -441,57 +394,84 @@
   <script src="../../assets/vendor/datatables.net-select/js/dataTables.select.min.js"></script>
   <!-- Argon JS -->
   <script src="../../assets/js/argon.js?v=1.1.0"></script>
+  <script src="../../assets/js/docList.js"></script>
   <script>
-    $(document).ready(function() {
-      document.getElementById("delete").disabled = true;
-      document.getElementById("edit").disabled = true;
-    // $('table.display').DataTable();
-    var table = $('#datatable-basic').DataTable();
-    // var button = document.querySelector('button')
+  // document.getElementById('editDoc').addEventListener('submit', editDoc);
+  //   $(document).ready(function() {
+  //     document.getElementById("delete").disabled = true;
+  //     document.getElementById("edit").disabled = true;
+  //   // $('table.display').DataTable();
+  //   var table = $('#datatable-basic').DataTable();
+  //   // var button = document.querySelector('button')
   
-    $('#datatable-basic tbody').on( 'click', 'tr', function () {
-        if ( $(this).hasClass('selected') ) {
-            $(this).removeClass('selected');
-            document.getElementById("delete").disabled = true;
-            document.getElementById("edit").disabled = true;
-            // button.disabled = true
-        }
-        else {
-            table.$('tr.selected').removeClass('selected');
-            $(this).addClass('selected');
-            document.getElementById("delete").disabled = false;
-            document.getElementById("edit").disabled = false;
-            // button.disabled = false
-        }
-    } );
+  //   $('#datatable-basic tbody').on( 'click', 'tr', function () {
+  //       if ( $(this).hasClass('selected') ) {
+  //           $(this).removeClass('selected');
+  //           document.getElementById("delete").disabled = true;
+  //           document.getElementById("edit").disabled = true;
+  //           // button.disabled = true
+  //       }
+  //       else {
+  //           table.$('tr.selected').removeClass('selected');
+  //           $(this).addClass('selected');
+  //           document.getElementById("delete").disabled = false;
+  //           document.getElementById("edit").disabled = false;
+  //           // button.disabled = false
+  //       }
+  //   } );
 
-    // Delete selected row
-    $('#delete').click( function () {
-      if (confirm('Are you sure you want to delete the row?')){
-         table.row('.selected').remove().draw( false );
-    } ;
-    });
+  //   // Delete selected row
+  //   $('#delete').click( function () {
+  //     if (confirm('Are you sure you want to delete the row?')){
+  //        table.row('.selected').remove().draw( false );
+  //   } ;
+  //   });
 
-    // Edit selected row
-    $('#edit').click( function () {
+  //   // Edit selected row
+  //   $('#edit').click( function () {
       
-      var name =  table.row('.selected').data()[1]
+  //     var name =  table.row('.selected').data()[1]
       
-      var author = table.row('.selected').data()[2]
+  //     var author = table.row('.selected').data()[2]
       
-      var type = table.row('.selected').data()[3]
+  //     var type = table.row('.selected').data()[3]
       
-      var status = table.row('.selected').data()[5]
+  //     var status = table.row('.selected').data()[5]
       
 
-      $("#name").val(name)
-      $("#author").val(author)
-      $("#type").val(type)
-      $("#status").val(status)
-    });
+  //     $("#name").val(name)
+  //     $("#author").val(author)
+  //     $("#type").val(type)
+  //     $("#status").val(status)
+  //   });
+    
+  //   docList = document.querySelector("#docList")
+  //   fetch ('http://localhost:3000/documents')
+  //   .then(response => response.json())
+  //   .then(docList =>{
+  //     docList.forEach(doc =>{
 
-  });
+  //       var data =[]
+  //       // get doc data
+  //       var docId= `${doc.id_doc}`
+  //       var docName = `${doc.doc_name}`
+  //       var docAuthor = `${doc.doc_author}`
+  //       var docType = `${doc.doc_type}`
+  //       var docDate = `${doc.updated_at}`
+  //       var docStatus = `${doc.status}`
 
+  //       data.push (docId,docName,docAuthor,docType,docDate,docStatus)
+
+  //       // add to table
+  //       table.row.add(data).draw()
+  //     })
+  //   })
+  //   .catch(error => {
+  //   console.error('Error:', error);
+  //   });
+    
+  // });
+  
   </script>
 </body>
 

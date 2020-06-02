@@ -121,7 +121,7 @@
       <!-- Topnav -->
       <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
         <div class="container-fluid">
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <div class="collapse navbar-collapse" id="navbarSupportedContent" style ="padding: 10px;">
             <!-- Search form -->
             <!-- <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">
               <div class="form-group mb-0">
@@ -223,14 +223,14 @@
                   <div class="btn-group">
                     <button type="button" id="delete" class="btn btn-primary">Delete</button>
                     <button type="button" id="edit" class="btn btn-primary" data-toggle="modal" data-target="#modal-form">Edit</button>
-                    <button type="button" class="btn btn-primary"  data-toggle="modal" data-target="#modal-form">New</button>
+                    <button type="button" class="btn btn-primary"  data-toggle="modal" data-target="#modal-form2">New</button>
                   </div>
                 </div>
                 <thead class="thead-light">
                   <tr>
+                    <th>UserId</th>
                     <th>Username</th>
                     <th>Name</th>
-                    <th>DOB</th>
                     <th>Sex</th>
                     <th>Phone</th>
                     <th>Role</th>
@@ -238,55 +238,15 @@
                 </thead>
                 <tfoot>
                   <tr>
+                    <th>UserId</th>
                     <th>Username</th>
                     <th>Name</th>
-                    <th>DOB</th>
                     <th>Sex</th>
                     <th>Phone</th>
                     <th>Role</th>
                   </tr>
                 </tfoot>
-                <tbody>
-                  <tr>
-                    <td>User01</td>
-                    <td>Tiger</td>
-                    <td>04/22/1999</td>
-                    <td>Male</td>
-                    <td>01289823121</td>
-                    <td>Admin</td>
-                  </tr>
-                  <tr>
-                    <td>User02</td>
-                    <td>Tiger Mom</td>
-                    <td>05/26/1999</td>
-                    <td>Female</td>
-                    <td>01289825156</td>
-                    <td>Librarian</td>
-                  </tr>
-                  <tr>
-                    <td>User02</td>
-                    <td>Astoh </td>
-                    <td>07/07/1998</td>
-                    <td>Female</td>
-                    <td>01281232336</td>
-                    <td>Librarian</td>
-                  </tr>
-                  <tr>
-                    <td>User03</td>
-                    <td>Cedric Kelly</td>
-                    <td>12/03/1997</td>
-                    <td>Female</td>
-                    <td>20120329</td>
-                    <td>Admin</td>
-                  </tr>
-                  <tr>
-                    <td>User04</td>
-                    <td>Airi Satou</td>
-                    <td>11/12/2001</td>
-                    <td>Male</td>
-                    <td>20081128</td>
-                    <td>Admin</td>
-                  </tr>
+                <tbody id="users">
                 </tbody>
               </table>
             </div>
@@ -297,7 +257,7 @@
 
     </div>
   </div>
-<!-- Modal - Add new user -->
+<!-- Modal - Edit user -->
   <!--* Modal header *-->
   <!--* Modal body *-->
   <!--* Modal footer *-->
@@ -312,7 +272,15 @@
                       <!-- <div class="text-center text-muted mb-4">
                           <small>Add new User</small>
                       </div> -->
-                      <form role="form">
+                      <form role="form" id='editUser'>
+                        <div class="form-group mb-3">
+                          <div class="input-group input-group-merge input-group-alternative">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text"><i class="ni ni-circle-08"></i></span>
+                              </div>
+                              <input class="form-control" id ="userId" placeholder="UserID" type="text" readonly>
+                          </div>
+                      </div>
                           <div class="form-group mb-3">
                               <div class="input-group input-group-merge input-group-alternative">
                                   <div class="input-group-prepend">
@@ -373,7 +341,95 @@
                           </div>
 
                           <div class="text-center">
-                              <button type="button" class="btn btn-primary my-4">Add</button>
+                              <button type="submit" id='sumbit' class="btn btn-primary my-4">Save</button>
+                              <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">Close</button>
+                          </div>
+                      </form>
+                  </div>
+              </div> 
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal - Add new user -->
+  <!--* Modal header *-->
+  <!--* Modal body *-->
+  <!--* Modal footer *-->
+  <!--* Modal init *-->
+  <div class="modal fade" id="modal-form2" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
+    <div class="modal-dialog modal- modal-dialog-centered modal-sm" role="document">
+        <div class="modal-content">
+        	
+          <div class="modal-body p-0">
+                <div class="card bg-secondary border-0 mb-0">
+                  <div class="card-body px-lg-5 py-lg-5">
+                      <div class="text-center text-muted mb-4">
+                          <small>Add new User</small>
+                      </div>
+                          <div class="form-group mb-3">
+                              <div class="input-group input-group-merge input-group-alternative">
+                                  <div class="input-group-prepend">
+                                      <span class="input-group-text"><i class="ni ni-circle-08"></i></span>
+                                  </div>
+                                  <input class="form-control" id ="username" placeholder="Username" type="text">
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <div class="input-group input-group-merge input-group-alternative">
+                                  <div class="input-group-prepend">
+                                      <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                                  </div>
+                                  <input class="form-control" id="password" placeholder="Password" type="password">
+                              </div>
+                          </div>
+                          <div class="form-group">
+                            <div class="input-group input-group-merge input-group-alternative">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="ni ni-badge"></i></span>
+                                </div>
+                                <input class="form-control" id="name" placeholder="Name" type="text">
+                            </div>
+                          </div>
+                          
+                          <div class="form-group">
+                            <select class="form-control" id= "sex" data-toggle="select" title="Select Sex" data-live-search="true" data-live-search-placeholder="Select">
+                              <option>Male</option>
+                              <option>Female</option>
+                              <option>Other</option>
+                            </select>
+                          </div>
+
+                          <div class="form-group">
+                            <div class="input-group input-group-merge input-group-alternative">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                </div>
+                                <input class="form-control" id="phone" placeholder="Phone" type="number">
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <div class="input-group input-group-merge input-group-alternative">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                                </div>
+                                <input class="form-control" id="DOB" placeholder="Date of birth" type="date">
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <select class="form-control" id="role" data-toggle="select" title="Select Sex" data-live-search="true" data-live-search-placeholder="Role">
+                              <option>Admin</option>
+                              <option>Librarian</option>
+                              <option>Student</option>
+                            </select>
+                          </div>
+
+                          <div class="text-center">
+                              <button type="submit" onclick='newUser()' class="btn btn-primary my-4">Add</button>
                               <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">Close</button>
                           </div>
                       </form>
@@ -409,66 +465,9 @@
   <script src='https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js'></script>
   <!-- Argon JS -->
   <script src="../../assets/js/argon.js?v=1.1.0"></script>
-  <!-- Demo JS - remove this in your project -->
-  <script src="../../assets/js/demo.min.js"></script>
+  <script src="../../assets/js/user.js"></script>
   <script>
-   $(document).ready(function() {
-      document.getElementById("delete").disabled = true;
-      document.getElementById("edit").disabled = true;
-    
-    var table = $('#datatable-basic').DataTable();
-    // var button = document.querySelector('button')
   
-    $('#datatable-basic tbody').on( 'click', 'tr', function () {
-        if ( $(this).hasClass('selected') ) {
-            $(this).removeClass('selected');
-            document.getElementById("delete").disabled = true;
-            document.getElementById("edit").disabled = true;
-            // button.disabled = true
-        }
-        else {
-            table.$('tr.selected').removeClass('selected');
-            $(this).addClass('selected');
-            document.getElementById("delete").disabled = false;
-            document.getElementById("edit").disabled = false;
-            // button.disabled = false
-        }
-    } );
-
-    // Delete selected row
-    $('#delete').click( function () {
-      if (confirm('Are you sure you want to delete the row?')){
-         table.row('.selected').remove().draw( false );
-    } ;
-    });
-
-    // Edit selected row
-    $('#edit').click( function () {
-      
-      var username =  table.row('.selected').data()[0]
-      
-      var name = table.row('.selected').data()[1]
-      
-      var DOB = table.row('.selected').data()[2]
-      
-      var sex = table.row('.selected').data()[3]
-
-      var phone = table.row('.selected').data()[4]
-
-      var role = table.row('.selected').data()[5]
-      
-
-      $("#username").val(username)
-      $("#name").val(name)
-      $("#DOB").val(DOB)
-      $("#sex").val(sex)
-      $("#phone").val(phone)
-      $("#role").val(role)
-
-    });
-
-  });
-
   </script>
 </body>
 

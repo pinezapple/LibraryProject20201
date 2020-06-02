@@ -19,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
   <meta name="author" content="Creative Tim">
-  <title>Returned document Report</title>
+  <title>Library Mangament | Returned document Report</title>
   <!-- Favicon -->
   <link rel="icon" href="../../assets/img/brand/favicon.png" type="image/png">
   <!-- Fonts -->
@@ -122,7 +122,7 @@
       <!-- Topnav -->
       <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
         <div class="container-fluid">
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <div class="collapse navbar-collapse" id="navbarSupportedContent" style ="padding: 10px;">
             <!-- Search form -->
             <!-- <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">
               <div class="form-group mb-0">
@@ -214,7 +214,7 @@
             <div class="card-header">
               <h3 class="mb-0">Document Management Report</h3>
               <p class="text-sm mb-0">
-                Report on document status :v idk
+                Report on document status 
               </p>
             </div>
             <div class="table-responsive py-4">
@@ -240,39 +240,7 @@
                     <th>Fee</th>
                   </tr>
                 </tfoot>
-                <tbody>
-                  <tr>
-                    <td>01</td>
-                    <td>System Architect</td>
-                    <td>20176628</td>
-                    <td>Returned</td>
-                    <td>2011/04/25</td>
-                    <td>$0</td>
-                  </tr>
-                  <tr>
-                    <td>02</td>
-                    <td>Accountant</td>
-                    <td>2923912</td>
-                    <td>Overdue</td>
-                    <td>2011/07/25</td>
-                    <td>$10</td>
-                  </tr>
-                  <tr>
-                    <td>03</td>
-                    <td>Junior Technical Author</td>
-                    <td>2921398</td>
-                    <td>Borrowing</td>
-                    <td>2009/01/12</td>
-                    <td>$0</td>
-                  </tr>
-                  <tr>
-                    <td>04</td>
-                    <td>Senior Javascript Developer</td>
-                    <td>221903109</td>
-                    <td>Returned</td>
-                    <td>2012/03/29</td>
-                    <td>$0</td>
-                  </tr>
+                <tbody id="docManagement">
                 </tbody>
               </table>
             </div>
@@ -306,6 +274,7 @@
   <script src="../../assets/js/argon.js?v=1.1.0"></script>
   <!-- Demo JS - remove this in your project -->
   <script src="../../assets/js/demo.min.js"></script>
+  
   <script>
 $(document).ready(function() {
   var table = $('#datatable-buttons').DataTable();
@@ -314,7 +283,7 @@ $(document).ready(function() {
         var title = $(this).text();
         $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
     } );
-    table.columns([0,1,2,4,5]).every(function () {
+    table.columns().every(function () {
         var that = this;
  
         $( 'input', this.footer() ).on( 'keyup change clear', function () {
@@ -326,23 +295,23 @@ $(document).ready(function() {
         } );
     } );
         
-      table.columns([3]).every( function () {
-                var column = this;
-                var select = $('<select><option value="">Show all</option></select>')
-                    .appendTo( $(column.footer()).empty() )
-                    .on( 'change', function () {
-                        var val = $.fn.dataTable.util.escapeRegex(
-                            $(this).val()
-                        );
-                        column
-                            .search( val ? '^'+val+'$' : '', true, false )
-                            .draw();
-                    } );
+      // table.columns([3]).every( function () {
+      //           var column = this;
+      //           var select = $('<select><option value="">Show all</option></select>')
+      //               .appendTo( $(column.footer()).empty() )
+      //               .on( 'change', function () {
+      //                   var val = $.fn.dataTable.util.escapeRegex(
+      //                       $(this).val()
+      //                   );
+      //                   column
+      //                       .search( val ? '^'+val+'$' : '', true, false )
+      //                       .draw();
+      //               } );
  
-                column.data().unique().sort().each( function ( d, j ) {
-                    select.append( '<option value="'+d+'">'+d+'</option>' )
-                } );
-            } );
+      //           column.data().unique().sort().each( function ( d, j ) {
+      //               select.append( '<option value="'+d+'">'+d+'</option>' )
+      //           } );
+      //       } );
         
 
     
