@@ -72,7 +72,8 @@ func (d *docDAO) UpdateDoc(ctx context.Context, db *mssqlx.DBs, doc *docmanagerM
 		return core.ErrDBObjNull
 	}
 
-	_, err = db.ExecContext(ctx, sqlUpdate, doc.Name, doc.Author, doc.Type, doc.Description, doc.Status, doc.Fee, time.Now(), doc.ID)
+	//_, err = db.ExecContext(ctx, sqlUpdate, doc.Name, doc.Author, doc.Type, doc.Description, doc.Status, doc.Fee, time.Now(), doc.ID)
+	_, err = db.Exec(sqlUpdate, doc.Name, doc.Author, doc.Type, doc.Description, doc.Status, doc.Fee, time.Now(), doc.ID)
 	return
 }
 

@@ -46,7 +46,7 @@
       var docAuthor = `${doc.doc_author}`
       var docType = `${doc.doc_type}`
       var docDescription = `${doc.doc_description}`
-      var docDate = `${doc.updated_at}`
+      var docDate = new Date(doc.updated_at.seconds*1000)
       var docStatus = `${doc.status}`
 
       data.push (docId,docName,docAuthor,docType,docDescription,docDate,docStatus)
@@ -59,18 +59,17 @@
   console.error('Error:', error);
   });
 
-  
-
   // Delete selected row
   $('#delete').click( function () {
     if (confirm('Are you sure you want to delete the row?')){
-        var documentId = table.row('.selected').data()[0]
+        var documentId = parseInt(table.row('.selected').data()[0])
         var url = 'http://localhost:11001/doc/delete'
         fetch( url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
-            }
+            },
+            body:JSON.stringify({id: documentId})
             // them json dang {id: id}
             })
         .catch(error => console.log(error))
@@ -85,7 +84,6 @@
     var name =  table.row('.selected').data()[1]
     var author = table.row('.selected').data()[2]
     var type = table.row('.selected').data()[3]
-    var status = table.row('.selected').data()[6]
     var description = table.row('.selected').data()[4]
 
     $("#id").val(id)
@@ -100,22 +98,19 @@
   $("#sumbit").on('click',function(){
     
 
-    let id = document.getElementById('id').value;
+    let id = parseInt(document.getElementById('id').value);
     let name = document.getElementById('name').value;
     let author = document.getElementById('author').value;
     let type = document.getElementById('type').value;
-    let status = document.getElementById('status').value;
     let description = document.getElementById('description').value;
 
     let url = 'http://localhost:11001/doc/update'
-
       fetch(url, {
          method: 'POST',
          headers: {
           'Content-Type': 'application/json; charset=UTF-8'
           },
-         body:JSON.stringify({id_doc: parseInt(id), doc_name:name, doc_author:author, doc_type:type, doc_description:description})
-
+         body:JSON.stringify({id_doc: id, doc_name:name, doc_author:author, doc_type:type, doc_description:description})
      }).then((res) => res.json())
      .then(result => alert("Fixed document", result))
      .catch((err)=>console.log(err))
@@ -159,7 +154,7 @@ fetch ('http://localhost:11001/doc/alldoc',{
       var docName = `${doc.doc_name}`
       var docAuthor = `${doc.doc_author}`
       var docType = `${doc.doc_type}`
-      var docDate = `${doc.updated_at}`
+      var docDate = new Date(doc.updated_at.seconds*1000)
       var docStatus = `${doc.status}`
 
       data.push (docId,docName,docAuthor,docType,docDate,docStatus)
