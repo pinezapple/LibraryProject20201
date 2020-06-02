@@ -116,7 +116,7 @@
          headers: {
           'Content-Type': 'application/json; charset=UTF-8'
           },
-         body:JSON.stringify({id_doc:id,doc_name:name, doc_author:author, doc_type:type,status:status, doc_description:description})
+         body:JSON.stringify({id_doc: parseInt(id),doc_name:name, doc_author:author, doc_type:type, doc_description:description})
 
      }).then((res) => res.json())
      .then(result => alert("Fixed document", result))

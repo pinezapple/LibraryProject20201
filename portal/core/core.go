@@ -66,15 +66,15 @@ var (
 
 // ------------------------- Sharding ---------------------------
 
-//getHash hash string to uint64
-func GetHash(s string) uint64 {
-	h := fnv.New64a()
+//getHash hash string to uint32
+func GetHash(s string) uint32 {
+	h := fnv.New32a()
 	h.Write([]byte(s))
-	return h.Sum64()
+	return h.Sum32()
 }
 
-func GetShardID(i uint64) uint64 {
-	return i % numShard
+func GetShardID(i uint32) uint32 {
+	return i % uint32(numShard)
 }
 
 type CassandraCache struct {
