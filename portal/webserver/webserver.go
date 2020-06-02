@@ -56,7 +56,7 @@ func WebServer(ctx context.Context) (fn model.Daemon, err error) {
 	// Secure middleware provides protection against cross-site scripting (XSS) attack, content type sniffing, clickjacking, insecure connection and other code injection attacks.
 	// For more example, please refer to https://echo.labstack.com/
 	e.Use(mw.Secure())
-
+	e.Use(mw.CORS())
 	// Restricted group of URIs for
 	/*
 		r := e.Group("/r")

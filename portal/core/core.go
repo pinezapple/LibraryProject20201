@@ -138,7 +138,7 @@ func InitCore(shardNumber int) {
 	})
 
 	mysqlLibs.RegisterDial()
-	constructCassandraSession()
+	//	constructCassandraSession()
 }
 
 func constructCassandraSession() {

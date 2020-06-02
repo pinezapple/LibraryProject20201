@@ -91,10 +91,13 @@ func ExecHandler(c echo.Context, expect interface{}, invoke func(c echo.Context,
 	}
 
 	fmt.Println(data)
-	return c.JSON(http.StatusOK, &Response{
-		Data: data,
-		Error: ResponseError{
-			Code: http.StatusOK,
-		},
-	})
+	return c.JSON(http.StatusOK, data)
+	/*
+		return c.JSON(http.StatusOK, &Response{
+			Data: data,
+			Error: ResponseError{
+				Code: http.StatusOK,
+			},
+		})
+	*/
 }

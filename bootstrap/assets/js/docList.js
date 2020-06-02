@@ -29,8 +29,8 @@
 
   docList = document.querySelector("#docList")
 
-  fetch ('http://localhost:3000/documents',{
-    method: 'GET',
+  fetch ('http://localhost:11001/doc/alldoc',{
+    method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
@@ -41,7 +41,7 @@
 
       var data =[]
       // get doc data
-      var docId= `${doc.id}`
+      var docId= `${doc.id_doc}`
       var docName = `${doc.doc_name}`
       var docAuthor = `${doc.doc_author}`
       var docType = `${doc.doc_type}`
@@ -65,12 +65,13 @@
   $('#delete').click( function () {
     if (confirm('Are you sure you want to delete the row?')){
         var documentId = table.row('.selected').data()[0]
-        var url = 'http://localhost:3000/documents/'+ documentId
+        var url = 'http://localhost:11001/doc/delete'
         fetch( url, {
-            method: 'DELETE',
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             }
+            // them json dang {id: id}
             })
         .catch(error => console.log(error))
        table.row('.selected').remove().draw( false );
@@ -106,10 +107,10 @@
     let status = document.getElementById('status').value;
     let description = document.getElementById('description').value;
 
-    let url = 'http://localhost:3000/documents/' +id
+    let url = 'http://localhost:11001/doc/update'
 
       fetch(url, {
-         method: 'PUT',
+         method: 'POST',
          headers: {
           'Content-Type': 'application/json; charset=UTF-8'
           },
@@ -142,14 +143,19 @@ function reset() {
   });
 
 // datatable-buttons docList
-  fetch ('http://localhost:3000/documents')
-  .then(response => response.json())
+fetch ('http://localhost:11001/doc/alldoc',{
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+}).then(response => response.json())
   .then(docList =>{
+    console.log(docList)
     docList.forEach(doc =>{
 
       var data =[]
       // get doc data
-      var docId= `${doc.id}`
+      var docId= `${doc.id_doc}`
       var docName = `${doc.doc_name}`
       var docAuthor = `${doc.doc_author}`
       var docType = `${doc.doc_type}`
@@ -177,7 +183,7 @@ function newDoc(event){
   let type = document.getElementById('type').value;
   let description = document.getElementById('description').value;
 
-  fetch('http://localhost:3000/documents', {
+  fetch('http://localhost:11001/doc/save', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json; charset=UTF-8'
@@ -199,7 +205,7 @@ function newForm(e){
   let days = document.getElementById('days').value;
   let docId = document.getElementById('docId').value;
 
-  fetch('http://localhost:3000/borrow_form', {
+  fetch('http://localhost:11001/doc/saveForm', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json; charset=UTF-8'
