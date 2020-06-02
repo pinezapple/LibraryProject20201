@@ -1,6 +1,7 @@
 package doc
 
 import (
+	"context"
 	"fmt"
 	"math/rand"
 	"net/http"
@@ -136,7 +137,6 @@ func updateDoc(c echo.Context, request interface{}) (statusCode int, data interf
 		Fee:         req.Fee,
 	}
 
-	fmt.Println("updating")
 	fmt.Println(docObj)
 	er := dDAO.UpdateDoc(ctx, db, docObj)
 	if er != nil {
@@ -144,7 +144,6 @@ func updateDoc(c echo.Context, request interface{}) (statusCode int, data interf
 		return
 	}
 
-	fmt.Println("updating 1")
 	//update doc to docmanager
 	shardService := microservice.GetDocmanagerShardServices()
 	if shardService == nil {
@@ -160,7 +159,8 @@ func updateDoc(c echo.Context, request interface{}) (statusCode int, data interf
 	}
 
 	fmt.Println("updating 2")
-	resp, err := ser.Docmanager.UpdateDoc(ctx, &docmanagerModel.UpdateDocReq{Doc: docObj})
+	ctx1 := context.Background()
+	resp, err := ser.Docmanager.UpdateDoc(ctx1, &docmanagerModel.UpdateDocReq{Doc: docObj})
 	if err != nil || resp.Code != 0 {
 		statusCode, err = http.StatusInternalServerError, fmt.Errorf("grpc Error")
 		return

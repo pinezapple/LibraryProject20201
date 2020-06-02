@@ -79,7 +79,7 @@ func (d *docCacheDAO) UpdateDoc(ctx context.Context, db *mssqlx.DBs, doc *docman
 	fmt.Println("in update Doc")
 	fmt.Println(doc)
 	fmt.Println(doc.ID)
-	_, err = db.ExecContext(ctx, sqlUpdateDocToCache, doc.Name, doc.Author, doc.Type, doc.Description, doc.Fee, time.Now(), doc.ID)
+	_, err = db.Exec(sqlUpdateDocToCache, doc.Name, doc.Author, doc.Type, doc.Description, doc.Fee, time.Now(), doc.ID)
 	return
 }
 
@@ -120,21 +120,21 @@ func (d *docCacheDAO) UpdateBorrowFormStatus(ctx context.Context, db *mssqlx.DBs
 	if db == nil {
 		return core.ErrDBObjNull
 	}
-	_, err = db.ExecContext(ctx, sqlUpdateBorrowFormStatus, status, time.Now(), id)
+	_, err = db.Exec(sqlUpdateBorrowFormStatus, status, time.Now(), id)
 	if err != nil {
 		return err
 	}
 	var id_doc uint64
-	err = db.GetContext(ctx, &id_doc, sqlSelecetIdDoc, id)
+	err = db.Get(&id_doc, sqlSelecetIdDoc, id)
 	if err != nil {
 		return err
 	}
-	_, err = db.ExecContext(ctx, sqlUpdateDocStatus, status, id_doc)
+	_, err = db.Exec(sqlUpdateDocStatus, status, id_doc)
 	if err != nil {
 		return err
 	}
 
-	_, err = db.ExecContext(ctx, sqlUpdateStatusDocToCache, status, id, id_doc)
+	_, err = db.Exec(sqlUpdateStatusDocToCache, status, id, id_doc)
 	return
 }
 
