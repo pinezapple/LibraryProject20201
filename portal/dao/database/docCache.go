@@ -15,7 +15,7 @@ const (
 	sqlSelectFormInCacheByStatus = "SELECT * FROM borrowform WHERE status = ?"
 	sqlSaveDocToCache            = "INSERT INTO doc(id_doc, doc_name, doc_author, doc_type, doc_description, fee) VALUES (?,?,?,?,?,?)"
 	sqlDeleteDocToCache          = "DELETE FROM doc WHERE id_doc = ?"
-	sqlUpdateStatusDocToCache    = "UPDATE doc SET status = ?, id_borrow = ?,updated_at = ? WHERE id_doc= ?"
+	sqlUpdateStatusDocToCache    = "UPDATE doc SET status = ?, id_borrow = ? WHERE id_doc= ?"
 	sqlUpdateDocToCache          = "UPDATE doc SET doc_name = ?, doc_author = ?, doc_type =?, doc_description = ?, fee = ?, updated_at = ? WHERE id_doc = ?"
 	sqlSaveBorrowForm            = "INSERT INTO borrowform(id_borrow, id_doc, id_cus, id_lib, status, start_at, end_at) VALUE (?,?,?,?,?,?,?)"
 	sqlUpdateBorrowFormStatus    = "UPDATE borrowform SET status = ?, updated_at = ? WHERE id_borrow = ?"

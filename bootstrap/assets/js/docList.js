@@ -200,17 +200,17 @@ function newDoc(event){
 function newForm(e){
   e.preventDefault();
 
-  let librarian = document.getElementById('librarian').value;
-  let student = document.getElementById('studentId').value;
-  let days = document.getElementById('days').value;
-  let docId = document.getElementById('docId').value;
+  let librarian = parseInt(document.getElementById('librarian').value,10);
+  let student = parseInt(document.getElementById('studentId').value,10);
+  let days = parseInt(document.getElementById('days').value,10);
+  let docId = parseInt(document.getElementById('docId').value,10);
 
   fetch('http://localhost:11001/doc/saveForm', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json; charset=UTF-8'
         },
-      body:JSON.stringify({id_customer:student, id_librarian:librarian,id_doc:docId ,duration:days})
+      body:JSON.stringify({id_doc:docId, id_cus:student, id_lib:librarian , status: 1, ttl:days})
      
   }).then((res) => res.json())
   .then(result => alert("Success", result))

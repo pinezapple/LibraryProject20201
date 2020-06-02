@@ -36,7 +36,7 @@ type reqSaveBorrowForm struct {
 	CusID  uint64 `protobuf:"varint,3,opt,name=CusID,proto3" json:"id_cus" db:"id_cus"`
 	LibID  uint64 `protobuf:"varint,4,opt,name=LibID,proto3" json:"id_lib" db:"id_lib"`
 	Status int32  `protobuf:"varint,5,opt,name=Status,proto3" json:"status" db:"status"`
-	TTL    uint32 `json:"ttl"`
+	TTL    int32  `protobuf:"varint,6,opt,name=TTL,proto3" json:"ttl" db:"ttl"`
 }
 
 func SelectAllDoc(c echo.Context) (erro error) {
