@@ -46,10 +46,11 @@
       var docAuthor = `${doc.doc_author}`
       var docType = `${doc.doc_type}`
       var docDescription = `${doc.doc_description}`
-      var docDate = `${doc.updated_at}`
-      var docStatus = `${doc.status}`
+      // var docDate = `${doc.updated_at}`
+      // var docStatus = `${doc.status}`
+      var docFee = `${doc.fee}`
 
-      data.push (docId,docName,docAuthor,docType,docDescription,docDate,docStatus)
+      data.push (docId,docName,docAuthor,docType,docDescription,docFee)
 
       // add to table
       table.row.add(data).draw()
@@ -64,13 +65,14 @@
   // Delete selected row
   $('#delete').click( function () {
     if (confirm('Are you sure you want to delete the row?')){
-        var documentId = table.row('.selected').data()[0]
+        var documentId =parseInt(table.row('.selected').data()[0].value,10) 
         var url = 'http://localhost:11001/doc/delete'
         fetch( url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
-            }
+            },
+            body:JSON.stringify({id_doc:documentId})
             // them json dang {id: id}
             })
         .catch(error => console.log(error))
@@ -100,7 +102,7 @@
   $("#sumbit").on('click',function(){
     
 
-    let id = document.getElementById('id').value;
+    let id = parseInt(document.getElementById('id').value,10);
     let name = document.getElementById('name').value;
     let author = document.getElementById('author').value;
     let type = document.getElementById('type').value;
@@ -114,7 +116,7 @@
          headers: {
           'Content-Type': 'application/json; charset=UTF-8'
           },
-         body:JSON.stringify({doc_name:name, doc_author:author, doc_type:type,status:status, doc_description:description})
+         body:JSON.stringify({id_doc:id,doc_name:name, doc_author:author, doc_type:type,status:status, doc_description:description})
 
      }).then((res) => res.json())
      .then(result => alert("Fixed document", result))
@@ -159,10 +161,11 @@ fetch ('http://localhost:11001/doc/alldoc',{
       var docName = `${doc.doc_name}`
       var docAuthor = `${doc.doc_author}`
       var docType = `${doc.doc_type}`
-      var docDate = `${doc.updated_at}`
-      var docStatus = `${doc.status}`
+      // var docDate = `${doc.updated_at}`
+      // var docStatus = `${doc.status}`
+      var docFee = `${doc.fee}`
 
-      data.push (docId,docName,docAuthor,docType,docDate,docStatus)
+      data.push (docId,docName,docAuthor,docType,docFee)
 
       // add to table
       t.row.add(data).draw()
