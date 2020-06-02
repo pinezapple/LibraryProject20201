@@ -18,11 +18,11 @@ $(document).ready(function() {
           document.getElementById("edit").disabled = false;
           // button.disabled = false
       }
-  } );
+  });
 
    // Fetch data 
-   fetch ('http://localhost:3000/users',{
-    method: 'GET',
+   fetch ('http://localhost:3000/user/alluser',{
+    method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
@@ -33,11 +33,11 @@ $(document).ready(function() {
 
       let data =[]
       // get doc data
-      let userid= `${user.id}`
+      let userid= `${user.id_user}`
       let username =`${user.username}`
       let name = `${user.name}`
       let sex = `${user.sex}`
-      let phone = `${user.phone_number}`
+      let phone = `${user.phonenumber}`
       let role = `${user.role}`
      
 
@@ -55,13 +55,14 @@ $(document).ready(function() {
   // Delete selected row
   $('#delete').click( function () {
     if (confirm('Are you sure you want to delete the row?')){
-        let userid =  table.row('.selected').data()[0]
-        let url = 'http://localhost:3000/users/' +userid
+        let userid = parseInt(table.row('.selected').data()[0],10)
+        let url = 'http://localhost:3000/user/delete'
         fetch( url, {
-            method: 'DELETE',
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
-            }
+            },
+            body: JSON.stringify({id_user:userid})
             })
         .catch(error => alert('something went wrong',error))
         // delete from table
@@ -72,26 +73,27 @@ $(document).ready(function() {
   // Edit selected row
   $('#edit').click( function () {
     
-    let userid =  table.row('.selected').data()[0]
+    let userid =  parseInt(table.row('.selected').data()[0],10)
     
-    let url = 'http://localhost:3000/users/' +userid
+    let url = 'http://localhost:3000/user/oneuser'
 
     fetch (url,{
-        method: 'GET',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
+        body: JSON.stringify({id_user:userid})
       })
       .then(response => response.json())
       .then(function(user){
 
-          let userId =`${user.id}`
+          let userId =`${user.id_user}`
           let username =`${user.username}`
           let password = `${user.password}`
           let name = `${user.name}`
           let dob = `${user.dob}`
           let sex = `${user.sex}`
-          let phone = `${user.phone_number}`
+          let phone = `${user.phonenumber}`
           let role = `${user.role}`
         
         $("#userId").val(userId)
@@ -114,7 +116,7 @@ $(document).ready(function() {
 
 $("#sumbit").on('click',function(){
     
-    let userid = document.getElementById('userId').value;
+    let userid = parseInt(document.getElementById('userId').value,10);
     let username = document.getElementById('username').value;
     let password = document.getElementById('password').value;
     let name = document.getElementById('name').value;
@@ -123,14 +125,14 @@ $("#sumbit").on('click',function(){
     let phone = document.getElementById('phone').value;
     let role = document.getElementById('role').value;
 
-    let url = 'http://localhost:3000/users/' +userid
+    let url = 'http://localhost:3000/user/update' 
 
       fetch(url, {
-         method: 'PUT',
+         method: 'POST',
          headers: {
           'Content-Type': 'application/json'
           },
-         body:JSON.stringify({name:name,username:username,password:password,phone_number:phone,dob:dob,sex:sex,role:role})
+         body:JSON.stringify({id_user:userid,name:name,username:username,password:password,phonenumber:phone,dob:dob,sex:sex,role:role})
 
      }).then((res) => res.json())
      .then(result => alert("Success", result))
@@ -140,7 +142,7 @@ $("#sumbit").on('click',function(){
 
   })
 
-  function newUser(){
+  $("#addUser").on('click',function(){
     // event.preventDefault();
   
     let username = document.getElementById('username').value;
@@ -152,16 +154,16 @@ $("#sumbit").on('click',function(){
     let role = document.getElementById('role').value;
 
 
-    fetch('http://localhost:3000/users', {
+    fetch('http://localhost:3000/user/save', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
           },
-        body:JSON.stringify({username:username,password:password,name:name,phone_number:phone,dob:dob,sex:sex,role:role})
+        body:JSON.stringify({username:username,password:password,name:name,phonenumber:phone,dob:dob,sex:sex,role:role})
        
     }).then((res) => res.json())
     .then(result => alert("Added new user", result))
     .catch((err)=>alert("Something went wrong",err))
   
-  }
+  })
 
