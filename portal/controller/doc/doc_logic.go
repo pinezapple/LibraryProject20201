@@ -44,7 +44,7 @@ func saveDoc(c echo.Context, request interface{}) (statusCode int, data interfac
 	db := core.GetDB()
 	dDAO := dao.GetDocCacheDAO()
 	docObj := &docmanagerModel.Doc{
-		ID:          id,
+		ID:          uint64(id),
 		Name:        req.Name,
 		Author:      req.Author,
 		Type:        req.Type,
@@ -65,7 +65,7 @@ func saveDoc(c echo.Context, request interface{}) (statusCode int, data interfac
 		return
 	}
 
-	ser, ok := shardService[shardID]
+	ser, ok := shardService[uint64(shardID)]
 	if !ok {
 		fmt.Println("nil shardID")
 		statusCode, err = http.StatusInternalServerError, fmt.Errorf("no shard id")
@@ -95,14 +95,14 @@ func delDoc(c echo.Context, request interface{}) (statusCode int, data interface
 		return
 	}
 	//del doc to docmanager
-	shardID := core.GetShardID(req.ID)
+	shardID := core.GetShardID(uint32(req.ID))
 	shardService := microservice.GetDocmanagerShardServices()
 	if shardService == nil {
 		statusCode, err = http.StatusInternalServerError, fmt.Errorf("nil shardService")
 		return
 	}
 
-	ser, ok := shardService[shardID]
+	ser, ok := shardService[uint64(shardID)]
 	if !ok {
 		statusCode, err = http.StatusInternalServerError, fmt.Errorf("no shard id")
 		return
@@ -122,7 +122,7 @@ func updateDoc(c echo.Context, request interface{}) (statusCode int, data interf
 	req := request.(*reqDoc)
 	ctx := c.Request().Context()
 	lg = &model.LogFormat{Source: c.Request().RemoteAddr, Action: "Update Doc", Data: req}
-	shardID := core.GetShardID(req.ID)
+	shardID := core.GetShardID(uint32(req.ID))
 
 	// update Doc to cache
 	db := core.GetDB()
@@ -135,11 +135,16 @@ func updateDoc(c echo.Context, request interface{}) (statusCode int, data interf
 		Description: req.Description,
 		Fee:         req.Fee,
 	}
+
+	fmt.Println("updating")
+	fmt.Println(docObj)
 	er := dDAO.UpdateDoc(ctx, db, docObj)
 	if er != nil {
 		statusCode, err = http.StatusInternalServerError, er
 		return
 	}
+
+	fmt.Println("updating 1")
 	//update doc to docmanager
 	shardService := microservice.GetDocmanagerShardServices()
 	if shardService == nil {
@@ -147,13 +152,14 @@ func updateDoc(c echo.Context, request interface{}) (statusCode int, data interf
 		return
 	}
 
-	ser, ok := shardService[shardID]
+	ser, ok := shardService[uint64(shardID)]
 	if !ok {
 		statusCode, err = http.StatusInternalServerError, fmt.Errorf("no shard id")
 		return
 
 	}
 
+	fmt.Println("updating 2")
 	resp, err := ser.Docmanager.UpdateDoc(ctx, &docmanagerModel.UpdateDocReq{Doc: docObj})
 	if err != nil || resp.Code != 0 {
 		statusCode, err = http.StatusInternalServerError, fmt.Errorf("grpc Error")
@@ -168,7 +174,7 @@ func selectDocByID(c echo.Context, request interface{}) (statusCode int, data in
 	ctx := c.Request().Context()
 	lg = &model.LogFormat{Source: c.Request().RemoteAddr, Action: "Select Doc by ID", Data: req}
 	//get shard id
-	shardID := core.GetShardID(req.ID)
+	shardID := core.GetShardID(uint32(req.ID))
 	shardService := microservice.GetDocmanagerShardServices()
 	if shardService == nil {
 		statusCode, err = http.StatusInternalServerError, fmt.Errorf("nil shardService")
@@ -176,7 +182,7 @@ func selectDocByID(c echo.Context, request interface{}) (statusCode int, data in
 	}
 
 	//select doc
-	ser, ok := shardService[shardID]
+	ser, ok := shardService[uint64(shardID)]
 	if !ok {
 		statusCode, err = http.StatusInternalServerError, fmt.Errorf("no shard id")
 		return
@@ -214,14 +220,14 @@ func saveForm(c echo.Context, request interface{}) (statusCode int, data interfa
 	ctx := c.Request().Context()
 	lg = &model.LogFormat{Source: c.Request().RemoteAddr, Action: "Save Form", Data: req}
 	// generate ID
-	shardID := core.GetShardID(req.DocID)
+	shardID := core.GetShardID(uint32(req.DocID))
 	id := core.GetHash(strconv.Itoa(int(req.DocID)) + strconv.Itoa(int(req.CusID)) + strconv.Itoa(rand.Int()))
 
 	// save form to cache
 	db := core.GetDB()
 	dDAO := dao.GetDocCacheDAO()
 	formObj := &docmanagerModel.BorrowForm{
-		ID:      id,
+		ID:      uint64(id),
 		DocID:   req.DocID,
 		CusID:   req.CusID,
 		LibID:   req.LibID,
@@ -241,7 +247,7 @@ func saveForm(c echo.Context, request interface{}) (statusCode int, data interfa
 		return
 	}
 
-	ser, ok := shardService[shardID]
+	ser, ok := shardService[uint64(shardID)]
 	if !ok {
 		statusCode, err = http.StatusInternalServerError, fmt.Errorf("no shard id")
 		return
@@ -262,14 +268,14 @@ func selectFormByID(c echo.Context, request interface{}) (statusCode int, data i
 	ctx := c.Request().Context()
 	lg = &model.LogFormat{Source: c.Request().RemoteAddr, Action: "Select Form By ID", Data: req}
 	// get shard ID
-	shardID := core.GetShardID(req.DocID)
+	shardID := core.GetShardID(uint32(req.DocID))
 	shardService := microservice.GetDocmanagerShardServices()
 	if shardService == nil {
 		statusCode, err = http.StatusInternalServerError, fmt.Errorf("nil shardService")
 		return
 	}
 
-	ser, ok := shardService[shardID]
+	ser, ok := shardService[uint64(shardID)]
 	if !ok {
 		statusCode, err = http.StatusInternalServerError, fmt.Errorf("no shard id")
 		return
@@ -290,14 +296,14 @@ func updateStatus(c echo.Context, request interface{}) (statusCode int, data int
 	ctx := c.Request().Context()
 	lg = &model.LogFormat{Source: c.Request().RemoteAddr, Action: "Update status", Data: req}
 	//get shard id
-	shardID := core.GetShardID(req.DocID)
+	shardID := core.GetShardID(uint32(req.DocID))
 	shardService := microservice.GetDocmanagerShardServices()
 	if shardService == nil {
 		statusCode, err = http.StatusInternalServerError, fmt.Errorf("nil shardService")
 		return
 	}
 
-	ser, ok := shardService[shardID]
+	ser, ok := shardService[uint64(shardID)]
 	if !ok {
 		statusCode, err = http.StatusInternalServerError, fmt.Errorf("no shard id")
 		return

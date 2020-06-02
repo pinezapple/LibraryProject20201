@@ -2,6 +2,7 @@ package database
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/linxGnu/mssqlx"
@@ -75,6 +76,9 @@ func (d *docCacheDAO) UpdateDoc(ctx context.Context, db *mssqlx.DBs, doc *docman
 		return core.ErrDBObjNull
 	}
 
+	fmt.Println("in update Doc")
+	fmt.Println(doc)
+	fmt.Println(doc.ID)
 	_, err = db.ExecContext(ctx, sqlUpdateDocToCache, doc.Name, doc.Author, doc.Type, doc.Description, doc.Fee, time.Now(), doc.ID)
 	return
 }
