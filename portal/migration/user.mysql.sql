@@ -1,6 +1,6 @@
 CREATE TABLE `user`
 (
-  `id` bigint
+  `id_user` bigint
 (20) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar
 (32) NOT NULL,
@@ -16,7 +16,7 @@ CREATE TABLE `user`
   `checksum` bigint
 (20) unsigned NOT NULL,
   PRIMARY KEY
-(`id`),
+(`id_user`),
   UNIQUE KEY `username`
 (`username`)
 ) ENGINE=InnoDB;

@@ -1,6 +1,7 @@
 package user
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/labstack/echo"
@@ -38,6 +39,7 @@ func selectUserByID(c echo.Context, request interface{}) (statusCode int, data i
 		statusCode, err = http.StatusInternalServerError, er
 		return
 	}
+	fmt.Println(res)
 
 	return http.StatusOK, res, lg, false, nil
 }

@@ -20,7 +20,7 @@ type reqUser struct {
 }
 
 type reqUserID struct {
-	ID       uint64 `json:"id"`
+	ID       uint64 `json:"id_user"`
 	Username string `json:"username"`
 }
 

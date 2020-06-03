@@ -14,8 +14,8 @@ import (
 )
 
 const (
-	sqlUserSelect                   = "SELECT * FROM user WHERE id = ?"
-	sqlSelectAllUserInCache         = "SELECT * FROM user_cache"
+	sqlUserSelect                   = "SELECT * FROM user WHERE id_user = ?"
+	sqlSelectAllUserInCache         = "SELECT * FROM user"
 	sqlUserSelectByUsername         = "SELECT * FROM user WHERE username = ?"
 	sqlUserSecSelectByUsername      = "SELECT * FROM user_security WHERE username = ?"
 	sqlUserInsert                   = "INSERT INTO user (username, status, checksum, name, role, dob, sex, phonenumber) VALUES (?,?,?,?,?,?,?,?)"
@@ -23,9 +23,9 @@ const (
 	sqlUserUpdateInfo               = "UPDATE user SET name = ?, role = ?, dob = ?, sex = ?, phonenumber = ?, updated_at = ? WHERE username = ?"
 	sqlUserSecUpdateWithPassword    = "UPDATE user_security SET password = ?, checksum = ?, updated_at = ? WHERE username = ?"
 	sqlUserSecUpdateWithoutPassword = "UPDATE user_security SET checksum = ?, updated_at = ? WHERE username = ?"
-	sqlUserUpdateStatus             = "UPDATE user SET status = ?, updated_at = ? WHERE id = ?"
-	sqlUserUpdatePasswordCounter    = "UPDATE user SET pwd_counter = ?, updated_at = ? WHERE id = ?"
-	sqlUserDetailDelete             = "DELETE FROM user WHERE id = ?"
+	sqlUserUpdateStatus             = "UPDATE user SET status = ?, updated_at = ? WHERE id_user = ?"
+	sqlUserUpdatePasswordCounter    = "UPDATE user SET pwd_counter = ?, updated_at = ? WHERE id_user = ?"
+	sqlUserDetailDelete             = "DELETE FROM user WHERE id_user = ?"
 	sqlUserDelete                   = "DELETE FROM user WHERE username = ?"
 	sqlUserDeleteSec                = "DELETE FROM user_security WHERE username = ?"
 )
