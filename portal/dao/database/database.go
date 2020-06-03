@@ -41,7 +41,7 @@ type IUserDAO interface {
 	// Create create new user
 	Create(ctx context.Context, db *mssqlx.DBs, k0, k1 uint64, username, password string, name, role, dob, sex, phonenumber string) (result *model.User, err error)
 	// Update update user
-	Update(ctx context.Context, db *mssqlx.DBs, k0, k1 uint64, id uint64, password string, name, role, dob, sex, phonenumber string) (err error)
+	Update(ctx context.Context, db *mssqlx.DBs, k0, k1 uint64, id uint64, username, password string, name, role, dob, sex, phonenumber string) (err error)
 	// UpdateStatus update user status
 	UpdateStatus(ctx context.Context, db *mssqlx.DBs, id uint64, status byte) (err error)
 	// UpdatePasswordCounter update user password counter
@@ -64,7 +64,7 @@ func (c *userDAO) Select(ctx context.Context, db *mssqlx.DBs, id uint64) (result
 	}
 
 	result = &model.User{}
-	if err = db.GetContext(ctx, result, sqlUserSelect, id); err == sql.ErrNoRows {
+	if err = db.Get(result, sqlUserSelect, id); err == sql.ErrNoRows {
 		result, err = nil, nil
 		return
 	}
@@ -109,7 +109,7 @@ func (c *userDAO) SelectSecByUsername(ctx context.Context, db *mssqlx.DBs, usern
 	}
 
 	result = &model.UserSecurity{}
-	if err = db.GetContext(ctx, result, sqlUserSecSelectByUsername, username); err == sql.ErrNoRows {
+	if err = db.Get(result, sqlUserSecSelectByUsername, username); err == sql.ErrNoRows {
 		result, err = nil, nil
 		return
 	}
@@ -185,26 +185,20 @@ func (c *userDAO) Create(ctx context.Context, db *mssqlx.DBs, k0, k1 uint64, use
 }
 
 // Update update user
-func (c *userDAO) Update(ctx context.Context, db *mssqlx.DBs, k0, k1 uint64, id uint64, password string, name, role, dob, sex, phonenumber string) (err error) {
+func (c *userDAO) Update(ctx context.Context, db *mssqlx.DBs, k0, k1 uint64, id uint64, username, password string, name, role, dob, sex, phonenumber string) (err error) {
 	// Validate input
 	if db == nil {
 		err = core.ErrDBObjNull
 		return
 	}
 
-	// select user
-	user, err := c.Select(ctx, db, id)
+	// select user sec
+	userSec, err := c.SelectSecByUsername(ctx, db, username)
 	if err != nil {
 		return err
-	} else if user == nil {
-		return fmt.Errorf("User not found")
 	}
 
-	// select user sec
-	userSec, err := c.SelectSecByUsername(ctx, db, user.Username)
-	if err != nil {
-		return err
-	}
+	fmt.Println(userSec)
 
 	// try to generate password
 	if len(password) > 0 {
@@ -223,17 +217,17 @@ func (c *userDAO) Update(ctx context.Context, db *mssqlx.DBs, k0, k1 uint64, id 
 	err = model.ExecTransaction(ctx, tx, func(ctx context.Context, tx *sql.Tx) (er error) {
 		now := time.Now()
 		if len(password) > 0 {
-			if _, er = tx.ExecContext(ctx, sqlUserUpdateInfo, name, role, dob, sex, phonenumber, now, user.Username); er != nil {
+			if _, er = tx.Exec(sqlUserUpdateInfo, name, role, dob, sex, phonenumber, now, username); er != nil {
 				return
 			}
-			if _, er = tx.ExecContext(ctx, sqlUserSecUpdateWithPassword, userSec.Password, userSec.Checksum, now, user.Username); er != nil {
+			if _, er = tx.Exec(sqlUserSecUpdateWithPassword, userSec.Password, userSec.Checksum, now, username); er != nil {
 				return
 			}
 		} else {
-			if _, er = tx.ExecContext(ctx, sqlUserUpdateInfo, name, role, dob, sex, phonenumber, now, user.Username); er != nil {
+			if _, er = tx.Exec(sqlUserUpdateInfo, name, role, dob, sex, phonenumber, now, username); er != nil {
 				return
 			}
-			if _, er = tx.ExecContext(ctx, sqlUserSecUpdateWithoutPassword, userSec.Checksum, now, user.Username); er != nil {
+			if _, er = tx.Exec(sqlUserSecUpdateWithoutPassword, userSec.Checksum, now, username); er != nil {
 				return
 			}
 		}

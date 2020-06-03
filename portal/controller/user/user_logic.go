@@ -63,12 +63,13 @@ func saveUser(c echo.Context, request interface{}) (statusCode int, data interfa
 func updateUser(c echo.Context, request interface{}) (statusCode int, data interface{}, lg *model.LogFormat, logResponse bool, err error) {
 	ctx := c.Request().Context()
 	req := request.(*reqUser)
+	fmt.Println(req)
 	// Log login info
 	lg = &model.LogFormat{Source: c.Request().RemoteAddr, Action: "Select All User", Data: ""}
 	db := core.GetDB()
 	uDAO := dao.GetUserDAO()
 
-	er := uDAO.Update(ctx, db, core.GetConfig().WebServer.Secure.SipHashSum0, core.GetConfig().WebServer.Secure.SipHashSum1, req.ID, req.Password, req.Name, req.Role, req.Dob, req.Sex, req.PhoneNumber)
+	er := uDAO.Update(ctx, db, core.GetConfig().WebServer.Secure.SipHashSum0, core.GetConfig().WebServer.Secure.SipHashSum1, req.ID, req.Username, req.Password, req.Name, req.Role, req.Dob, req.Sex, req.PhoneNumber)
 	if er != nil {
 		statusCode, err = http.StatusInternalServerError, er
 		return
