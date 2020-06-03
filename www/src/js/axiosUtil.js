@@ -15,7 +15,7 @@ var parseError = (error) => {
             data: error.response.data
         }
     } else {
-        // Something happened in setting up the request that triggered an Error
+        // Something happened in setting up the request that triggered an Error 
         return {
             status: -1,
             data: error

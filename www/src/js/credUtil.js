@@ -1,4 +1,4 @@
-// { UserID, Group, Role, exp }
+// { UserID, Group, Role, exp } 
 var cacheAuth = null;
 
 var saveCreds = (cred) => {

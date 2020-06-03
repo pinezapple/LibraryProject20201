@@ -7,6 +7,7 @@
   $('table.display').DataTable();
   var table = $('#datatable-basic').DataTable();
   var t = $('#datatable-buttons').DataTable();
+  var t1 = $('#datatable').DataTable();
 
 
   $('#datatable-basic tbody').on( 'click', 'tr', function () {
@@ -222,3 +223,33 @@ function newForm(e){
 
   document.getElementById("borrowForm").reset();
 }
+
+// fetch data 
+fetch ('http://localhost:11001/doc/allform',{
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+  })
+  .then(response => response.json())
+  .then(formList =>{
+    formList.forEach(form =>{
+
+      let data =[]
+      // get doc data
+    
+      let id = `${form.id_borrow}`
+      let docId= `${form.id_doc}`
+      let docName = `${form.doc_name}`
+      let cusId = `${form.id_cus}`
+      let status = `${form.status}`
+
+      data.push (docId,docName,cusId,status)
+
+      // add to table
+      t1.row.add(data).draw()
+    })
+  })
+  .catch(error => {
+  console.error('Error:', error);
+  });
