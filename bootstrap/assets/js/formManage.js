@@ -64,12 +64,12 @@ $('#update').click(function() {
     $("#status").val(status)
 })
 
-$('#updateForm').submit(function(){
+$('#submit').on('click',function(){
     let formId = parseInt(document.getElementById('formId').value,10)
     let docId = parseInt(document.getElementById('docId').value,10)
-    // let option= document.getElementById('status').value
-    let option = $("#status").val()
-    let status = parseInt(option,10)
+    let e= document.getElementById('status').value
+    // let e = $("#status").val()
+    let status = parseInt(e.options[e.selectedIndex].value,10)
 
     fetch('http://localhost:11001/doc/updateStatus', {
       method: 'POST',
