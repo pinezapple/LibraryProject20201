@@ -292,6 +292,7 @@ func selectFormByID(c echo.Context, request interface{}) (statusCode int, data i
 }
 
 func updateStatus(c echo.Context, request interface{}) (statusCode int, data interface{}, lg *model.LogFormat, logResponse bool, err error) {
+	fmt.Println("in update status")
 	req := request.(*reqUpdateStatus)
 	ctx := c.Request().Context()
 	lg = &model.LogFormat{Source: c.Request().RemoteAddr, Action: "Update status", Data: req}
@@ -320,7 +321,8 @@ func updateStatus(c echo.Context, request interface{}) (statusCode int, data int
 		return
 	}
 
-	resp, err := ser.Docmanager.UpdateBorrowFormStatus(ctx, &docmanagerModel.UpdateBorrowFormStatusReq{FormID: req.FormID, Status: int32(req.Status)})
+	ctx1 := context.Background()
+	resp, err := ser.Docmanager.UpdateBorrowFormStatus(ctx1, &docmanagerModel.UpdateBorrowFormStatusReq{FormID: req.FormID, Status: int32(req.Status)})
 	if err != nil || resp.Code != 0 {
 		statusCode, err = http.StatusInternalServerError, fmt.Errorf("grpc Error")
 		return
