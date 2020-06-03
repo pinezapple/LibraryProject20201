@@ -321,7 +321,8 @@ func updateStatus(c echo.Context, request interface{}) (statusCode int, data int
 		return
 	}
 
-	resp, err := ser.Docmanager.UpdateBorrowFormStatus(ctx, &docmanagerModel.UpdateBorrowFormStatusReq{FormID: req.FormID, Status: int32(req.Status)})
+	ctx1 := context.Background()
+	resp, err := ser.Docmanager.UpdateBorrowFormStatus(ctx1, &docmanagerModel.UpdateBorrowFormStatusReq{FormID: req.FormID, Status: int32(req.Status)})
 	if err != nil || resp.Code != 0 {
 		statusCode, err = http.StatusInternalServerError, fmt.Errorf("grpc Error")
 		return

@@ -57,7 +57,7 @@ $('#update').click(function() {
     let userId = table.row('.selected').data()[3]
     let status = table.row('.selected').data()[4]
 
-    $("$formId").val(formId)
+    $("#formId").val(formId)
     $("#docId").val(docId)
     $("#name").val(docName)
     $("#userId").val(userId)
@@ -69,7 +69,9 @@ $('#submit').on('click',function(){
     let docId = parseInt(document.getElementById('docId').value,10)
     let e= document.getElementById('status').value
     // let e = $("#status").val()
-    let status = parseInt(e.options[e.selectedIndex].value,10)
+    //let status = parseInt(e.options[e.selectedIndex].value,10)
+    let option = $("#status").val()
+    let status = parseInt(option,10)
 
     fetch('http://localhost:11001/doc/updateStatus', {
       method: 'POST',

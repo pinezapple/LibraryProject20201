@@ -114,17 +114,17 @@ func (d *docDAO) UpdateBorrowFormStatus(ctx context.Context, db *mssqlx.DBs, id 
 	if db == nil {
 		return core.ErrDBObjNull
 	}
-	_, err = db.ExecContext(ctx, sqlUpdateBorrowFormStatus, status, time.Now(), id)
+	_, err = db.Exec(sqlUpdateBorrowFormStatus, status, time.Now(), id)
 	if err != nil {
 		return err
 	}
 	var id_doc uint64
-	err = db.GetContext(ctx, &id_doc, sqlSelecetIdDoc, id)
+	err = db.Get(&id_doc, sqlSelecetIdDoc, id)
 	if err != nil {
 		return err
 	}
 
-	_, err = db.ExecContext(ctx, sqlUpdateStatus, status, id, id_doc)
+	_, err = db.Exec(sqlUpdateStatus, status, id, id_doc)
 	return
 }
 
