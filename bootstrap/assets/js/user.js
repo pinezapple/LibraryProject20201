@@ -73,30 +73,18 @@ $(document).ready(function() {
   // Edit selected row
   $('#edit').click( function () {
     
-    let userid =  parseInt(table.row('.selected').data()[0],10)
+    let userid =  table.row('.selected').data()[0]
+    let username =  table.row('.selected').data()[1]
+    let password =  ""
+    let name =  table.row('.selected').data()[2]
+    let dob =  table.row('.selected').data()[3]
+    let sex =  table.row('.selected').data()[4]
+    let phone =  table.row('.selected').data()[5]
+    let role =  table.row('.selected').data()[6]
     
-    let url = 'http://localhost:11001/user/oneuser'
-
-    fetch (url,{
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({id_user:userid})
-      })
-      .then(response => response.json())
-      .then(function(user){
-
-          let userId =`${user.id_user}`
-          let username =`${user.username}`
-          let password = `${user.password}`
-          let name = `${user.name}`
-          let dob = `${user.dob}`
-          let sex = `${user.sex}`
-          let phone = `${user.phonenumber}`
-          let role = `${user.role}`
+   
         
-        $("#userId").val(userId)
+        $("#userId").val(userid)
         $("#username").val(username)
         $("#password").val(password)
         $("#name").val(name)
@@ -106,11 +94,6 @@ $(document).ready(function() {
         $("#role").val(role)
 
       })
-      .catch(error => {
-      alert('Something went wrong',error)
-      });
-  });
-});
 
 // sumbit form
 
@@ -143,28 +126,28 @@ $("#sumbit").on('click',function(){
   })
 
   
-  $("#addUser").on('click',function(){
-    // event.preventDefault();
+  // $("#addUser").on('click',function(){
+  //   // event.preventDefault();
   
-    let username = document.getElementById('username').value;
-    let password = document.getElementById('password').value;
-    let name = document.getElementById('name').value;
-    let dob = document.getElementById('DOB').value;
-    let sex = document.getElementById('sex').value;
-    let phone = document.getElementById('phone').value;
-    let role = document.getElementById('role').value;
+  //   let username = document.getElementById('username').value;
+  //   let password = document.getElementById('password').value;
+  //   let name = document.getElementById('name').value;
+  //   let dob = document.getElementById('DOB').value;
+  //   let sex = document.getElementById('sex').value;
+  //   let phone = document.getElementById('phone').value;
+  //   let role = document.getElementById('role').value;
 
 
-    fetch('http://localhost:11001/user/save', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-          },
-        body:JSON.stringify({username:username,password:password,name:name,phonenumber:phone,dob:dob,sex:sex,role:role})
+  //   fetch('http://localhost:11001/user/save', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json'
+  //         },
+  //       body:JSON.stringify({username:username,password:password,name:name,phonenumber:phone,dob:dob,sex:sex,role:role})
        
-    }).then((res) => res.json())
-    .then(result => alert("Added new user", result))
-    .catch((err)=>alert("Something went wrong",err))
+  //   }).then((res) => res.json())
+  //   .then(result => alert("Added new user", result))
+  //   .catch((err)=>alert("Something went wrong",err))
   
-  })
+  // })
 
