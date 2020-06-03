@@ -21,7 +21,7 @@ $(document).ready(function() {
   });
 
    // Fetch data 
-   fetch ('http://localhost:3000/user/alluser',{
+   fetch ('http://localhost:11001/user/alluser',{
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -56,7 +56,7 @@ $(document).ready(function() {
   $('#delete').click( function () {
     if (confirm('Are you sure you want to delete the row?')){
         let userid = parseInt(table.row('.selected').data()[0],10)
-        let url = 'http://localhost:3000/user/delete'
+        let url = 'http://localhost:11001/user/delete'
         fetch( url, {
             method: 'POST',
             headers: {
@@ -75,7 +75,7 @@ $(document).ready(function() {
     
     let userid =  parseInt(table.row('.selected').data()[0],10)
     
-    let url = 'http://localhost:3000/user/oneuser'
+    let url = 'http://localhost:11001/user/oneuser'
 
     fetch (url,{
         method: 'POST',
@@ -125,7 +125,7 @@ $("#sumbit").on('click',function(){
     let phone = document.getElementById('phone').value;
     let role = document.getElementById('role').value;
 
-    let url = 'http://localhost:3000/user/update' 
+    let url = 'http://localhost:11001/user/update' 
 
       fetch(url, {
          method: 'POST',
@@ -155,7 +155,7 @@ $("#sumbit").on('click',function(){
     let role = document.getElementById('role').value;
 
 
-    fetch('http://localhost:3000/user/save', {
+    fetch('http://localhost:11001/user/save', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
