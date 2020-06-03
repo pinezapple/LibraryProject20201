@@ -292,6 +292,7 @@ func selectFormByID(c echo.Context, request interface{}) (statusCode int, data i
 }
 
 func updateStatus(c echo.Context, request interface{}) (statusCode int, data interface{}, lg *model.LogFormat, logResponse bool, err error) {
+	fmt.Println("in update status")
 	req := request.(*reqUpdateStatus)
 	ctx := c.Request().Context()
 	lg = &model.LogFormat{Source: c.Request().RemoteAddr, Action: "Update status", Data: req}

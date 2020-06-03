@@ -1,6 +1,8 @@
 package user
 
 import (
+	"fmt"
+
 	"github.com/labstack/echo"
 	"github.com/pinezapple/LibraryProject20201/portal/controller"
 )
@@ -23,21 +25,26 @@ type reqUserID struct {
 }
 
 func SelectAllUser(c echo.Context) (erro error) {
+	fmt.Println("1")
 	return controller.ExecHandler(c, nil, selectAllUser)
 }
 
 func SelectUserByID(c echo.Context) (erro error) {
+	fmt.Println("2")
 	return controller.ExecHandler(c, &reqUserID{}, selectUserByID)
 }
 
 func SaveUser(c echo.Context) (erro error) {
+	fmt.Println("3")
 	return controller.ExecHandler(c, &reqUser{}, saveUser)
 }
 
 func UpdateUser(c echo.Context) (erro error) {
+	fmt.Println("4")
 	return controller.ExecHandler(c, &reqUser{}, updateUser)
 }
 
 func DeleteUser(c echo.Context) (erro error) {
+	fmt.Println("5")
 	return controller.ExecHandler(c, &reqUserID{}, deleteUser)
 }
