@@ -114,10 +114,10 @@
       fetch(url, {
          method: 'POST',
          headers: {
-          'Content-Type': 'application/json; charset=UTF-8'
+          'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'aplication/x-www-form-urlencoded; charset=UTF-8'
           },
          body:JSON.stringify({id_doc: parseInt(id),doc_name:name, doc_author:author, doc_type:type, doc_description:description})
-
      }).then((res) => res.json())
      .then(result => alert("Fixed document", result))
      .catch((err)=>console.log(err))
@@ -189,6 +189,7 @@ function newDoc(event){
   fetch('http://localhost:11001/doc/save', {
       method: 'POST',
       headers: {
+        'Accept': 'application/json, text/plain, */*',
         'Content-Type': 'application/json; charset=UTF-8'
         },
       body:JSON.stringify({doc_name:name, doc_author:author, doc_type:type, doc_description:description})
