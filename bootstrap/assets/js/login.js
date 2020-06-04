@@ -18,6 +18,7 @@ $("#login").on('click',function(){
         } else {
             let token = res
             localStorage.setItem("token",token)
+            window.location.href = "bootstrap/pages/dashboards/dashboard.html";
         }
     })
     .catch(error => {

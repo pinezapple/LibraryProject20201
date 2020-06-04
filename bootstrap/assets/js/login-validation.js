@@ -5,11 +5,11 @@ if(token == null){
     window.location.href = "bootstrap/pages/login/login.html";
 } else {
     let request = {
-        method:"POST",
-        credentials: "omit",
-      headers: {
+      //   method:"POST",
+      //   credentials: "omit",
+      // headers: {
         Authorization: "Bearer " + token,
         "Content-Type": "application/json",
       }
     }
-}
+
