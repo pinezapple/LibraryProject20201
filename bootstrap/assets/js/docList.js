@@ -201,6 +201,8 @@ function newDoc(event){
   let author = document.getElementById('author').value;
   let type = document.getElementById('type').value;
   let description = document.getElementById('description').value;
+  let fee = document.getElementById('fee').value;
+
 
   fetch('http://localhost:11001/doc/save', 
   {
@@ -210,7 +212,7 @@ function newDoc(event){
        'Content-Type': 'application/json',
        Authorization: "Bearer " + token,
       },
-     body:JSON.stringify({doc_name:name, doc_author:author, doc_type:type, doc_description:description})
+     body:JSON.stringify({doc_name:name, doc_author:author, doc_type:type, doc_description:description,fee:fee})
     }).then((res) => res.json())
   .then(result => alert("Added new document", result))
   .catch((err)=>alert("Something went wrong",err))
@@ -266,8 +268,10 @@ fetch ('http://localhost:11001/doc/allform',
       let docName = `${form.doc_name}`
       let cusId = `${form.id_cus}`
       let status = `${form.status}`
+      let startDate = new Date(form.start_at.seconds*1000)
+      let endDate = new Date(form.end_at.seconds*1000)
 
-      data.push (docId,docName,cusId,status)
+      data.push (docId,docName,cusId,status,startDate,endDate)
 
       // add to table
       t1.row.add(data).draw()

@@ -69,7 +69,7 @@
             <li class="nav-item">
               <a class="nav-link " href="../../pages/tables/formManagement.html" role="button" aria-expanded="true" aria-controls="navbar-dashboards" style="transform:none;">
                 <i class="ni ni-archive-2 text-muted"></i>
-                <span class="nav-link-text">Add User</span>
+                <span class="nav-link-text">Borrow form mangament</span>
               </a>
             </li>
             <li class="nav-item">
@@ -84,6 +84,9 @@
                   </li>
                   <li class="nav-item">
                     <a href="../../pages/forms/newBook.html" class="nav-link">Add new Document</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="../../pages/forms/addUser.html" class="nav-link">Add new User</a>
                   </li>
                 </ul>
               </div>
@@ -193,7 +196,7 @@
                 <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                   <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
                   <li class="breadcrumb-item"><a href="#">Forms</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Add new Document</li>
+                  <li class="breadcrumb-item active" aria-current="page">Add new User</li>
                 </ol>
               </nav>
             </div>
@@ -211,7 +214,7 @@
             <div class="card">
               <!-- Card header -->
               <div class="card-header">
-                <h3 class="mb-0">Add new documents</h3>
+                <h3 class="mb-0">Add new User</h3>
               </div>
               <!-- Card body -->
               <div class="card-body">
@@ -352,6 +355,7 @@
   <!-- <script src="../../assets/js/docList.js"></script> -->
   
   <script>
+  let token = localStorage.getItem("token")
   function reset() {
   document.getElementById("newUser").reset();
   }
@@ -369,15 +373,17 @@
     let role = document.getElementById('role').value;
 
     fetch('http://localhost:11001/user/save', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-          },
+      method: 'POST',
+      credentials: "omit",
+      headers: {
+       'Content-Type': 'application/json',
+        Authorization: "Bearer " + token,
+      },
         body:JSON.stringify({username:username,password:password,name:name,phonenumber:phone,dob:dob,sex:sex,role:role})
        
     }).then((res) => res.json())
     .then(result => alert("Added new user", result))
-    .catch((err)=>alert("Deo add dc",err))
+    .catch((err)=>alert("Something went wrong",err))
   }
   
 </script>

@@ -40,8 +40,10 @@ fetch ('http://localhost:11001/doc/allform',  {
       let docName = `${form.doc_name}`
       let cusId = `${form.id_cus}`
       let status = `${form.status}`
+      let startDate = new Date(form.start_at.seconds*1000)
+      let endDate = new Date(form.end_at.seconds*1000)
 
-      data.push (id,docId,docName,cusId,status)
+      data.push (id,docId,docName,cusId,status,startDate,endDate)
 
       // add to table
       table.row.add(data).draw()
@@ -88,4 +90,38 @@ $('#submit').on('click',function(){
   .then(result => alert("Success", result))
   .catch((err)=>alert("Something went wrong",err))
 })
+
+// fetch data
+fetch ('http://localhost:11001/doc/allform',  {
+  method: 'POST',
+  credentials: "omit",
+  headers: {
+     'Content-Type': 'application/json',
+     Authorization: "Bearer " + token,
+    },
+  })
+  .then(response => response.json())
+  .then(formList =>{
+    formList.forEach(form =>{
+
+      let data =[]
+      // get doc data
+    
+      let id = `${form.id_borrow}`
+      let docId= `${form.id_doc}`
+      let docName = `${form.doc_name}`
+      let cusId = `${form.id_cus}`
+      let status = `${form.status}`
+      let startDate = new Date(form.start_at.seconds*1000)
+      let endDate = new Date(form.end_at.seconds*1000)
+
+      data.push (id,docId,docName,cusId,status,startDate,endDate)
+
+      // add to table
+      t.row.add(data).draw()
+    })
+  })
+  .catch(error => {
+  console.error('Error:', error);
+  });
 
