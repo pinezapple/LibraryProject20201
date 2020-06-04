@@ -17,24 +17,24 @@
 - [gRPC](https://grpc.io/)
 - [cassandra](https://cassandra.apache.org/)
 
-**Cách cài đặt các dependencies và deploy hệ thống:
-***Cài đặt etcd:
+**Cách cài đặt các dependencies và deploy hệ thống**:
+***Cài đặt etcd***:
 - Tải các bản release của etcd [tại đây](https://github.com/etcd-io/etcd/releases).
 - Chạy etcd:
 ```
 cd /your/etcd/file
 ./bin/etcd
 ```
-***Cài đặt cassandra:
+***Cài đặt cassandra***:
 - Cassandra được cài đặt như [link](https://cassandra.apache.org/doc/latest/getting_started/installing.html).
 - Cassandra sẽ start bằng lệnh:
 ```
 systemctl start cassandra.service
 ```
-***Cài đặt gRPC cho Golang:
+***Cài đặt gRPC cho Golang***:
 - Để đặt gRPC thực hiện như [link](https://grpc.io/docs/languages/go/quickstart/)
 
-***Deploy hệ thống:
+***Deploy hệ thống***:
 - Clone code từ github:
 ```
 git clone https://github.com/pinezapple/LibraryProject20201.git
