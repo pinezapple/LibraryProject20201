@@ -47,6 +47,12 @@ func SelectAllDoc(c echo.Context) (erro error) {
 	return controller.ExecHandler(c, nil, selectAllDoc)
 }
 
+func SelectAllDoc0(c echo.Context) (erro error) {
+
+	fmt.Println("in Select doc 0 all")
+	return controller.ExecHandler(c, nil, selectAllDoc0)
+}
+
 func SelectDocByID(c echo.Context) (erro error) {
 
 	fmt.Println("in select by id")

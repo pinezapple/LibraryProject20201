@@ -56,8 +56,9 @@
       // var docDate = `${doc.updated_at}`
       // var docStatus = `${doc.status}`
       var docFee = `${doc.fee}`
+      var docStatus = `${doc.status}`
 
-      data.push (docId,docName,docAuthor,docType,docDescription,docFee)
+      data.push (docId,docName,docAuthor,docType,docDescription,docFee,docStatus)
 
       // add to table
       table.row.add(data).draw()
@@ -157,7 +158,7 @@ function reset() {
   });
 
 // datatable-buttons docList
-fetch ('http://localhost:11001/doc/alldoc',
+fetch ('http://localhost:11001/doc/alldoc0',
 {
   method: 'POST',
   credentials: "omit",
@@ -168,7 +169,7 @@ fetch ('http://localhost:11001/doc/alldoc',
 }
 ).then(response => response.json())
   .then(docList =>{
-    // console.log(docList)
+     console.log(docList)
     docList.forEach(doc =>{
 
       var data =[]

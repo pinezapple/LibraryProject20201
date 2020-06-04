@@ -1,6 +1,6 @@
-let token = localStorage.getItem("token")
+let token1 = localStorage.getItem("token")
 
-if(token == null){
+if(token1 == null){
     alert("Please login");
     window.location.href = "../../pages/login/login.html";
 }

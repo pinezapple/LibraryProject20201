@@ -32,6 +32,22 @@ func selectAllDoc(c echo.Context, request interface{}) (statusCode int, data int
 	return http.StatusOK, res, lg, false, nil
 }
 
+func selectAllDoc0(c echo.Context, request interface{}) (statusCode int, data interface{}, lg *model.LogFormat, logResponse bool, err error) {
+	ctx := c.Request().Context()
+	// Log login info
+	lg = &model.LogFormat{Source: c.Request().RemoteAddr, Action: "Select Doc from cache", Data: ""}
+	db := core.GetDB()
+	dDAO := dao.GetDocCacheDAO()
+
+	res, er := dDAO.SelectAllDoc0FromCache(ctx, db)
+	if er != nil {
+		statusCode, err = http.StatusInternalServerError, er
+		return
+	}
+
+	return http.StatusOK, res, lg, false, nil
+}
+
 func saveDoc(c echo.Context, request interface{}) (statusCode int, data interface{}, lg *model.LogFormat, logResponse bool, err error) {
 	req := request.(*reqDoc)
 	ctx := c.Request().Context()

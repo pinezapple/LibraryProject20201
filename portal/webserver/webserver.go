@@ -106,6 +106,7 @@ func initDocRouter(e *echo.Echo) {
 	d.POST("/delete", doc.DelDoc)
 	d.POST("/update", doc.UpdateDoc)
 	d.POST("/alldoc", doc.SelectAllDoc)
+	d.POST("/alldoc0", doc.SelectAllDoc0)
 	d.POST("/onedoc", doc.SelectDocByID)
 
 	d.POST("/saveForm", doc.SaveForm)

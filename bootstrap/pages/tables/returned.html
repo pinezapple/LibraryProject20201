@@ -191,6 +191,7 @@
               <table class="table table-flush" id="datatable-buttons">
                 <thead class="thead-light">
                   <tr>
+                    <th>BorrowFormId</th>
                     <th>Document_ID</th>
                     <th>Document name</th>
                     <th>User_ID</th>
@@ -201,6 +202,7 @@
                 </thead>
                 <tfoot>
                   <tr>
+                    <th>BorrowFormId</th>
                     <th>Document_ID</th>
                     <th>Document name</th>
                     <th>User_ID</th>
@@ -245,6 +247,7 @@
   <!-- <script src="../../assets/js/formManage.js"></script> -->
   
   <script>
+var t = $('#datatable-buttons').DataTable();
 // fetch data
 let token = localStorage.getItem("token")
 fetch ('http://localhost:11001/doc/allform',  {

@@ -20,8 +20,8 @@ $("#login").on('click',function(){
                 message: "auth failed"
             })
         } else {
-            let token = res
-            localStorage.setItem("token",token)
+            let token2 = res
+            localStorage.setItem("token",token2)
             window.location.href = "../dashboards/dashboard.html";
         }
     })

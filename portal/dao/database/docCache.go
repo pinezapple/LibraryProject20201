@@ -13,6 +13,7 @@ import (
 
 const (
 	sqlSelectAllDocInCache       = "SELECT * FROM doc"
+	sqlSelectAllDoc0InCache      = "SELECT *FROM doc WHERE status = 0"
 	sqlSelectAllFormInCache      = "select br.id_borrow, br.id_doc, d.doc_name, br.id_cus, br.id_lib, br.status, br.start_at, br.end_at from borrowform as br join doc as d where br.id_doc=d.id_doc"
 	sqlSelectFormInCacheByStatus = "SELECT * FROM borrowform WHERE status = ?"
 	sqlSaveDocToCache            = "INSERT INTO doc(id_doc, doc_name, doc_author, doc_type, doc_description, fee) VALUES (?,?,?,?,?,?)"
@@ -42,6 +43,7 @@ type CacheBorrowForm struct {
 type IDocCache interface {
 	// Select all doc from cachedsa
 	SelectAllDocFromCache(ctx context.Context, db *mssqlx.DBs) (result []*docmanagerModel.Doc, err error)
+	SelectAllDoc0FromCache(ctx context.Context, db *mssqlx.DBs) (result []*docmanagerModel.Doc, err error)
 	SelectAllFormFromCache(ctx context.Context, db *mssqlx.DBs) (result []*CacheBorrowForm, err error)
 	SaveDoc(ctx context.Context, db *mssqlx.DBs, doc *docmanagerModel.Doc) (err error)
 	UpdateDoc(ctx context.Context, db *mssqlx.DBs, doc *docmanagerModel.Doc) (err error)
@@ -62,6 +64,17 @@ func (d *docCacheDAO) SelectAllDocFromCache(ctx context.Context, db *mssqlx.DBs)
 	}
 
 	err = db.SelectContext(ctx, &result, sqlSelectAllDocInCache)
+	return
+}
+
+func (d *docCacheDAO) SelectAllDoc0FromCache(ctx context.Context, db *mssqlx.DBs) (result []*docmanagerModel.Doc, err error) {
+	// Validate input
+	if db == nil {
+		err = core.ErrDBObjNull
+		return
+	}
+
+	err = db.SelectContext(ctx, &result, sqlSelectAllDoc0InCache)
 	return
 }
 
