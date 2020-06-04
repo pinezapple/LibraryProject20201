@@ -60,7 +60,6 @@ func SaveDoc(c echo.Context) (erro error) {
 }
 
 func DelDoc(c echo.Context) (erro error) {
-
 	fmt.Println("in del doc")
 	return controller.ExecHandler(c, &reqSelectByID{}, delDoc)
 }
@@ -77,19 +76,16 @@ func UpdateStatus(c echo.Context) (erro error) {
 }
 
 func SelectAllForm(c echo.Context) (erro error) {
-
 	fmt.Println("in Select all form")
 	return controller.ExecHandler(c, nil, selectAllForm)
 }
 
 func SaveForm(c echo.Context) (erro error) {
-
 	fmt.Println("in save form")
 	return controller.ExecHandler(c, &reqSaveBorrowForm{}, saveForm)
 }
 
 func SelectFormByID(c echo.Context) (erro error) {
-
 	fmt.Println("in form by id")
 	return controller.ExecHandler(c, &reqSelectFormByID{}, selectFormByID)
 }

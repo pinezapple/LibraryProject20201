@@ -19,7 +19,7 @@ $(document).ready(function() {
           // button.disabled = false
       }
   });
-
+  let token = localStorage.getItem("token")
    // Fetch data 
    fetch ('http://localhost:11001/user/alluser',  {
     method: 'POST',

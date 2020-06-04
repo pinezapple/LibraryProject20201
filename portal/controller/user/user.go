@@ -25,26 +25,26 @@ type reqUserID struct {
 }
 
 func SelectAllUser(c echo.Context) (erro error) {
-	fmt.Println("1")
+	fmt.Println("Select all user")
 	return controller.ExecHandler(c, nil, selectAllUser)
 }
 
 func SelectUserByID(c echo.Context) (erro error) {
-	fmt.Println("2")
+	fmt.Println("Select user by id")
 	return controller.ExecHandler(c, &reqUserID{}, selectUserByID)
 }
 
 func SaveUser(c echo.Context) (erro error) {
-	fmt.Println("3")
+	fmt.Println("Save user")
 	return controller.ExecHandler(c, &reqUser{}, saveUser)
 }
 
 func UpdateUser(c echo.Context) (erro error) {
-	fmt.Println("4")
+	fmt.Println("Update user")
 	return controller.ExecHandler(c, &reqUser{}, updateUser)
 }
 
 func DeleteUser(c echo.Context) (erro error) {
-	fmt.Println("5")
+	fmt.Println("Delete user")
 	return controller.ExecHandler(c, &reqUserID{}, deleteUser)
 }

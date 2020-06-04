@@ -7,12 +7,13 @@ import (
 
 	"github.com/linxGnu/mssqlx"
 	"github.com/pinezapple/LibraryProject20201/portal/core"
+	"github.com/pinezapple/LibraryProject20201/skeleton/model"
 	"github.com/pinezapple/LibraryProject20201/skeleton/model/docmanagerModel"
 )
 
 const (
 	sqlSelectAllDocInCache       = "SELECT * FROM doc"
-	sqlSelectAllFormInCache      = "SELECT * FROM borrowform"
+	sqlSelectAllFormInCache      = "select br.id_borrow, br.id_doc, d.doc_name, br.id_cus, br.id_lib, br.status, br.start_at, br.end_at from borrowform as br join doc as d where br.id_doc=d.id_doc"
 	sqlSelectFormInCacheByStatus = "SELECT * FROM borrowform WHERE status = ?"
 	sqlSaveDocToCache            = "INSERT INTO doc(id_doc, doc_name, doc_author, doc_type, doc_description, fee) VALUES (?,?,?,?,?,?)"
 	sqlDeleteDocToCache          = "DELETE FROM doc WHERE id_doc = ?"
@@ -25,10 +26,23 @@ const (
 	sqlSelecetIdDoc              = "SELECT id_doc FROM doc WHERE id_borrow = ?"
 )
 
+type CacheBorrowForm struct {
+	ID        uint64      `protobuf:"varint,1,opt,name=ID,proto3" json:"id_borrow" db:"id_borrow"`
+	DocID     uint64      `protobuf:"varint,2,opt,name=DocID,proto3" json:"id_doc" db:"id_doc"`
+	Name      string      `protobuf:"bytes,2,opt,name=Name,proto3" json:"doc_name" db:"doc_name"`
+	CusID     uint64      `protobuf:"varint,3,opt,name=CusID,proto3" json:"id_cus" db:"id_cus"`
+	LibID     uint64      `protobuf:"varint,4,opt,name=LibID,proto3" json:"id_lib" db:"id_lib"`
+	Status    int32       `protobuf:"varint,5,opt,name=Status,proto3" json:"status" db:"status"`
+	StartAt   *model.Time `protobuf:"bytes,6,opt,name=Start_at,json=StartAt,proto3" json:"start_at" db:"start_at"`
+	EndAt     *model.Time `protobuf:"bytes,7,opt,name=End_at,json=EndAt,proto3" json:"end_at" db:"end_at"`
+	CreatedAt *model.Time `protobuf:"bytes,8,opt,name=Created_at,json=CreatedAt,proto3" json:"created_at" db:"created_at"`
+	UpdatedAt *model.Time `protobuf:"bytes,9,opt,name=Updated_at,json=UpdatedAt,proto3" json:"updated_at" db:"updated_at"`
+}
+
 type IDocCache interface {
 	// Select all doc from cachedsa
 	SelectAllDocFromCache(ctx context.Context, db *mssqlx.DBs) (result []*docmanagerModel.Doc, err error)
-	SelectAllFormFromCache(ctx context.Context, db *mssqlx.DBs) (result []*docmanagerModel.BorrowForm, err error)
+	SelectAllFormFromCache(ctx context.Context, db *mssqlx.DBs) (result []*CacheBorrowForm, err error)
 	SaveDoc(ctx context.Context, db *mssqlx.DBs, doc *docmanagerModel.Doc) (err error)
 	UpdateDoc(ctx context.Context, db *mssqlx.DBs, doc *docmanagerModel.Doc) (err error)
 	DelDoc(ctx context.Context, db *mssqlx.DBs, id uint64) (err error)
@@ -51,7 +65,7 @@ func (d *docCacheDAO) SelectAllDocFromCache(ctx context.Context, db *mssqlx.DBs)
 	return
 }
 
-func (d *docCacheDAO) SelectAllFormFromCache(ctx context.Context, db *mssqlx.DBs) (result []*docmanagerModel.BorrowForm, err error) {
+func (d *docCacheDAO) SelectAllFormFromCache(ctx context.Context, db *mssqlx.DBs) (result []*CacheBorrowForm, err error) {
 	// Validate input
 	if db == nil {
 		err = core.ErrDBObjNull

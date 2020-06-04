@@ -201,7 +201,7 @@ function newDoc(event){
   let author = document.getElementById('author').value;
   let type = document.getElementById('type').value;
   let description = document.getElementById('description').value;
-  let fee = document.getElementById('fee').value;
+  let fee = parseInt(document.getElementById('fee').value);
 
 
   fetch('http://localhost:11001/doc/save', 

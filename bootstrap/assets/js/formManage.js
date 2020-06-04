@@ -17,7 +17,7 @@ $('#datatable-basic tbody').on( 'click', 'tr', function () {
         // button.disabled = false
     }
 } );
-
+let token = localStorage.getItem("token")
 // fetch data
 
 fetch ('http://localhost:11001/doc/allform',  {
