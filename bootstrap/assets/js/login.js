@@ -2,6 +2,10 @@ $("#login").on('click',function(){
     let username = document.getElementById('username').value
     let password = document.getElementById('password').value
 
+    if (username == "" || password == ""){
+        alert("Please fill all the input fields")
+    }
+
     // get token?
     fetch('http://localhost:11001/p/login',{
         method: 'POST',
@@ -22,7 +26,7 @@ $("#login").on('click',function(){
         }
     })
     .catch(error => {
-        alert("error with fetch login", error)
+        alert("Something went wrong, please check your username or password", error)
         });
 })
 

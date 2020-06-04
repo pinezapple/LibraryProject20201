@@ -125,56 +125,21 @@
       <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
         <div class="container-fluid">
           <div class="collapse navbar-collapse" id="navbarSupportedContent" style ="padding: 10px;">
-            <!-- Search form -->
-            <!-- <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">
-              <div class="form-group mb-0">
-                <div class="input-group input-group-alternative input-group-merge">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-search"></i></span>
-                  </div>
-                  <input class="form-control" placeholder="Search" type="text">
-                </div>
-              </div>
-              <button type="button" class="close" data-action="search-close" data-target="#navbar-search-main" aria-label="Close">
-                <span aria-hidden="true">×</span>
-              </button>
-            </form> -->
-
             <!-- Profile -->
             <ul class="navbar-nav align-items-center ml-auto ml-md-0" style=" position: absolute;right: 0; padding-right:30px;">
               <li class="nav-item dropdown">
                 <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <div class="media align-items-center">
-                    <!-- <span class="avatar avatar-sm rounded-circle">
-                      <img alt="Image placeholder" src="../../assets/img/theme/team-4.jpg">
-                    </span> -->
                     <div class="media-body ml-2 d-none d-lg-block">
-                      <span class="mb-0 text-sm  font-weight-bold">John Snow</span>
+                      <span class="mb-0 text-sm  font-weight-bold">Welcome</span>
                     </div>
                   </div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
                   <div class="dropdown-header noti-title">
-                    <h6 class="text-overflow m-0">Welcome!</h6>
+                    <h6 class="text-overflow m-0">Action</h6>
                   </div>
-                  <!-- <a href="#!" class="dropdown-item">
-                    <i class="ni ni-single-02"></i>
-                    <span>My profile</span>
-                  </a>
-                  <a href="#!" class="dropdown-item">
-                    <i class="ni ni-settings-gear-65"></i>
-                    <span>Settings</span>
-                  </a>
-                  <a href="#!" class="dropdown-item">
-                    <i class="ni ni-calendar-grid-58"></i>
-                    <span>Activity</span>
-                  </a>
-                  <a href="#!" class="dropdown-item">
-                    <i class="ni ni-support-16"></i>
-                    <span>Support</span>
-                  </a>
-                  <div class="dropdown-divider"></div> -->
-                  <a href="#!" class="dropdown-item">
+                  <a href="#!" onclick="logout(); return false;" class="dropdown-item">
                     <i class="ni ni-user-run"></i>
                     <span>Logout</span>
                   </a>
@@ -229,8 +194,8 @@
                     <th>Document name</th>
                     <th>Author</th>
                     <th>Type</th>
-                    <th>Updated at</th>
-                    <th>Status</th>
+                    <th>Description</th>
+                    <th>Fee</th>
                   </tr>
                 </thead>
                 <tfoot>
@@ -239,8 +204,8 @@
                     <th>Document name</th>
                     <th>Author</th>
                     <th>Type</th>
-                    <th>Updated at</th>
-                    <th>Status</th>
+                    <th>Description</th>
+                    <th>Fee</th>
                   </tr>
                 </tfoot>
                 <tbody id="docList">
@@ -274,23 +239,19 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js'></script>
   <!-- Argon JS -->
-  <script src="../../assets/js/argon.js?v=1.1.0"></script>
-  <!-- Demo JS - remove this in your project -->
-  <script src="../../assets/js/demo.min.js"></script>
-  <script src="../../assets/js/docList.js"></script>
+  <script src="../../assets/js/login-validation.js"></script>
+  <script src="../../assets/js/argon.js?v=1.1.0"></script>>
+  <!-- <script src="../../assets/js/docList.js"></script> -->
   <script>
-
 
 $(document).ready(function() {
   var table = $('#datatable-buttons').DataTable();
-  
     $('#datatable-buttons tfoot th').each( function () {
         var title = $(this).text();
         $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
     } );
     table.columns().every(function () {
         var that = this;
- 
         $( 'input', this.footer() ).on( 'keyup change clear', function () {
             if ( that.search() !== this.value ) {
                 that
@@ -299,25 +260,44 @@ $(document).ready(function() {
             }
         } );
     } );
-        
-      // table.columns([3]).every( function () {
-      //           var column = this;
-      //           var select = $('<select><option value="">Show all</option></select>')
-      //               .appendTo( $(column.footer()).empty() )
-      //               .on( 'change', function () {
-      //                   var val = $.fn.dataTable.util.escapeRegex(
-      //                       $(this).val()
-      //                   );
-      //                   column
-      //                       .search( val ? '^'+val+'$' : '', true, false )
-      //                       .draw();
-      //               } );
- 
-      //           column.data().unique().sort().each( function ( d, j ) {
-      //               select.append( '<option value="'+d+'">'+d+'</option>' )
-      //           } );
-      //       } );  
-} );
+});
+
+let token = localStorage.getItem("token")
+// datatable-buttons docList
+fetch ('http://localhost:11001/doc/alldoc',
+{
+  method: 'POST',
+  credentials: "omit",
+  headers: {
+     'Content-Type': 'application/json',
+     Authorization: "Bearer " + token,
+    },
+}
+).then(response => response.json())
+  .then(docList =>{
+    // console.log(docList)
+    docList.forEach(doc =>{
+
+      var data =[]
+      // get doc data
+      var docId= `${doc.id_doc}`
+      var docName = `${doc.doc_name}`
+      var docAuthor = `${doc.doc_author}`
+      var docType = `${doc.doc_type}`
+      var docDescription = `${doc.doc_description}`
+      var docFee = `${doc.fee}`
+
+      data.push (docId,docName,docAuthor,docType,docDescription,docFee)
+
+      // add to table
+      t.row.add(data).draw()
+    })
+  })
+  .catch(error => {
+    alert("Something went wrong",error)
+  });
+
+
   </script>
 </body>
 

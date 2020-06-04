@@ -124,56 +124,21 @@
     <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
       <div class="container-fluid">
         <div class="collapse navbar-collapse" id="navbarSupportedContent" style ="padding: 10px;">
-          <!-- Search form -->
-          <!-- <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">
-            <div class="form-group mb-0">
-              <div class="input-group input-group-alternative input-group-merge">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fas fa-search"></i></span>
-                </div>
-                <input class="form-control" placeholder="Search" type="text">
-              </div>
-            </div>
-            <button type="button" class="close" data-action="search-close" data-target="#navbar-search-main" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-          </form> -->
-
           <!-- Profile -->
           <ul class="navbar-nav align-items-center ml-auto ml-md-0" style=" position: absolute;right: 0; padding-right:30px;">
             <li class="nav-item dropdown">
               <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <div class="media align-items-center">
-                  <!-- <span class="avatar avatar-sm rounded-circle">
-                    <img alt="Image placeholder" src="../../assets/img/theme/team-4.jpg">
-                  </span> -->
                   <div class="media-body ml-2 d-none d-lg-block">
-                    <span class="mb-0 text-sm  font-weight-bold">John Snow</span>
+                    <span class="mb-0 text-sm  font-weight-bold">Welcome</span>
                   </div>
                 </div>
               </a>
               <div class="dropdown-menu dropdown-menu-right">
                 <div class="dropdown-header noti-title">
-                  <h6 class="text-overflow m-0">Welcome!</h6>
+                  <h6 class="text-overflow m-0">Action</h6>
                 </div>
-                <!-- <a href="#!" class="dropdown-item">
-                  <i class="ni ni-single-02"></i>
-                  <span>My profile</span>
-                </a>
-                <a href="#!" class="dropdown-item">
-                  <i class="ni ni-settings-gear-65"></i>
-                  <span>Settings</span>
-                </a>
-                <a href="#!" class="dropdown-item">
-                  <i class="ni ni-calendar-grid-58"></i>
-                  <span>Activity</span>
-                </a>
-                <a href="#!" class="dropdown-item">
-                  <i class="ni ni-support-16"></i>
-                  <span>Support</span>
-                </a>
-                <div class="dropdown-divider"></div> -->
-                <a href="#!" class="dropdown-item">
+                <a href="#!" onclick="logout(); return false;" class="dropdown-item">
                   <i class="ni ni-user-run"></i>
                   <span>Logout</span>
                 </a>
@@ -223,7 +188,6 @@
                   <div class="btn-group">
                     <button type="button" id="delete" class="btn btn-outline-primary">Delete</button>
                     <button type="button" id="edit" class="btn btn-outline-primary" data-toggle="modal" data-target="#modal-form">Edit</button>
-                    <!-- <button type="button" class="btn btn-primary"  data-toggle="modal" data-target="#modal-form">New</button> -->
                   </div>
                 </div>
                   <tr>
@@ -352,14 +316,6 @@
                               <input class="form-control" id= "description" placeholder="description" type="text">
                             </div>
                           </div>                     
-                          <!-- <div class="form-group">
-                            <div class="input-group input-group-merge input-group-alternative">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
-                                </div>
-                                <input class="form-control" placeholder="Updated at" type="date">
-                            </div>
-                          </div> -->
                           <div class="text-center">
                               <button type="sumbit" id="sumbit" class="btn btn-primary my-4">Save</button>
                               <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">Close</button>
@@ -394,89 +350,9 @@
   <script src="../../assets/vendor/datatables.net-buttons/js/buttons.print.min.js"></script>
   <script src="../../assets/vendor/datatables.net-select/js/dataTables.select.min.js"></script>
   <!-- Argon JS -->
-  <script src="../../assets/jslogin-validation.js"></script>
+  <script src="../../assets/js/login-validation.js"></script>
   <script src="../../assets/js/argon.js?v=1.1.0"></script>
   <script src="../../assets/js/docList.js"></script>
-  
-
-  <script>
-  // document.getElementById('editDoc').addEventListener('submit', editDoc);
-  //   $(document).ready(function() {
-  //     document.getElementById("delete").disabled = true;
-  //     document.getElementById("edit").disabled = true;
-  //   // $('table.display').DataTable();
-  //   var table = $('#datatable-basic').DataTable();
-  //   // var button = document.querySelector('button')
-  
-  //   $('#datatable-basic tbody').on( 'click', 'tr', function () {
-  //       if ( $(this).hasClass('selected') ) {
-  //           $(this).removeClass('selected');
-  //           document.getElementById("delete").disabled = true;
-  //           document.getElementById("edit").disabled = true;
-  //           // button.disabled = true
-  //       }
-  //       else {
-  //           table.$('tr.selected').removeClass('selected');
-  //           $(this).addClass('selected');
-  //           document.getElementById("delete").disabled = false;
-  //           document.getElementById("edit").disabled = false;
-  //           // button.disabled = false
-  //       }
-  //   } );
-
-  //   // Delete selected row
-  //   $('#delete').click( function () {
-  //     if (confirm('Are you sure you want to delete the row?')){
-  //        table.row('.selected').remove().draw( false );
-  //   } ;
-  //   });
-
-  //   // Edit selected row
-  //   $('#edit').click( function () {
-      
-  //     var name =  table.row('.selected').data()[1]
-      
-  //     var author = table.row('.selected').data()[2]
-      
-  //     var type = table.row('.selected').data()[3]
-      
-  //     var status = table.row('.selected').data()[5]
-      
-
-  //     $("#name").val(name)
-  //     $("#author").val(author)
-  //     $("#type").val(type)
-  //     $("#status").val(status)
-  //   });
-    
-  //   docList = document.querySelector("#docList")
-  //   fetch ('http://localhost:3000/documents')
-  //   .then(response => response.json())
-  //   .then(docList =>{
-  //     docList.forEach(doc =>{
-
-  //       var data =[]
-  //       // get doc data
-  //       var docId= `${doc.id_doc}`
-  //       var docName = `${doc.doc_name}`
-  //       var docAuthor = `${doc.doc_author}`
-  //       var docType = `${doc.doc_type}`
-  //       var docDate = `${doc.updated_at}`
-  //       var docStatus = `${doc.status}`
-
-  //       data.push (docId,docName,docAuthor,docType,docDate,docStatus)
-
-  //       // add to table
-  //       table.row.add(data).draw()
-  //     })
-  //   })
-  //   .catch(error => {
-  //   console.error('Error:', error);
-  //   });
-    
-  // });
-  
-  </script>
 </body>
 
 </html>
