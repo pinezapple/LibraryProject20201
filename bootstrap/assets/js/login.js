@@ -25,6 +25,7 @@ $("#login").on('click',function(){
         });
 })
 
-
-
+function logout(){
+    localStorage.removeItem('token')
+}
 

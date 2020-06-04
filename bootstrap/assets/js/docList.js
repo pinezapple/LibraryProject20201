@@ -30,12 +30,14 @@
 
   docList = document.querySelector("#docList")
 
-  fetch ('http://localhost:11001/doc/alldoc',{
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-  })
+  fetch ('http://localhost:11001/doc/alldoc', request
+  // {
+  //   method: 'POST',
+  //   headers: {
+  //     'Content-Type': 'application/json'
+  //   },
+  // }
+  )
   .then(response => response.json())
   .then(docList =>{
     docList.forEach(doc =>{
@@ -112,14 +114,16 @@
 
     let url = 'http://localhost:11001/doc/update'
 
-      fetch(url, {
-         method: 'POST',
-         headers: {
-          'Accept': 'application/json, text/plain, */*',
-        'Content-Type': 'aplication/x-www-form-urlencoded; charset=UTF-8'
-          },
-         body:JSON.stringify({id_doc: parseInt(id),doc_name:name, doc_author:author, doc_type:type, doc_description:description})
-     }).then((res) => res.json())
+      fetch(url, request
+    //     {
+    //      method: 'POST',
+    //      headers: {
+    //       'Accept': 'application/json, text/plain, */*',
+    //     'Content-Type': 'aplication/x-www-form-urlencoded; charset=UTF-8'
+    //       },
+    //      body:JSON.stringify({id_doc: parseInt(id),doc_name:name, doc_author:author, doc_type:type, doc_description:description})
+    //  }
+     ).then((res) => res.json())
      .then(result => alert("Fixed document", result))
      .catch((err)=>console.log(err))
 
@@ -146,14 +150,16 @@ function reset() {
   });
 
 // datatable-buttons docList
-fetch ('http://localhost:11001/doc/alldoc',{
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json'
-  },
-}).then(response => response.json())
+fetch ('http://localhost:11001/doc/alldoc', request
+// {
+//   method: 'POST',
+//   headers: {
+//     'Content-Type': 'application/json'
+//   },
+// }
+).then(response => response.json())
   .then(docList =>{
-    console.log(docList)
+    // console.log(docList)
     docList.forEach(doc =>{
 
       var data =[]
@@ -187,15 +193,17 @@ function newDoc(event){
   let type = document.getElementById('type').value;
   let description = document.getElementById('description').value;
 
-  fetch('http://localhost:11001/doc/save', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json, text/plain, */*',
-        'Content-Type': 'application/json; charset=UTF-8'
-        },
-      body:JSON.stringify({doc_name:name, doc_author:author, doc_type:type, doc_description:description})
+  fetch('http://localhost:11001/doc/save', request
+  // {
+  //     method: 'POST',
+  //     headers: {
+  //       'Accept': 'application/json, text/plain, */*',
+  //       'Content-Type': 'application/json; charset=UTF-8'
+  //       },
+  //     body:JSON.stringify({doc_name:name, doc_author:author, doc_type:type, doc_description:description})
      
-  }).then((res) => res.json())
+  // }
+  ).then((res) => res.json())
   .then(result => alert("Added new document", result))
   .catch((err)=>alert("Something went wrong",err))
 
@@ -210,14 +218,16 @@ function newForm(e){
   let days = parseInt(document.getElementById('days').value,10);
   let docId = parseInt(document.getElementById('docId').value,10);
 
-  fetch('http://localhost:11001/doc/saveForm', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json; charset=UTF-8'
-        },
-      body:JSON.stringify({id_doc:docId, id_cus:student, id_lib:librarian , status: 1, ttl:days})
+  fetch('http://localhost:11001/doc/saveForm', request
+  // {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json; charset=UTF-8'
+  //       },
+  //     body:JSON.stringify({id_doc:docId, id_cus:student, id_lib:librarian , status: 1, ttl:days})
      
-  }).then((res) => res.json())
+  // }
+  ).then((res) => res.json())
   .then(result => alert("Success", result))
   .catch((err)=>alert("Something went wrong",err))
 
@@ -225,12 +235,14 @@ function newForm(e){
 }
 
 // fetch data 
-fetch ('http://localhost:11001/doc/allform',{
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-  })
+fetch ('http://localhost:11001/doc/allform', request
+// {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json'
+//     },
+// }
+  )
   .then(response => response.json())
   .then(formList =>{
     formList.forEach(form =>{
