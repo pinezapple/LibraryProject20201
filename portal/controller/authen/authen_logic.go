@@ -17,15 +17,13 @@ import (
 func login(c echo.Context, request interface{}) (statusCode int, data interface{}, lg *model.LogFormat, logResponse bool, err error) {
 	req, ctx := request.(*reqLogin), c.Request().Context()
 
+	fmt.Println(req)
 	// Log login info
 	lg = &model.LogFormat{Source: c.Request().RemoteAddr, Action: "Login", Data: req.Username}
 
 	// Validate request input
 	req.Username = strings.ToLower(strings.TrimSpace(req.Username))
-	if req.Username != "root" {
-		statusCode, err = http.StatusUnauthorized, fmt.Errorf("Not root User")
-		return
-	}
+
 	db, conf := core.GetDB(), core.GetConfig()
 	if db == nil || conf == nil {
 		statusCode, err = http.StatusInternalServerError, fmt.Errorf("Database connection / Config not initialized")
@@ -95,5 +93,6 @@ func login(c echo.Context, request interface{}) (statusCode int, data interface{
 		c.SetCookie(cookie)
 	*/
 
+	fmt.Println(t)
 	return http.StatusOK, t, lg, false, nil
 }

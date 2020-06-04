@@ -21,11 +21,13 @@ $(document).ready(function() {
   });
 
    // Fetch data 
-   fetch ('http://localhost:11001/user/alluser',{
+   fetch ('http://localhost:11001/user/alluser',  {
     method: 'POST',
+    credentials: "omit",
     headers: {
-      'Content-Type': 'application/json'
-    },
+       'Content-Type': 'application/json',
+       Authorization: "Bearer " + token,
+      },
   })
   .then(response => response.json())
   .then(usersList =>{
@@ -58,10 +60,12 @@ $(document).ready(function() {
     if (confirm('Are you sure you want to delete the row?')){
         let userid = parseInt(table.row('.selected').data()[0],10)
         let url = 'http://localhost:11001/user/delete'
-        fetch( url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
+        fetch( url,   {
+          method: 'POST',
+          credentials: "omit",
+          headers: {
+             'Content-Type': 'application/json',
+             Authorization: "Bearer " + token,
             },
             body: JSON.stringify({id_user:userid})
             })
@@ -120,10 +124,12 @@ $("#submit").on('click',function(){
 
     let url = 'http://localhost:11001/user/update' 
 
-      fetch(url, {
-         method: 'POST',
-         headers: {
-          'Content-Type': 'application/json'
+      fetch(url,   {
+        method: 'POST',
+        credentials: "omit",
+        headers: {
+           'Content-Type': 'application/json',
+           Authorization: "Bearer " + token,
           },
          body:JSON.stringify({id_user:userid,name:name,username:username,password:password,phonenumber:phone,dob:dob,sex:sex,role:role})
 

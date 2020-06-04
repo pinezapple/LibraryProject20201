@@ -70,6 +70,8 @@ func WebServer(ctx context.Context) (fn model.Daemon, err error) {
 
 	// init router
 	//initRouter(e, r)
+
+	e.POST("/p/login", authen.Login)
 	initUserRouter(e)
 	initDocRouter(e)
 

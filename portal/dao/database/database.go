@@ -179,7 +179,7 @@ func (c *userDAO) Create(ctx context.Context, db *mssqlx.DBs, k0, k1 uint64, use
 	result.Status = 1
 	result.Checksum = result.Sum(k0, k1)
 
-	_, err = db.ExecContext(ctx, "UPDATE user SET checksum = ?, status = ? WHERE id = ?", result.Checksum, result.Status, result.ID)
+	_, err = db.ExecContext(ctx, "UPDATE user SET checksum = ?, status = ? WHERE id_user = ?", result.Checksum, result.Status, result.ID)
 
 	return
 }

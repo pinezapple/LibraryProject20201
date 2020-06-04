@@ -20,10 +20,12 @@ $('#datatable-basic tbody').on( 'click', 'tr', function () {
 
 // fetch data
 
-fetch ('http://localhost:11001/doc/allform',{
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
+fetch ('http://localhost:11001/doc/allform',  {
+  method: 'POST',
+  credentials: "omit",
+  headers: {
+     'Content-Type': 'application/json',
+     Authorization: "Bearer " + token,
     },
   })
   .then(response => response.json())
@@ -73,11 +75,12 @@ $('#submit').on('click',function(){
     let option = $("#status").val()
     let status = parseInt(option,10)
 
-    fetch('http://localhost:11001/doc/updateStatus', {
+    fetch('http://localhost:11001/doc/updateStatus',   {
       method: 'POST',
+      credentials: "omit",
       headers: {
-        'Accept': 'application/json, text/plain, */*',
-        'Content-Type': 'application/json; charset=UTF-8;'
+         'Content-Type': 'application/json',
+         Authorization: "Bearer " + token,
         },
       body:JSON.stringify({form_id:formId, doc_id:docId, status: status})
      

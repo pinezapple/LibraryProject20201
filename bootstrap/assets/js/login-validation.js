@@ -1,4 +1,4 @@
-let token = localStorage.getItem(token)
+let token = localStorage.getItem("token")
 
 if(token == null){
     alert("Please login");
@@ -6,7 +6,7 @@ if(token == null){
 } else {
     let request = {
       //   method:"POST",
-      //   credentials: "omit",
+        credentials: "omit",
       // headers: {
         Authorization: "Bearer " + token,
         "Content-Type": "application/json",
