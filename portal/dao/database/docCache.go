@@ -15,6 +15,7 @@ const (
 	sqlSelectAllDocInCache       = "SELECT * FROM doc"
 	sqlSelectAllDoc0InCache      = "SELECT *FROM doc WHERE status = 0"
 	sqlSelectAllFormInCache      = "select br.id_borrow, br.id_doc, d.doc_name, br.id_cus, br.id_lib, br.status, br.start_at, br.end_at from borrowform as br join doc as d where br.id_doc=d.id_doc"
+	sqlInsertToBorrowFormCache   = "insert into borrowform_cache(id_borrow,id_doc,doc_name,id_cus,id_lib,status,start_at,end_at) values (?,?,?,?,?,?,?,?)"
 	sqlSelectFormInCacheByStatus = "SELECT * FROM borrowform WHERE status = ?"
 	sqlSaveDocToCache            = "INSERT INTO doc(id_doc, doc_name, doc_author, doc_type, doc_description, fee) VALUES (?,?,?,?,?,?)"
 	sqlDeleteDocToCache          = "DELETE FROM doc WHERE id_doc = ?"
@@ -135,6 +136,17 @@ func (d *docCacheDAO) SaveBorrowForm(ctx context.Context, db *mssqlx.DBs, form *
 	}
 
 	_, err = db.ExecContext(ctx, sqlSaveBorrowForm, form.ID, form.DocID, form.CusID, form.LibID, form.Status, form.StartAt, form.EndAt)
+	if err != nil {
+		return err
+	}
+
+	var docname string
+	err = db.GetContext(ctx, &docname, "SELECT doc_name FROM doc where id_doc = ?", form.DocID)
+	if err != nil {
+		return err
+	}
+
+	_, err = db.ExecContext(ctx, sqlInsertToBorrowFormCache, form.ID, form.DocID, docname, form.CusID, form.LibID, form.Status, form.StartAt, form.EndAt)
 	if err != nil {
 		return err
 	}

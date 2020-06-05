@@ -57,6 +57,6 @@ cd /your/cloned/files
 
 **Các tài liệu khác** :
 - [Phân tích yêu cầu phần mềm](https://drive.google.com/open?id=1XAD5SHuuKTj9p12JePVix_pfcdow-a6jhYzckpSOWxE)
-- [Sprint planning](https://drive.google.com/file/d/1zRfYP8E_dr7blH6TxqzpF_2vAYAuWGDo/view?usp=sharing)
+- [Sprint planning](https://docs.google.com/spreadsheets/d/1rQJ7jLo0bQ3YLJ5W82lS9-sIo_PXcWvu6X4y02v3euc/edit?usp=sharing)
 - [QnA File](https://drive.google.com/file/d/1mIAgsAoSo6Jj55SHId-utsZTrNTX_O9B/view?usp=sharing)
 - [Tài liệu phát triển phần mềm](https://github.com/pinezapple/LibraryProject20201/tree/master/Documents)
