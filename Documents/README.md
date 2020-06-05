@@ -17,7 +17,9 @@ Hệ thống gồm 3 actor chính:
 ![UseCaseAdmin](UseCaseDigrams/UseCaseAdmin.png)
 ### 1.2 Đặc tả chi tiết Usecase:
 - [Tại đây](https://drive.google.com/file/d/1E4QsfgcYECWx2HlTyU-J6KisU6yErmQ3/view?usp=sharing)
-### 1.2 Biểu đồ cộng tác (frontend view)
+
+### 1.3) Biểu đồ cộng tác:
+### 1.3.1 Biểu đồ cộng tác (frontend view):
 - Biểu đồ cộng tác cho chức năng tạo phiếu mượn sách
 ![CommunicationDiagram](CommunicationDiagrams/Borrow1.png)
 - Biểu đồ cộng tác cho chức năng trả sách và thanh toán phụ phí (nếu có)
@@ -26,7 +28,12 @@ Hệ thống gồm 3 actor chính:
 ![CommunicationDiagram](CommunicationDiagrams/ThongKe.png)
 - Biểu đồ cộng tác cho chức năng theo dõi sách đang mượn
 ![CommunicationDiagram](CommunicationDiagrams/xemTTmuonsach.png)
-### 1.3 Biểu đồ ER
+
+### 1.3.2 Biểu đồ cộng tác (backend view):
+- Biểu đồ cộng tác cho request tới docmanager:
+![CommunicationDiagram](flowdiagram.png)
+
+### 1.4 Biểu đồ ER
 ![ERDiagram](dbdiagram.png)
 
 ## 2. Thiết kế  hệ thống:
