@@ -153,6 +153,9 @@ github.com/modern-go/reflect2 v1.0.1/go.mod h1:bx2lNnkwVCuqBIxFjflWJWanXIb3Rllmb
 github.com/mwitkow/go-conntrack v0.0.0-20161129095857-cc309e4a2223/go.mod h1:qRWi+5nqEBWmkhHvq77mSJWrCKwh8bxhgT7d/eI7P4U=
 github.com/olekukonko/tablewriter v0.0.0-20170122224234-a0225b3f23b5/go.mod h1:vsDQFd/mU46D+Z4whnwzcISnGGzXWMclvtLoiIKAKIo=
 github.com/pinezapple/LibraryProject20201 v0.0.0-20200601055845-50cbdd69f6eb h1:cU5NLW/C2VYPIvwDnfyifMJhruW6fVBaNNsLOZRZXh8=
+github.com/pinezapple/LibraryProject20201 v0.0.0-20200605023818-e9abd0590d5b h1:BNmgR86nZtUQYY0rGArpMf8N3IeT8nxPougcz737KpI=
+github.com/pinezapple/LibraryProject20201/docmanager v0.0.0-20200605023818-e9abd0590d5b h1:ZIMOWoJmIpGC8HS5xfSidkRGO79BNEyH68uSvK2y/XM=
+github.com/pinezapple/LibraryProject20201/docmanager v0.0.0-20200605023818-e9abd0590d5b/go.mod h1:2e43sQr1H+sh1TQ4otjZPsVsOdncaXn5ynnWf0NZST0=
 github.com/pinezapple/LibraryProject20201/portal v0.0.0-20200515025236-31f40a629450/go.mod h1:2fpxtzdbkh7+XieSZJd2UzdnYbeDLdwfZXOKHHQFHpI=
 github.com/pinezapple/LibraryProject20201/skeleton v0.0.0-20200506104420-467ce0cfc384 h1:SCyHLlPWXTwrePsg74LAC7aW6Y9oulp6HLL4XsF4aKw=
 github.com/pinezapple/LibraryProject20201/skeleton v0.0.0-20200506104420-467ce0cfc384/go.mod h1:b1Rhb64eq0ePeNE1+b/0im28cy7B+DubVn/h5xiek9w=

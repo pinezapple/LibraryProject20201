@@ -7,6 +7,7 @@ require (
 	github.com/hashicorp/go-multierror v1.1.0
 	github.com/labstack/echo v3.3.10+incompatible
 	github.com/linxGnu/mssqlx v1.0.7
+	github.com/pinezapple/LibraryProject20201/docmanager v0.0.0-20200605023818-e9abd0590d5b // indirect
 	github.com/pinezapple/LibraryProject20201/skeleton v0.0.0-20200521183651-bd8c417f6a21
 	github.com/prometheus/common v0.7.0
 	go.etcd.io/etcd v0.5.0-alpha.5.0.20191120073830-908ef19d865f
