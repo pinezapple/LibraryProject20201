@@ -1,0 +1,174 @@
+syntax = "proto3";
+
+package model;
+
+option go_package = "github.com/pinezapple/LibraryProject20201/skeleton/model/docmanagerModel";
+
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+import "github.com/pinezapple/LibraryProject20201/skeleton/model/time.proto";
+
+option (gogoproto.gostring_all) = true;
+option (gogoproto.equal_all) = true;
+option (gogoproto.verbose_equal_all) = true;
+option (gogoproto.populate_all) = true;
+option (gogoproto.testgen_all) = true;
+option (gogoproto.benchgen_all) = false;
+option (gogoproto.marshaler_all) = true;
+option (gogoproto.sizer_all) = true;
+option (gogoproto.unmarshaler_all) = true;
+
+service Docmanager {
+    rpc SelectAllBarcode (SelectAllBarcodeReq) returns (SelectAllBarcodeResp);
+    rpc SelectBarcodeByID (SelectBarcodeByIDReq) returns (SelectBarcodeByIDResp);
+    rpc InsertBarcode (InsertBarcodeReq) returns (InsertBarcodeResp);
+    rpc UpdateBarcode (UpdateBarcodeReq) returns (UpdateBarcodeResp);
+    rpc DeleteBarcode (DeleteBarcodeReq) returns (DeleteBarcodeResp);
+
+    rpc SelectAllBorrowForm (SelectAllBorrowFormReq) returns (SelectAllBorrowFormResp);
+    rpc SelectBorrowFormByID (SelectBorrowFormByIDReq) returns (SelectBorrowFormByIDResp);
+    rpc SaveBorrowForm (SaveBorrowFormReq) returns (SaveBorrowFormResp);
+    rpc DeleteBorrowForm (SaveBorrowFormReq) returns (SaveBorrowFormResp);
+}
+
+message Doc {
+    uint64 ID = 1 [(gogoproto.jsontag) = "id_doc", (gogoproto.moretags) = "db:\"id_doc\""];
+    string Name = 2 [(gogoproto.jsontag) = "doc_name", (gogoproto.moretags) = "db:\"doc_name\""];
+    model.Time Created_at = 3 [(gogoproto.jsontag) = "created_at", (gogoproto.moretags) = "db:\"created_at\""];
+	model.Time Updated_at = 4 [(gogoproto.jsontag) = "updated_at", (gogoproto.moretags) = "db:\"updated_at\""];
+}
+
+message DocVersion {
+    string DocVer = 1 [(gogoproto.jsontag) = "doc_ver", (gogoproto.moretags) = "db:\"doc_ver\""];
+    uint64 DocID = 2 [(gogoproto.jsontag) = "id_doc", (gogoproto.moretags) = "db:\"id_doc\""];
+    uint64 Version = 3 [(gogoproto.jsontag) = "version", (gogoproto.moretags) = "db:\"version\""];
+    string DocType = 4 [(gogoproto.jsontag) = "doc_type", (gogoproto.moretags) = "db:\"doc_type\""];
+    string DocDescription = 5 [(gogoproto.jsontag) = "doc_description", (gogoproto.moretags) = "db:\"doc_description\""];
+    uint64 fee = 6 [(gogoproto.jsontag) = "fee", (gogoproto.moretags) = "db:\"fee\""];
+    uint64 price = 7 [(gogoproto.jsontag) = "price", (gogoproto.moretags) = "db:\"price\""];
+    model.Time Created_at = 8 [(gogoproto.jsontag) = "created_at", (gogoproto.moretags) = "db:\"created_at\""];
+	model.Time Updated_at = 9 [(gogoproto.jsontag) = "updated_at", (gogoproto.moretags) = "db:\"updated_at\""];
+}
+
+message Barcode {
+    uint64 ID = 1 [(gogoproto.jsontag) = "id_barcode", (gogoproto.moretags) = "db:\"id_barcode\""];
+    string DocVer = 2 [(gogoproto.jsontag) = "doc_ver", (gogoproto.moretags) = "db:\"doc_ver\""];
+    uint64 status = 3 [(gogoproto.jsontag) = "status", (gogoproto.moretags) = "db:\"status\""];
+    model.Time Created_at = 4 [(gogoproto.jsontag) = "created_at", (gogoproto.moretags) = "db:\"created_at\""];
+	model.Time Updated_at = 5 [(gogoproto.jsontag) = "updated_at", (gogoproto.moretags) = "db:\"updated_at\""];
+}
+
+message Payment {
+    uint64 ID = 1 [(gogoproto.jsontag) = "id_payment", (gogoproto.moretags) = "db:\"id_payment\""];
+    uint64 Money = 2 [(gogoproto.jsontag) = "money", (gogoproto.moretags) = "db:\"money\""];
+    string Vendor = 3 [(gogoproto.jsontag) = "vendor", (gogoproto.moretags) = "db:\"vendor\""];
+    uint64 BarcodeID = 4 [(gogoproto.jsontag) = "id_barcode", (gogoproto.moretags) = "db:\"id_barcode\""];
+    model.Time Created_at = 5 [(gogoproto.jsontag) = "created_at", (gogoproto.moretags) = "db:\"created_at\""];
+	model.Time Updated_at = 6 [(gogoproto.jsontag) = "updated_at", (gogoproto.moretags) = "db:\"updated_at\""];
+}
+
+message Receipt {
+    uint64 ID = 1 [(gogoproto.jsontag) = "id_receipt", (gogoproto.moretags) = "db:\"id_receipt\""];
+    uint64 BorrowFormID = 2 [(gogoproto.jsontag) = "id_borrow_form", (gogoproto.moretags) = "db:\"id_borrow_form\""];
+    uint64 Money = 3 [(gogoproto.jsontag) = "money", (gogoproto.moretags) = "db:\"money\""];
+    model.Time Created_at = 4 [(gogoproto.jsontag) = "created_at", (gogoproto.moretags) = "db:\"created_at\""];
+	model.Time Updated_at = 5 [(gogoproto.jsontag) = "updated_at", (gogoproto.moretags) = "db:\"updated_at\""];
+}
+
+message BorrowForm {
+    uint64 ID = 1 [(gogoproto.jsontag) = "id_receipt", (gogoproto.moretags) = "db:\"id_receipt\""];
+    uint64 LibrarianID = 2 [(gogoproto.jsontag) = "id_librarian", (gogoproto.moretags) = "db:\"id_librarian\""];
+    uint64 BarcodeID = 3 [(gogoproto.jsontag) = "id_barcode", (gogoproto.moretags) = "db:\"id_barcode\""];
+    uint64 Status = 4 [(gogoproto.jsontag) = "status", (gogoproto.moretags) = "db:\"status\""];
+    model.Time StartTime = 5 [(gogoproto.jsontag) = "start_time", (gogoproto.moretags) = "db:\"start_time\""];
+    model.Time EndTime = 6 [(gogoproto.jsontag) = "end_time", (gogoproto.moretags) = "db:\"end_time\""];
+    model.Time Created_at = 7 [(gogoproto.jsontag) = "created_at", (gogoproto.moretags) = "db:\"created_at\""];
+	model.Time Updated_at = 8 [(gogoproto.jsontag) = "updated_at", (gogoproto.moretags) = "db:\"updated_at\""];
+}
+
+// ---------------------------------------------------------------
+message SelectAllBarcodeReq {
+
+}
+
+message SelectAllBarcodeResp {
+    int32 code = 1;
+    string message = 2;
+    repeated Barcode barcodes = 3 [(gogoproto.nullable) = true]; 
+}
+
+message SelectBarcodeByIDReq {
+    uint64 barcodeID = 1;
+}
+
+message SelectBarcodeByIDResp {
+    int32 code = 1;
+    string message = 2;
+    Barcode barcode = 3 [(gogoproto.nullable) = true]; 
+}
+
+message InsertBarcodeReq {
+    Barcode barcode = 1;
+}
+
+message InsertBarcodeResp {
+    int32 code = 1;
+    string message = 2;
+}
+
+message UpdateBarcodeReq {
+    Barcode barcode = 1;
+}
+
+message UpdateBarcodeResp {
+    int32 code = 1;
+    string message = 2;
+}
+
+message DeleteBarcodeReq {
+    uint64 barcodeID = 1;
+}
+
+message DeleteBarcodeResp {
+    int32 code = 1;
+    string message = 2;
+}
+
+// ----------------- Borrow Form ------------------
+
+message SelectAllBorrowFormReq {
+
+}
+
+message SelectAllBorrowFormResp {
+    int32 code = 1;
+    string message = 2;
+    repeated BorrowForm borrowForms = 3 [(gogoproto.nullable) = true];
+}
+
+message SelectBorrowFormByIDReq {
+    uint64 BorrowFormID = 1;
+}
+
+message SelectBorrowFormByIDResp {
+    int32 code = 1;
+    string message = 2;
+    BorrowForm borrowform = 3 [(gogoproto.nullable) = true]; 
+}
+
+message SaveBorrowFormReq {
+    BorrowForm borrowform = 1;
+}
+
+message SaveBorrowFormResp {
+    int32 code = 1;
+    string message = 2;
+}
+
+message DeleteBorrowFormReq {
+    uint64 borrowFormID = 1;
+}
+
+message DeleteBorrowFormResp {
+    int32 code = 1;
+    string message = 2;
+}
