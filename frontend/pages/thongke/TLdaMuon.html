@@ -249,6 +249,50 @@
                     <th>Trạng thái tài liệu</th>
                   </tr>
                 </tfoot>
+                <tbody>
+                <tr>
+                  <td>01</td>
+                  <td>fhalf</td>
+                  <td>022</td>
+                  <td>dfa</td>
+                  <td>àds</td>
+                  <td>adfa</td>
+                  <td>adfa</td>
+                  <td>opip</td>
+                </tr>
+
+                <tr>
+                  <td>02</td>
+                  <td>fhalf</td>
+                  <td>032</td>
+                  <td>dfa</td>
+                  <td>àds</td>
+                  <td>adfa</td>
+                  <td>adfa</td>
+                  <td>opip</td>
+                </tr>
+                <tr>
+                  <td>03</td>
+                  <td>fhalf</td>
+                  <td>046</td>
+                  <td>dfa</td>
+                  <td>àds</td>
+                  <td>adfa</td>
+                  <td>adfa</td>
+                  <td>opip</td>
+                </tr>
+
+                <tr>
+                  <td>04</td>
+                  <td>fhalf</td>
+                  <td>046</td>
+                  <td>dfa</td>
+                  <td>àds</td>
+                  <td>adfa</td>
+                  <td>adfa</td>
+                  <td>opit</td>
+                </tr>
+                </tbody>
                 
               </table>
             </div>
@@ -313,8 +357,9 @@
 // add search bar dropdown
     table.columns([4,7]).every( function () {
         var column = this;
-        var select = $('<select><option value=""></option></select>')
-            .appendTo( $(column.footer()).append() )
+        var title = this.title()
+        var select = $('<select><option value="">'+title+'</option></select>')
+            .appendTo( $(column.footer()).empty() )
             .on( 'change', function () {
                 var val = $.fn.dataTable.util.escapeRegex(
                     $(this).val()
@@ -327,8 +372,22 @@
         { select.append( '<option value="'+d+'">'+d+'</option>' )});
     });
 // add search input text
-});
+    table.columns([0,1,2,3,5,6]).every( function () {
+        var column = this;
+        var title = this.title()
+        var that = this
+        var input = $('<input type="text" placeholder="Tìm '+title+'" />')
+            .appendTo( $(column.footer()).empty() )
+            $( 'input', this.footer() ).on( 'keyup change clear', function () {
+                    if ( that.search() !== this.value ) {
+                        that
+                            .search( this.value )
+                            .draw();
+                    }
+                } );
 
+});
+  })
   </script>
 </body>
 
