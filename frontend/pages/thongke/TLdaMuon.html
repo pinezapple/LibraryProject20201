@@ -302,6 +302,7 @@
   <script src ="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js'></script>
+  <script src='//cdn.datatables.net/plug-ins/1.10.22/api/column().title().js'></script>
   <!-- Argon JS -->
   <script src="../../assets/js/argon.js?v=1.1.0"></script>
   <!-- Demo JS - remove this in your project -->
@@ -309,7 +310,23 @@
   <script>
   $(document).ready(function() {
   var table = $('#datatable-buttons').DataTable();
-// add search bar
+// add search bar dropdown
+    table.columns([4,7]).every( function () {
+        var column = this;
+        var select = $('<select><option value=""></option></select>')
+            .appendTo( $(column.footer()).append() )
+            .on( 'change', function () {
+                var val = $.fn.dataTable.util.escapeRegex(
+                    $(this).val()
+                );
+                column
+                    .search( val ? '^'+val+'$' : '', true, false )
+                    .draw();
+            } );
+        column.data().unique().sort().each( function ( d, j ) 
+        { select.append( '<option value="'+d+'">'+d+'</option>' )});
+    });
+// add search input text
 });
 
   </script>
