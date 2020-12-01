@@ -306,6 +306,26 @@
   <script src="../../assets/js/argon.js?v=1.1.0"></script>
   <!-- Demo JS - remove this in your project -->
   <script src="../../assets/js/demo.min.js"></script>
+  <script>
+    $(document).ready(function() {
+  var table = $('#datatable-buttons').DataTable();
+
+    $('#datatable-buttons tfoot th').each( function () {
+        var title = $(this).text();
+        $(this).html( '<input type="text" placeholder="Tìm '+title+'" />' );
+    } );
+    table.columns().every(function () {
+        var that = this;
+        $( 'input', this.footer() ).on( 'keyup change clear', function () {
+            if ( that.search() !== this.value ) {
+                that
+                    .search( this.value )
+                    .draw();
+            }
+        } );
+    } );
+});
+  </script>
 </body>
 
 </html>

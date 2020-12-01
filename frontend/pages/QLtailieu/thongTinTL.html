@@ -266,7 +266,7 @@
                   <td>NXB Giáo dục</td>
                   <td>10000</td>
                   <td><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-form">Chỉnh sửa</button>
-                    <button type="button" class="btn btn-danger btn-sm"  data-toggle="sweet-alert" data-sweet-alert="warning">Xóa</button></td>
+                    <button type="button" class="btn btn-danger btn-sm"  data-toggle="sweet-alert" onclick="deleteBook()">Xóa</button></td>
                 </tbody>
               </table>
             </div>
@@ -428,6 +428,31 @@
   <script src="../../assets/js/argon.js?v=1.1.0"></script>
   <!-- Demo JS - remove this in your project -->
   <script src="../../assets/js/demo.min.js"></script>
+  <script>
+    function deleteBook(){
+      swal({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+        // delete in db
+
+        // show alert
+        swal({
+          title:'Deleted!',
+          text:'Your file has been deleted.',
+          type:'success'
+        })
+      }
+  })
+}
+
+  </script>
 </body>
 
 </html>
