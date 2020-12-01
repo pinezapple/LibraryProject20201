@@ -19,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
   <meta name="author" content="Creative Tim">
-  <title>Argon Dashboard PRO - Premium Bootstrap 4 Admin Template</title>
+  <title>Nhập tài liệu</title>
   <!-- Favicon -->
   <link rel="icon" href="../../assets/img/brand/favicon.png" type="image/png">
   <!-- Fonts -->
@@ -109,7 +109,10 @@
                     <a href="../../pages/thongke/TLdaMuon.html" class="nav-link">Tài liệu đã mượn</a>
                   </li>
                   <li class="nav-item">
-                    <a href="../../pages/thongke/TLthanhtoan.html" class="nav-link">Tài liệu thanh toán</a>
+                    <a href="../../pages/thongke/TLthanhtoan.html" class="nav-link">Tài liệu thanh lý</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="../../pages/thongke/TLthanhToanNhap.html" class="nav-link">Tài liệu nhập</a>
                   </li>
                   <li class="nav-item">
                     <a href="../../pages/thongke/docGiaViPham.html" class="nav-link">Độc giả vi phạm</a>
@@ -132,12 +135,12 @@
           <!-- Search form -->
           <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">
             <div class="form-group mb-0">
-              <div class="input-group input-group-alternative input-group-merge">
+              <!-- <div class="input-group input-group-alternative input-group-merge">
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="fas fa-search"></i></span>
                 </div>
                 <input class="form-control" placeholder="Search" type="text">
-              </div>
+              </div> -->
             </div>
             <button type="button" class="close" data-action="search-close" data-target="#navbar-search-main" aria-label="Close">
               <span aria-hidden="true">×</span>
@@ -259,7 +262,13 @@
                           <div class="input-group-prepend">
                             <span class="input-group-text"><i class="ni ni-archive-2"></i></span>
                           </div>
-                          <input class="form-control" id="type" placeholder="Thể loại" type="text">
+                          <!-- <input class="form-control" id="type" placeholder="Thể loại" type="text"> -->
+                          <select class="form-control" data-toggle="select">
+                            <option>Giáo trình</option>
+                            <option>Tạp chí</option>
+                            <option>Sách tham khảo</option>
+                            <option>Sách nước ngoài</option>
+                          </select>
                         </div>
                       </div>
                     </div>
@@ -281,13 +290,38 @@
                       <div class="form-group">
                         <div class="input-group input-group-merge">
                           <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="ni ni-money-coins"></i></span>
+                            <span class="input-group-text"><i class="ni ni-box-2"></i></span>
                           </div>
                           <input class="form-control" id="fee" placeholder="Tái bản" type="text">
                         </div>
                       </div>
                     </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <div class="input-group input-group-merge">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="ni ni-fat-add"></i></span>
+                          </div>
+                          <input class="form-control" id="fee" placeholder="Số lượng" type="text">
+                        </div>
+                      </div>
+                    </div>
                   </div>
+
+                  <!-- Input -->
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <div class="input-group input-group-merge">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="ni ni-money-coins"></i></span>
+                          </div>
+                          <input class="form-control" id="fee" placeholder="Giá" type="text">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                   <button class="btn btn-primary" type="submit">Thêm</button>
                   <button type="button" class="btn btn-danger" style = "float: right;" onclick="reset()" >Hủy</button>
                 </form>
