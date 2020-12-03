@@ -21,7 +21,7 @@ var DatatableBasic = (function() {
 		var options = {
 			keys: !0,
 			select: {
-				style: "multi"
+				style: "single"
 			},
 			language: {
 				paginate: {

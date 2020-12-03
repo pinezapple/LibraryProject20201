@@ -247,12 +247,30 @@
                   </tr>
                 </tfoot>
                 <tbody>
+                  <tr>
                   <td>01</td>
                   <td>Trần Văn B</td>
                   <td>Phạm Thị C</td>
                   <td>Còn hạn</td>
                   <td>0</td>
                   <td><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-form">Chỉnh sửa</button></td>
+                </tr>
+                <tr>
+                  <td>02</td>
+                  <td>Nguyễn Thị L</td>
+                  <td>Phan Huy</td>
+                  <td>Quá hạn</td>
+                  <td>10000</td>
+                  <td><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-form">Chỉnh sửa</button></td>
+                </tr>
+                <tr>
+                  <td>03</td>
+                  <td>Duy Trầm</td>
+                  <td>Vũ Du</td>
+                  <td>Còn hạn</td>
+                  <td>0</td>
+                  <td><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-form">Chỉnh sửa</button></td>
+                </tr>
                 </tbody>
               </table>
             </div>
@@ -342,10 +360,10 @@
                                   <span class="input-group-text"><i class="ni ni-folder-17"></i></span>
                               </div>
                               <select class="form-control" id= "status" data-toggle="select" title="Tình trạng mượn" data-live-search="true" data-live-search-placeholder="Select">
-                                <option value="0">Returned</option>
-                                <option value="1">Borrowing</option>
-                                <option value="2">Overdue</option>
-                                <option value="3">Cancelled</option>
+                                <option value="0">Đã trả</option>
+                                <option value="1">Đang mượn</option>
+                                <option value="2">Quá hạn</option>
+                                <option value="3">Hủy</option>
                               </select>
                           </div>
                         </div>
@@ -377,12 +395,14 @@
 
 
   <!-- Argon Scripts -->
+  
   <!-- Core -->
   <script src="../../assets/vendor/jquery/dist/jquery.min.js"></script>
   <script src="../../assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   <script src="../../assets/vendor/js-cookie/js.cookie.js"></script>
   <script src="../../assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
   <script src="../../assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
+ 
   <!-- Optional JS -->
   <script src="../../assets/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
   <script src="../../assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
@@ -392,10 +412,13 @@
   <script src="../../assets/vendor/datatables.net-buttons/js/buttons.flash.min.js"></script>
   <script src="../../assets/vendor/datatables.net-buttons/js/buttons.print.min.js"></script>
   <script src="../../assets/vendor/datatables.net-select/js/dataTables.select.min.js"></script>
-  <!-- Argon JS -->
-  <script src="../../assets/js/argon.js?v=1.1.0"></script>
+   <!-- Argon JS -->
+   <script src="../../assets/js/argon.js?v=1.1.0"></script>
   <!-- Demo JS - remove this in your project -->
   <script src="../../assets/js/demo.min.js"></script>
+  <script>
+
+  </script>
 </body>
 
 </html>
