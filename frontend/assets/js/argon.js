@@ -1559,7 +1559,7 @@ var DatatableBasic = (function() {
 		var options = {
 			keys: !0,
 			select: {
-				style: "multi"
+				style: "single"
 			},
 			language: {
 				paginate: {
@@ -2610,45 +2610,45 @@ var QuillEditor = (function() {
 // Select2.js
 //
 
-'use strict';
+// 'use strict';
 
-var Select2 = (function() {
+// var Select2 = (function() {
 
-	//
-	// Variables
-	//
+// 	//
+// 	// Variables
+// 	//
 
-	var $select = $('[data-toggle="select"]');
-
-
-	//
-	// Methods
-	//
-
-	function init($this) {
-		var options = {
-			// dropdownParent: $this.closest('.modal').length ? $this.closest('.modal') : $(document.body),
-			// minimumResultsForSearch: $this.data('minimum-results-for-search'),
-			// templateResult: formatAvatar
-		};
-
-		$this.select2(options);
-	}
+// 	var $select = $('[data-toggle="select"]');
 
 
-	//
-	// Events
-	//
+// 	//
+// 	// Methods
+// 	//
 
-	if ($select.length) {
+// 	function init($this) {
+// 		var options = {
+// 			// dropdownParent: $this.closest('.modal').length ? $this.closest('.modal') : $(document.body),
+// 			// minimumResultsForSearch: $this.data('minimum-results-for-search'),
+// 			// templateResult: formatAvatar
+// 		};
 
-		// Init selects
-		$select.each(function() {
-			init($(this));
-		});
-	}
+// 		$this.select2(options);
+// 	}
 
-})();
+
+// 	//
+// 	// Events
+// 	//
+
+// 	if ($select.length) {
+
+// 		// Init selects
+// 		$select.each(function() {
+// 			init($(this));
+// 		});
+// 	}
+
+// })();
 
 //
 // Tags input

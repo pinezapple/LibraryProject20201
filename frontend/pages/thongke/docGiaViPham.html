@@ -246,6 +246,44 @@
                     <th>Phí</th>
                   </tr>
                 </tfoot>
+                <tbody>
+                  <tr>
+                    <td>01</td>
+                    <td>Nguyễn Văn A</td>
+                    <td>01</td>
+                    <td>Quá hạn</td>
+                    <td>Còn nguyên vẹn</td>
+                    <td>10000</td>
+                    
+                  </tr>
+                  <tr>
+                    <td>02</td>
+                    <td>Lê Vân</td>
+                    <td>02</td>
+                    <td>Đúng hạn</td>
+                    <td>Hư hỏng</td>
+                    <td>10000</td>
+                    
+                  </tr>
+                  <tr>
+                    <td>03</td>
+                    <td>Nguyễn B</td>
+                    <td>03</td>
+                    <td>Quá hạn</td>
+                    <td>Hư hỏng</td>
+                    <td>20000</td>
+                    
+                  </tr>
+                  <tr>
+                    <td>04</td>
+                    <td>Phan Thành</td>
+                    <td>04</td>
+                    <td>Quá hạn</td>
+                    <td>Còn nguyên vẹn</td>
+                    <td>1000</td>
+                    
+                  </tr>
+                </tbody>
               </table>
             </div>
           </div>
@@ -342,6 +380,48 @@
 });
 
 // add footer sum
+
+$('#datatable-buttons').DataTable( {
+  destroy: true,
+  paging:true,
+        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+ 
+            // Remove the formatting to get integer data for summation
+            var intVal = function ( i ) {
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+ 
+            // Total over all pages
+            if (api.column(5, {search:'applied'}).data().length>0) {
+            total = api
+                .column( 5, { search: 'applied' })
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+              } else {
+                total= 0;
+              }
+ 
+            // Total over this page
+            pageTotal = api
+                .column( 5, { page: 'current'} )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+ 
+            // Update footer
+            $( api.column( 5 ).footer() ).html(
+                '$'+pageTotal +' ( $'+ total +' total)'
+            );
+        }
+    } );
+
   })
   </script>
 </body>

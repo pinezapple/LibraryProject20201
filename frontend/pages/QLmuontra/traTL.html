@@ -253,7 +253,7 @@
                   <td>Phạm Thị C</td>
                   <td>Còn hạn</td>
                   <td>0</td>
-                  <td><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-form">Chỉnh sửa</button></td>
+                  <td><button type="button" id="update" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-form">Chỉnh sửa</button></td>
                 </tr>
                 <tr>
                   <td>02</td>
@@ -261,7 +261,7 @@
                   <td>Phan Huy</td>
                   <td>Quá hạn</td>
                   <td>10000</td>
-                  <td><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-form">Chỉnh sửa</button></td>
+                  <td><button type="button" id="update" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-form">Chỉnh sửa</button></td>
                 </tr>
                 <tr>
                   <td>03</td>
@@ -269,7 +269,7 @@
                   <td>Vũ Du</td>
                   <td>Còn hạn</td>
                   <td>0</td>
-                  <td><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-form">Chỉnh sửa</button></td>
+                  <td><button type="button" id="update" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-form">Chỉnh sửa</button></td>
                 </tr>
                 </tbody>
               </table>
@@ -359,7 +359,7 @@
                               <div class="input-group-prepend">
                                   <span class="input-group-text"><i class="ni ni-folder-17"></i></span>
                               </div>
-                              <select class="form-control" id= "status" data-toggle="select" title="Tình trạng mượn" data-live-search="true" data-live-search-placeholder="Select">
+                              <select class="form-control" id= "borrowStatus" data-toggle="select" title="Tình trạng mượn" data-live-search="true" data-live-search-placeholder="Select">
                                 <option value="0">Đã trả</option>
                                 <option value="1">Đang mượn</option>
                                 <option value="2">Quá hạn</option>
@@ -372,7 +372,7 @@
                               <div class="input-group-prepend">
                                   <span class="input-group-text"><i class="ni ni-folder-17"></i></span>
                               </div>
-                              <select class="form-control" id= "status" data-toggle="select" title="Tình trạng tài liệu" data-live-search="true" data-live-search-placeholder="Select">
+                              <select class="form-control" id= "docStatus" data-toggle="select" title="Tình trạng tài liệu" data-live-search="true" data-live-search-placeholder="Select">
                                 <option value="0">Còn nguyên vẹn</option>
                                 <option value="1">Hư hại</option>
                               </select>
@@ -417,6 +417,11 @@
   <!-- Demo JS - remove this in your project -->
   <script src="../../assets/js/demo.min.js"></script>
   <script>
+var table = $('#datatable-basic').DataTable();
+$('#datatable-basic tbody').on( 'click', 'button', function () {
+        var data = table.row( $(this).parents('tr') ).data();
+        console.log(data)
+    } );
 
   </script>
 </body>

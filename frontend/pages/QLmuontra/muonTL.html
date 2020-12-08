@@ -204,7 +204,7 @@
         <div class="header-body">
           <div class="row align-items-center py-4">
             <div class="col-lg-6 col-7">
-              <h6 class="h2 text-white d-inline-block mb-0">Quản lý mượn trả</h6>
+              <h6 class="h2 text-white d-inline-block mb-0">Phiếu mượn tài liệu</h6>
               <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                 <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                   <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
@@ -213,7 +213,6 @@
                 </ol>
               </nav>
             </div>
-            
           </div>
         </div>
       </div>
@@ -231,10 +230,16 @@
               </div>
               <!-- Card body -->
               <div class="card-body">
+                <div class="col-lg-8">
+                  <p class="mb-0">
+                    Thông tin chi tiết
+                    <br /><br />
+                  </p>
+                </div>
                 <form id='borrowForm'>
                 <!-- input groups with icon -->
-                  <div class="row">
-                    <div class="col-md-6">
+                  <div class="form-row" id="personalInfo">
+                    <div class="col-md-4 mb-3">
                       <div class="form-group">
                         <div class="input-group input-group-merge">
                           <div class="input-group-prepend">
@@ -244,7 +249,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4 mb-3">
                       <div class="form-group">
                         <div class="input-group input-group-merge">
                           <div class="input-group-prepend">
@@ -254,10 +259,7 @@
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <!-- Date input -->
-                  <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4 mb-3">
                       <div class="form-group">
                         <div class="input-group input-group-merge">
                           <div class="input-group-prepend">
@@ -270,9 +272,16 @@
                         </div>
                       </div>
                     </div>
-
-                    <!-- Document Info -->
-                    <div class="col-md-6">
+                  </div>
+                  <!-- Document Info-->
+                  <div class="col-lg-8">
+                    <p class="mb-0">
+                      Thông tin tài liệu
+                      <br /><br />
+                    </p>
+                  </div>
+                  <div class="form-row" id="addDoc">
+                    <!-- <div class="col-sm-6 col-md-3">
                       <div class="form-group">
                         <div class="input-group input-group-merge">
                           <div class="input-group-prepend">
@@ -281,10 +290,10 @@
                           <input class="form-control" id='docId' placeholder="Mã tài liệu" type="text" required readonly>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-6">
+                    </div> -->
+                  <!-- </div> -->
+                  <!-- <div class="form-row"> -->
+                    <!-- <div class="col-sm-6 col-md-3">
                       <div class="form-group">
                         <div class="input-group input-group-merge">
                           <div class="input-group-prepend">
@@ -294,7 +303,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col">
+                    <div class="col-sm-6 col-md-3">
                       <div class="form-group">
                         <div class="input-group input-group-merge">
                           <div class="input-group-prepend">
@@ -304,20 +313,26 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col">
+                    <div class="col-sm-6 col-md-3">
                       <div class="form-group">
-                        <div class="input-group input-group-merge">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="ni ni-archive-2"></i></span>
-                          </div>
-                          <input class="form-control" id= "docType" placeholder="Thể loại" type="text" disabled>
+                        <div class="input-group input-group-merge"> -->
+                          <!-- <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="ni ni-fat-remove"></i></span>
+                          </div> -->
+                          <!-- <button class="btn btn-icon btn-primary" type="button"> -->
+                            <!-- <span class="input-group-text"><i class="ni ni-fat-remove"></i></span> -->
+                            <!-- <span class="btn-inner--text">Xóa</span>
+                          </button>
                         </div>
                       </div>
-                    </div> 
+                    </div>  -->
                   </div>
                   <!-- button -->
-                <button class="btn btn-primary" type="button">Tạo phiếu</button>
-                <button type="button" class="btn btn-danger" style = "float: right;" onclick="reset()">Hủy</button>
+                <div class="form-row" id="formButton">
+                  <button class="btn btn-primary" type="button" onclick="getDocId()">Tạo phiếu</button>
+                  <button type="button" class="btn btn-danger" style = "float: right;" onclick="reset()">Hủy</button>
+                </div>
+                
                 </form>
               </div>
             </div>
@@ -333,11 +348,6 @@
           </div>
           <div class="table-responsive py-4 w-100 d-block d-md-table">
             <table class="table table-flush " id="datatable-basic">
-              <div class="col text-center">
-                <div class="btn-group">
-                  <button type="button" id="add" class="btn btn-outline-primary">Add</button>
-                </div>
-              </div>
               <thead class="thead-light">
                 <tr>
                 <th>Mã tài liệu</th>
@@ -345,6 +355,7 @@
                 <th>Tác giả</th>
                 <th>Thể loại</th>
                 <th>NXB</th>
+                <th></th>
                 </tr>
               </thead>
               <tfoot>
@@ -354,14 +365,42 @@
                   <th>Tác giả</th>
                   <th>Thể loại</th>
                   <th>NXB</th>
+                  <th></th>
                 </tr>
               </tfoot>
               <tbody id="docList">
-                <td>01</td>
-                <td>Tin học</td>
-                <td>Nguyễn Văn A</td>
-                <td>SGK</td>
-                <td>NXB Giáo Dục</td>
+                <tr>
+                  <td>01</td>
+                  <td>Tin học</td>
+                  <td>Nguyễn Văn A</td>
+                  <td>SGK</td>
+                  <td>NXB Giáo Dục</td>
+                  <td><button type="button" id="add" class="btn btn-info btn-sm">Thêm</button></td>
+                </tr>
+                <tr>
+                  <td>02</td>
+                  <td>Văn học</td>
+                  <td>Lê Vân</td>
+                  <td>SGK</td>
+                  <td>NXB Giáo Dục</td>
+                  <td><button type="button" id="add" class="btn btn-info btn-sm">Thêm</button></td>
+                </tr>
+                <tr>
+                  <td>03</td>
+                  <td>Toán học</td>
+                  <td>Nguyễn B</td>
+                  <td>SGK</td>
+                  <td>NXB Giáo Dục</td>
+                  <td><button type="button" id="add" class="btn btn-info btn-sm">Thêm</button></td>
+                </tr>
+                <tr>
+                  <td>04</td>
+                  <td>Hóa học</td>
+                  <td>Phan Thành</td>
+                  <td>SGK</td>
+                  <td>NXB Giáo Dục</td>
+                  <td><button type="button" id="add" class="btn btn-info btn-sm">Thêm</button></td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -395,6 +434,71 @@
   
   <!-- Demo JS - remove this in your project -->
   <script src="../../assets/js/demo.min.js"></script>
+  <script>
+    var table = $('#datatable-basic').DataTable();
+    let docIdForm ='<div class="col-sm-6 col-md-3"><div class="form-group"><div class="input-group input-group-merge"><div class="input-group-prepend"> <span class="input-group-text"><i class="ni ni-book-bookmark"></i></span></div><input class="form-control" id="docId" placeholder="Mã tài liệu" type="text" disabled ></div></div></div> '
+    let docNameForm ='<div class="col-sm-6 col-md-3"><div class="form-group"><div class="input-group input-group-merge"><div class="input-group-prepend"> <span class="input-group-text"><i class="ni ni-books"></i></span></div><input class="form-control" id="docName" placeholder="Tên tài liệu" type="text" disabled></div></div></div> '
+    let authorForm ='<div class="col-sm-6 col-md-3"><div class="form-group"><div class="input-group input-group-merge"><div class="input-group-prepend"> <span class="input-group-text"><i class="fas fa-users"></i></span></div><input class="form-control" id="author" placeholder="Tác giả" type="text" disabled ></div></div></div> '
+    let buttonForm ='<div class="col-sm-6 col-md-3"><div class="form-group"><div class="input-group input-group-merge"><button class="btn btn-icon btn-primary" type="button" id="delete"><span class="btn-inner--text">Xóa</span></button></div></div></div> '
+    let range = document.createRange()
+    let form = document.querySelector('#borrowForm')
+    let info = document.querySelector('#addDoc')
+    let buttonSubmit = document.querySelector('#formButton')
+    
+  
+  $('#datatable-basic tbody').on( 'click', 'button', function (event) {
+      // event prevent
+      event.preventDefault()
+     
+      // get data from table
+      let data = table.row( $(this).parents('tr') ).data();
+      
+     
+      // append to form
+      let formRow = document.createElement("div")
+      formRow.setAttribute('class','form-row')
+      formRow.setAttribute('id','newRow')
+      info.appendChild(formRow)
+      // buttonSubmit.parentNode.insertBefore(formRow,buttonSubmit)
+
+
+      // add input field
+      let inputDocId = range.createContextualFragment(docIdForm)
+      formRow.appendChild(inputDocId)
+      let inputDocName = range.createContextualFragment(docNameForm)
+      formRow.appendChild(inputDocName)
+      let inputAuthor = range.createContextualFragment(authorForm)
+      formRow.appendChild(inputAuthor)
+      let inputButton = range.createContextualFragment(buttonForm)
+      formRow.appendChild(inputButton)
+
+      // add data 
+      info.lastChild.querySelector("#docId").value = data[0]
+      info.lastChild.querySelector("#docName").value = data[1]
+      info.lastChild.querySelector("#author").value = data[2]
+      // document.getElementById("docId").setAttribute('value',data[0]);
+      // document.getElementById("docName").setAttribute('value',data[1]);
+      // document.getElementById("author").setAttribute('value',data[2]);
+
+    });
+
+  $(document).on('click', '#delete', function(e) {
+   e.preventDefault();
+   $(this).closest('#newRow').remove();
+   return false;
+  });
+
+  function getDocId(){
+    let allDocId = document.querySelectorAll("#docId")
+    let arrayId =[]
+    // console.log(allDocId[0].value)
+    for (let i = 0; i < allDocId.length; i++) {
+        // console.log(allDocId[i].value);
+        arrayId.push(allDocId[i].value)
+      }
+    console.log(arrayId)
+  }
+  </script>
 </body>
 
 </html>
