@@ -229,11 +229,9 @@
                   <tr>
                     <th>Mã phiếu mượn</th>
                     <th>Mã tài liệu</th>
+                    <th>Mã vạch</th>
                     <th>Tên tài liệu</th>
                     <th>Tác giả</th>
-                    <th>Thể loại</th>
-                    <th>Tái bản</th>
-                    <th>NXB</th>
                     <th>Trạng thái tài liệu</th>
                   </tr>
                 </thead>
@@ -241,11 +239,9 @@
                   <tr>
                     <th>Mã phiếu mượn</th>
                     <th>Mã tài liệu</th>
+                    <th>Mã vạch</th>
                     <th>Tên tài liệu</th>
                     <th>Tác giả</th>
-                    <th>Thể loại</th>
-                    <th>Tái bản</th>
-                    <th>NXB</th>
                     <th>Trạng thái tài liệu</th>
                   </tr>
                 </tfoot>
@@ -257,8 +253,6 @@
                   <td>dfa</td>
                   <td>àds</td>
                   <td>adfa</td>
-                  <td>adfa</td>
-                  <td>opip</td>
                 </tr>
 
                 <tr>
@@ -268,8 +262,7 @@
                   <td>dfa</td>
                   <td>àds</td>
                   <td>adfa</td>
-                  <td>adfa</td>
-                  <td>opip</td>
+                  
                 </tr>
                 <tr>
                   <td>03</td>
@@ -278,8 +271,7 @@
                   <td>dfa</td>
                   <td>àds</td>
                   <td>adfa</td>
-                  <td>adfa</td>
-                  <td>opip</td>
+                
                 </tr>
 
                 <tr>
@@ -289,8 +281,6 @@
                   <td>dfa</td>
                   <td>àds</td>
                   <td>adfa</td>
-                  <td>adfa</td>
-                  <td>opit</td>
                 </tr>
                 </tbody>
                 
@@ -355,7 +345,7 @@
   $(document).ready(function() {
   var table = $('#datatable-buttons').DataTable();
 // add search bar dropdown
-    table.columns([4,7]).every( function () {
+    table.columns([5]).every( function () {
         var column = this;
         var title = this.title()
         var select = $('<select><option value="">'+title+'</option></select>')
@@ -372,7 +362,7 @@
         { select.append( '<option value="'+d+'">'+d+'</option>' )});
     });
 // add search input text
-    table.columns([0,1,2,3,5,6]).every( function () {
+    table.columns([0,1,2,3,4]).every( function () {
         var column = this;
         var title = this.title()
         var that = this

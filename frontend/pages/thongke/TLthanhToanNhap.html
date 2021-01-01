@@ -224,29 +224,35 @@
           <div class="card">
             <!-- Card header -->
             <div class="card-header">
-              <h3 class="mb-0">Tài liệu thanh toán</h3>
+              <h3 class="mb-0">Tài liệu đã nhập</h3>
             </div>
             <div class="table-responsive py-4">
               <table class="table table-flush" id="datatable-buttons">
                 <thead class="thead-light">
                   <tr>
                     <th>Mã tài liệu</th>
+                    <th>Mã vạch</th>
                     <th>Tên tài liệu</th>
                     <th>Tác giả</th>
                     <th>Tái bản</th>
+                    <th>Thể loại</th>
                     <th>NXB</th>
-                    <th>Số lượng</th>
+                    <th>Ngày nhập</th>
+                    <th>Tình trạng tài liệu</th>
                     <th>Phí</th>
                   </tr>
                 </thead>
                 <tfoot>
                   <tr>
                     <th>Mã tài liệu</th>
+                    <th>Mã vạch</th>
                     <th>Tên tài liệu</th>
                     <th>Tác giả</th>
                     <th>Tái bản</th>
+                    <th>Thể loại</th>
                     <th>NXB</th>
-                    <th>Số lượng</th>
+                    <th>Ngày nhập</th>
+                    <th>Tình trạng tài liệu</th>
                     <th>Phí</th>
                   </tr>
                 </tfoot>
@@ -302,6 +308,7 @@
   <script src ="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js'></script>
+  <script src='//cdn.datatables.net/plug-ins/1.10.22/api/column().title().js'></script>
   <!-- Argon JS -->
   <script src="../../assets/js/argon.js?v=1.1.0"></script>
   <!-- Demo JS - remove this in your project -->
@@ -309,21 +316,74 @@
   <script>
     $(document).ready(function() {
   var table = $('#datatable-buttons').DataTable();
+  let url ='http://localhost:3000/documents'
 
-    $('#datatable-buttons tfoot th').each( function () {
-        var title = $(this).text();
-        $(this).html( '<input type="text" placeholder="Tìm '+title+'" />' );
+  fetch (url,  {
+  method: 'GET',
+  credentials: "omit",
+  headers: {
+     'Content-Type': 'application/json',
+    //  Authorization: "Bearer " + token,
+    },
+  })
+  .then(response => response.json())
+  .then(docList =>{
+    docList.forEach(doc =>{
+
+      let data =[]
+      // get doc data
+    
+    
+      let docId= `${doc.id}`
+      let barcode = `${doc.barcode}`
+      let docName = `${doc.doc_name}`
+      let author = `${doc.doc_author}`
+      let type = `${doc.doc_type}`
+      let publisher = `${doc.doc_publisher}`
+      let edition = `${doc.doc_edition}`
+      let price = `${doc.doc_price}`
+      let date = `${doc.created_at}`
+      let status = `${doc.doc_status}`
+
+      data.push (docId,barcode,docName,author,edition,type,publisher,date,status,price)
+
+      // add to table
+      table.row.add(data).draw()
+    })
+  })
+  .catch(error => {
+  console.error('Error:', error);
+  });
+
+
+
+  if ( $.fn.dataTable.isDataTable( '#datatable-buttons' ) ) {
+    table = $('#datatable-buttons').DataTable();
+}
+else {
+    table = $('#datatable-buttons').DataTable( {
+      orderCellsTop: true,
+      fixedHeader: true
     } );
-    table.columns().every(function () {
-        var that = this;
-        $( 'input', this.footer() ).on( 'keyup change clear', function () {
-            if ( that.search() !== this.value ) {
-                that
+}
+    // Setup - add a text input to each footer cell
+    $('#datatable-buttons thead tr').clone().appendTo( '#datatable-buttons thead' );
+
+    $('#datatable-buttons thead tr:eq(1) th').each( function (i) {
+        var title = $(this).text();
+        // var abc = this
+        $(this).html( '<input type="text" placeholder="Tìm '+title+'" />' )
+ 
+        $( 'input', this ).on( 'keyup change', function () {
+            if ( table.column(i).search() !== this.value ) {
+                table
+                    .column(i)
                     .search( this.value )
                     .draw();
             }
         } );
     } );
+
 });
   </script>
 </body>

@@ -350,57 +350,29 @@
             <table class="table table-flush " id="datatable-basic">
               <thead class="thead-light">
                 <tr>
-                <th>Mã tài liệu</th>
-                <th>Tên tài liệu</th>
-                <th>Tác giả</th>
-                <th>Thể loại</th>
-                <th>NXB</th>
-                <th></th>
+                  <th>Mã tài liệu</th>
+                  <th>Mã vạch</th>
+                  <th>Tên tài liệu</th>
+                  <th>Tác giả</th>
+                  <th>Thể loại</th>
+                  <th>Tái bản</th>
+                  <th>NXB</th>
+                  <th></th>
                 </tr>
               </thead>
               <tfoot>
                 <tr>
                   <th>Mã tài liệu</th>
+                  <th>Mã vạch</th>
                   <th>Tên tài liệu</th>
                   <th>Tác giả</th>
                   <th>Thể loại</th>
+                  <th>Tái bản</th>
                   <th>NXB</th>
                   <th></th>
                 </tr>
               </tfoot>
               <tbody id="docList">
-                <tr>
-                  <td>01</td>
-                  <td>Tin học</td>
-                  <td>Nguyễn Văn A</td>
-                  <td>SGK</td>
-                  <td>NXB Giáo Dục</td>
-                  <td><button type="button" id="add" class="btn btn-info btn-sm">Thêm</button></td>
-                </tr>
-                <tr>
-                  <td>02</td>
-                  <td>Văn học</td>
-                  <td>Lê Vân</td>
-                  <td>SGK</td>
-                  <td>NXB Giáo Dục</td>
-                  <td><button type="button" id="add" class="btn btn-info btn-sm">Thêm</button></td>
-                </tr>
-                <tr>
-                  <td>03</td>
-                  <td>Toán học</td>
-                  <td>Nguyễn B</td>
-                  <td>SGK</td>
-                  <td>NXB Giáo Dục</td>
-                  <td><button type="button" id="add" class="btn btn-info btn-sm">Thêm</button></td>
-                </tr>
-                <tr>
-                  <td>04</td>
-                  <td>Hóa học</td>
-                  <td>Phan Thành</td>
-                  <td>SGK</td>
-                  <td>NXB Giáo Dục</td>
-                  <td><button type="button" id="add" class="btn btn-info btn-sm">Thêm</button></td>
-                </tr>
               </tbody>
             </table>
           </div>
@@ -436,14 +408,16 @@
   <script src="../../assets/js/demo.min.js"></script>
   <script>
     var table = $('#datatable-basic').DataTable();
-    let docIdForm ='<div class="col-sm-6 col-md-3"><div class="form-group"><div class="input-group input-group-merge"><div class="input-group-prepend"> <span class="input-group-text"><i class="ni ni-book-bookmark"></i></span></div><input class="form-control" id="docId" placeholder="Mã tài liệu" type="text" disabled ></div></div></div> '
-    let docNameForm ='<div class="col-sm-6 col-md-3"><div class="form-group"><div class="input-group input-group-merge"><div class="input-group-prepend"> <span class="input-group-text"><i class="ni ni-books"></i></span></div><input class="form-control" id="docName" placeholder="Tên tài liệu" type="text" disabled></div></div></div> '
-    let authorForm ='<div class="col-sm-6 col-md-3"><div class="form-group"><div class="input-group input-group-merge"><div class="input-group-prepend"> <span class="input-group-text"><i class="fas fa-users"></i></span></div><input class="form-control" id="author" placeholder="Tác giả" type="text" disabled ></div></div></div> '
-    let buttonForm ='<div class="col-sm-6 col-md-3"><div class="form-group"><div class="input-group input-group-merge"><button class="btn btn-icon btn-primary" type="button" id="delete"><span class="btn-inner--text">Xóa</span></button></div></div></div> '
+    let docIdForm ='<div class="col"><div class="form-group"><div class="input-group input-group-merge"><div class="input-group-prepend"> <span class="input-group-text"><i class="ni ni-book-bookmark"></i></span></div><input class="form-control" id="docId" placeholder="Mã tài liệu" type="text" disabled ></div></div></div> '
+    let barcodeForm ='<div class="col"><div class="form-group"><div class="input-group input-group-merge"><div class="input-group-prepend"> <span class="input-group-text"><i class="fas fa-barcode"></i></span></div><input class="form-control" id="barcode" placeholder="Mã vạch" type="text" disabled ></div></div></div> '
+    let docNameForm ='<div class="col"><div class="form-group"><div class="input-group input-group-merge"><div class="input-group-prepend"> <span class="input-group-text"><i class="ni ni-books"></i></span></div><input class="form-control" id="docName" placeholder="Tên tài liệu" type="text" disabled></div></div></div> '
+    let authorForm ='<div class="col"><div class="form-group"><div class="input-group input-group-merge"><div class="input-group-prepend"> <span class="input-group-text"><i class="fas fa-users"></i></span></div><input class="form-control" id="author" placeholder="Tác giả" type="text" disabled ></div></div></div> '
+    let buttonForm ='<div class="col"><div class="form-group"><div class="input-group input-group-merge"><button class="btn btn-icon btn-primary" type="button" id="delete"><span class="btn-inner--text">Xóa</span></button></div></div></div> '
     let range = document.createRange()
     let form = document.querySelector('#borrowForm')
     let info = document.querySelector('#addDoc')
     let buttonSubmit = document.querySelector('#formButton')
+    let url = 'http://localhost:3000/documents'
     
   
   $('#datatable-basic tbody').on( 'click', 'button', function (event) {
@@ -458,13 +432,15 @@
       let formRow = document.createElement("div")
       formRow.setAttribute('class','form-row')
       formRow.setAttribute('id','newRow')
-      info.appendChild(formRow)
-      // buttonSubmit.parentNode.insertBefore(formRow,buttonSubmit)
+      form.appendChild(formRow)
+      buttonSubmit.parentNode.insertBefore(formRow,buttonSubmit)
 
 
       // add input field
       let inputDocId = range.createContextualFragment(docIdForm)
       formRow.appendChild(inputDocId)
+      let inputBarcode = range.createContextualFragment(barcodeForm)
+      formRow.appendChild(inputBarcode)
       let inputDocName = range.createContextualFragment(docNameForm)
       formRow.appendChild(inputDocName)
       let inputAuthor = range.createContextualFragment(authorForm)
@@ -473,12 +449,10 @@
       formRow.appendChild(inputButton)
 
       // add data 
-      info.lastChild.querySelector("#docId").value = data[0]
-      info.lastChild.querySelector("#docName").value = data[1]
-      info.lastChild.querySelector("#author").value = data[2]
-      // document.getElementById("docId").setAttribute('value',data[0]);
-      // document.getElementById("docName").setAttribute('value',data[1]);
-      // document.getElementById("author").setAttribute('value',data[2]);
+      formRow.querySelector("#docId").value = data[0]
+      formRow.querySelector("#barcode").value = data[1]
+      formRow.querySelector("#docName").value = data[2]
+      formRow.querySelector("#author").value = data[3]
 
     });
 
@@ -491,13 +465,46 @@
   function getDocId(){
     let allDocId = document.querySelectorAll("#docId")
     let arrayId =[]
-    // console.log(allDocId[0].value)
     for (let i = 0; i < allDocId.length; i++) {
-        // console.log(allDocId[i].value);
         arrayId.push(allDocId[i].value)
       }
     console.log(arrayId)
   }
+
+  fetch (url,
+  {
+    method: 'GET',
+    credentials: "omit",
+    headers: {
+       'Content-Type': 'application/json',
+      //  Authorization: "Bearer " + token,
+      },
+  })
+  .then(response => response.json())
+  .then(docList =>{
+    docList.forEach(doc =>{
+
+      let data =[]
+      // get doc data
+      let docId= `${doc.id}`
+      let barcode = `${doc.barcode}`
+      let docName = `${doc.doc_name}`
+      let author = `${doc.doc_author}`
+      let type = `${doc.doc_type}`
+      let publisher = `${doc.doc_publisher}`
+      let edition = `${doc.doc_edition}`
+      let btn = '<button type="button" id="add" class="btn btn-info btn-sm">Thêm</button>'
+     
+      data.push (docId,barcode,docName,author,type,edition,publisher,btn)
+      // add to table
+      table.row.add(data).draw()
+    })
+  })
+  .catch(error => {
+  console.error('Error:', error);
+  });
+
+
   </script>
 </body>
 

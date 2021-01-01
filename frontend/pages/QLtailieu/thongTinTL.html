@@ -236,37 +236,54 @@
                 <thead class="thead-light">
                   <tr>
                     <th>Mã tài liệu</th>
+                    <th>Mã vạch</th>
                     <th>Tên tài liệu</th>
                     <th>Tác giả</th>
                     <th>Thể loại</th>
                     <th>Tái bản</th>
                     <th>NXB</th>
                     <th>Giá</th>
-                    <th></th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <tfoot>
                   <tr>
                     <th>Mã tài liệu</th>
+                    <th>Mã vạch</th>
                     <th>Tên tài liệu</th>
                     <th>Tác giả</th>
                     <th>Thể loại</th>
                     <th>Tái bản</th>
                     <th>NXB</th>
                     <th>Giá</th>
-                    <th></th>
+                    <th>Action</th>
                   </tr>
                 </tfoot>
                 <tbody>
+                <tr>
                   <td>05</td>
+                  <td>0129323</td>
                   <td>Tin học</td>
                   <td>Nguyễn Văn A</td>
                   <td>Giáo trình</td>
                   <td>lần 1</td>
                   <td>NXB Giáo dục</td>
                   <td>10000</td>
-                  <td><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-form">Chỉnh sửa</button>
-                    <button type="button" class="btn btn-danger btn-sm"  data-toggle="sweet-alert" onclick="deleteBook()">Xóa</button></td>
+                  <td><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-form" id="edit">Chỉnh sửa</button>
+                    <button type="button" class="btn btn-danger btn-sm"  data-toggle="sweet-alert" id="delete" >Xóa</button></td>
+                  </tr>
+                  <tr>
+                    <td>07</td>
+                    <td>409384</td>
+                    <td>Tiếng Anh</td>
+                    <td>Trần Văn B</td>
+                    <td>Giáo trình</td>
+                    <td>lần 5</td>
+                    <td>NXB Sự Thật</td>
+                    <td>10000</td>
+                    <td><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-form" id="edit">Chỉnh sửa</button>
+                      <button type="button" class="btn btn-danger btn-sm"  data-toggle="sweet-alert" id="delete" >Xóa</button></td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -317,76 +334,60 @@
                     <div class="text-center text-muted mb-4">
                         <small>Chỉnh sửa</small>
                     </div>
-                    <!-- <form role="form">
-                      <div class="form-group mb-3">
-                        <div class="input-group input-group-merge input-group-alternative">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="ni ni-ungroup"></i></span>
-                            </div>
-                            <input class="form-control" id="formId" placeholder="Mã phiếu mượn" type="text" readonly>
-                        </div>
-                    </div> -->
                         <div class="form-group mb-3">
-                            <div class="input-group input-group-merge input-group-alternative">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="ni ni-book-bookmark"></i></span>
-                                </div>
+                            
+                                <label class="form-control-label">Mã tài liệu</label>
                                 <input class="form-control" id="docId" placeholder="Mã tài liệu" type="text" readonly>
-                            </div>
+
+                        </div>
+                        <div class="form-group mb-3">
+                         
+                              <label class="form-control-label">Mã vạch</label>
+                              <input class="form-control" id="barcode" placeholder="Mã vạch" type="text" readonly>
+
                         </div>
                         <div class="form-group">
-                            <div class="input-group input-group-merge input-group-alternative">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="ni ni-books"></i></span>
-                                </div>
-                                <input class="form-control" id="name" placeholder="Tên tài liệu" type="text" >
-                            </div>
+                      
+                                <label class="form-control-label">Tên tài liệu</label>
+                                <input class="form-control" id="docName" placeholder="Tên tài liệu" type="text" >
+
                         </div>
                         <div class="form-group">
-                          <div class="input-group input-group-merge input-group-alternative">
-                              <div class="input-group-prepend">
-                                  <span class="input-group-text"><i class="fas fa-users"></i></span>
-                              </div>
-                              <input class="form-control" id="userId" placeholder="Tác giả" type="text">
-                          </div>
+                        
+                              <label class="form-control-label">Tác giả</label>
+                              <input class="form-control" id="author" placeholder="Tác giả" type="text">
+                        
                         </div>
                         <div class="form-group">
-                          <div class="input-group input-group-merge input-group-alternative">
-                              <div class="input-group-prepend">
-                                  <span class="input-group-text"><i class="ni ni-box-2"></i></span>
-                              </div>
-                              <input class="form-control" id="userId" placeholder="Tái bản" type="text">
-                          </div>
+                        
+                              <label class="form-control-label">Tái bản</label>
+                              <input class="form-control" id="edition" placeholder="Tái bản" type="text">
+                        
                         </div>
                         <div class="form-group">
-                          <div class="input-group input-group-merge input-group-alternative">
-                              <div class="input-group-prepend">
-                                  <span class="input-group-text"><i class="ni ni-folder-17"></i></span>
-                              </div>
-                              <input class="form-control" id="userId" placeholder="Nhà xuất bản" type="text">
-                          </div>
+                        
+                              <label class="form-control-label">Nhà xuất bản</label>
+                              <input class="form-control" id="publisher" placeholder="Nhà xuất bản" type="text">
+                         
                         </div>
                         <div class="form-group">
-                          <div class="input-group input-group-merge input-group-alternative">
-                              <div class="input-group-prepend">
-                                  <span class="input-group-text"><i class="ni ni-archive-2"></i></span>
-                              </div>
-                              <select class="form-control" id= "status" data-toggle="select" title="Thể loại" data-live-search="true" data-live-search-placeholder="Select">
+                         
+                              <label class="form-control-label">Thể loại</label>
+                              <select class="form-control" id= "type" data-toggle="select" title="Thể loại" data-live-search="true" data-live-search-placeholder="Select">
                                 <option>Giáo trình</option>
                                 <option>Tạp chí</option>
                                 <option>Sách tham khảo</option>
                                 <option>Sách nước ngoài</option>
                               </select>
-                          </div>
-                        </div> 
+                        
+                        </div>
                         <div class="form-group">
-                          <div class="input-group input-group-merge input-group-alternative">
-                              <div class="input-group-prepend">
-                                  <span class="input-group-text"><i class="ni ni-fat-add"></i></span>
-                              </div>
-                              <input class="form-control" id="userId" placeholder="Số lượng" type="text">
-                          </div>
-                        </div>                                
+                        
+                            <label class="form-control-label">Giá tiền</label>
+                            <input class="form-control" id="price" placeholder="Giá" type="text">
+                        
+                        </div> 
+                                                  
                         <div class="text-center">
                             <button type="submit" id="submit" class="btn btn-primary my-4">Cập nhật</button>
                             <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">Đóng</button>
@@ -424,33 +425,193 @@
   <script src="../../assets/vendor/datatables.net-select/js/dataTables.select.min.js"></script>
   <script src="../../assets/vendor/sweetalert2/dist/sweetalert2.min.js"></script>
   <script src="../../assets/vendor/bootstrap-notify/bootstrap-notify.min.js"></script>
+  <script src='//cdn.datatables.net/plug-ins/1.10.22/api/column().title().js'></script>
   <!-- Argon JS -->
   <script src="../../assets/js/argon.js?v=1.1.0"></script>
   <!-- Demo JS - remove this in your project -->
   <script src="../../assets/js/demo.min.js"></script>
   <script>
-    function deleteBook(){
+// get data
+
+let url ="http://localhost:3000/documents"
+fetch (url,
+  {
+    method: 'GET',
+    credentials: "omit",
+    headers: {
+       'Content-Type': 'application/json',
+      //  Authorization: "Bearer " + token,
+      },
+  })
+  .then(response => response.json())
+  .then(docList =>{
+    docList.forEach(doc =>{
+
+      let data =[]
+      // get doc data
+      let docId= `${doc.id}`
+      let barcode = `${doc.barcode}`
+      let docName = `${doc.doc_name}`
+      let author = `${doc.doc_author}`
+      let type = `${doc.doc_type}`
+      let publisher = `${doc.doc_publisher}`
+      let edition = `${doc.doc_edition}`
+      let price = `${doc.doc_price}`
+      let btn = '<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-form" id="edit">Chỉnh sửa</button><button type="button" class="btn btn-danger btn-sm"  data-toggle="sweet-alert" id="delete" >Xóa</button>'
+     
+      data.push (docId,barcode,docName,author,type,edition,publisher,price,btn)
+      // add to table
+      table.row.add(data).draw()
+    })
+  })
+  .catch(error => {
+  console.error('Error:', error);
+  });
+
+// edit modal
+
+  $('#datatable-basic tbody').on( 'click', '#edit', function (event) {
+      // event prevent
+      event.preventDefault()
+     
+      // get data from table
+      let data = table.row( $(this).parents('tr') ).data();
+      // console.log(data)
+     
+      let docId =  data[0]
+      let barcode =  data[1]
+      let docName =  data[2]
+      let author = data[3]
+      let type = data[4]
+      let edition = data[5]
+      let publisher = data[6]
+      let price = data[7]
+
+      // add data to input field
+      $("#docId").val(docId)
+      $("#barcode").val(barcode)
+      $("#docName").val(docName)
+      $("#author").val(author)
+      $("#type").val(type)
+      $("#edition").val(edition)
+      $("#publisher").val(publisher)
+      $("#type").val(type)
+      $("#price").val(price)     
+     
+    });
+
+    $("#submit").on('click',function(){
+    
+
+    let id = parseInt(document.getElementById('docId').value,10);
+    let name = document.getElementById('docName').value;
+    let author = document.getElementById('author').value;
+    let type = document.getElementById('type').value;
+    let publisher = document.getElementById('publisher').value;
+    let edition = document.getElementById('edition').value;
+    let price = document.getElementById('price').value;
+
+    let url = 'http://localhost:3000/documents/'
+
+      fetch(url + id, 
+        {
+          method: 'PUT',
+          credentials: "omit",
+          headers: {
+             'Content-Type': 'application/json',
+            //  Authorization: "Bearer " + token,
+            },
+          body:JSON.stringify({doc_name:name, doc_author:author, doc_type:type, doc_publisher: publisher, doc_edition: edition,doc_price:price})
+    }
+     ).then((res) => res.json())
+     .then(result => alert("Đã sửa thông tin tài liệu", result))
+     .then(result => location.reload() )
+     .catch((err)=>alert("Đã xảy ra lỗi",err))
+    //  location.reload();
+
+  })
+
+
+
+// delete doc
+
+    $('#datatable-basic tbody').on( 'click', '#delete', function (event) {
+      // event prevent
+      event.preventDefault()
+     
+      // get data from table
+      let data = table.row( $(this).parents('tr') ).data();
+      let docId =  data[0]
+      let url = 'http://localhost:3000/documents/'
+
+      // sweet alert
       swal({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
+      title: 'Bạn có chắc chắn muốn xóa tài liệu này?',
+      text: "Bạn sẽ không thể làm lại",
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: 'Xóa tài liệu'
     }).then((result) => {
       if (result.value) {
         // delete in db
-
+        fetch( url + docId,
+        {
+          method: 'DELETE',
+          credentials: "omit",
+          headers: {
+             'Content-Type': 'application/json',
+            //  Authorization: "Bearer " + token,
+            },
+            // body:JSON.stringify({id_doc:documentId})
+            })
+        // remove data from table
+        .then(result =>  table.row('.selected').remove().draw( false ))
         // show alert
-        swal({
-          title:'Deleted!',
-          text:'Your file has been deleted.',
+        .then(result =>  swal({
+          title:'Đã xóa',
+          text:'Tài liệu đã được xóa',
           type:'success'
-        })
+        }))
+        .catch(error => console.log(error))
       }
-  })
+    })
+     
+    });
+
+
+// add search box 
+
+$(document).ready(function() {
+  if ( $.fn.dataTable.isDataTable( '#datatable-basic' ) ) {
+    table = $('#datatable-basic').DataTable();
 }
+else {
+    table = $('#datatable-basic').DataTable( {
+      orderCellsTop: true,
+      fixedHeader: true
+    } );
+}
+    // Setup - add a text input to each footer cell
+    $('#datatable-basic thead tr').clone().appendTo( '#datatable-basic thead' );
+
+    $('#datatable-basic thead tr:eq(1) th').each( function (i) {
+        var title = $(this).text();
+        // var abc = this
+        $(this).html( '<input type="text" placeholder="Tìm '+title+'" />' )
+ 
+        $( 'input', this ).on( 'keyup change', function () {
+            if ( table.column(i).search() !== this.value ) {
+                table
+                    .column(i)
+                    .search( this.value )
+                    .draw();
+            }
+        } );
+    } );
+} );
+
 
   </script>
 </body>

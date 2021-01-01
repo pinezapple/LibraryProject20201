@@ -303,4 +303,39 @@
   <script src="../../assets/js/demo.min.js"></script>
 </body>
 
+<script>
+  $(document).ready(function() {
+
+  
+if ( $.fn.dataTable.isDataTable( '#datatable-basic' ) ) {
+  table = $('#datatable-basic').DataTable();
+}
+else {
+  table = $('#datatable-basic').DataTable( {
+    orderCellsTop: true,
+    fixedHeader: true
+  } );
+}
+
+  // Setup - add a text input to each footer cell
+  $('#datatable-basic thead tr').clone().appendTo( '#datatable-basic thead' );
+
+  $('#datatable-basic thead tr:eq(1) th').each( function (i) {
+      var title = $(this).text();
+      // var abc = this
+      $(this).html( '<input type="text" placeholder="Tìm '+title+'" />' )
+
+      $( 'input', this ).on( 'keyup change', function () {
+          if ( table.column(i).search() !== this.value ) {
+              table
+                  .column(i)
+                  .search( this.value )
+                  .draw();
+          }
+      } );
+  } );
+} );
+
+</script>
+
 </html>

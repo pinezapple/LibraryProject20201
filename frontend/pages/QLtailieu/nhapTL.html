@@ -238,7 +238,7 @@
                           <div class="input-group-prepend">
                             <span class="input-group-text"><i class="ni ni-books"></i></span>
                           </div>
-                          <input class="form-control" id="name" placeholder="Tên tài liệu" type="text" required>
+                          <input class="form-control" id="docName" placeholder="Tên tài liệu" type="text" required>
                         </div>
                       </div>
                     </div>
@@ -263,7 +263,7 @@
                             <span class="input-group-text"><i class="ni ni-archive-2"></i></span>
                           </div>
                           <!-- <input class="form-control" id="type" placeholder="Thể loại" type="text"> -->
-                          <select class="form-control" data-toggle="select">
+                          <select class="form-control" id='type' data-toggle="select">
                             <option>Giáo trình</option>
                             <option>Tạp chí</option>
                             <option>Sách tham khảo</option>
@@ -278,7 +278,7 @@
                           <div class="input-group-prepend">
                             <span class="input-group-text"><i class="ni ni-folder-17"></i></span>
                           </div>
-                          <input class="form-control" id = "description" placeholder="Nhà xuất bản" type="text">
+                          <input class="form-control" id = "publisher" placeholder="Nhà xuất bản" type="text" required>
                         </div>
                       </div>
                     </div>
@@ -292,7 +292,7 @@
                           <div class="input-group-prepend">
                             <span class="input-group-text"><i class="ni ni-box-2"></i></span>
                           </div>
-                          <input class="form-control" id="fee" placeholder="Tái bản" type="text">
+                          <input class="form-control" id="edition" placeholder="Tái bản" type="text" required>
                         </div>
                       </div>
                     </div>
@@ -302,7 +302,7 @@
                           <div class="input-group-prepend">
                             <span class="input-group-text"><i class="ni ni-fat-add"></i></span>
                           </div>
-                          <input class="form-control" id="fee" placeholder="Số lượng" type="text">
+                          <input class="form-control" id="quantity" placeholder="Số lượng" type="text">
                         </div>
                       </div>
                     </div>
@@ -316,13 +316,13 @@
                           <div class="input-group-prepend">
                             <span class="input-group-text"><i class="ni ni-money-coins"></i></span>
                           </div>
-                          <input class="form-control" id="fee" placeholder="Giá" type="text">
+                          <input class="form-control" id="price" placeholder="Giá" type="text" required>
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  <button class="btn btn-primary" type="submit">Thêm</button>
+                  <button class="btn btn-primary" type="submit" id="submit">Thêm</button>
                   <button type="button" class="btn btn-danger" style = "float: right;" onclick="reset()" >Hủy</button>
                 </form>
               </div>
@@ -367,30 +367,46 @@
   <script src="../../assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
   <script src="../../assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
   <!-- Optional JS -->
-  <script>
-    // Example starter JavaScript for disabling form submissions if there are invalid fields
-    (function() {
-      'use strict';
-      window.addEventListener('load', function() {
-        // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        var forms = document.getElementsByClassName('needs-validation');
-        // Loop over them and prevent submission
-        var validation = Array.prototype.filter.call(forms, function(form) {
-          form.addEventListener('submit', function(event) {
-            if (form.checkValidity() === false) {
-              event.preventDefault();
-              event.stopPropagation();
-            }
-            form.classList.add('was-validated');
-          }, false);
-        });
-      }, false);
-    })();
-  </script>
   <!-- Argon JS -->
   <script src="../../assets/js/argon.js?v=1.1.0"></script>
   <!-- Demo JS - remove this in your project -->
   <script src="../../assets/js/demo.min.js"></script>
+  <script>
+    document.getElementById('newDoc').addEventListener('submit', newDoc);
+
+    $("#submit").on('click',function(){
+    
+    event.preventDefault();
+
+    let docName = document.getElementById('docName').value;
+    let author = document.getElementById('author').value;
+    let type = document.getElementById('type').value;
+    let publisher = document.getElementById('publisher').value;
+    let edition = document.getElementById('edition').value;
+    let price = parseInt(document.getElementById('price').value);
+    let quantity = parseInt(document.getElementById('quantity').value);
+
+    
+
+    let url = 'http://localhost:3000/documents'
+
+    fetch(url, 
+    {
+      method: 'POST',
+      credentials: "omit",
+      headers: {
+        'Content-Type': 'application/json',
+        // Authorization: "Bearer " + token,
+        },
+      body:JSON.stringify({doc_name:docName, doc_author:author, doc_type:type, doc_publisher: publisher,doc_edition: edition, doc_price: price})
+      }).then((res) => res.json())
+    .then(result => alert("Đã thêm tài liệu", result))
+    .catch((err)=>alert("Đã xảy ra lỗi, xin hãy nhập lại",err))
+
+    document.getElementById("newDoc").reset();
+      
+  })
+  </script>
 </body>
 
 </html>
