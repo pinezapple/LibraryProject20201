@@ -255,7 +255,7 @@
                           <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-id-card"></i></span>
                           </div>
-                          <input class="form-control" id="studentId" placeholder="Mã độc giả" type="text" required>
+                          <input class="form-control" id="reader" placeholder="Mã độc giả" type="text" required>
                         </div>
                       </div>
                     </div>
@@ -265,7 +265,7 @@
                           <div class="input-group-prepend">
                             <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
                           </div>
-                          <input class="form-control" placeholder="Số ngày mượn" id='days' type="number" min="1" required>
+                          <input class="form-control" placeholder="Số ngày mượn" id='duration' type="number" min="1" required>
                           <div class="input-group-append">
                             <span class="input-group-text">ngày</span>
                           </div>
@@ -329,7 +329,7 @@
                   </div>
                   <!-- button -->
                 <div class="form-row" id="formButton">
-                  <button class="btn btn-primary" type="button" onclick="getDocId()">Tạo phiếu</button>
+                  <button class="btn btn-primary" type="button" onclick="createBorrowForm()">Tạo phiếu</button>
                   <button type="button" class="btn btn-danger" style = "float: right;" onclick="reset()">Hủy</button>
                 </div>
                 
@@ -418,6 +418,7 @@
     let info = document.querySelector('#addDoc')
     let buttonSubmit = document.querySelector('#formButton')
     let url = 'http://localhost:3000/documents'
+    let urlBorrow ='http://localhost:3000/borrow_form'
     
   
   $('#datatable-basic tbody').on( 'click', 'button', function (event) {
@@ -462,13 +463,37 @@
    return false;
   });
 
-  function getDocId(){
-    let allDocId = document.querySelectorAll("#docId")
+  function createBorrowForm(){
+    let docIds = document.querySelectorAll('#docId')
+    let barcodeIds = document.querySelectorAll('#barcode')
+    let duration = document.getElementById('duration').value
+    let reader = document.getElementById('reader').value
+    let librarian = document.getElementById('librarian').value
+
     let arrayId =[]
-    for (let i = 0; i < allDocId.length; i++) {
-        arrayId.push(allDocId[i].value)
+     for (let i = 0; i < docIds.length; i++) {
+      let obj = {"docId":docIds[i].value, "barcode": barcodeIds[i].value}
+      arrayId.push(obj)
       }
-    console.log(arrayId)
+    // console.log(arrayId)
+
+    fetch(urlBorrow,
+  {
+    method: 'POST',
+    credentials: "omit",
+    headers: {
+       'Content-Type': 'application/json',
+      //  Authorization: "Bearer " + token,
+      },
+      body:JSON.stringify({id_reader: reader, id_librarian: librarian, docs:arrayId, duration: duration,borrow_status:"1"})
+     
+  }
+  ).then((res) => res.json())
+  .then(result => alert("Success", result))
+  .catch((err)=>alert("Something went wrong",err))
+
+  document.getElementById("borrowForm").reset();
+   
   }
 
   fetch (url,

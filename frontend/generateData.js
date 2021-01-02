@@ -29,24 +29,58 @@ module.exports = function(){
                fee: faker.commerce.price()
            }
        }),
-       borrow_form: _.times(60, function(n){
+
+       doc_returned: _.times(60, function(n){
+        return {
+            borrow_id: n,
+            id_doc:faker.random.number(60),
+            barcode : faker.phone.phoneNumberFormat(),
+            doc_name: faker.random.words(),
+            doc_author: faker.name.findName(),
+            doc_status : faker.commerce.color(2),
+        }
+    }),
+
+       returned_form: _.times(60, function(n){
            return{
                id:n,
                id_reader:faker.random.number(60),
                reader: faker.name.findName(),
                id_librarian: faker.random.number(60),
                librarian:faker.name.findName(),
-               id_doc: faker.random.number(60),
                docs: [
                    {barcode : faker.phone.phoneNumberFormat(),id_doc:faker.random.number(60),doc_name: faker.random.words(),
-                    doc_author: faker.name.findName()},
+                    doc_author: faker.name.findName(),doc_status : faker.commerce.color(2)},
                     {barcode : faker.phone.phoneNumberFormat(),id_doc:faker.random.number(60),doc_name: faker.random.words(),
-                    doc_author: faker.name.findName()},
+                    doc_author: faker.name.findName(),doc_status : faker.commerce.color(2)},
                     {barcode : faker.phone.phoneNumberFormat(),id_doc:faker.random.number(60),doc_name: faker.random.words(),
-                    doc_author: faker.name.findName()}
+                    doc_author: faker.name.findName(),doc_status : faker.commerce.color(2)}
                ],
-               duration: faker.random.number(7)
+               duration: faker.random.number(7),
+               borrow_status: faker.random.number({
+                'min': 0,
+                'max': 2
+            })
            }
-       })
-    }
+       }),
+
+       borrow_form: _.times(60, function(n){
+        return{
+            id:n,
+            id_reader:faker.random.number(60),
+            reader: faker.name.findName(),
+            id_librarian: faker.random.number(60),
+            docs: [
+                {barcode : faker.phone.phoneNumberFormat(),id_doc:faker.random.number(60)},
+                {barcode : faker.phone.phoneNumberFormat(),id_doc:faker.random.number(60)},
+                {barcode : faker.phone.phoneNumberFormat(),id_doc:faker.random.number(60)}
+            ],
+            duration: faker.random.number(7),
+            borrow_status: faker.random.number({
+             'min': 0,
+             'max': 2
+         })
+        }
+    })
+    }       
 }

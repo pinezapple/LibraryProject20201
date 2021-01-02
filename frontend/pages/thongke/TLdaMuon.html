@@ -339,45 +339,105 @@
   <script src='//cdn.datatables.net/plug-ins/1.10.22/api/column().title().js'></script>
   <!-- Argon JS -->
   <script src="../../assets/js/argon.js?v=1.1.0"></script>
+  
   <!-- Demo JS - remove this in your project -->
   <script src="../../assets/js/demo.min.js"></script>
   <script>
-  $(document).ready(function() {
-  var table = $('#datatable-buttons').DataTable();
-// add search bar dropdown
-    table.columns([5]).every( function () {
-        var column = this;
-        var title = this.title()
-        var select = $('<select><option value="">'+title+'</option></select>')
-            .appendTo( $(column.footer()).empty() )
-            .on( 'change', function () {
-                var val = $.fn.dataTable.util.escapeRegex(
-                    $(this).val()
-                );
-                column
-                    .search( val ? '^'+val+'$' : '', true, false )
-                    .draw();
-            } );
-        column.data().unique().sort().each( function ( d, j ) 
-        { select.append( '<option value="'+d+'">'+d+'</option>' )});
-    });
-// add search input text
-    table.columns([0,1,2,3,4]).every( function () {
-        var column = this;
-        var title = this.title()
-        var that = this
-        var input = $('<input type="text" placeholder="Tìm '+title+'" />')
-            .appendTo( $(column.footer()).empty() )
-            $( 'input', this.footer() ).on( 'keyup change clear', function () {
-                    if ( that.search() !== this.value ) {
-                        that
-                            .search( this.value )
-                            .draw();
-                    }
-                } );
-
-});
+     var table = $('#datatable-buttons').DataTable();
+    let url ='http://localhost:3000/doc_returned'
+    fetch (url,
+  {
+    method: 'GET',
+    credentials: "omit",
+    headers: {
+       'Content-Type': 'application/json',
+      //  Authorization: "Bearer " + token,
+      },
   })
+  .then(response => response.json())
+  .then(docList =>{
+    docList.forEach(doc =>{
+
+      let data =[]
+      // get doc data
+      let borrowId = `${doc.borrow_id}`
+      let docId= `${doc.id_doc}`
+      let barcode = `${doc.barcode}`
+      let docName = `${doc.doc_name}`
+      let author = `${doc.doc_author}`
+      let status = `${doc.doc_status}`
+     
+      data.push (borrowId,docId,barcode,docName,author,status)
+      // add to table
+      table.row.add(data).draw()
+    })
+  })
+  .catch(error => {
+  console.error('Error:', error);
+  });
+$(document).ready(function() {
+  if ( $.fn.dataTable.isDataTable( '#datatable-buttons' ) ) {
+    table = $('#datatable-buttons').DataTable();
+  }
+else {
+    table = $('#datatable-buttons').DataTable( {
+      orderCellsTop: true,
+      fixedHeader: true
+    } );
+  }
+    // Setup - add a text input to each footer cell
+    $('#datatable-buttons thead tr').clone().appendTo( '#datatable-buttons thead' );
+
+    $('#datatable-buttons thead tr:eq(1) th').each( function (i) {
+        var title = $(this).text();
+        // var abc = this
+        $(this).html( '<input type="text" placeholder="Tìm '+title+'" />' )
+ 
+        $( 'input', this ).on( 'keyup change', function () {
+            if ( table.column(i).search() !== this.value ) {
+                table
+                    .column(i)
+                    .search( this.value )
+                    .draw();
+            }
+        } );
+    } );
+
+
+
+  //   table.columns([5]).every( function () {
+  //       var column = this;
+  //       var title = this.title()
+  //       var select = $('<select><option value="">'+title+'</option></select>')
+  //           .appendTo( $(column.footer()).empty() )
+  //           .on( 'change', function () {
+  //               var val = $.fn.dataTable.util.escapeRegex(
+  //                   $(this).val()
+  //               );
+  //               column
+  //                   .search( val ? '^'+val+'$' : '', true, false )
+  //                   .draw();
+  //           } );
+  //       column.data().unique().sort().each( function ( d, j ) 
+  //       { select.append( '<option value="'+d+'">'+d+'</option>' )});
+  //   });
+
+  //   table.columns([0,1,2,3,4]).every( function () {
+  //       var column = this;
+  //       var title = this.title()
+  //       var that = this
+  //       var input = $('<input type="text" placeholder="Tìm '+title+'" />')
+  //           .appendTo( $(column.footer()).empty() )
+  //           $( 'input', this.footer() ).on( 'keyup change clear', function () {
+  //                   if ( that.search() !== this.value ) {
+  //                       that
+  //                           .search( this.value )
+  //                           .draw();
+  //                   }
+  //               } );
+
+  // });
+})
   </script>
 </body>
 
