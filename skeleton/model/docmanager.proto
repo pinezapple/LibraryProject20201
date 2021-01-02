@@ -20,7 +20,7 @@ option (gogoproto.unmarshaler_all) = true;
 service Docmanager {
     rpc SelectAllBarcode (SelectAllBarcodeReq) returns (SelectAllBarcodeResp);
     rpc SelectBarcodeByID (SelectBarcodeByIDReq) returns (SelectBarcodeByIDResp);
-    rpc InsertBarcode (InsertBarcodeReq) returns (InsertBarcodeResp);
+    rpc SaveBarcode (SaveBarcodeReq) returns (SaveBarcodeResp);
     rpc UpdateBarcode (UpdateBarcodeReq) returns (UpdateBarcodeResp);
     rpc DeleteBarcode (DeleteBarcodeReq) returns (DeleteBarcodeResp);
 
@@ -28,25 +28,29 @@ service Docmanager {
     rpc SelectBorrowFormByID (SelectBorrowFormByIDReq) returns (SelectBorrowFormByIDResp);
     rpc SaveBorrowForm (SaveBorrowFormReq) returns (SaveBorrowFormResp);
     rpc DeleteBorrowForm (SaveBorrowFormReq) returns (SaveBorrowFormResp);
+
+    rpc SelectAllSaleBill (SelectAllSaleBillReq) returns (SelectAllSaleBillResp);
+    rpc SelectAllSaleBillByID (SelectAllSaleBillByIDReq) returns (SelectAllSaleBillByIDResp);
+    rpc SaveSaleBill (SaveSaleBillReq) returns (SaveSaleBillResp);
+    rpc DeleteSaleBill (DeleteSaleBillReq) returns (DeleteSaleBillResp);
 }
 
 message Doc {
     uint64 ID = 1 [(gogoproto.jsontag) = "id_doc", (gogoproto.moretags) = "db:\"id_doc\""];
     string Name = 2 [(gogoproto.jsontag) = "doc_name", (gogoproto.moretags) = "db:\"doc_name\""];
-    model.Time Created_at = 3 [(gogoproto.jsontag) = "created_at", (gogoproto.moretags) = "db:\"created_at\""];
-	model.Time Updated_at = 4 [(gogoproto.jsontag) = "updated_at", (gogoproto.moretags) = "db:\"updated_at\""];
+    uint64 Category_id = 3 [(gogoproto.jsontag) = "doc_type", (gogoproto.moretags) = "db:\"category_id\""];
+    model.Time Created_at = 4 [(gogoproto.jsontag) = "created_at", (gogoproto.moretags) = "db:\"created_at\""];
+	model.Time Updated_at = 5 [(gogoproto.jsontag) = "updated_at", (gogoproto.moretags) = "db:\"updated_at\""];
 }
 
 message DocVersion {
     string DocVer = 1 [(gogoproto.jsontag) = "doc_ver", (gogoproto.moretags) = "db:\"doc_ver\""];
     uint64 DocID = 2 [(gogoproto.jsontag) = "id_doc", (gogoproto.moretags) = "db:\"id_doc\""];
     uint64 Version = 3 [(gogoproto.jsontag) = "version", (gogoproto.moretags) = "db:\"version\""];
-    string DocType = 4 [(gogoproto.jsontag) = "doc_type", (gogoproto.moretags) = "db:\"doc_type\""];
-    string DocDescription = 5 [(gogoproto.jsontag) = "doc_description", (gogoproto.moretags) = "db:\"doc_description\""];
-    uint64 fee = 6 [(gogoproto.jsontag) = "fee", (gogoproto.moretags) = "db:\"fee\""];
-    uint64 price = 7 [(gogoproto.jsontag) = "price", (gogoproto.moretags) = "db:\"price\""];
-    model.Time Created_at = 8 [(gogoproto.jsontag) = "created_at", (gogoproto.moretags) = "db:\"created_at\""];
-	model.Time Updated_at = 9 [(gogoproto.jsontag) = "updated_at", (gogoproto.moretags) = "db:\"updated_at\""];
+    string DocDescription = 4 [(gogoproto.jsontag) = "doc_description", (gogoproto.moretags) = "db:\"doc_description\""];
+    uint64 Price = 5 [(gogoproto.jsontag) = "price", (gogoproto.moretags) = "db:\"price\""];
+    model.Time Created_at = 6 [(gogoproto.jsontag) = "created_at", (gogoproto.moretags) = "db:\"created_at\""];
+	model.Time Updated_at = 7 [(gogoproto.jsontag) = "updated_at", (gogoproto.moretags) = "db:\"updated_at\""];
 }
 
 message Barcode {
@@ -59,19 +63,10 @@ message Barcode {
 
 message Payment {
     uint64 ID = 1 [(gogoproto.jsontag) = "id_payment", (gogoproto.moretags) = "db:\"id_payment\""];
-    uint64 Money = 2 [(gogoproto.jsontag) = "money", (gogoproto.moretags) = "db:\"money\""];
-    string Vendor = 3 [(gogoproto.jsontag) = "vendor", (gogoproto.moretags) = "db:\"vendor\""];
-    uint64 BarcodeID = 4 [(gogoproto.jsontag) = "id_barcode", (gogoproto.moretags) = "db:\"id_barcode\""];
+    repeated uint64 barcode_id = 2 [(gogoproto.jsontag) = "barcode_id", (gogoproto.moretags) = "db:\"barcode_id\""];
+    repeated uint64 money = 3 [(gogoproto.jsontag) = "money", (gogoproto.moretags) = "db:\"money\""];
     model.Time Created_at = 5 [(gogoproto.jsontag) = "created_at", (gogoproto.moretags) = "db:\"created_at\""];
 	model.Time Updated_at = 6 [(gogoproto.jsontag) = "updated_at", (gogoproto.moretags) = "db:\"updated_at\""];
-}
-
-message Receipt {
-    uint64 ID = 1 [(gogoproto.jsontag) = "id_receipt", (gogoproto.moretags) = "db:\"id_receipt\""];
-    uint64 BorrowFormID = 2 [(gogoproto.jsontag) = "id_borrow_form", (gogoproto.moretags) = "db:\"id_borrow_form\""];
-    uint64 Money = 3 [(gogoproto.jsontag) = "money", (gogoproto.moretags) = "db:\"money\""];
-    model.Time Created_at = 4 [(gogoproto.jsontag) = "created_at", (gogoproto.moretags) = "db:\"created_at\""];
-	model.Time Updated_at = 5 [(gogoproto.jsontag) = "updated_at", (gogoproto.moretags) = "db:\"updated_at\""];
 }
 
 message BorrowForm {
@@ -83,6 +78,12 @@ message BorrowForm {
     model.Time EndTime = 6 [(gogoproto.jsontag) = "end_time", (gogoproto.moretags) = "db:\"end_time\""];
     model.Time Created_at = 7 [(gogoproto.jsontag) = "created_at", (gogoproto.moretags) = "db:\"created_at\""];
 	model.Time Updated_at = 8 [(gogoproto.jsontag) = "updated_at", (gogoproto.moretags) = "db:\"updated_at\""];
+}
+
+message SaleBill {
+    uint64 ID = 1 [(gogoproto.jsontag) = "id_sale_bill", (gogoproto.moretags) = "db:\"id_sale_bill\""];
+    repeated uint64 barcode_id = 2 [(gogoproto.jsontag) = "barcode_id", (gogoproto.moretags) = "db:\"barcode_id\""];
+    repeated uint64 price = 3 [(gogoproto.jsontag) = "price", (gogoproto.moretags) = "db:\"price\""];
 }
 
 // ---------------------------------------------------------------
@@ -106,11 +107,11 @@ message SelectBarcodeByIDResp {
     Barcode barcode = 3 [(gogoproto.nullable) = true]; 
 }
 
-message InsertBarcodeReq {
+message SaveBarcodeReq {
     Barcode barcode = 1;
 }
 
-message InsertBarcodeResp {
+message SaveBarcodeResp {
     int32 code = 1;
     string message = 2;
 }
@@ -169,6 +170,46 @@ message DeleteBorrowFormReq {
 }
 
 message DeleteBorrowFormResp {
+    int32 code = 1;
+    string message = 2;
+}
+
+// ----------------- Sale Bill ------------------
+
+message SelectAllSaleBillReq {
+
+}
+
+message SelectAllSaleBillResp {
+    int32 code = 1;
+    string message = 2;
+    repeated SaleBill saleBills = 3 [(gogoproto.nullable) = true];
+}
+
+message SelectAllSaleBillByIDReq {
+    uint64 saleBillID = 1;
+}
+
+message SelectAllSaleBillByIDResp {
+    int32 code = 1;
+    string message = 2;
+    repeated SaleBill saleBills = 3 [(gogoproto.nullable) = true];
+}
+
+message SaveSaleBillReq {
+    SaleBill saleBill = 1;
+}
+
+message SaveSaleBillResp {
+    int32 code = 1;
+    string message = 2;
+}
+
+message DeleteSaleBillReq {
+    uint64 saleBillID = 1; 
+}
+
+message DeleteSaleBillResp {
     int32 code = 1;
     string message = 2;
 }
