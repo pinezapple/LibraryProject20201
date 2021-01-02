@@ -4,7 +4,6 @@
 package docmanagerModel
 
 import (
-	bytes "bytes"
 	context "context"
 	fmt "fmt"
 	_ "github.com/gogo/protobuf/gogoproto"
@@ -32,14 +31,11 @@ var _ = math.Inf
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 type Doc struct {
-	ID                   uint64      `protobuf:"varint,1,opt,name=ID,proto3" json:"id_doc" db:"id_doc"`
-	Name                 string      `protobuf:"bytes,2,opt,name=Name,proto3" json:"doc_name" db:"doc_name"`
-	CategoryId           uint64      `protobuf:"varint,3,opt,name=Category_id,json=CategoryId,proto3" json:"doc_type" db:"category_id"`
-	CreatedAt            *model.Time `protobuf:"bytes,4,opt,name=Created_at,json=CreatedAt,proto3" json:"created_at" db:"created_at"`
-	UpdatedAt            *model.Time `protobuf:"bytes,5,opt,name=Updated_at,json=UpdatedAt,proto3" json:"updated_at" db:"updated_at"`
-	XXX_NoUnkeyedLiteral struct{}    `json:"-"`
-	XXX_unrecognized     []byte      `json:"-"`
-	XXX_sizecache        int32       `json:"-"`
+	ID         uint64      `protobuf:"varint,1,opt,name=ID,proto3" json:"id_doc" db:"id_doc"`
+	Name       string      `protobuf:"bytes,2,opt,name=Name,proto3" json:"doc_name" db:"doc_name"`
+	CategoryId uint64      `protobuf:"varint,3,opt,name=Category_id,json=CategoryId,proto3" json:"doc_type" db:"category_id"`
+	CreatedAt  *model.Time `protobuf:"bytes,4,opt,name=Created_at,json=CreatedAt,proto3" json:"created_at" db:"created_at"`
+	UpdatedAt  *model.Time `protobuf:"bytes,5,opt,name=Updated_at,json=UpdatedAt,proto3" json:"updated_at" db:"updated_at"`
 }
 
 func (m *Doc) Reset()         { *m = Doc{} }
@@ -111,16 +107,13 @@ func (m *Doc) GetUpdatedAt() *model.Time {
 }
 
 type DocVersion struct {
-	DocVer               string      `protobuf:"bytes,1,opt,name=DocVer,proto3" json:"doc_ver" db:"doc_ver"`
-	DocID                uint64      `protobuf:"varint,2,opt,name=DocID,proto3" json:"id_doc" db:"id_doc"`
-	Version              uint64      `protobuf:"varint,3,opt,name=Version,proto3" json:"version" db:"version"`
-	DocDescription       string      `protobuf:"bytes,4,opt,name=DocDescription,proto3" json:"doc_description" db:"doc_description"`
-	Price                uint64      `protobuf:"varint,5,opt,name=Price,proto3" json:"price" db:"price"`
-	CreatedAt            *model.Time `protobuf:"bytes,6,opt,name=Created_at,json=CreatedAt,proto3" json:"created_at" db:"created_at"`
-	UpdatedAt            *model.Time `protobuf:"bytes,7,opt,name=Updated_at,json=UpdatedAt,proto3" json:"updated_at" db:"updated_at"`
-	XXX_NoUnkeyedLiteral struct{}    `json:"-"`
-	XXX_unrecognized     []byte      `json:"-"`
-	XXX_sizecache        int32       `json:"-"`
+	DocVer         string      `protobuf:"bytes,1,opt,name=DocVer,proto3" json:"doc_ver" db:"doc_ver"`
+	DocID          uint64      `protobuf:"varint,2,opt,name=DocID,proto3" json:"id_doc" db:"id_doc"`
+	Version        uint64      `protobuf:"varint,3,opt,name=Version,proto3" json:"version" db:"version"`
+	DocDescription string      `protobuf:"bytes,4,opt,name=DocDescription,proto3" json:"doc_description" db:"doc_description"`
+	Price          uint64      `protobuf:"varint,5,opt,name=Price,proto3" json:"price" db:"price"`
+	CreatedAt      *model.Time `protobuf:"bytes,6,opt,name=Created_at,json=CreatedAt,proto3" json:"created_at" db:"created_at"`
+	UpdatedAt      *model.Time `protobuf:"bytes,7,opt,name=Updated_at,json=UpdatedAt,proto3" json:"updated_at" db:"updated_at"`
 }
 
 func (m *DocVersion) Reset()         { *m = DocVersion{} }
@@ -206,14 +199,11 @@ func (m *DocVersion) GetUpdatedAt() *model.Time {
 }
 
 type Barcode struct {
-	ID                   uint64      `protobuf:"varint,1,opt,name=ID,proto3" json:"id_barcode" db:"id_barcode"`
-	DocVer               string      `protobuf:"bytes,2,opt,name=DocVer,proto3" json:"doc_ver" db:"doc_ver"`
-	Status               uint64      `protobuf:"varint,3,opt,name=status,proto3" json:"status" db:"status"`
-	CreatedAt            *model.Time `protobuf:"bytes,4,opt,name=Created_at,json=CreatedAt,proto3" json:"created_at" db:"created_at"`
-	UpdatedAt            *model.Time `protobuf:"bytes,5,opt,name=Updated_at,json=UpdatedAt,proto3" json:"updated_at" db:"updated_at"`
-	XXX_NoUnkeyedLiteral struct{}    `json:"-"`
-	XXX_unrecognized     []byte      `json:"-"`
-	XXX_sizecache        int32       `json:"-"`
+	ID        uint64      `protobuf:"varint,1,opt,name=ID,proto3" json:"id_barcode" db:"id_barcode"`
+	DocVer    string      `protobuf:"bytes,2,opt,name=DocVer,proto3" json:"doc_ver" db:"doc_ver"`
+	Status    uint64      `protobuf:"varint,3,opt,name=status,proto3" json:"status" db:"status"`
+	CreatedAt *model.Time `protobuf:"bytes,4,opt,name=Created_at,json=CreatedAt,proto3" json:"created_at" db:"created_at"`
+	UpdatedAt *model.Time `protobuf:"bytes,5,opt,name=Updated_at,json=UpdatedAt,proto3" json:"updated_at" db:"updated_at"`
 }
 
 func (m *Barcode) Reset()         { *m = Barcode{} }
@@ -285,14 +275,11 @@ func (m *Barcode) GetUpdatedAt() *model.Time {
 }
 
 type Payment struct {
-	ID                   uint64      `protobuf:"varint,1,opt,name=ID,proto3" json:"id_payment" db:"id_payment"`
-	BarcodeId            []uint64    `protobuf:"varint,2,rep,packed,name=barcode_id,json=barcodeId,proto3" json:"barcode_id" db:"barcode_id"`
-	Money                []uint64    `protobuf:"varint,3,rep,packed,name=money,proto3" json:"money" db:"money"`
-	CreatedAt            *model.Time `protobuf:"bytes,5,opt,name=Created_at,json=CreatedAt,proto3" json:"created_at" db:"created_at"`
-	UpdatedAt            *model.Time `protobuf:"bytes,6,opt,name=Updated_at,json=UpdatedAt,proto3" json:"updated_at" db:"updated_at"`
-	XXX_NoUnkeyedLiteral struct{}    `json:"-"`
-	XXX_unrecognized     []byte      `json:"-"`
-	XXX_sizecache        int32       `json:"-"`
+	ID        uint64      `protobuf:"varint,1,opt,name=ID,proto3" json:"id_payment" db:"id_payment"`
+	BarcodeId []uint64    `protobuf:"varint,2,rep,packed,name=barcode_id,json=barcodeId,proto3" json:"barcode_id" db:"barcode_id"`
+	Money     []uint64    `protobuf:"varint,3,rep,packed,name=money,proto3" json:"money" db:"money"`
+	CreatedAt *model.Time `protobuf:"bytes,5,opt,name=Created_at,json=CreatedAt,proto3" json:"created_at" db:"created_at"`
+	UpdatedAt *model.Time `protobuf:"bytes,6,opt,name=Updated_at,json=UpdatedAt,proto3" json:"updated_at" db:"updated_at"`
 }
 
 func (m *Payment) Reset()         { *m = Payment{} }
@@ -364,17 +351,14 @@ func (m *Payment) GetUpdatedAt() *model.Time {
 }
 
 type BorrowForm struct {
-	ID                   uint64      `protobuf:"varint,1,opt,name=ID,proto3" json:"id_receipt" db:"id_receipt"`
-	LibrarianID          uint64      `protobuf:"varint,2,opt,name=LibrarianID,proto3" json:"id_librarian" db:"id_librarian"`
-	BarcodeID            uint64      `protobuf:"varint,3,opt,name=BarcodeID,proto3" json:"id_barcode" db:"id_barcode"`
-	Status               uint64      `protobuf:"varint,4,opt,name=Status,proto3" json:"status" db:"status"`
-	StartTime            *model.Time `protobuf:"bytes,5,opt,name=StartTime,proto3" json:"start_time" db:"start_time"`
-	EndTime              *model.Time `protobuf:"bytes,6,opt,name=EndTime,proto3" json:"end_time" db:"end_time"`
-	CreatedAt            *model.Time `protobuf:"bytes,7,opt,name=Created_at,json=CreatedAt,proto3" json:"created_at" db:"created_at"`
-	UpdatedAt            *model.Time `protobuf:"bytes,8,opt,name=Updated_at,json=UpdatedAt,proto3" json:"updated_at" db:"updated_at"`
-	XXX_NoUnkeyedLiteral struct{}    `json:"-"`
-	XXX_unrecognized     []byte      `json:"-"`
-	XXX_sizecache        int32       `json:"-"`
+	ID          uint64      `protobuf:"varint,1,opt,name=ID,proto3" json:"id_receipt" db:"id_receipt"`
+	LibrarianID uint64      `protobuf:"varint,2,opt,name=LibrarianID,proto3" json:"id_librarian" db:"id_librarian"`
+	BarcodeID   []uint64    `protobuf:"varint,3,rep,packed,name=BarcodeID,proto3" json:"id_barcode" db:"id_barcode"`
+	Status      []uint64    `protobuf:"varint,4,rep,packed,name=Status,proto3" json:"status" db:"status"`
+	StartTime   *model.Time `protobuf:"bytes,5,opt,name=StartTime,proto3" json:"start_time" db:"start_time"`
+	EndTime     *model.Time `protobuf:"bytes,6,opt,name=EndTime,proto3" json:"end_time" db:"end_time"`
+	CreatedAt   *model.Time `protobuf:"bytes,7,opt,name=Created_at,json=CreatedAt,proto3" json:"created_at" db:"created_at"`
+	UpdatedAt   *model.Time `protobuf:"bytes,8,opt,name=Updated_at,json=UpdatedAt,proto3" json:"updated_at" db:"updated_at"`
 }
 
 func (m *BorrowForm) Reset()         { *m = BorrowForm{} }
@@ -424,18 +408,18 @@ func (m *BorrowForm) GetLibrarianID() uint64 {
 	return 0
 }
 
-func (m *BorrowForm) GetBarcodeID() uint64 {
+func (m *BorrowForm) GetBarcodeID() []uint64 {
 	if m != nil {
 		return m.BarcodeID
 	}
-	return 0
+	return nil
 }
 
-func (m *BorrowForm) GetStatus() uint64 {
+func (m *BorrowForm) GetStatus() []uint64 {
 	if m != nil {
 		return m.Status
 	}
-	return 0
+	return nil
 }
 
 func (m *BorrowForm) GetStartTime() *model.Time {
@@ -467,12 +451,10 @@ func (m *BorrowForm) GetUpdatedAt() *model.Time {
 }
 
 type SaleBill struct {
-	ID                   uint64   `protobuf:"varint,1,opt,name=ID,proto3" json:"id_sale_bill" db:"id_sale_bill"`
-	BarcodeId            []uint64 `protobuf:"varint,2,rep,packed,name=barcode_id,json=barcodeId,proto3" json:"barcode_id" db:"barcode_id"`
-	Price                []uint64 `protobuf:"varint,3,rep,packed,name=price,proto3" json:"price" db:"price"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	ID        uint64      `protobuf:"varint,1,opt,name=ID,proto3" json:"id_sale_bill" db:"id_sale_bill"`
+	BarcodeId []uint64    `protobuf:"varint,2,rep,packed,name=barcode_id,json=barcodeId,proto3" json:"barcode_id" db:"barcode_id"`
+	Price     []uint64    `protobuf:"varint,3,rep,packed,name=price,proto3" json:"price" db:"price"`
+	CreatedAt *model.Time `protobuf:"bytes,4,opt,name=Created_at,json=CreatedAt,proto3" json:"created_at" db:"created_at"`
 }
 
 func (m *SaleBill) Reset()         { *m = SaleBill{} }
@@ -529,11 +511,15 @@ func (m *SaleBill) GetPrice() []uint64 {
 	return nil
 }
 
+func (m *SaleBill) GetCreatedAt() *model.Time {
+	if m != nil {
+		return m.CreatedAt
+	}
+	return nil
+}
+
 // ---------------------------------------------------------------
 type SelectAllBarcodeReq struct {
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *SelectAllBarcodeReq) Reset()         { *m = SelectAllBarcodeReq{} }
@@ -570,12 +556,9 @@ func (m *SelectAllBarcodeReq) XXX_DiscardUnknown() {
 var xxx_messageInfo_SelectAllBarcodeReq proto.InternalMessageInfo
 
 type SelectAllBarcodeResp struct {
-	Code                 int32      `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
-	Message              string     `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	Barcodes             []*Barcode `protobuf:"bytes,3,rep,name=barcodes,proto3" json:"barcodes,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}   `json:"-"`
-	XXX_unrecognized     []byte     `json:"-"`
-	XXX_sizecache        int32      `json:"-"`
+	Code     int32      `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message  string     `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Barcodes []*Barcode `protobuf:"bytes,3,rep,name=barcodes,proto3" json:"barcodes,omitempty"`
 }
 
 func (m *SelectAllBarcodeResp) Reset()         { *m = SelectAllBarcodeResp{} }
@@ -632,18 +615,207 @@ func (m *SelectAllBarcodeResp) GetBarcodes() []*Barcode {
 	return nil
 }
 
+type SelectAllSellingBarcodeReq struct {
+}
+
+func (m *SelectAllSellingBarcodeReq) Reset()         { *m = SelectAllSellingBarcodeReq{} }
+func (m *SelectAllSellingBarcodeReq) String() string { return proto.CompactTextString(m) }
+func (*SelectAllSellingBarcodeReq) ProtoMessage()    {}
+func (*SelectAllSellingBarcodeReq) Descriptor() ([]byte, []int) {
+	return fileDescriptor_3bc93e03df457931, []int{8}
+}
+func (m *SelectAllSellingBarcodeReq) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *SelectAllSellingBarcodeReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_SelectAllSellingBarcodeReq.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *SelectAllSellingBarcodeReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SelectAllSellingBarcodeReq.Merge(m, src)
+}
+func (m *SelectAllSellingBarcodeReq) XXX_Size() int {
+	return m.Size()
+}
+func (m *SelectAllSellingBarcodeReq) XXX_DiscardUnknown() {
+	xxx_messageInfo_SelectAllSellingBarcodeReq.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_SelectAllSellingBarcodeReq proto.InternalMessageInfo
+
+type SelectAllSellingBarcodeResp struct {
+	Code     int32      `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message  string     `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Barcodes []*Barcode `protobuf:"bytes,3,rep,name=barcodes,proto3" json:"barcodes,omitempty"`
+}
+
+func (m *SelectAllSellingBarcodeResp) Reset()         { *m = SelectAllSellingBarcodeResp{} }
+func (m *SelectAllSellingBarcodeResp) String() string { return proto.CompactTextString(m) }
+func (*SelectAllSellingBarcodeResp) ProtoMessage()    {}
+func (*SelectAllSellingBarcodeResp) Descriptor() ([]byte, []int) {
+	return fileDescriptor_3bc93e03df457931, []int{9}
+}
+func (m *SelectAllSellingBarcodeResp) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *SelectAllSellingBarcodeResp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_SelectAllSellingBarcodeResp.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *SelectAllSellingBarcodeResp) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SelectAllSellingBarcodeResp.Merge(m, src)
+}
+func (m *SelectAllSellingBarcodeResp) XXX_Size() int {
+	return m.Size()
+}
+func (m *SelectAllSellingBarcodeResp) XXX_DiscardUnknown() {
+	xxx_messageInfo_SelectAllSellingBarcodeResp.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_SelectAllSellingBarcodeResp proto.InternalMessageInfo
+
+func (m *SelectAllSellingBarcodeResp) GetCode() int32 {
+	if m != nil {
+		return m.Code
+	}
+	return 0
+}
+
+func (m *SelectAllSellingBarcodeResp) GetMessage() string {
+	if m != nil {
+		return m.Message
+	}
+	return ""
+}
+
+func (m *SelectAllSellingBarcodeResp) GetBarcodes() []*Barcode {
+	if m != nil {
+		return m.Barcodes
+	}
+	return nil
+}
+
+type SelectAllDamageBarcodeReq struct {
+	Code     int32      `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message  string     `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Barcodes []*Barcode `protobuf:"bytes,3,rep,name=barcodes,proto3" json:"barcodes,omitempty"`
+}
+
+func (m *SelectAllDamageBarcodeReq) Reset()         { *m = SelectAllDamageBarcodeReq{} }
+func (m *SelectAllDamageBarcodeReq) String() string { return proto.CompactTextString(m) }
+func (*SelectAllDamageBarcodeReq) ProtoMessage()    {}
+func (*SelectAllDamageBarcodeReq) Descriptor() ([]byte, []int) {
+	return fileDescriptor_3bc93e03df457931, []int{10}
+}
+func (m *SelectAllDamageBarcodeReq) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *SelectAllDamageBarcodeReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_SelectAllDamageBarcodeReq.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *SelectAllDamageBarcodeReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SelectAllDamageBarcodeReq.Merge(m, src)
+}
+func (m *SelectAllDamageBarcodeReq) XXX_Size() int {
+	return m.Size()
+}
+func (m *SelectAllDamageBarcodeReq) XXX_DiscardUnknown() {
+	xxx_messageInfo_SelectAllDamageBarcodeReq.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_SelectAllDamageBarcodeReq proto.InternalMessageInfo
+
+func (m *SelectAllDamageBarcodeReq) GetCode() int32 {
+	if m != nil {
+		return m.Code
+	}
+	return 0
+}
+
+func (m *SelectAllDamageBarcodeReq) GetMessage() string {
+	if m != nil {
+		return m.Message
+	}
+	return ""
+}
+
+func (m *SelectAllDamageBarcodeReq) GetBarcodes() []*Barcode {
+	if m != nil {
+		return m.Barcodes
+	}
+	return nil
+}
+
+type SelectAllDamageBarcodeResp struct {
+}
+
+func (m *SelectAllDamageBarcodeResp) Reset()         { *m = SelectAllDamageBarcodeResp{} }
+func (m *SelectAllDamageBarcodeResp) String() string { return proto.CompactTextString(m) }
+func (*SelectAllDamageBarcodeResp) ProtoMessage()    {}
+func (*SelectAllDamageBarcodeResp) Descriptor() ([]byte, []int) {
+	return fileDescriptor_3bc93e03df457931, []int{11}
+}
+func (m *SelectAllDamageBarcodeResp) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *SelectAllDamageBarcodeResp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_SelectAllDamageBarcodeResp.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *SelectAllDamageBarcodeResp) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SelectAllDamageBarcodeResp.Merge(m, src)
+}
+func (m *SelectAllDamageBarcodeResp) XXX_Size() int {
+	return m.Size()
+}
+func (m *SelectAllDamageBarcodeResp) XXX_DiscardUnknown() {
+	xxx_messageInfo_SelectAllDamageBarcodeResp.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_SelectAllDamageBarcodeResp proto.InternalMessageInfo
+
 type SelectBarcodeByIDReq struct {
-	BarcodeID            uint64   `protobuf:"varint,1,opt,name=barcodeID,proto3" json:"barcodeID,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	BarcodeID uint64 `protobuf:"varint,1,opt,name=barcodeID,proto3" json:"barcodeID,omitempty"`
 }
 
 func (m *SelectBarcodeByIDReq) Reset()         { *m = SelectBarcodeByIDReq{} }
 func (m *SelectBarcodeByIDReq) String() string { return proto.CompactTextString(m) }
 func (*SelectBarcodeByIDReq) ProtoMessage()    {}
 func (*SelectBarcodeByIDReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{8}
+	return fileDescriptor_3bc93e03df457931, []int{12}
 }
 func (m *SelectBarcodeByIDReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -680,19 +852,16 @@ func (m *SelectBarcodeByIDReq) GetBarcodeID() uint64 {
 }
 
 type SelectBarcodeByIDResp struct {
-	Code                 int32    `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
-	Message              string   `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	Barcode              *Barcode `protobuf:"bytes,3,opt,name=barcode,proto3" json:"barcode,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Code    int32    `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message string   `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Barcode *Barcode `protobuf:"bytes,3,opt,name=barcode,proto3" json:"barcode,omitempty"`
 }
 
 func (m *SelectBarcodeByIDResp) Reset()         { *m = SelectBarcodeByIDResp{} }
 func (m *SelectBarcodeByIDResp) String() string { return proto.CompactTextString(m) }
 func (*SelectBarcodeByIDResp) ProtoMessage()    {}
 func (*SelectBarcodeByIDResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{9}
+	return fileDescriptor_3bc93e03df457931, []int{13}
 }
 func (m *SelectBarcodeByIDResp) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -743,17 +912,14 @@ func (m *SelectBarcodeByIDResp) GetBarcode() *Barcode {
 }
 
 type SaveBarcodeReq struct {
-	Barcode              *Barcode `protobuf:"bytes,1,opt,name=barcode,proto3" json:"barcode,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Barcode *Barcode `protobuf:"bytes,1,opt,name=barcode,proto3" json:"barcode,omitempty"`
 }
 
 func (m *SaveBarcodeReq) Reset()         { *m = SaveBarcodeReq{} }
 func (m *SaveBarcodeReq) String() string { return proto.CompactTextString(m) }
 func (*SaveBarcodeReq) ProtoMessage()    {}
 func (*SaveBarcodeReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{10}
+	return fileDescriptor_3bc93e03df457931, []int{14}
 }
 func (m *SaveBarcodeReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -790,18 +956,15 @@ func (m *SaveBarcodeReq) GetBarcode() *Barcode {
 }
 
 type SaveBarcodeResp struct {
-	Code                 int32    `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
-	Message              string   `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Code    int32  `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message string `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
 }
 
 func (m *SaveBarcodeResp) Reset()         { *m = SaveBarcodeResp{} }
 func (m *SaveBarcodeResp) String() string { return proto.CompactTextString(m) }
 func (*SaveBarcodeResp) ProtoMessage()    {}
 func (*SaveBarcodeResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{11}
+	return fileDescriptor_3bc93e03df457931, []int{15}
 }
 func (m *SaveBarcodeResp) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -845,17 +1008,14 @@ func (m *SaveBarcodeResp) GetMessage() string {
 }
 
 type UpdateBarcodeReq struct {
-	Barcode              *Barcode `protobuf:"bytes,1,opt,name=barcode,proto3" json:"barcode,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Barcode *Barcode `protobuf:"bytes,1,opt,name=barcode,proto3" json:"barcode,omitempty"`
 }
 
 func (m *UpdateBarcodeReq) Reset()         { *m = UpdateBarcodeReq{} }
 func (m *UpdateBarcodeReq) String() string { return proto.CompactTextString(m) }
 func (*UpdateBarcodeReq) ProtoMessage()    {}
 func (*UpdateBarcodeReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{12}
+	return fileDescriptor_3bc93e03df457931, []int{16}
 }
 func (m *UpdateBarcodeReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -892,18 +1052,15 @@ func (m *UpdateBarcodeReq) GetBarcode() *Barcode {
 }
 
 type UpdateBarcodeResp struct {
-	Code                 int32    `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
-	Message              string   `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Code    int32  `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message string `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
 }
 
 func (m *UpdateBarcodeResp) Reset()         { *m = UpdateBarcodeResp{} }
 func (m *UpdateBarcodeResp) String() string { return proto.CompactTextString(m) }
 func (*UpdateBarcodeResp) ProtoMessage()    {}
 func (*UpdateBarcodeResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{13}
+	return fileDescriptor_3bc93e03df457931, []int{17}
 }
 func (m *UpdateBarcodeResp) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -947,17 +1104,14 @@ func (m *UpdateBarcodeResp) GetMessage() string {
 }
 
 type DeleteBarcodeReq struct {
-	BarcodeID            uint64   `protobuf:"varint,1,opt,name=barcodeID,proto3" json:"barcodeID,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	BarcodeID uint64 `protobuf:"varint,1,opt,name=barcodeID,proto3" json:"barcodeID,omitempty"`
 }
 
 func (m *DeleteBarcodeReq) Reset()         { *m = DeleteBarcodeReq{} }
 func (m *DeleteBarcodeReq) String() string { return proto.CompactTextString(m) }
 func (*DeleteBarcodeReq) ProtoMessage()    {}
 func (*DeleteBarcodeReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{14}
+	return fileDescriptor_3bc93e03df457931, []int{18}
 }
 func (m *DeleteBarcodeReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -994,18 +1148,15 @@ func (m *DeleteBarcodeReq) GetBarcodeID() uint64 {
 }
 
 type DeleteBarcodeResp struct {
-	Code                 int32    `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
-	Message              string   `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Code    int32  `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message string `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
 }
 
 func (m *DeleteBarcodeResp) Reset()         { *m = DeleteBarcodeResp{} }
 func (m *DeleteBarcodeResp) String() string { return proto.CompactTextString(m) }
 func (*DeleteBarcodeResp) ProtoMessage()    {}
 func (*DeleteBarcodeResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{15}
+	return fileDescriptor_3bc93e03df457931, []int{19}
 }
 func (m *DeleteBarcodeResp) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1049,16 +1200,13 @@ func (m *DeleteBarcodeResp) GetMessage() string {
 }
 
 type SelectAllBorrowFormReq struct {
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *SelectAllBorrowFormReq) Reset()         { *m = SelectAllBorrowFormReq{} }
 func (m *SelectAllBorrowFormReq) String() string { return proto.CompactTextString(m) }
 func (*SelectAllBorrowFormReq) ProtoMessage()    {}
 func (*SelectAllBorrowFormReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{16}
+	return fileDescriptor_3bc93e03df457931, []int{20}
 }
 func (m *SelectAllBorrowFormReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1088,19 +1236,16 @@ func (m *SelectAllBorrowFormReq) XXX_DiscardUnknown() {
 var xxx_messageInfo_SelectAllBorrowFormReq proto.InternalMessageInfo
 
 type SelectAllBorrowFormResp struct {
-	Code                 int32         `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
-	Message              string        `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	BorrowForms          []*BorrowForm `protobuf:"bytes,3,rep,name=borrowForms,proto3" json:"borrowForms,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
-	XXX_unrecognized     []byte        `json:"-"`
-	XXX_sizecache        int32         `json:"-"`
+	Code        int32         `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message     string        `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	BorrowForms []*BorrowForm `protobuf:"bytes,3,rep,name=borrowForms,proto3" json:"borrowForms,omitempty"`
 }
 
 func (m *SelectAllBorrowFormResp) Reset()         { *m = SelectAllBorrowFormResp{} }
 func (m *SelectAllBorrowFormResp) String() string { return proto.CompactTextString(m) }
 func (*SelectAllBorrowFormResp) ProtoMessage()    {}
 func (*SelectAllBorrowFormResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{17}
+	return fileDescriptor_3bc93e03df457931, []int{21}
 }
 func (m *SelectAllBorrowFormResp) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1150,18 +1295,111 @@ func (m *SelectAllBorrowFormResp) GetBorrowForms() []*BorrowForm {
 	return nil
 }
 
+type SelectAllUnReturnBorrowFormReq struct {
+}
+
+func (m *SelectAllUnReturnBorrowFormReq) Reset()         { *m = SelectAllUnReturnBorrowFormReq{} }
+func (m *SelectAllUnReturnBorrowFormReq) String() string { return proto.CompactTextString(m) }
+func (*SelectAllUnReturnBorrowFormReq) ProtoMessage()    {}
+func (*SelectAllUnReturnBorrowFormReq) Descriptor() ([]byte, []int) {
+	return fileDescriptor_3bc93e03df457931, []int{22}
+}
+func (m *SelectAllUnReturnBorrowFormReq) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *SelectAllUnReturnBorrowFormReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_SelectAllUnReturnBorrowFormReq.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *SelectAllUnReturnBorrowFormReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SelectAllUnReturnBorrowFormReq.Merge(m, src)
+}
+func (m *SelectAllUnReturnBorrowFormReq) XXX_Size() int {
+	return m.Size()
+}
+func (m *SelectAllUnReturnBorrowFormReq) XXX_DiscardUnknown() {
+	xxx_messageInfo_SelectAllUnReturnBorrowFormReq.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_SelectAllUnReturnBorrowFormReq proto.InternalMessageInfo
+
+type SelectAllUnReturnBorrowFormResp struct {
+	Code        int32         `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message     string        `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	BorrowForms []*BorrowForm `protobuf:"bytes,3,rep,name=borrowForms,proto3" json:"borrowForms,omitempty"`
+}
+
+func (m *SelectAllUnReturnBorrowFormResp) Reset()         { *m = SelectAllUnReturnBorrowFormResp{} }
+func (m *SelectAllUnReturnBorrowFormResp) String() string { return proto.CompactTextString(m) }
+func (*SelectAllUnReturnBorrowFormResp) ProtoMessage()    {}
+func (*SelectAllUnReturnBorrowFormResp) Descriptor() ([]byte, []int) {
+	return fileDescriptor_3bc93e03df457931, []int{23}
+}
+func (m *SelectAllUnReturnBorrowFormResp) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *SelectAllUnReturnBorrowFormResp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_SelectAllUnReturnBorrowFormResp.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *SelectAllUnReturnBorrowFormResp) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SelectAllUnReturnBorrowFormResp.Merge(m, src)
+}
+func (m *SelectAllUnReturnBorrowFormResp) XXX_Size() int {
+	return m.Size()
+}
+func (m *SelectAllUnReturnBorrowFormResp) XXX_DiscardUnknown() {
+	xxx_messageInfo_SelectAllUnReturnBorrowFormResp.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_SelectAllUnReturnBorrowFormResp proto.InternalMessageInfo
+
+func (m *SelectAllUnReturnBorrowFormResp) GetCode() int32 {
+	if m != nil {
+		return m.Code
+	}
+	return 0
+}
+
+func (m *SelectAllUnReturnBorrowFormResp) GetMessage() string {
+	if m != nil {
+		return m.Message
+	}
+	return ""
+}
+
+func (m *SelectAllUnReturnBorrowFormResp) GetBorrowForms() []*BorrowForm {
+	if m != nil {
+		return m.BorrowForms
+	}
+	return nil
+}
+
 type SelectBorrowFormByIDReq struct {
-	BorrowFormID         uint64   `protobuf:"varint,1,opt,name=BorrowFormID,proto3" json:"BorrowFormID,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	BorrowFormID uint64 `protobuf:"varint,1,opt,name=BorrowFormID,proto3" json:"BorrowFormID,omitempty"`
 }
 
 func (m *SelectBorrowFormByIDReq) Reset()         { *m = SelectBorrowFormByIDReq{} }
 func (m *SelectBorrowFormByIDReq) String() string { return proto.CompactTextString(m) }
 func (*SelectBorrowFormByIDReq) ProtoMessage()    {}
 func (*SelectBorrowFormByIDReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{18}
+	return fileDescriptor_3bc93e03df457931, []int{24}
 }
 func (m *SelectBorrowFormByIDReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1198,19 +1436,16 @@ func (m *SelectBorrowFormByIDReq) GetBorrowFormID() uint64 {
 }
 
 type SelectBorrowFormByIDResp struct {
-	Code                 int32       `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
-	Message              string      `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	Borrowform           *BorrowForm `protobuf:"bytes,3,opt,name=borrowform,proto3" json:"borrowform,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}    `json:"-"`
-	XXX_unrecognized     []byte      `json:"-"`
-	XXX_sizecache        int32       `json:"-"`
+	Code       int32       `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message    string      `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Borrowform *BorrowForm `protobuf:"bytes,3,opt,name=borrowform,proto3" json:"borrowform,omitempty"`
 }
 
 func (m *SelectBorrowFormByIDResp) Reset()         { *m = SelectBorrowFormByIDResp{} }
 func (m *SelectBorrowFormByIDResp) String() string { return proto.CompactTextString(m) }
 func (*SelectBorrowFormByIDResp) ProtoMessage()    {}
 func (*SelectBorrowFormByIDResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{19}
+	return fileDescriptor_3bc93e03df457931, []int{25}
 }
 func (m *SelectBorrowFormByIDResp) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1261,17 +1496,14 @@ func (m *SelectBorrowFormByIDResp) GetBorrowform() *BorrowForm {
 }
 
 type SaveBorrowFormReq struct {
-	Borrowform           *BorrowForm `protobuf:"bytes,1,opt,name=borrowform,proto3" json:"borrowform,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}    `json:"-"`
-	XXX_unrecognized     []byte      `json:"-"`
-	XXX_sizecache        int32       `json:"-"`
+	Borrowform *BorrowForm `protobuf:"bytes,1,opt,name=borrowform,proto3" json:"borrowform,omitempty"`
 }
 
 func (m *SaveBorrowFormReq) Reset()         { *m = SaveBorrowFormReq{} }
 func (m *SaveBorrowFormReq) String() string { return proto.CompactTextString(m) }
 func (*SaveBorrowFormReq) ProtoMessage()    {}
 func (*SaveBorrowFormReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{20}
+	return fileDescriptor_3bc93e03df457931, []int{26}
 }
 func (m *SaveBorrowFormReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1308,18 +1540,15 @@ func (m *SaveBorrowFormReq) GetBorrowform() *BorrowForm {
 }
 
 type SaveBorrowFormResp struct {
-	Code                 int32    `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
-	Message              string   `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Code    int32  `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message string `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
 }
 
 func (m *SaveBorrowFormResp) Reset()         { *m = SaveBorrowFormResp{} }
 func (m *SaveBorrowFormResp) String() string { return proto.CompactTextString(m) }
 func (*SaveBorrowFormResp) ProtoMessage()    {}
 func (*SaveBorrowFormResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{21}
+	return fileDescriptor_3bc93e03df457931, []int{27}
 }
 func (m *SaveBorrowFormResp) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1363,17 +1592,14 @@ func (m *SaveBorrowFormResp) GetMessage() string {
 }
 
 type DeleteBorrowFormReq struct {
-	BorrowFormID         uint64   `protobuf:"varint,1,opt,name=borrowFormID,proto3" json:"borrowFormID,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	BorrowFormID uint64 `protobuf:"varint,1,opt,name=borrowFormID,proto3" json:"borrowFormID,omitempty"`
 }
 
 func (m *DeleteBorrowFormReq) Reset()         { *m = DeleteBorrowFormReq{} }
 func (m *DeleteBorrowFormReq) String() string { return proto.CompactTextString(m) }
 func (*DeleteBorrowFormReq) ProtoMessage()    {}
 func (*DeleteBorrowFormReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{22}
+	return fileDescriptor_3bc93e03df457931, []int{28}
 }
 func (m *DeleteBorrowFormReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1410,18 +1636,15 @@ func (m *DeleteBorrowFormReq) GetBorrowFormID() uint64 {
 }
 
 type DeleteBorrowFormResp struct {
-	Code                 int32    `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
-	Message              string   `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Code    int32  `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message string `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
 }
 
 func (m *DeleteBorrowFormResp) Reset()         { *m = DeleteBorrowFormResp{} }
 func (m *DeleteBorrowFormResp) String() string { return proto.CompactTextString(m) }
 func (*DeleteBorrowFormResp) ProtoMessage()    {}
 func (*DeleteBorrowFormResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{23}
+	return fileDescriptor_3bc93e03df457931, []int{29}
 }
 func (m *DeleteBorrowFormResp) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1465,16 +1688,13 @@ func (m *DeleteBorrowFormResp) GetMessage() string {
 }
 
 type SelectAllSaleBillReq struct {
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *SelectAllSaleBillReq) Reset()         { *m = SelectAllSaleBillReq{} }
 func (m *SelectAllSaleBillReq) String() string { return proto.CompactTextString(m) }
 func (*SelectAllSaleBillReq) ProtoMessage()    {}
 func (*SelectAllSaleBillReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{24}
+	return fileDescriptor_3bc93e03df457931, []int{30}
 }
 func (m *SelectAllSaleBillReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1504,19 +1724,16 @@ func (m *SelectAllSaleBillReq) XXX_DiscardUnknown() {
 var xxx_messageInfo_SelectAllSaleBillReq proto.InternalMessageInfo
 
 type SelectAllSaleBillResp struct {
-	Code                 int32       `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
-	Message              string      `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	SaleBills            []*SaleBill `protobuf:"bytes,3,rep,name=saleBills,proto3" json:"saleBills,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}    `json:"-"`
-	XXX_unrecognized     []byte      `json:"-"`
-	XXX_sizecache        int32       `json:"-"`
+	Code      int32       `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message   string      `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	SaleBills []*SaleBill `protobuf:"bytes,3,rep,name=saleBills,proto3" json:"saleBills,omitempty"`
 }
 
 func (m *SelectAllSaleBillResp) Reset()         { *m = SelectAllSaleBillResp{} }
 func (m *SelectAllSaleBillResp) String() string { return proto.CompactTextString(m) }
 func (*SelectAllSaleBillResp) ProtoMessage()    {}
 func (*SelectAllSaleBillResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{25}
+	return fileDescriptor_3bc93e03df457931, []int{31}
 }
 func (m *SelectAllSaleBillResp) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1567,17 +1784,14 @@ func (m *SelectAllSaleBillResp) GetSaleBills() []*SaleBill {
 }
 
 type SelectAllSaleBillByIDReq struct {
-	SaleBillID           uint64   `protobuf:"varint,1,opt,name=saleBillID,proto3" json:"saleBillID,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	SaleBillID uint64 `protobuf:"varint,1,opt,name=saleBillID,proto3" json:"saleBillID,omitempty"`
 }
 
 func (m *SelectAllSaleBillByIDReq) Reset()         { *m = SelectAllSaleBillByIDReq{} }
 func (m *SelectAllSaleBillByIDReq) String() string { return proto.CompactTextString(m) }
 func (*SelectAllSaleBillByIDReq) ProtoMessage()    {}
 func (*SelectAllSaleBillByIDReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{26}
+	return fileDescriptor_3bc93e03df457931, []int{32}
 }
 func (m *SelectAllSaleBillByIDReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1614,19 +1828,16 @@ func (m *SelectAllSaleBillByIDReq) GetSaleBillID() uint64 {
 }
 
 type SelectAllSaleBillByIDResp struct {
-	Code                 int32       `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
-	Message              string      `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	SaleBills            []*SaleBill `protobuf:"bytes,3,rep,name=saleBills,proto3" json:"saleBills,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}    `json:"-"`
-	XXX_unrecognized     []byte      `json:"-"`
-	XXX_sizecache        int32       `json:"-"`
+	Code      int32       `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message   string      `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	SaleBills []*SaleBill `protobuf:"bytes,3,rep,name=saleBills,proto3" json:"saleBills,omitempty"`
 }
 
 func (m *SelectAllSaleBillByIDResp) Reset()         { *m = SelectAllSaleBillByIDResp{} }
 func (m *SelectAllSaleBillByIDResp) String() string { return proto.CompactTextString(m) }
 func (*SelectAllSaleBillByIDResp) ProtoMessage()    {}
 func (*SelectAllSaleBillByIDResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{27}
+	return fileDescriptor_3bc93e03df457931, []int{33}
 }
 func (m *SelectAllSaleBillByIDResp) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1677,17 +1888,14 @@ func (m *SelectAllSaleBillByIDResp) GetSaleBills() []*SaleBill {
 }
 
 type SaveSaleBillReq struct {
-	SaleBill             *SaleBill `protobuf:"bytes,1,opt,name=saleBill,proto3" json:"saleBill,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
-	XXX_unrecognized     []byte    `json:"-"`
-	XXX_sizecache        int32     `json:"-"`
+	SaleBill *SaleBill `protobuf:"bytes,1,opt,name=saleBill,proto3" json:"saleBill,omitempty"`
 }
 
 func (m *SaveSaleBillReq) Reset()         { *m = SaveSaleBillReq{} }
 func (m *SaveSaleBillReq) String() string { return proto.CompactTextString(m) }
 func (*SaveSaleBillReq) ProtoMessage()    {}
 func (*SaveSaleBillReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{28}
+	return fileDescriptor_3bc93e03df457931, []int{34}
 }
 func (m *SaveSaleBillReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1724,18 +1932,15 @@ func (m *SaveSaleBillReq) GetSaleBill() *SaleBill {
 }
 
 type SaveSaleBillResp struct {
-	Code                 int32    `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
-	Message              string   `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Code    int32  `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message string `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
 }
 
 func (m *SaveSaleBillResp) Reset()         { *m = SaveSaleBillResp{} }
 func (m *SaveSaleBillResp) String() string { return proto.CompactTextString(m) }
 func (*SaveSaleBillResp) ProtoMessage()    {}
 func (*SaveSaleBillResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{29}
+	return fileDescriptor_3bc93e03df457931, []int{35}
 }
 func (m *SaveSaleBillResp) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1779,17 +1984,14 @@ func (m *SaveSaleBillResp) GetMessage() string {
 }
 
 type DeleteSaleBillReq struct {
-	SaleBillID           uint64   `protobuf:"varint,1,opt,name=saleBillID,proto3" json:"saleBillID,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	SaleBillID uint64 `protobuf:"varint,1,opt,name=saleBillID,proto3" json:"saleBillID,omitempty"`
 }
 
 func (m *DeleteSaleBillReq) Reset()         { *m = DeleteSaleBillReq{} }
 func (m *DeleteSaleBillReq) String() string { return proto.CompactTextString(m) }
 func (*DeleteSaleBillReq) ProtoMessage()    {}
 func (*DeleteSaleBillReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{30}
+	return fileDescriptor_3bc93e03df457931, []int{36}
 }
 func (m *DeleteSaleBillReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1826,18 +2028,15 @@ func (m *DeleteSaleBillReq) GetSaleBillID() uint64 {
 }
 
 type DeleteSaleBillResp struct {
-	Code                 int32    `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
-	Message              string   `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Code    int32  `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message string `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
 }
 
 func (m *DeleteSaleBillResp) Reset()         { *m = DeleteSaleBillResp{} }
 func (m *DeleteSaleBillResp) String() string { return proto.CompactTextString(m) }
 func (*DeleteSaleBillResp) ProtoMessage()    {}
 func (*DeleteSaleBillResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{31}
+	return fileDescriptor_3bc93e03df457931, []int{37}
 }
 func (m *DeleteSaleBillResp) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1889,6 +2088,10 @@ func init() {
 	proto.RegisterType((*SaleBill)(nil), "model.SaleBill")
 	proto.RegisterType((*SelectAllBarcodeReq)(nil), "model.SelectAllBarcodeReq")
 	proto.RegisterType((*SelectAllBarcodeResp)(nil), "model.SelectAllBarcodeResp")
+	proto.RegisterType((*SelectAllSellingBarcodeReq)(nil), "model.SelectAllSellingBarcodeReq")
+	proto.RegisterType((*SelectAllSellingBarcodeResp)(nil), "model.SelectAllSellingBarcodeResp")
+	proto.RegisterType((*SelectAllDamageBarcodeReq)(nil), "model.SelectAllDamageBarcodeReq")
+	proto.RegisterType((*SelectAllDamageBarcodeResp)(nil), "model.SelectAllDamageBarcodeResp")
 	proto.RegisterType((*SelectBarcodeByIDReq)(nil), "model.SelectBarcodeByIDReq")
 	proto.RegisterType((*SelectBarcodeByIDResp)(nil), "model.SelectBarcodeByIDResp")
 	proto.RegisterType((*SaveBarcodeReq)(nil), "model.SaveBarcodeReq")
@@ -1899,6 +2102,8 @@ func init() {
 	proto.RegisterType((*DeleteBarcodeResp)(nil), "model.DeleteBarcodeResp")
 	proto.RegisterType((*SelectAllBorrowFormReq)(nil), "model.SelectAllBorrowFormReq")
 	proto.RegisterType((*SelectAllBorrowFormResp)(nil), "model.SelectAllBorrowFormResp")
+	proto.RegisterType((*SelectAllUnReturnBorrowFormReq)(nil), "model.SelectAllUnReturnBorrowFormReq")
+	proto.RegisterType((*SelectAllUnReturnBorrowFormResp)(nil), "model.SelectAllUnReturnBorrowFormResp")
 	proto.RegisterType((*SelectBorrowFormByIDReq)(nil), "model.SelectBorrowFormByIDReq")
 	proto.RegisterType((*SelectBorrowFormByIDResp)(nil), "model.SelectBorrowFormByIDResp")
 	proto.RegisterType((*SaveBorrowFormReq)(nil), "model.SaveBorrowFormReq")
@@ -1920,98 +2125,107 @@ func init() {
 }
 
 var fileDescriptor_3bc93e03df457931 = []byte{
-	// 1441 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xcc, 0x58, 0xcf, 0x6f, 0xd4, 0x46,
-	0x14, 0xae, 0x37, 0x9b, 0x6c, 0xf6, 0x6d, 0x80, 0x64, 0xf8, 0x91, 0xcd, 0x02, 0xeb, 0x74, 0xa4,
-	0x4a, 0xa9, 0x10, 0xd9, 0xfc, 0x28, 0xaa, 0x40, 0xb4, 0x10, 0x63, 0xa0, 0xab, 0x02, 0x42, 0x0e,
-	0x6d, 0x25, 0x2e, 0x2b, 0xaf, 0x3d, 0xa4, 0x6e, 0xbd, 0x6b, 0x63, 0x3b, 0xa9, 0xc2, 0xa1, 0x52,
-	0xfb, 0xd7, 0xf4, 0xd4, 0x43, 0x4f, 0x3d, 0x56, 0x55, 0x0f, 0x48, 0xbd, 0xf4, 0x2f, 0xb0, 0x60,
-	0x8f, 0x7b, 0xaa, 0xf6, 0xd4, 0x63, 0xe5, 0xf1, 0x8c, 0x3d, 0xf6, 0x7a, 0x03, 0x4b, 0xa2, 0xaa,
-	0x27, 0x32, 0x6f, 0xde, 0xfb, 0xe6, 0xcd, 0xf7, 0xbe, 0x79, 0xcf, 0x2c, 0xb4, 0xf7, 0xac, 0xe0,
-	0xeb, 0xfd, 0xee, 0xba, 0xe1, 0xf4, 0x5a, 0xae, 0xd5, 0x27, 0x2f, 0x74, 0xd7, 0xb5, 0x49, 0xeb,
-	0x81, 0xd5, 0xf5, 0x74, 0xef, 0xf0, 0xb1, 0xe7, 0x7c, 0x43, 0x8c, 0x60, 0x6b, 0x63, 0x6b, 0x63,
-	0xb3, 0xe5, 0x7f, 0x4b, 0x6c, 0x12, 0x38, 0xfd, 0x56, 0xcf, 0x31, 0x89, 0xdd, 0x32, 0x1d, 0xa3,
-	0xa7, 0xf7, 0xf5, 0x3d, 0xe2, 0xad, 0xbb, 0x9e, 0x13, 0x38, 0x68, 0x96, 0xda, 0x1b, 0x57, 0x05,
-	0xc4, 0x3d, 0x67, 0xcf, 0x69, 0xd1, 0xdd, 0xee, 0xfe, 0x33, 0xba, 0xa2, 0x0b, 0xfa, 0x57, 0x1c,
-	0xd5, 0xb8, 0xf3, 0xce, 0x09, 0x04, 0x56, 0x8f, 0xc4, 0x20, 0xf8, 0x8f, 0x12, 0xcc, 0xa8, 0x8e,
-	0x81, 0x3e, 0x84, 0x52, 0x5b, 0xad, 0x4b, 0xab, 0xd2, 0x5a, 0x59, 0x59, 0x19, 0x86, 0xf2, 0x9c,
-	0x65, 0x76, 0x4c, 0xc7, 0x18, 0x85, 0x72, 0xcd, 0xec, 0xde, 0xc0, 0xf1, 0x0a, 0x6b, 0xa5, 0xb6,
-	0x8a, 0x36, 0xa1, 0xfc, 0x48, 0xef, 0x91, 0x7a, 0x69, 0x55, 0x5a, 0xab, 0x2a, 0x97, 0x87, 0xa1,
-	0x3c, 0x6f, 0x3a, 0x46, 0xa7, 0xaf, 0xf7, 0xc8, 0x28, 0x94, 0x4f, 0x45, 0xee, 0x7c, 0x8d, 0x35,
-	0xea, 0x8a, 0x76, 0xa0, 0x76, 0x47, 0x0f, 0xc8, 0x9e, 0xe3, 0x1d, 0x76, 0x2c, 0xb3, 0x3e, 0x43,
-	0x8f, 0x59, 0xe5, 0x91, 0xc1, 0xa1, 0x1b, 0x45, 0x2e, 0x46, 0x91, 0x46, 0xea, 0x86, 0x35, 0xe0,
-	0x41, 0x6d, 0x13, 0x3d, 0x04, 0xb8, 0xe3, 0x11, 0x3d, 0x20, 0x66, 0x47, 0x0f, 0xea, 0xe5, 0x55,
-	0x69, 0xad, 0xb6, 0x55, 0x5b, 0xa7, 0xf7, 0x59, 0x7f, 0x62, 0xf5, 0x88, 0xf2, 0xfe, 0x30, 0x94,
-	0xc1, 0x48, 0x5c, 0x46, 0xa1, 0x7c, 0x86, 0x02, 0x26, 0x16, 0xac, 0x55, 0x19, 0xc2, 0x4e, 0x10,
-	0xc1, 0x7d, 0xe1, 0x9a, 0x1c, 0x6e, 0x76, 0x02, 0xdc, 0x7e, 0xe2, 0xc2, 0xe1, 0x52, 0x0b, 0xd6,
-	0xaa, 0x0c, 0x61, 0x27, 0xc0, 0x7f, 0xce, 0x00, 0xa8, 0x8e, 0xf1, 0x25, 0xf1, 0x7c, 0xcb, 0xe9,
-	0xa3, 0x6d, 0x98, 0x8b, 0x57, 0x94, 0xd1, 0xaa, 0x72, 0x71, 0x18, 0xca, 0x95, 0xe8, 0xaa, 0x07,
-	0xc4, 0x1b, 0x85, 0xf2, 0x02, 0xe7, 0xe8, 0x80, 0x78, 0x58, 0x63, 0xae, 0xa8, 0x05, 0xb3, 0xaa,
-	0x63, 0xb4, 0x55, 0x4a, 0xec, 0x91, 0x55, 0x88, 0xfd, 0xd0, 0x35, 0xa8, 0xb0, 0x03, 0x19, 0xa3,
-	0xf4, 0x98, 0x83, 0xd8, 0xc4, 0x8f, 0x61, 0x4b, 0xac, 0x71, 0x5f, 0xb4, 0x0b, 0xa7, 0x55, 0xc7,
-	0x50, 0x89, 0x6f, 0x78, 0x96, 0x1b, 0x44, 0xd1, 0x65, 0x9a, 0xe4, 0x95, 0x61, 0x74, 0x47, 0xc7,
-	0xe8, 0x98, 0xe9, 0xd6, 0x28, 0x94, 0xcf, 0xf1, 0x64, 0x05, 0x33, 0xd6, 0x72, 0x10, 0xe8, 0x2a,
-	0xcc, 0x3e, 0xf6, 0x2c, 0x83, 0x50, 0x2a, 0xcb, 0xca, 0xf2, 0x30, 0x94, 0x67, 0xdd, 0xc8, 0x30,
-	0x0a, 0x65, 0x88, 0x10, 0xe8, 0x02, 0x6b, 0xb1, 0x57, 0xae, 0x9a, 0x73, 0x27, 0x5b, 0xcd, 0xca,
-	0x71, 0xab, 0xf9, 0x7b, 0x09, 0x2a, 0x8a, 0xee, 0x19, 0x8e, 0x49, 0xd0, 0xa6, 0xf0, 0x30, 0x28,
-	0x8a, 0x65, 0x76, 0xba, 0xf1, 0x1e, 0x47, 0x49, 0x2d, 0xf1, 0x03, 0x49, 0xab, 0x5f, 0x7a, 0xfb,
-	0xea, 0x6f, 0xc2, 0x9c, 0x1f, 0xe8, 0xc1, 0xbe, 0xcf, 0x6a, 0x49, 0xcb, 0x1f, 0x5b, 0x78, 0xf9,
-	0xe3, 0x15, 0xd6, 0x98, 0xf9, 0xff, 0xfe, 0x24, 0x4a, 0x50, 0x79, 0xac, 0x1f, 0xf6, 0x48, 0x3f,
-	0x28, 0x24, 0xd1, 0x8d, 0xf7, 0x04, 0x12, 0x99, 0x25, 0x26, 0xf1, 0x36, 0x00, 0x23, 0x35, 0xea,
-	0x18, 0xa5, 0xd5, 0x19, 0x1e, 0x9a, 0x5a, 0x79, 0x68, 0x6a, 0xc1, 0x5a, 0x95, 0x2d, 0xda, 0x66,
-	0x24, 0xc9, 0x9e, 0xd3, 0x27, 0x87, 0xf5, 0x19, 0x1a, 0x4c, 0x25, 0x49, 0x0d, 0x5c, 0x92, 0x74,
-	0x81, 0xb5, 0xd8, 0x98, 0x63, 0x73, 0xf6, 0x64, 0xd9, 0x9c, 0x3b, 0x2e, 0x9b, 0x3f, 0x97, 0x01,
-	0x14, 0xc7, 0xf3, 0x9c, 0xef, 0xee, 0x39, 0x5e, 0xaf, 0x90, 0x50, 0x8f, 0x18, 0xc4, 0x72, 0x45,
-	0x42, 0x99, 0x25, 0x26, 0xf4, 0x3e, 0xd4, 0xe2, 0xd1, 0x60, 0xe9, 0xfd, 0xa4, 0xc9, 0x7c, 0x30,
-	0x0c, 0xe5, 0x05, 0xcb, 0xec, 0xd8, 0x7c, 0x67, 0x14, 0xca, 0x4b, 0x2c, 0x3a, 0xb1, 0x61, 0x4d,
-	0x8c, 0x44, 0xb7, 0xa0, 0xca, 0x1e, 0x47, 0x5b, 0x65, 0x62, 0x7d, 0x8b, 0x87, 0x91, 0xc6, 0x44,
-	0x52, 0xdf, 0x8d, 0xa5, 0x5e, 0x7e, 0xa3, 0xd4, 0x63, 0x47, 0xf4, 0x00, 0xaa, 0xbb, 0x81, 0xee,
-	0x05, 0x11, 0x73, 0x13, 0x6b, 0xe3, 0x47, 0x1e, 0x9d, 0x68, 0xb8, 0xf1, 0x04, 0x52, 0x0b, 0xd6,
-	0x52, 0x00, 0xa4, 0x42, 0xe5, 0x6e, 0xdf, 0xa4, 0x58, 0x05, 0x85, 0xa1, 0x13, 0x8d, 0xf4, 0x4d,
-	0x8e, 0x44, 0x27, 0x1a, 0x5f, 0x63, 0x8d, 0x87, 0xe6, 0x04, 0x53, 0x39, 0x59, 0xc1, 0xcc, 0x1f,
-	0x57, 0x30, 0xbf, 0x48, 0x30, 0xbf, 0xab, 0xdb, 0x44, 0xb1, 0x6c, 0x1b, 0x5d, 0x13, 0xe4, 0xc2,
-	0x4b, 0xee, 0xeb, 0x36, 0xe9, 0x74, 0x2d, 0xdb, 0x16, 0x4a, 0x9e, 0xd8, 0x4e, 0xf0, 0x0d, 0xd2,
-	0xc6, 0x2f, 0xbe, 0xc1, 0xc2, 0xb1, 0x10, 0xff, 0x7b, 0x1e, 0xce, 0xee, 0x12, 0x9b, 0x18, 0xc1,
-	0x8e, 0x6d, 0x33, 0xbd, 0x68, 0xe4, 0x39, 0x3e, 0x80, 0x73, 0xe3, 0x66, 0xdf, 0x45, 0x08, 0xca,
-	0xd1, 0xdf, 0xf4, 0x62, 0xb3, 0x1a, 0xfd, 0x1b, 0xd5, 0xa1, 0xd2, 0x23, 0xbe, 0xaf, 0xef, 0xb1,
-	0x0f, 0x14, 0x8d, 0x2f, 0xd1, 0x06, 0xcc, 0xb3, 0xc4, 0x7c, 0x9a, 0x4e, 0x6d, 0xeb, 0x34, 0xa3,
-	0x97, 0x61, 0x2a, 0xe5, 0x97, 0xa1, 0x2c, 0x69, 0x89, 0x17, 0xfe, 0x88, 0x9f, 0xcb, 0x1d, 0x0e,
-	0xdb, 0xaa, 0x46, 0x9e, 0xa3, 0x4b, 0x90, 0x5c, 0x91, 0xb1, 0x9a, 0xde, 0x59, 0xc5, 0xfb, 0x70,
-	0xbe, 0x20, 0x6a, 0xea, 0x74, 0xd7, 0xa1, 0xc2, 0x30, 0xe9, 0x23, 0x9b, 0x94, 0x2d, 0x77, 0xc2,
-	0x37, 0xe0, 0xf4, 0xae, 0x7e, 0x40, 0x52, 0xda, 0xd0, 0x5a, 0x8a, 0x20, 0x15, 0x21, 0xa4, 0xb1,
-	0xb7, 0xe0, 0x4c, 0x26, 0x76, 0xda, 0x64, 0xf1, 0x4d, 0x58, 0x8c, 0xa5, 0xf7, 0x4e, 0xc7, 0xef,
-	0xc0, 0x52, 0x2e, 0x7a, 0xea, 0x04, 0x36, 0x60, 0x51, 0x8d, 0xbe, 0x71, 0xc5, 0x04, 0x8e, 0x2e,
-	0xd3, 0x0e, 0x2c, 0xe5, 0x22, 0xa6, 0x3e, 0xb4, 0x0e, 0x17, 0x52, 0x5d, 0x26, 0xcd, 0x39, 0x52,
-	0xec, 0x8f, 0x12, 0x2c, 0x17, 0x6e, 0x4d, 0x2d, 0x83, 0xeb, 0x50, 0xeb, 0x26, 0xf1, 0x5c, 0xb8,
-	0x4b, 0x9c, 0xc9, 0x64, 0x87, 0xa9, 0x41, 0xf4, 0xc5, 0x9f, 0xf0, 0x1c, 0x04, 0x37, 0xa6, 0x60,
-	0x0c, 0x0b, 0xa9, 0x31, 0x61, 0x27, 0x63, 0xc3, 0x3f, 0x48, 0x50, 0x2f, 0x8e, 0x9f, 0xfa, 0x12,
-	0x1f, 0x03, 0xc4, 0x89, 0x3d, 0x73, 0xbc, 0x1e, 0x93, 0xf3, 0xc4, 0x3b, 0x08, 0xae, 0xf8, 0x1e,
-	0x2c, 0x51, 0x61, 0x8a, 0xe4, 0xa2, 0xcd, 0x0c, 0x9a, 0x34, 0x01, 0x2d, 0x83, 0xa3, 0x00, 0xca,
-	0xe3, 0x4c, 0x5d, 0xed, 0xeb, 0x70, 0x96, 0x09, 0x26, 0x93, 0x0d, 0x86, 0x85, 0x6e, 0x01, 0x95,
-	0xa2, 0x0d, 0xab, 0x70, 0x6e, 0x3c, 0x74, 0xea, 0x04, 0x2e, 0x08, 0x6d, 0x90, 0xb7, 0xf6, 0x48,
-	0x6c, 0x2f, 0x78, 0xc3, 0xc9, 0xd8, 0xa7, 0x2e, 0xd2, 0x36, 0x54, 0x7d, 0x16, 0xcd, 0x75, 0x76,
-	0x86, 0xb1, 0xca, 0x51, 0x59, 0x85, 0x52, 0x3f, 0x7c, 0x83, 0x6b, 0x44, 0x38, 0x9b, 0x8b, 0xac,
-	0x09, 0xc0, 0x1d, 0x13, 0x5e, 0x04, 0x0b, 0xfe, 0x1e, 0x56, 0x26, 0xc4, 0xfe, 0x37, 0xb9, 0x7f,
-	0x1a, 0x77, 0x3d, 0x81, 0x4a, 0x74, 0x05, 0xe6, 0xf9, 0x3e, 0x13, 0x56, 0x1e, 0x46, 0x4b, 0x1c,
-	0xf0, 0x6d, 0x58, 0xcc, 0xc6, 0x4f, 0x5d, 0xd1, 0x6d, 0xde, 0x83, 0xc4, 0x1c, 0xde, 0x44, 0x9b,
-	0x02, 0x28, 0x1f, 0x34, 0xed, 0xc1, 0x5b, 0x83, 0x0a, 0xfd, 0xff, 0x2a, 0xfb, 0x19, 0x02, 0x7d,
-	0x0e, 0x8b, 0xf9, 0x01, 0x8b, 0x1a, 0xfc, 0xe2, 0xe3, 0x03, 0xb9, 0x71, 0x71, 0xe2, 0x9e, 0xef,
-	0xa2, 0x47, 0xb0, 0x34, 0x36, 0xff, 0x50, 0x36, 0x22, 0x3b, 0x4f, 0x1b, 0x97, 0x26, 0x6f, 0xfa,
-	0x2e, 0xba, 0x09, 0x35, 0x61, 0x38, 0xa1, 0xf3, 0x49, 0x41, 0xc4, 0x61, 0xd7, 0xb8, 0x50, 0x64,
-	0xf6, 0x5d, 0xa4, 0xc0, 0xa9, 0xcc, 0x6c, 0x41, 0xcb, 0xcc, 0x31, 0x3f, 0xaf, 0x1a, 0xf5, 0xe2,
-	0x8d, 0x18, 0x23, 0x33, 0x2a, 0x12, 0x8c, 0xfc, 0xc8, 0x49, 0x30, 0xc6, 0x27, 0xcb, 0x13, 0xf1,
-	0xd3, 0x26, 0xfd, 0x90, 0xbf, 0x3c, 0xc6, 0xa4, 0xd8, 0x5c, 0x1a, 0xcd, 0xa3, 0xb6, 0x7d, 0x17,
-	0x7d, 0x95, 0x7c, 0xa1, 0x64, 0x5a, 0x34, 0xca, 0xc6, 0x8d, 0xf5, 0xff, 0x86, 0x7c, 0xe4, 0xbe,
-	0xef, 0xa2, 0xbb, 0xec, 0x6b, 0x22, 0xcd, 0xb4, 0x2e, 0x12, 0x9c, 0x49, 0x72, 0x65, 0xc2, 0x8e,
-	0xef, 0xa2, 0xfb, 0xc9, 0x58, 0x3e, 0x26, 0x50, 0x22, 0x2a, 0xa1, 0x57, 0xa0, 0x31, 0x19, 0x0a,
-	0xcf, 0x28, 0x27, 0xaa, 0x7c, 0x6b, 0x7c, 0x5a, 0xd0, 0x33, 0x29, 0x73, 0xf2, 0xa4, 0x30, 0x4e,
-	0xdd, 0xea, 0xd1, 0x0e, 0xbe, 0x8b, 0x6e, 0xc1, 0x82, 0xd8, 0x17, 0x90, 0x28, 0x4d, 0x31, 0xc3,
-	0xe5, 0x42, 0x7b, 0x4c, 0x7e, 0xf6, 0x85, 0xa3, 0xac, 0xae, 0x44, 0x90, 0x95, 0x09, 0x3b, 0xbe,
-	0xab, 0xf4, 0x5f, 0xbd, 0x6e, 0x4a, 0x7f, 0xbf, 0x6e, 0x4a, 0xff, 0xbc, 0x6e, 0x4a, 0x3f, 0x0d,
-	0x9a, 0xd2, 0xaf, 0x83, 0xa6, 0xf4, 0xdb, 0xa0, 0xf9, 0xde, 0xcb, 0x41, 0x53, 0xfa, 0x6b, 0xd0,
-	0x94, 0x5e, 0x0d, 0x9a, 0xd2, 0xd3, 0xcf, 0x4e, 0xe0, 0x77, 0xcc, 0x87, 0xd1, 0xba, 0x3b, 0x47,
-	0x7f, 0x52, 0xdc, 0xfe, 0x37, 0x00, 0x00, 0xff, 0xff, 0xe9, 0xde, 0xfd, 0x8f, 0x1a, 0x15, 0x00,
-	0x00,
+	// 1590 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xcc, 0x59, 0xcd, 0x6f, 0xdb, 0x46,
+	0x16, 0x37, 0x65, 0xd9, 0xb2, 0x9e, 0x9c, 0xc4, 0x9e, 0x7c, 0x58, 0x56, 0x12, 0x52, 0x19, 0x20,
+	0x0b, 0x2f, 0x82, 0xf8, 0x73, 0x83, 0x45, 0x82, 0xec, 0x26, 0x56, 0x98, 0x64, 0x85, 0x4d, 0x82,
+	0x80, 0x4e, 0x5a, 0x20, 0x40, 0xa1, 0x52, 0xe4, 0x44, 0x65, 0x4b, 0x89, 0x2c, 0x49, 0xbb, 0x70,
+	0x8a, 0x16, 0x48, 0x8f, 0x3d, 0xb5, 0xff, 0x45, 0x4f, 0x3d, 0xf7, 0x58, 0x14, 0x3d, 0x04, 0xe8,
+	0x25, 0xc7, 0x9e, 0x84, 0xc4, 0xb9, 0xf9, 0x54, 0xf8, 0xd4, 0x63, 0xc1, 0xe1, 0x0c, 0x39, 0xa4,
+	0x28, 0x27, 0x8a, 0x0d, 0xa3, 0x37, 0xcd, 0xfb, 0xf8, 0xcd, 0x9b, 0xdf, 0x7b, 0x33, 0xef, 0x99,
+	0x86, 0x66, 0xc7, 0x0a, 0x3e, 0xd9, 0x6c, 0x2f, 0x1a, 0x4e, 0x77, 0xc9, 0xb5, 0x7a, 0xe4, 0x99,
+	0xee, 0xba, 0x36, 0x59, 0xba, 0x67, 0xb5, 0x3d, 0xdd, 0xdb, 0x7e, 0xe8, 0x39, 0x9f, 0x12, 0x23,
+	0x58, 0x5d, 0x5e, 0x5d, 0x5e, 0x59, 0xf2, 0x3f, 0x23, 0x36, 0x09, 0x9c, 0xde, 0x52, 0xd7, 0x31,
+	0x89, 0xbd, 0x64, 0x3a, 0x46, 0x57, 0xef, 0xe9, 0x1d, 0xe2, 0x2d, 0xba, 0x9e, 0x13, 0x38, 0x68,
+	0x82, 0xca, 0x6b, 0x97, 0x05, 0xc4, 0x8e, 0xd3, 0x71, 0x96, 0xa8, 0xb6, 0xbd, 0xf9, 0x94, 0xae,
+	0xe8, 0x82, 0xfe, 0x8a, 0xbc, 0x6a, 0xb7, 0xde, 0x3b, 0x80, 0xc0, 0xea, 0x92, 0x08, 0x04, 0xff,
+	0x5a, 0x80, 0x71, 0xd5, 0x31, 0xd0, 0x3f, 0xa1, 0xd0, 0x54, 0xab, 0x52, 0x5d, 0x5a, 0x28, 0x36,
+	0xe6, 0x77, 0xfb, 0xca, 0xa4, 0x65, 0xb6, 0x4c, 0xc7, 0xd8, 0xeb, 0x2b, 0x15, 0xb3, 0x7d, 0x0d,
+	0x47, 0x2b, 0xac, 0x15, 0x9a, 0x2a, 0x5a, 0x81, 0xe2, 0x03, 0xbd, 0x4b, 0xaa, 0x85, 0xba, 0xb4,
+	0x50, 0x6e, 0x9c, 0xdf, 0xed, 0x2b, 0x53, 0xa6, 0x63, 0xb4, 0x7a, 0x7a, 0x97, 0xec, 0xf5, 0x95,
+	0x63, 0xa1, 0x39, 0x5f, 0x63, 0x8d, 0x9a, 0xa2, 0x75, 0xa8, 0xdc, 0xd2, 0x03, 0xd2, 0x71, 0xbc,
+	0xed, 0x96, 0x65, 0x56, 0xc7, 0xe9, 0x36, 0x75, 0xee, 0x19, 0x6c, 0xbb, 0xa1, 0xe7, 0x4c, 0xe8,
+	0x69, 0x24, 0x66, 0x58, 0x03, 0xee, 0xd4, 0x34, 0xd1, 0x7d, 0x80, 0x5b, 0x1e, 0xd1, 0x03, 0x62,
+	0xb6, 0xf4, 0xa0, 0x5a, 0xac, 0x4b, 0x0b, 0x95, 0xd5, 0xca, 0x22, 0x3d, 0xcf, 0xe2, 0x23, 0xab,
+	0x4b, 0x1a, 0x17, 0x76, 0xfb, 0x0a, 0x18, 0xb1, 0xc9, 0x5e, 0x5f, 0x39, 0x41, 0x01, 0x63, 0x09,
+	0xd6, 0xca, 0x0c, 0x61, 0x3d, 0x08, 0xe1, 0x1e, 0xbb, 0x26, 0x87, 0x9b, 0x18, 0x02, 0xb7, 0x19,
+	0x9b, 0x70, 0xb8, 0x44, 0x82, 0xb5, 0x32, 0x43, 0x58, 0x0f, 0xf0, 0x6f, 0xe3, 0x00, 0xaa, 0x63,
+	0x7c, 0x40, 0x3c, 0xdf, 0x72, 0x7a, 0x68, 0x0d, 0x26, 0xa3, 0x15, 0x65, 0xb4, 0xdc, 0x38, 0xbb,
+	0xdb, 0x57, 0x4a, 0xe1, 0x51, 0xb7, 0x88, 0xb7, 0xd7, 0x57, 0xa6, 0x39, 0x47, 0x5b, 0xc4, 0xc3,
+	0x1a, 0x33, 0x45, 0x4b, 0x30, 0xa1, 0x3a, 0x46, 0x53, 0xa5, 0xc4, 0xee, 0x9b, 0x85, 0xc8, 0x0e,
+	0x5d, 0x81, 0x12, 0xdb, 0x90, 0x31, 0x4a, 0xb7, 0xd9, 0x8a, 0x44, 0x7c, 0x1b, 0xb6, 0xc4, 0x1a,
+	0xb7, 0x45, 0x1b, 0x70, 0x5c, 0x75, 0x0c, 0x95, 0xf8, 0x86, 0x67, 0xb9, 0x41, 0xe8, 0x5d, 0xa4,
+	0x41, 0x5e, 0xda, 0x0d, 0xcf, 0xe8, 0x18, 0x2d, 0x33, 0x51, 0xed, 0xf5, 0x95, 0x53, 0x3c, 0x58,
+	0x41, 0x8c, 0xb5, 0x0c, 0x04, 0xba, 0x0c, 0x13, 0x0f, 0x3d, 0xcb, 0x20, 0x94, 0xca, 0x62, 0x63,
+	0x6e, 0xb7, 0xaf, 0x4c, 0xb8, 0xa1, 0x60, 0xaf, 0xaf, 0x40, 0x88, 0x40, 0x17, 0x58, 0x8b, 0xac,
+	0x32, 0xd9, 0x9c, 0x3c, 0xdc, 0x6c, 0x96, 0x0e, 0x9a, 0xcd, 0x5f, 0x0a, 0x50, 0x6a, 0xe8, 0x9e,
+	0xe1, 0x98, 0x04, 0xad, 0x08, 0x17, 0x83, 0xa2, 0x58, 0x66, 0xab, 0x1d, 0xe9, 0x38, 0x4a, 0x22,
+	0x89, 0x2e, 0x48, 0x92, 0xfd, 0xc2, 0xbb, 0x67, 0x7f, 0x05, 0x26, 0xfd, 0x40, 0x0f, 0x36, 0x7d,
+	0x96, 0x4b, 0x9a, 0xfe, 0x48, 0xc2, 0xd3, 0x1f, 0xad, 0xb0, 0xc6, 0xc4, 0x7f, 0xf7, 0x2b, 0x51,
+	0x80, 0xd2, 0x43, 0x7d, 0xbb, 0x4b, 0x7a, 0x41, 0x2e, 0x89, 0x6e, 0xa4, 0x13, 0x48, 0x64, 0x92,
+	0x88, 0xc4, 0x9b, 0x00, 0x8c, 0xd4, 0xf0, 0xc5, 0x28, 0xd4, 0xc7, 0xb9, 0x6b, 0x22, 0xe5, 0xae,
+	0x89, 0x04, 0x6b, 0x65, 0xb6, 0x68, 0x9a, 0x61, 0x49, 0x76, 0x9d, 0x1e, 0xd9, 0xae, 0x8e, 0x53,
+	0x67, 0x5a, 0x92, 0x54, 0xc0, 0x4b, 0x92, 0x2e, 0xb0, 0x16, 0x09, 0x33, 0x6c, 0x4e, 0x1c, 0x2e,
+	0x9b, 0x93, 0x07, 0x65, 0xf3, 0xc7, 0x22, 0x40, 0xc3, 0xf1, 0x3c, 0xe7, 0x8b, 0x3b, 0x8e, 0xd7,
+	0xcd, 0x25, 0xd4, 0x23, 0x06, 0xb1, 0x5c, 0x91, 0x50, 0x26, 0x89, 0x08, 0xbd, 0x0b, 0x95, 0xa8,
+	0x35, 0x58, 0x7a, 0x2f, 0x7e, 0x64, 0x2e, 0xee, 0xf6, 0x95, 0x69, 0xcb, 0x6c, 0xd9, 0x5c, 0xb3,
+	0xd7, 0x57, 0x66, 0x99, 0x77, 0x2c, 0xc3, 0x9a, 0xe8, 0x89, 0x6e, 0x40, 0x99, 0x5d, 0x8e, 0xa6,
+	0xca, 0xb8, 0x7d, 0x87, 0x8b, 0x91, 0xf8, 0x84, 0xa5, 0xbe, 0x11, 0x95, 0x7a, 0x91, 0x7a, 0xef,
+	0x57, 0xea, 0x91, 0x21, 0xba, 0x07, 0xe5, 0x8d, 0x40, 0xf7, 0x82, 0x90, 0xb9, 0xa1, 0xb9, 0xf1,
+	0x43, 0x8b, 0x56, 0xd8, 0xdc, 0x78, 0x00, 0x89, 0x04, 0x6b, 0x09, 0x00, 0x52, 0xa1, 0x74, 0xbb,
+	0x67, 0x52, 0xac, 0x9c, 0xc4, 0xd0, 0x8e, 0x46, 0x7a, 0x26, 0x47, 0xa2, 0x1d, 0x8d, 0xaf, 0xb1,
+	0xc6, 0x5d, 0x33, 0x05, 0x53, 0x3a, 0xdc, 0x82, 0x99, 0x3a, 0x68, 0xc1, 0x3c, 0x2f, 0xc0, 0xd4,
+	0x86, 0x6e, 0x93, 0x86, 0x65, 0xdb, 0xe8, 0x8a, 0x50, 0x2e, 0x3c, 0xe5, 0xbe, 0x6e, 0x93, 0x56,
+	0xdb, 0xb2, 0x6d, 0x21, 0xe5, 0xb1, 0xec, 0x10, 0xef, 0x20, 0x7d, 0xf8, 0xc5, 0x3b, 0x98, 0xdb,
+	0x16, 0xdc, 0x9c, 0xb6, 0x70, 0xd0, 0x17, 0x0d, 0x9f, 0x86, 0x93, 0x1b, 0xc4, 0x26, 0x46, 0xb0,
+	0x6e, 0xdb, 0xac, 0xfc, 0x34, 0xf2, 0x39, 0xde, 0x82, 0x53, 0x83, 0x62, 0xdf, 0x45, 0x08, 0x8a,
+	0xe1, 0x6f, 0xca, 0xd3, 0x84, 0x46, 0x7f, 0xa3, 0x2a, 0x94, 0xba, 0xc4, 0xf7, 0xf5, 0x0e, 0x9b,
+	0x77, 0x34, 0xbe, 0x44, 0xcb, 0x30, 0xc5, 0xce, 0xe9, 0xd3, 0xd3, 0x55, 0x56, 0x8f, 0xb3, 0x48,
+	0x19, 0x66, 0xa3, 0xf8, 0xa2, 0xaf, 0x48, 0x5a, 0x6c, 0x85, 0xcf, 0x41, 0x2d, 0xde, 0x77, 0x83,
+	0xd8, 0xb6, 0xd5, 0xeb, 0x08, 0x51, 0x7d, 0x05, 0x67, 0x87, 0x6a, 0x8f, 0x20, 0xb8, 0x2f, 0x61,
+	0x3e, 0xde, 0x5e, 0xd5, 0xbb, 0x7a, 0x87, 0x24, 0xb1, 0x1d, 0x29, 0x33, 0x99, 0xcd, 0x7d, 0x17,
+	0xff, 0x8b, 0xe7, 0x8b, 0xbb, 0x6f, 0x37, 0xd5, 0x30, 0xaa, 0x73, 0x10, 0x57, 0x1a, 0x2b, 0xee,
+	0xa4, 0xf4, 0x54, 0xbc, 0x09, 0xa7, 0x73, 0xbc, 0x46, 0x66, 0x72, 0x11, 0x4a, 0x0c, 0x93, 0x36,
+	0xe6, 0x61, 0x67, 0xe1, 0x46, 0xf8, 0x1a, 0x1c, 0xdf, 0xd0, 0xb7, 0x44, 0xf2, 0x16, 0x12, 0x04,
+	0x29, 0x0f, 0x21, 0xf1, 0xbd, 0x01, 0x27, 0x52, 0xbe, 0xa3, 0x06, 0x8b, 0xaf, 0xc3, 0x4c, 0xf4,
+	0x02, 0xbc, 0xd7, 0xf6, 0xeb, 0x30, 0x9b, 0xf1, 0x1e, 0x39, 0x80, 0x65, 0x98, 0x51, 0xc3, 0x3f,
+	0x35, 0xc4, 0x00, 0xf6, 0x4f, 0xd3, 0x3a, 0xcc, 0x66, 0x3c, 0x46, 0xde, 0xb4, 0x0a, 0x67, 0x92,
+	0xfb, 0x1c, 0xf7, 0xc8, 0xf0, 0x4e, 0x7d, 0x23, 0xc1, 0x5c, 0xae, 0x6a, 0xe4, 0x32, 0xb8, 0x0a,
+	0x95, 0x76, 0xec, 0xcf, 0xcb, 0x7a, 0x96, 0x33, 0x19, 0x6b, 0x58, 0x35, 0x88, 0xb6, 0xb8, 0x0e,
+	0x72, 0x1c, 0xc3, 0xe3, 0x9e, 0x46, 0x82, 0x4d, 0xaf, 0x97, 0x0e, 0xf3, 0x5b, 0x09, 0x94, 0x7d,
+	0x4d, 0x8e, 0x32, 0xdc, 0xff, 0x70, 0xca, 0x04, 0x33, 0x76, 0xe1, 0x30, 0x4c, 0x27, 0xc2, 0x38,
+	0x99, 0x29, 0x19, 0x7e, 0x2e, 0x41, 0x35, 0xdf, 0x7f, 0xe4, 0x43, 0xfc, 0x1b, 0x20, 0x0a, 0xec,
+	0xa9, 0xe3, 0x75, 0xd9, 0xed, 0x1b, 0x7a, 0x06, 0xc1, 0x14, 0xdf, 0x81, 0x59, 0x7a, 0x8f, 0x44,
+	0x92, 0xd1, 0x4a, 0x0a, 0x4d, 0x1a, 0x82, 0x96, 0xc2, 0x69, 0x00, 0xca, 0xe2, 0x8c, 0x5c, 0x9c,
+	0x57, 0xe1, 0x24, 0xab, 0xef, 0x54, 0x34, 0x18, 0xa6, 0xdb, 0x39, 0x54, 0x8a, 0x32, 0xac, 0xc2,
+	0xa9, 0x41, 0xd7, 0x91, 0x03, 0x38, 0x23, 0x74, 0x3b, 0x3e, 0x10, 0x84, 0x45, 0xf7, 0x8c, 0xbf,
+	0x8f, 0x29, 0xf9, 0xc8, 0x49, 0x5a, 0x83, 0xb2, 0xcf, 0xbc, 0x79, 0x9d, 0x9d, 0x60, 0xac, 0x72,
+	0x54, 0x96, 0xa1, 0xc4, 0x0e, 0x5f, 0xe3, 0x35, 0x22, 0xec, 0xcd, 0x8b, 0x4c, 0x06, 0xe0, 0x86,
+	0x31, 0x2f, 0x82, 0x04, 0x7f, 0x2d, 0x34, 0xaa, 0xb4, 0xef, 0xd1, 0xc4, 0xfe, 0xdf, 0xe8, 0x91,
+	0x16, 0xa8, 0x44, 0x97, 0x60, 0x8a, 0xeb, 0x59, 0x61, 0x65, 0x61, 0xb4, 0xd8, 0x00, 0xdf, 0x84,
+	0x99, 0xb4, 0xff, 0xc8, 0x19, 0x5d, 0xe3, 0x4f, 0xa6, 0x18, 0xc3, 0xdb, 0x68, 0x6b, 0x00, 0xca,
+	0x3a, 0x8d, 0xba, 0xf1, 0xea, 0xf7, 0x40, 0xbf, 0x72, 0xb0, 0x8f, 0x57, 0xe8, 0xff, 0x30, 0x93,
+	0x9d, 0xa3, 0x50, 0x8d, 0x1f, 0x7c, 0x70, 0xee, 0xaa, 0x9d, 0x1d, 0xaa, 0xf3, 0x5d, 0xf4, 0xb1,
+	0xf0, 0x52, 0xa7, 0xc7, 0x1f, 0x74, 0x21, 0xeb, 0x37, 0x30, 0x3c, 0xd5, 0xf0, 0xdb, 0x4c, 0x7c,
+	0x17, 0x7d, 0x24, 0xb4, 0x89, 0xd4, 0x90, 0x81, 0xea, 0x59, 0xef, 0xec, 0x00, 0x54, 0xbb, 0xf0,
+	0x16, 0x0b, 0xdf, 0x45, 0x0f, 0x60, 0x76, 0x60, 0xde, 0x40, 0xe9, 0x23, 0xa7, 0xe7, 0x97, 0xda,
+	0xb9, 0xe1, 0x4a, 0xdf, 0x45, 0xd7, 0xa1, 0x22, 0x0c, 0x03, 0xe8, 0x74, 0x5c, 0x51, 0xe2, 0x70,
+	0x51, 0x3b, 0x93, 0x27, 0xf6, 0x5d, 0xd4, 0x80, 0x63, 0xa9, 0x5e, 0x8e, 0xe6, 0x98, 0x61, 0x76,
+	0x3e, 0xa8, 0x55, 0xf3, 0x15, 0x11, 0x46, 0xaa, 0x35, 0xc7, 0x18, 0xd9, 0x16, 0x1f, 0x63, 0x0c,
+	0x76, 0xf2, 0x47, 0xe2, 0x08, 0x9e, 0xfc, 0xfd, 0x7a, 0x7e, 0xa0, 0x14, 0xc4, 0xd7, 0xb1, 0x26,
+	0xef, 0xa7, 0xf6, 0x5d, 0x64, 0x0b, 0xb3, 0xf2, 0x60, 0xbf, 0x44, 0x17, 0xb3, 0xee, 0xb9, 0x6d,
+	0xb7, 0xf6, 0x8f, 0x77, 0x31, 0xf3, 0x5d, 0xf4, 0x61, 0x3c, 0x7f, 0xa6, 0x3a, 0x1a, 0x4a, 0x47,
+	0x39, 0xd0, 0x2e, 0x6b, 0xca, 0xbe, 0x7a, 0xdf, 0x45, 0xb7, 0xd9, 0xac, 0x98, 0x44, 0x5e, 0x15,
+	0xd3, 0x99, 0x0a, 0x76, 0x7e, 0x88, 0xc6, 0x77, 0xd1, 0xdd, 0x78, 0xe8, 0x3a, 0x20, 0x50, 0x5c,
+	0xc2, 0xc2, 0xd3, 0x8a, 0x06, 0x6e, 0xad, 0xf0, 0xea, 0x64, 0x4a, 0x38, 0xdb, 0x49, 0x9e, 0xe4,
+	0xb4, 0x18, 0xca, 0x9c, 0x32, 0xcc, 0x8d, 0x53, 0x57, 0xdf, 0xdf, 0xc0, 0x77, 0xd1, 0x0d, 0x98,
+	0x16, 0x9f, 0x51, 0x24, 0x5e, 0x04, 0x31, 0xc2, 0xb9, 0x5c, 0x79, 0x44, 0x7e, 0xfa, 0x41, 0x44,
+	0xe9, 0x2a, 0x16, 0x41, 0xe6, 0x87, 0x68, 0x7c, 0xb7, 0xf1, 0xec, 0xd5, 0x6b, 0x59, 0xfa, 0xe3,
+	0xb5, 0x2c, 0xfd, 0xf9, 0x5a, 0x96, 0x7e, 0xd8, 0x91, 0xa5, 0x9f, 0x76, 0x64, 0xe9, 0xe7, 0x1d,
+	0x79, 0xec, 0xc5, 0x8e, 0x2c, 0xbd, 0xdc, 0x91, 0xa5, 0x57, 0x3b, 0xb2, 0xf4, 0xdd, 0x1b, 0x79,
+	0xec, 0xe5, 0x1b, 0x79, 0xec, 0xf7, 0x37, 0xf2, 0xd8, 0x93, 0xff, 0x1d, 0xc2, 0x3f, 0x0e, 0xee,
+	0x87, 0xeb, 0xf6, 0x24, 0xfd, 0x86, 0xbf, 0xf6, 0x57, 0x00, 0x00, 0x00, 0xff, 0xff, 0x2f, 0x7d,
+	0x9d, 0xfe, 0x8b, 0x18, 0x00, 0x00,
 }
 
 func (this *Doc) VerboseEqual(that interface{}) error {
@@ -2054,9 +2268,6 @@ func (this *Doc) VerboseEqual(that interface{}) error {
 	if !this.UpdatedAt.Equal(that1.UpdatedAt) {
 		return fmt.Errorf("UpdatedAt this(%v) Not Equal that(%v)", this.UpdatedAt, that1.UpdatedAt)
 	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
-		return fmt.Errorf("XXX_unrecognized this(%v) Not Equal that(%v)", this.XXX_unrecognized, that1.XXX_unrecognized)
-	}
 	return nil
 }
 func (this *Doc) Equal(that interface{}) bool {
@@ -2091,9 +2302,6 @@ func (this *Doc) Equal(that interface{}) bool {
 		return false
 	}
 	if !this.UpdatedAt.Equal(that1.UpdatedAt) {
-		return false
-	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
 		return false
 	}
 	return true
@@ -2144,9 +2352,6 @@ func (this *DocVersion) VerboseEqual(that interface{}) error {
 	if !this.UpdatedAt.Equal(that1.UpdatedAt) {
 		return fmt.Errorf("UpdatedAt this(%v) Not Equal that(%v)", this.UpdatedAt, that1.UpdatedAt)
 	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
-		return fmt.Errorf("XXX_unrecognized this(%v) Not Equal that(%v)", this.XXX_unrecognized, that1.XXX_unrecognized)
-	}
 	return nil
 }
 func (this *DocVersion) Equal(that interface{}) bool {
@@ -2187,9 +2392,6 @@ func (this *DocVersion) Equal(that interface{}) bool {
 		return false
 	}
 	if !this.UpdatedAt.Equal(that1.UpdatedAt) {
-		return false
-	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
 		return false
 	}
 	return true
@@ -2234,9 +2436,6 @@ func (this *Barcode) VerboseEqual(that interface{}) error {
 	if !this.UpdatedAt.Equal(that1.UpdatedAt) {
 		return fmt.Errorf("UpdatedAt this(%v) Not Equal that(%v)", this.UpdatedAt, that1.UpdatedAt)
 	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
-		return fmt.Errorf("XXX_unrecognized this(%v) Not Equal that(%v)", this.XXX_unrecognized, that1.XXX_unrecognized)
-	}
 	return nil
 }
 func (this *Barcode) Equal(that interface{}) bool {
@@ -2271,9 +2470,6 @@ func (this *Barcode) Equal(that interface{}) bool {
 		return false
 	}
 	if !this.UpdatedAt.Equal(that1.UpdatedAt) {
-		return false
-	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
 		return false
 	}
 	return true
@@ -2328,9 +2524,6 @@ func (this *Payment) VerboseEqual(that interface{}) error {
 	if !this.UpdatedAt.Equal(that1.UpdatedAt) {
 		return fmt.Errorf("UpdatedAt this(%v) Not Equal that(%v)", this.UpdatedAt, that1.UpdatedAt)
 	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
-		return fmt.Errorf("XXX_unrecognized this(%v) Not Equal that(%v)", this.XXX_unrecognized, that1.XXX_unrecognized)
-	}
 	return nil
 }
 func (this *Payment) Equal(that interface{}) bool {
@@ -2377,9 +2570,6 @@ func (this *Payment) Equal(that interface{}) bool {
 	if !this.UpdatedAt.Equal(that1.UpdatedAt) {
 		return false
 	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
-		return false
-	}
 	return true
 }
 func (this *BorrowForm) VerboseEqual(that interface{}) error {
@@ -2413,11 +2603,21 @@ func (this *BorrowForm) VerboseEqual(that interface{}) error {
 	if this.LibrarianID != that1.LibrarianID {
 		return fmt.Errorf("LibrarianID this(%v) Not Equal that(%v)", this.LibrarianID, that1.LibrarianID)
 	}
-	if this.BarcodeID != that1.BarcodeID {
-		return fmt.Errorf("BarcodeID this(%v) Not Equal that(%v)", this.BarcodeID, that1.BarcodeID)
+	if len(this.BarcodeID) != len(that1.BarcodeID) {
+		return fmt.Errorf("BarcodeID this(%v) Not Equal that(%v)", len(this.BarcodeID), len(that1.BarcodeID))
 	}
-	if this.Status != that1.Status {
-		return fmt.Errorf("Status this(%v) Not Equal that(%v)", this.Status, that1.Status)
+	for i := range this.BarcodeID {
+		if this.BarcodeID[i] != that1.BarcodeID[i] {
+			return fmt.Errorf("BarcodeID this[%v](%v) Not Equal that[%v](%v)", i, this.BarcodeID[i], i, that1.BarcodeID[i])
+		}
+	}
+	if len(this.Status) != len(that1.Status) {
+		return fmt.Errorf("Status this(%v) Not Equal that(%v)", len(this.Status), len(that1.Status))
+	}
+	for i := range this.Status {
+		if this.Status[i] != that1.Status[i] {
+			return fmt.Errorf("Status this[%v](%v) Not Equal that[%v](%v)", i, this.Status[i], i, that1.Status[i])
+		}
 	}
 	if !this.StartTime.Equal(that1.StartTime) {
 		return fmt.Errorf("StartTime this(%v) Not Equal that(%v)", this.StartTime, that1.StartTime)
@@ -2430,9 +2630,6 @@ func (this *BorrowForm) VerboseEqual(that interface{}) error {
 	}
 	if !this.UpdatedAt.Equal(that1.UpdatedAt) {
 		return fmt.Errorf("UpdatedAt this(%v) Not Equal that(%v)", this.UpdatedAt, that1.UpdatedAt)
-	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
-		return fmt.Errorf("XXX_unrecognized this(%v) Not Equal that(%v)", this.XXX_unrecognized, that1.XXX_unrecognized)
 	}
 	return nil
 }
@@ -2461,11 +2658,21 @@ func (this *BorrowForm) Equal(that interface{}) bool {
 	if this.LibrarianID != that1.LibrarianID {
 		return false
 	}
-	if this.BarcodeID != that1.BarcodeID {
+	if len(this.BarcodeID) != len(that1.BarcodeID) {
 		return false
 	}
-	if this.Status != that1.Status {
+	for i := range this.BarcodeID {
+		if this.BarcodeID[i] != that1.BarcodeID[i] {
+			return false
+		}
+	}
+	if len(this.Status) != len(that1.Status) {
 		return false
+	}
+	for i := range this.Status {
+		if this.Status[i] != that1.Status[i] {
+			return false
+		}
 	}
 	if !this.StartTime.Equal(that1.StartTime) {
 		return false
@@ -2477,9 +2684,6 @@ func (this *BorrowForm) Equal(that interface{}) bool {
 		return false
 	}
 	if !this.UpdatedAt.Equal(that1.UpdatedAt) {
-		return false
-	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
 		return false
 	}
 	return true
@@ -2528,8 +2732,8 @@ func (this *SaleBill) VerboseEqual(that interface{}) error {
 			return fmt.Errorf("Price this[%v](%v) Not Equal that[%v](%v)", i, this.Price[i], i, that1.Price[i])
 		}
 	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
-		return fmt.Errorf("XXX_unrecognized this(%v) Not Equal that(%v)", this.XXX_unrecognized, that1.XXX_unrecognized)
+	if !this.CreatedAt.Equal(that1.CreatedAt) {
+		return fmt.Errorf("CreatedAt this(%v) Not Equal that(%v)", this.CreatedAt, that1.CreatedAt)
 	}
 	return nil
 }
@@ -2571,7 +2775,7 @@ func (this *SaleBill) Equal(that interface{}) bool {
 			return false
 		}
 	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
+	if !this.CreatedAt.Equal(that1.CreatedAt) {
 		return false
 	}
 	return true
@@ -2601,9 +2805,6 @@ func (this *SelectAllBarcodeReq) VerboseEqual(that interface{}) error {
 	} else if this == nil {
 		return fmt.Errorf("that is type *SelectAllBarcodeReq but is not nil && this == nil")
 	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
-		return fmt.Errorf("XXX_unrecognized this(%v) Not Equal that(%v)", this.XXX_unrecognized, that1.XXX_unrecognized)
-	}
 	return nil
 }
 func (this *SelectAllBarcodeReq) Equal(that interface{}) bool {
@@ -2623,9 +2824,6 @@ func (this *SelectAllBarcodeReq) Equal(that interface{}) bool {
 	if that1 == nil {
 		return this == nil
 	} else if this == nil {
-		return false
-	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
 		return false
 	}
 	return true
@@ -2669,9 +2867,6 @@ func (this *SelectAllBarcodeResp) VerboseEqual(that interface{}) error {
 			return fmt.Errorf("Barcodes this[%v](%v) Not Equal that[%v](%v)", i, this.Barcodes[i], i, that1.Barcodes[i])
 		}
 	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
-		return fmt.Errorf("XXX_unrecognized this(%v) Not Equal that(%v)", this.XXX_unrecognized, that1.XXX_unrecognized)
-	}
 	return nil
 }
 func (this *SelectAllBarcodeResp) Equal(that interface{}) bool {
@@ -2707,7 +2902,252 @@ func (this *SelectAllBarcodeResp) Equal(that interface{}) bool {
 			return false
 		}
 	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
+	return true
+}
+func (this *SelectAllSellingBarcodeReq) VerboseEqual(that interface{}) error {
+	if that == nil {
+		if this == nil {
+			return nil
+		}
+		return fmt.Errorf("that == nil && this != nil")
+	}
+
+	that1, ok := that.(*SelectAllSellingBarcodeReq)
+	if !ok {
+		that2, ok := that.(SelectAllSellingBarcodeReq)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *SelectAllSellingBarcodeReq")
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return nil
+		}
+		return fmt.Errorf("that is type *SelectAllSellingBarcodeReq but is nil && this != nil")
+	} else if this == nil {
+		return fmt.Errorf("that is type *SelectAllSellingBarcodeReq but is not nil && this == nil")
+	}
+	return nil
+}
+func (this *SelectAllSellingBarcodeReq) Equal(that interface{}) bool {
+	if that == nil {
+		return this == nil
+	}
+
+	that1, ok := that.(*SelectAllSellingBarcodeReq)
+	if !ok {
+		that2, ok := that.(SelectAllSellingBarcodeReq)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		return this == nil
+	} else if this == nil {
+		return false
+	}
+	return true
+}
+func (this *SelectAllSellingBarcodeResp) VerboseEqual(that interface{}) error {
+	if that == nil {
+		if this == nil {
+			return nil
+		}
+		return fmt.Errorf("that == nil && this != nil")
+	}
+
+	that1, ok := that.(*SelectAllSellingBarcodeResp)
+	if !ok {
+		that2, ok := that.(SelectAllSellingBarcodeResp)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *SelectAllSellingBarcodeResp")
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return nil
+		}
+		return fmt.Errorf("that is type *SelectAllSellingBarcodeResp but is nil && this != nil")
+	} else if this == nil {
+		return fmt.Errorf("that is type *SelectAllSellingBarcodeResp but is not nil && this == nil")
+	}
+	if this.Code != that1.Code {
+		return fmt.Errorf("Code this(%v) Not Equal that(%v)", this.Code, that1.Code)
+	}
+	if this.Message != that1.Message {
+		return fmt.Errorf("Message this(%v) Not Equal that(%v)", this.Message, that1.Message)
+	}
+	if len(this.Barcodes) != len(that1.Barcodes) {
+		return fmt.Errorf("Barcodes this(%v) Not Equal that(%v)", len(this.Barcodes), len(that1.Barcodes))
+	}
+	for i := range this.Barcodes {
+		if !this.Barcodes[i].Equal(that1.Barcodes[i]) {
+			return fmt.Errorf("Barcodes this[%v](%v) Not Equal that[%v](%v)", i, this.Barcodes[i], i, that1.Barcodes[i])
+		}
+	}
+	return nil
+}
+func (this *SelectAllSellingBarcodeResp) Equal(that interface{}) bool {
+	if that == nil {
+		return this == nil
+	}
+
+	that1, ok := that.(*SelectAllSellingBarcodeResp)
+	if !ok {
+		that2, ok := that.(SelectAllSellingBarcodeResp)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		return this == nil
+	} else if this == nil {
+		return false
+	}
+	if this.Code != that1.Code {
+		return false
+	}
+	if this.Message != that1.Message {
+		return false
+	}
+	if len(this.Barcodes) != len(that1.Barcodes) {
+		return false
+	}
+	for i := range this.Barcodes {
+		if !this.Barcodes[i].Equal(that1.Barcodes[i]) {
+			return false
+		}
+	}
+	return true
+}
+func (this *SelectAllDamageBarcodeReq) VerboseEqual(that interface{}) error {
+	if that == nil {
+		if this == nil {
+			return nil
+		}
+		return fmt.Errorf("that == nil && this != nil")
+	}
+
+	that1, ok := that.(*SelectAllDamageBarcodeReq)
+	if !ok {
+		that2, ok := that.(SelectAllDamageBarcodeReq)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *SelectAllDamageBarcodeReq")
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return nil
+		}
+		return fmt.Errorf("that is type *SelectAllDamageBarcodeReq but is nil && this != nil")
+	} else if this == nil {
+		return fmt.Errorf("that is type *SelectAllDamageBarcodeReq but is not nil && this == nil")
+	}
+	if this.Code != that1.Code {
+		return fmt.Errorf("Code this(%v) Not Equal that(%v)", this.Code, that1.Code)
+	}
+	if this.Message != that1.Message {
+		return fmt.Errorf("Message this(%v) Not Equal that(%v)", this.Message, that1.Message)
+	}
+	if len(this.Barcodes) != len(that1.Barcodes) {
+		return fmt.Errorf("Barcodes this(%v) Not Equal that(%v)", len(this.Barcodes), len(that1.Barcodes))
+	}
+	for i := range this.Barcodes {
+		if !this.Barcodes[i].Equal(that1.Barcodes[i]) {
+			return fmt.Errorf("Barcodes this[%v](%v) Not Equal that[%v](%v)", i, this.Barcodes[i], i, that1.Barcodes[i])
+		}
+	}
+	return nil
+}
+func (this *SelectAllDamageBarcodeReq) Equal(that interface{}) bool {
+	if that == nil {
+		return this == nil
+	}
+
+	that1, ok := that.(*SelectAllDamageBarcodeReq)
+	if !ok {
+		that2, ok := that.(SelectAllDamageBarcodeReq)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		return this == nil
+	} else if this == nil {
+		return false
+	}
+	if this.Code != that1.Code {
+		return false
+	}
+	if this.Message != that1.Message {
+		return false
+	}
+	if len(this.Barcodes) != len(that1.Barcodes) {
+		return false
+	}
+	for i := range this.Barcodes {
+		if !this.Barcodes[i].Equal(that1.Barcodes[i]) {
+			return false
+		}
+	}
+	return true
+}
+func (this *SelectAllDamageBarcodeResp) VerboseEqual(that interface{}) error {
+	if that == nil {
+		if this == nil {
+			return nil
+		}
+		return fmt.Errorf("that == nil && this != nil")
+	}
+
+	that1, ok := that.(*SelectAllDamageBarcodeResp)
+	if !ok {
+		that2, ok := that.(SelectAllDamageBarcodeResp)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *SelectAllDamageBarcodeResp")
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return nil
+		}
+		return fmt.Errorf("that is type *SelectAllDamageBarcodeResp but is nil && this != nil")
+	} else if this == nil {
+		return fmt.Errorf("that is type *SelectAllDamageBarcodeResp but is not nil && this == nil")
+	}
+	return nil
+}
+func (this *SelectAllDamageBarcodeResp) Equal(that interface{}) bool {
+	if that == nil {
+		return this == nil
+	}
+
+	that1, ok := that.(*SelectAllDamageBarcodeResp)
+	if !ok {
+		that2, ok := that.(SelectAllDamageBarcodeResp)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		return this == nil
+	} else if this == nil {
 		return false
 	}
 	return true
@@ -2740,9 +3180,6 @@ func (this *SelectBarcodeByIDReq) VerboseEqual(that interface{}) error {
 	if this.BarcodeID != that1.BarcodeID {
 		return fmt.Errorf("BarcodeID this(%v) Not Equal that(%v)", this.BarcodeID, that1.BarcodeID)
 	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
-		return fmt.Errorf("XXX_unrecognized this(%v) Not Equal that(%v)", this.XXX_unrecognized, that1.XXX_unrecognized)
-	}
 	return nil
 }
 func (this *SelectBarcodeByIDReq) Equal(that interface{}) bool {
@@ -2765,9 +3202,6 @@ func (this *SelectBarcodeByIDReq) Equal(that interface{}) bool {
 		return false
 	}
 	if this.BarcodeID != that1.BarcodeID {
-		return false
-	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
 		return false
 	}
 	return true
@@ -2806,9 +3240,6 @@ func (this *SelectBarcodeByIDResp) VerboseEqual(that interface{}) error {
 	if !this.Barcode.Equal(that1.Barcode) {
 		return fmt.Errorf("Barcode this(%v) Not Equal that(%v)", this.Barcode, that1.Barcode)
 	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
-		return fmt.Errorf("XXX_unrecognized this(%v) Not Equal that(%v)", this.XXX_unrecognized, that1.XXX_unrecognized)
-	}
 	return nil
 }
 func (this *SelectBarcodeByIDResp) Equal(that interface{}) bool {
@@ -2837,9 +3268,6 @@ func (this *SelectBarcodeByIDResp) Equal(that interface{}) bool {
 		return false
 	}
 	if !this.Barcode.Equal(that1.Barcode) {
-		return false
-	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
 		return false
 	}
 	return true
@@ -2872,9 +3300,6 @@ func (this *SaveBarcodeReq) VerboseEqual(that interface{}) error {
 	if !this.Barcode.Equal(that1.Barcode) {
 		return fmt.Errorf("Barcode this(%v) Not Equal that(%v)", this.Barcode, that1.Barcode)
 	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
-		return fmt.Errorf("XXX_unrecognized this(%v) Not Equal that(%v)", this.XXX_unrecognized, that1.XXX_unrecognized)
-	}
 	return nil
 }
 func (this *SaveBarcodeReq) Equal(that interface{}) bool {
@@ -2897,9 +3322,6 @@ func (this *SaveBarcodeReq) Equal(that interface{}) bool {
 		return false
 	}
 	if !this.Barcode.Equal(that1.Barcode) {
-		return false
-	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
 		return false
 	}
 	return true
@@ -2935,9 +3357,6 @@ func (this *SaveBarcodeResp) VerboseEqual(that interface{}) error {
 	if this.Message != that1.Message {
 		return fmt.Errorf("Message this(%v) Not Equal that(%v)", this.Message, that1.Message)
 	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
-		return fmt.Errorf("XXX_unrecognized this(%v) Not Equal that(%v)", this.XXX_unrecognized, that1.XXX_unrecognized)
-	}
 	return nil
 }
 func (this *SaveBarcodeResp) Equal(that interface{}) bool {
@@ -2963,9 +3382,6 @@ func (this *SaveBarcodeResp) Equal(that interface{}) bool {
 		return false
 	}
 	if this.Message != that1.Message {
-		return false
-	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
 		return false
 	}
 	return true
@@ -2998,9 +3414,6 @@ func (this *UpdateBarcodeReq) VerboseEqual(that interface{}) error {
 	if !this.Barcode.Equal(that1.Barcode) {
 		return fmt.Errorf("Barcode this(%v) Not Equal that(%v)", this.Barcode, that1.Barcode)
 	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
-		return fmt.Errorf("XXX_unrecognized this(%v) Not Equal that(%v)", this.XXX_unrecognized, that1.XXX_unrecognized)
-	}
 	return nil
 }
 func (this *UpdateBarcodeReq) Equal(that interface{}) bool {
@@ -3023,9 +3436,6 @@ func (this *UpdateBarcodeReq) Equal(that interface{}) bool {
 		return false
 	}
 	if !this.Barcode.Equal(that1.Barcode) {
-		return false
-	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
 		return false
 	}
 	return true
@@ -3061,9 +3471,6 @@ func (this *UpdateBarcodeResp) VerboseEqual(that interface{}) error {
 	if this.Message != that1.Message {
 		return fmt.Errorf("Message this(%v) Not Equal that(%v)", this.Message, that1.Message)
 	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
-		return fmt.Errorf("XXX_unrecognized this(%v) Not Equal that(%v)", this.XXX_unrecognized, that1.XXX_unrecognized)
-	}
 	return nil
 }
 func (this *UpdateBarcodeResp) Equal(that interface{}) bool {
@@ -3089,9 +3496,6 @@ func (this *UpdateBarcodeResp) Equal(that interface{}) bool {
 		return false
 	}
 	if this.Message != that1.Message {
-		return false
-	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
 		return false
 	}
 	return true
@@ -3124,9 +3528,6 @@ func (this *DeleteBarcodeReq) VerboseEqual(that interface{}) error {
 	if this.BarcodeID != that1.BarcodeID {
 		return fmt.Errorf("BarcodeID this(%v) Not Equal that(%v)", this.BarcodeID, that1.BarcodeID)
 	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
-		return fmt.Errorf("XXX_unrecognized this(%v) Not Equal that(%v)", this.XXX_unrecognized, that1.XXX_unrecognized)
-	}
 	return nil
 }
 func (this *DeleteBarcodeReq) Equal(that interface{}) bool {
@@ -3149,9 +3550,6 @@ func (this *DeleteBarcodeReq) Equal(that interface{}) bool {
 		return false
 	}
 	if this.BarcodeID != that1.BarcodeID {
-		return false
-	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
 		return false
 	}
 	return true
@@ -3187,9 +3585,6 @@ func (this *DeleteBarcodeResp) VerboseEqual(that interface{}) error {
 	if this.Message != that1.Message {
 		return fmt.Errorf("Message this(%v) Not Equal that(%v)", this.Message, that1.Message)
 	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
-		return fmt.Errorf("XXX_unrecognized this(%v) Not Equal that(%v)", this.XXX_unrecognized, that1.XXX_unrecognized)
-	}
 	return nil
 }
 func (this *DeleteBarcodeResp) Equal(that interface{}) bool {
@@ -3215,9 +3610,6 @@ func (this *DeleteBarcodeResp) Equal(that interface{}) bool {
 		return false
 	}
 	if this.Message != that1.Message {
-		return false
-	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
 		return false
 	}
 	return true
@@ -3247,9 +3639,6 @@ func (this *SelectAllBorrowFormReq) VerboseEqual(that interface{}) error {
 	} else if this == nil {
 		return fmt.Errorf("that is type *SelectAllBorrowFormReq but is not nil && this == nil")
 	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
-		return fmt.Errorf("XXX_unrecognized this(%v) Not Equal that(%v)", this.XXX_unrecognized, that1.XXX_unrecognized)
-	}
 	return nil
 }
 func (this *SelectAllBorrowFormReq) Equal(that interface{}) bool {
@@ -3269,9 +3658,6 @@ func (this *SelectAllBorrowFormReq) Equal(that interface{}) bool {
 	if that1 == nil {
 		return this == nil
 	} else if this == nil {
-		return false
-	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
 		return false
 	}
 	return true
@@ -3315,9 +3701,6 @@ func (this *SelectAllBorrowFormResp) VerboseEqual(that interface{}) error {
 			return fmt.Errorf("BorrowForms this[%v](%v) Not Equal that[%v](%v)", i, this.BorrowForms[i], i, that1.BorrowForms[i])
 		}
 	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
-		return fmt.Errorf("XXX_unrecognized this(%v) Not Equal that(%v)", this.XXX_unrecognized, that1.XXX_unrecognized)
-	}
 	return nil
 }
 func (this *SelectAllBorrowFormResp) Equal(that interface{}) bool {
@@ -3353,8 +3736,129 @@ func (this *SelectAllBorrowFormResp) Equal(that interface{}) bool {
 			return false
 		}
 	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
+	return true
+}
+func (this *SelectAllUnReturnBorrowFormReq) VerboseEqual(that interface{}) error {
+	if that == nil {
+		if this == nil {
+			return nil
+		}
+		return fmt.Errorf("that == nil && this != nil")
+	}
+
+	that1, ok := that.(*SelectAllUnReturnBorrowFormReq)
+	if !ok {
+		that2, ok := that.(SelectAllUnReturnBorrowFormReq)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *SelectAllUnReturnBorrowFormReq")
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return nil
+		}
+		return fmt.Errorf("that is type *SelectAllUnReturnBorrowFormReq but is nil && this != nil")
+	} else if this == nil {
+		return fmt.Errorf("that is type *SelectAllUnReturnBorrowFormReq but is not nil && this == nil")
+	}
+	return nil
+}
+func (this *SelectAllUnReturnBorrowFormReq) Equal(that interface{}) bool {
+	if that == nil {
+		return this == nil
+	}
+
+	that1, ok := that.(*SelectAllUnReturnBorrowFormReq)
+	if !ok {
+		that2, ok := that.(SelectAllUnReturnBorrowFormReq)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		return this == nil
+	} else if this == nil {
 		return false
+	}
+	return true
+}
+func (this *SelectAllUnReturnBorrowFormResp) VerboseEqual(that interface{}) error {
+	if that == nil {
+		if this == nil {
+			return nil
+		}
+		return fmt.Errorf("that == nil && this != nil")
+	}
+
+	that1, ok := that.(*SelectAllUnReturnBorrowFormResp)
+	if !ok {
+		that2, ok := that.(SelectAllUnReturnBorrowFormResp)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *SelectAllUnReturnBorrowFormResp")
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return nil
+		}
+		return fmt.Errorf("that is type *SelectAllUnReturnBorrowFormResp but is nil && this != nil")
+	} else if this == nil {
+		return fmt.Errorf("that is type *SelectAllUnReturnBorrowFormResp but is not nil && this == nil")
+	}
+	if this.Code != that1.Code {
+		return fmt.Errorf("Code this(%v) Not Equal that(%v)", this.Code, that1.Code)
+	}
+	if this.Message != that1.Message {
+		return fmt.Errorf("Message this(%v) Not Equal that(%v)", this.Message, that1.Message)
+	}
+	if len(this.BorrowForms) != len(that1.BorrowForms) {
+		return fmt.Errorf("BorrowForms this(%v) Not Equal that(%v)", len(this.BorrowForms), len(that1.BorrowForms))
+	}
+	for i := range this.BorrowForms {
+		if !this.BorrowForms[i].Equal(that1.BorrowForms[i]) {
+			return fmt.Errorf("BorrowForms this[%v](%v) Not Equal that[%v](%v)", i, this.BorrowForms[i], i, that1.BorrowForms[i])
+		}
+	}
+	return nil
+}
+func (this *SelectAllUnReturnBorrowFormResp) Equal(that interface{}) bool {
+	if that == nil {
+		return this == nil
+	}
+
+	that1, ok := that.(*SelectAllUnReturnBorrowFormResp)
+	if !ok {
+		that2, ok := that.(SelectAllUnReturnBorrowFormResp)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		return this == nil
+	} else if this == nil {
+		return false
+	}
+	if this.Code != that1.Code {
+		return false
+	}
+	if this.Message != that1.Message {
+		return false
+	}
+	if len(this.BorrowForms) != len(that1.BorrowForms) {
+		return false
+	}
+	for i := range this.BorrowForms {
+		if !this.BorrowForms[i].Equal(that1.BorrowForms[i]) {
+			return false
+		}
 	}
 	return true
 }
@@ -3386,9 +3890,6 @@ func (this *SelectBorrowFormByIDReq) VerboseEqual(that interface{}) error {
 	if this.BorrowFormID != that1.BorrowFormID {
 		return fmt.Errorf("BorrowFormID this(%v) Not Equal that(%v)", this.BorrowFormID, that1.BorrowFormID)
 	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
-		return fmt.Errorf("XXX_unrecognized this(%v) Not Equal that(%v)", this.XXX_unrecognized, that1.XXX_unrecognized)
-	}
 	return nil
 }
 func (this *SelectBorrowFormByIDReq) Equal(that interface{}) bool {
@@ -3411,9 +3912,6 @@ func (this *SelectBorrowFormByIDReq) Equal(that interface{}) bool {
 		return false
 	}
 	if this.BorrowFormID != that1.BorrowFormID {
-		return false
-	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
 		return false
 	}
 	return true
@@ -3452,9 +3950,6 @@ func (this *SelectBorrowFormByIDResp) VerboseEqual(that interface{}) error {
 	if !this.Borrowform.Equal(that1.Borrowform) {
 		return fmt.Errorf("Borrowform this(%v) Not Equal that(%v)", this.Borrowform, that1.Borrowform)
 	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
-		return fmt.Errorf("XXX_unrecognized this(%v) Not Equal that(%v)", this.XXX_unrecognized, that1.XXX_unrecognized)
-	}
 	return nil
 }
 func (this *SelectBorrowFormByIDResp) Equal(that interface{}) bool {
@@ -3483,9 +3978,6 @@ func (this *SelectBorrowFormByIDResp) Equal(that interface{}) bool {
 		return false
 	}
 	if !this.Borrowform.Equal(that1.Borrowform) {
-		return false
-	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
 		return false
 	}
 	return true
@@ -3518,9 +4010,6 @@ func (this *SaveBorrowFormReq) VerboseEqual(that interface{}) error {
 	if !this.Borrowform.Equal(that1.Borrowform) {
 		return fmt.Errorf("Borrowform this(%v) Not Equal that(%v)", this.Borrowform, that1.Borrowform)
 	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
-		return fmt.Errorf("XXX_unrecognized this(%v) Not Equal that(%v)", this.XXX_unrecognized, that1.XXX_unrecognized)
-	}
 	return nil
 }
 func (this *SaveBorrowFormReq) Equal(that interface{}) bool {
@@ -3543,9 +4032,6 @@ func (this *SaveBorrowFormReq) Equal(that interface{}) bool {
 		return false
 	}
 	if !this.Borrowform.Equal(that1.Borrowform) {
-		return false
-	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
 		return false
 	}
 	return true
@@ -3581,9 +4067,6 @@ func (this *SaveBorrowFormResp) VerboseEqual(that interface{}) error {
 	if this.Message != that1.Message {
 		return fmt.Errorf("Message this(%v) Not Equal that(%v)", this.Message, that1.Message)
 	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
-		return fmt.Errorf("XXX_unrecognized this(%v) Not Equal that(%v)", this.XXX_unrecognized, that1.XXX_unrecognized)
-	}
 	return nil
 }
 func (this *SaveBorrowFormResp) Equal(that interface{}) bool {
@@ -3609,9 +4092,6 @@ func (this *SaveBorrowFormResp) Equal(that interface{}) bool {
 		return false
 	}
 	if this.Message != that1.Message {
-		return false
-	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
 		return false
 	}
 	return true
@@ -3644,9 +4124,6 @@ func (this *DeleteBorrowFormReq) VerboseEqual(that interface{}) error {
 	if this.BorrowFormID != that1.BorrowFormID {
 		return fmt.Errorf("BorrowFormID this(%v) Not Equal that(%v)", this.BorrowFormID, that1.BorrowFormID)
 	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
-		return fmt.Errorf("XXX_unrecognized this(%v) Not Equal that(%v)", this.XXX_unrecognized, that1.XXX_unrecognized)
-	}
 	return nil
 }
 func (this *DeleteBorrowFormReq) Equal(that interface{}) bool {
@@ -3669,9 +4146,6 @@ func (this *DeleteBorrowFormReq) Equal(that interface{}) bool {
 		return false
 	}
 	if this.BorrowFormID != that1.BorrowFormID {
-		return false
-	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
 		return false
 	}
 	return true
@@ -3707,9 +4181,6 @@ func (this *DeleteBorrowFormResp) VerboseEqual(that interface{}) error {
 	if this.Message != that1.Message {
 		return fmt.Errorf("Message this(%v) Not Equal that(%v)", this.Message, that1.Message)
 	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
-		return fmt.Errorf("XXX_unrecognized this(%v) Not Equal that(%v)", this.XXX_unrecognized, that1.XXX_unrecognized)
-	}
 	return nil
 }
 func (this *DeleteBorrowFormResp) Equal(that interface{}) bool {
@@ -3735,9 +4206,6 @@ func (this *DeleteBorrowFormResp) Equal(that interface{}) bool {
 		return false
 	}
 	if this.Message != that1.Message {
-		return false
-	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
 		return false
 	}
 	return true
@@ -3767,9 +4235,6 @@ func (this *SelectAllSaleBillReq) VerboseEqual(that interface{}) error {
 	} else if this == nil {
 		return fmt.Errorf("that is type *SelectAllSaleBillReq but is not nil && this == nil")
 	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
-		return fmt.Errorf("XXX_unrecognized this(%v) Not Equal that(%v)", this.XXX_unrecognized, that1.XXX_unrecognized)
-	}
 	return nil
 }
 func (this *SelectAllSaleBillReq) Equal(that interface{}) bool {
@@ -3789,9 +4254,6 @@ func (this *SelectAllSaleBillReq) Equal(that interface{}) bool {
 	if that1 == nil {
 		return this == nil
 	} else if this == nil {
-		return false
-	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
 		return false
 	}
 	return true
@@ -3835,9 +4297,6 @@ func (this *SelectAllSaleBillResp) VerboseEqual(that interface{}) error {
 			return fmt.Errorf("SaleBills this[%v](%v) Not Equal that[%v](%v)", i, this.SaleBills[i], i, that1.SaleBills[i])
 		}
 	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
-		return fmt.Errorf("XXX_unrecognized this(%v) Not Equal that(%v)", this.XXX_unrecognized, that1.XXX_unrecognized)
-	}
 	return nil
 }
 func (this *SelectAllSaleBillResp) Equal(that interface{}) bool {
@@ -3873,9 +4332,6 @@ func (this *SelectAllSaleBillResp) Equal(that interface{}) bool {
 			return false
 		}
 	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
-		return false
-	}
 	return true
 }
 func (this *SelectAllSaleBillByIDReq) VerboseEqual(that interface{}) error {
@@ -3906,9 +4362,6 @@ func (this *SelectAllSaleBillByIDReq) VerboseEqual(that interface{}) error {
 	if this.SaleBillID != that1.SaleBillID {
 		return fmt.Errorf("SaleBillID this(%v) Not Equal that(%v)", this.SaleBillID, that1.SaleBillID)
 	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
-		return fmt.Errorf("XXX_unrecognized this(%v) Not Equal that(%v)", this.XXX_unrecognized, that1.XXX_unrecognized)
-	}
 	return nil
 }
 func (this *SelectAllSaleBillByIDReq) Equal(that interface{}) bool {
@@ -3931,9 +4384,6 @@ func (this *SelectAllSaleBillByIDReq) Equal(that interface{}) bool {
 		return false
 	}
 	if this.SaleBillID != that1.SaleBillID {
-		return false
-	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
 		return false
 	}
 	return true
@@ -3977,9 +4427,6 @@ func (this *SelectAllSaleBillByIDResp) VerboseEqual(that interface{}) error {
 			return fmt.Errorf("SaleBills this[%v](%v) Not Equal that[%v](%v)", i, this.SaleBills[i], i, that1.SaleBills[i])
 		}
 	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
-		return fmt.Errorf("XXX_unrecognized this(%v) Not Equal that(%v)", this.XXX_unrecognized, that1.XXX_unrecognized)
-	}
 	return nil
 }
 func (this *SelectAllSaleBillByIDResp) Equal(that interface{}) bool {
@@ -4015,9 +4462,6 @@ func (this *SelectAllSaleBillByIDResp) Equal(that interface{}) bool {
 			return false
 		}
 	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
-		return false
-	}
 	return true
 }
 func (this *SaveSaleBillReq) VerboseEqual(that interface{}) error {
@@ -4048,9 +4492,6 @@ func (this *SaveSaleBillReq) VerboseEqual(that interface{}) error {
 	if !this.SaleBill.Equal(that1.SaleBill) {
 		return fmt.Errorf("SaleBill this(%v) Not Equal that(%v)", this.SaleBill, that1.SaleBill)
 	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
-		return fmt.Errorf("XXX_unrecognized this(%v) Not Equal that(%v)", this.XXX_unrecognized, that1.XXX_unrecognized)
-	}
 	return nil
 }
 func (this *SaveSaleBillReq) Equal(that interface{}) bool {
@@ -4073,9 +4514,6 @@ func (this *SaveSaleBillReq) Equal(that interface{}) bool {
 		return false
 	}
 	if !this.SaleBill.Equal(that1.SaleBill) {
-		return false
-	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
 		return false
 	}
 	return true
@@ -4111,9 +4549,6 @@ func (this *SaveSaleBillResp) VerboseEqual(that interface{}) error {
 	if this.Message != that1.Message {
 		return fmt.Errorf("Message this(%v) Not Equal that(%v)", this.Message, that1.Message)
 	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
-		return fmt.Errorf("XXX_unrecognized this(%v) Not Equal that(%v)", this.XXX_unrecognized, that1.XXX_unrecognized)
-	}
 	return nil
 }
 func (this *SaveSaleBillResp) Equal(that interface{}) bool {
@@ -4139,9 +4574,6 @@ func (this *SaveSaleBillResp) Equal(that interface{}) bool {
 		return false
 	}
 	if this.Message != that1.Message {
-		return false
-	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
 		return false
 	}
 	return true
@@ -4174,9 +4606,6 @@ func (this *DeleteSaleBillReq) VerboseEqual(that interface{}) error {
 	if this.SaleBillID != that1.SaleBillID {
 		return fmt.Errorf("SaleBillID this(%v) Not Equal that(%v)", this.SaleBillID, that1.SaleBillID)
 	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
-		return fmt.Errorf("XXX_unrecognized this(%v) Not Equal that(%v)", this.XXX_unrecognized, that1.XXX_unrecognized)
-	}
 	return nil
 }
 func (this *DeleteSaleBillReq) Equal(that interface{}) bool {
@@ -4199,9 +4628,6 @@ func (this *DeleteSaleBillReq) Equal(that interface{}) bool {
 		return false
 	}
 	if this.SaleBillID != that1.SaleBillID {
-		return false
-	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
 		return false
 	}
 	return true
@@ -4237,9 +4663,6 @@ func (this *DeleteSaleBillResp) VerboseEqual(that interface{}) error {
 	if this.Message != that1.Message {
 		return fmt.Errorf("Message this(%v) Not Equal that(%v)", this.Message, that1.Message)
 	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
-		return fmt.Errorf("XXX_unrecognized this(%v) Not Equal that(%v)", this.XXX_unrecognized, that1.XXX_unrecognized)
-	}
 	return nil
 }
 func (this *DeleteSaleBillResp) Equal(that interface{}) bool {
@@ -4267,9 +4690,6 @@ func (this *DeleteSaleBillResp) Equal(that interface{}) bool {
 	if this.Message != that1.Message {
 		return false
 	}
-	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
-		return false
-	}
 	return true
 }
 func (this *Doc) GoString() string {
@@ -4286,9 +4706,6 @@ func (this *Doc) GoString() string {
 	}
 	if this.UpdatedAt != nil {
 		s = append(s, "UpdatedAt: "+fmt.Sprintf("%#v", this.UpdatedAt)+",\n")
-	}
-	if this.XXX_unrecognized != nil {
-		s = append(s, "XXX_unrecognized:"+fmt.Sprintf("%#v", this.XXX_unrecognized)+",\n")
 	}
 	s = append(s, "}")
 	return strings.Join(s, "")
@@ -4310,9 +4727,6 @@ func (this *DocVersion) GoString() string {
 	if this.UpdatedAt != nil {
 		s = append(s, "UpdatedAt: "+fmt.Sprintf("%#v", this.UpdatedAt)+",\n")
 	}
-	if this.XXX_unrecognized != nil {
-		s = append(s, "XXX_unrecognized:"+fmt.Sprintf("%#v", this.XXX_unrecognized)+",\n")
-	}
 	s = append(s, "}")
 	return strings.Join(s, "")
 }
@@ -4331,9 +4745,6 @@ func (this *Barcode) GoString() string {
 	if this.UpdatedAt != nil {
 		s = append(s, "UpdatedAt: "+fmt.Sprintf("%#v", this.UpdatedAt)+",\n")
 	}
-	if this.XXX_unrecognized != nil {
-		s = append(s, "XXX_unrecognized:"+fmt.Sprintf("%#v", this.XXX_unrecognized)+",\n")
-	}
 	s = append(s, "}")
 	return strings.Join(s, "")
 }
@@ -4351,9 +4762,6 @@ func (this *Payment) GoString() string {
 	}
 	if this.UpdatedAt != nil {
 		s = append(s, "UpdatedAt: "+fmt.Sprintf("%#v", this.UpdatedAt)+",\n")
-	}
-	if this.XXX_unrecognized != nil {
-		s = append(s, "XXX_unrecognized:"+fmt.Sprintf("%#v", this.XXX_unrecognized)+",\n")
 	}
 	s = append(s, "}")
 	return strings.Join(s, "")
@@ -4380,9 +4788,6 @@ func (this *BorrowForm) GoString() string {
 	if this.UpdatedAt != nil {
 		s = append(s, "UpdatedAt: "+fmt.Sprintf("%#v", this.UpdatedAt)+",\n")
 	}
-	if this.XXX_unrecognized != nil {
-		s = append(s, "XXX_unrecognized:"+fmt.Sprintf("%#v", this.XXX_unrecognized)+",\n")
-	}
 	s = append(s, "}")
 	return strings.Join(s, "")
 }
@@ -4390,13 +4795,13 @@ func (this *SaleBill) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := make([]string, 0, 7)
+	s := make([]string, 0, 8)
 	s = append(s, "&docmanagerModel.SaleBill{")
 	s = append(s, "ID: "+fmt.Sprintf("%#v", this.ID)+",\n")
 	s = append(s, "BarcodeId: "+fmt.Sprintf("%#v", this.BarcodeId)+",\n")
 	s = append(s, "Price: "+fmt.Sprintf("%#v", this.Price)+",\n")
-	if this.XXX_unrecognized != nil {
-		s = append(s, "XXX_unrecognized:"+fmt.Sprintf("%#v", this.XXX_unrecognized)+",\n")
+	if this.CreatedAt != nil {
+		s = append(s, "CreatedAt: "+fmt.Sprintf("%#v", this.CreatedAt)+",\n")
 	}
 	s = append(s, "}")
 	return strings.Join(s, "")
@@ -4407,9 +4812,6 @@ func (this *SelectAllBarcodeReq) GoString() string {
 	}
 	s := make([]string, 0, 4)
 	s = append(s, "&docmanagerModel.SelectAllBarcodeReq{")
-	if this.XXX_unrecognized != nil {
-		s = append(s, "XXX_unrecognized:"+fmt.Sprintf("%#v", this.XXX_unrecognized)+",\n")
-	}
 	s = append(s, "}")
 	return strings.Join(s, "")
 }
@@ -4424,9 +4826,52 @@ func (this *SelectAllBarcodeResp) GoString() string {
 	if this.Barcodes != nil {
 		s = append(s, "Barcodes: "+fmt.Sprintf("%#v", this.Barcodes)+",\n")
 	}
-	if this.XXX_unrecognized != nil {
-		s = append(s, "XXX_unrecognized:"+fmt.Sprintf("%#v", this.XXX_unrecognized)+",\n")
+	s = append(s, "}")
+	return strings.Join(s, "")
+}
+func (this *SelectAllSellingBarcodeReq) GoString() string {
+	if this == nil {
+		return "nil"
 	}
+	s := make([]string, 0, 4)
+	s = append(s, "&docmanagerModel.SelectAllSellingBarcodeReq{")
+	s = append(s, "}")
+	return strings.Join(s, "")
+}
+func (this *SelectAllSellingBarcodeResp) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := make([]string, 0, 7)
+	s = append(s, "&docmanagerModel.SelectAllSellingBarcodeResp{")
+	s = append(s, "Code: "+fmt.Sprintf("%#v", this.Code)+",\n")
+	s = append(s, "Message: "+fmt.Sprintf("%#v", this.Message)+",\n")
+	if this.Barcodes != nil {
+		s = append(s, "Barcodes: "+fmt.Sprintf("%#v", this.Barcodes)+",\n")
+	}
+	s = append(s, "}")
+	return strings.Join(s, "")
+}
+func (this *SelectAllDamageBarcodeReq) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := make([]string, 0, 7)
+	s = append(s, "&docmanagerModel.SelectAllDamageBarcodeReq{")
+	s = append(s, "Code: "+fmt.Sprintf("%#v", this.Code)+",\n")
+	s = append(s, "Message: "+fmt.Sprintf("%#v", this.Message)+",\n")
+	if this.Barcodes != nil {
+		s = append(s, "Barcodes: "+fmt.Sprintf("%#v", this.Barcodes)+",\n")
+	}
+	s = append(s, "}")
+	return strings.Join(s, "")
+}
+func (this *SelectAllDamageBarcodeResp) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := make([]string, 0, 4)
+	s = append(s, "&docmanagerModel.SelectAllDamageBarcodeResp{")
 	s = append(s, "}")
 	return strings.Join(s, "")
 }
@@ -4437,9 +4882,6 @@ func (this *SelectBarcodeByIDReq) GoString() string {
 	s := make([]string, 0, 5)
 	s = append(s, "&docmanagerModel.SelectBarcodeByIDReq{")
 	s = append(s, "BarcodeID: "+fmt.Sprintf("%#v", this.BarcodeID)+",\n")
-	if this.XXX_unrecognized != nil {
-		s = append(s, "XXX_unrecognized:"+fmt.Sprintf("%#v", this.XXX_unrecognized)+",\n")
-	}
 	s = append(s, "}")
 	return strings.Join(s, "")
 }
@@ -4454,9 +4896,6 @@ func (this *SelectBarcodeByIDResp) GoString() string {
 	if this.Barcode != nil {
 		s = append(s, "Barcode: "+fmt.Sprintf("%#v", this.Barcode)+",\n")
 	}
-	if this.XXX_unrecognized != nil {
-		s = append(s, "XXX_unrecognized:"+fmt.Sprintf("%#v", this.XXX_unrecognized)+",\n")
-	}
 	s = append(s, "}")
 	return strings.Join(s, "")
 }
@@ -4469,9 +4908,6 @@ func (this *SaveBarcodeReq) GoString() string {
 	if this.Barcode != nil {
 		s = append(s, "Barcode: "+fmt.Sprintf("%#v", this.Barcode)+",\n")
 	}
-	if this.XXX_unrecognized != nil {
-		s = append(s, "XXX_unrecognized:"+fmt.Sprintf("%#v", this.XXX_unrecognized)+",\n")
-	}
 	s = append(s, "}")
 	return strings.Join(s, "")
 }
@@ -4483,9 +4919,6 @@ func (this *SaveBarcodeResp) GoString() string {
 	s = append(s, "&docmanagerModel.SaveBarcodeResp{")
 	s = append(s, "Code: "+fmt.Sprintf("%#v", this.Code)+",\n")
 	s = append(s, "Message: "+fmt.Sprintf("%#v", this.Message)+",\n")
-	if this.XXX_unrecognized != nil {
-		s = append(s, "XXX_unrecognized:"+fmt.Sprintf("%#v", this.XXX_unrecognized)+",\n")
-	}
 	s = append(s, "}")
 	return strings.Join(s, "")
 }
@@ -4498,9 +4931,6 @@ func (this *UpdateBarcodeReq) GoString() string {
 	if this.Barcode != nil {
 		s = append(s, "Barcode: "+fmt.Sprintf("%#v", this.Barcode)+",\n")
 	}
-	if this.XXX_unrecognized != nil {
-		s = append(s, "XXX_unrecognized:"+fmt.Sprintf("%#v", this.XXX_unrecognized)+",\n")
-	}
 	s = append(s, "}")
 	return strings.Join(s, "")
 }
@@ -4512,9 +4942,6 @@ func (this *UpdateBarcodeResp) GoString() string {
 	s = append(s, "&docmanagerModel.UpdateBarcodeResp{")
 	s = append(s, "Code: "+fmt.Sprintf("%#v", this.Code)+",\n")
 	s = append(s, "Message: "+fmt.Sprintf("%#v", this.Message)+",\n")
-	if this.XXX_unrecognized != nil {
-		s = append(s, "XXX_unrecognized:"+fmt.Sprintf("%#v", this.XXX_unrecognized)+",\n")
-	}
 	s = append(s, "}")
 	return strings.Join(s, "")
 }
@@ -4525,9 +4952,6 @@ func (this *DeleteBarcodeReq) GoString() string {
 	s := make([]string, 0, 5)
 	s = append(s, "&docmanagerModel.DeleteBarcodeReq{")
 	s = append(s, "BarcodeID: "+fmt.Sprintf("%#v", this.BarcodeID)+",\n")
-	if this.XXX_unrecognized != nil {
-		s = append(s, "XXX_unrecognized:"+fmt.Sprintf("%#v", this.XXX_unrecognized)+",\n")
-	}
 	s = append(s, "}")
 	return strings.Join(s, "")
 }
@@ -4539,9 +4963,6 @@ func (this *DeleteBarcodeResp) GoString() string {
 	s = append(s, "&docmanagerModel.DeleteBarcodeResp{")
 	s = append(s, "Code: "+fmt.Sprintf("%#v", this.Code)+",\n")
 	s = append(s, "Message: "+fmt.Sprintf("%#v", this.Message)+",\n")
-	if this.XXX_unrecognized != nil {
-		s = append(s, "XXX_unrecognized:"+fmt.Sprintf("%#v", this.XXX_unrecognized)+",\n")
-	}
 	s = append(s, "}")
 	return strings.Join(s, "")
 }
@@ -4551,9 +4972,6 @@ func (this *SelectAllBorrowFormReq) GoString() string {
 	}
 	s := make([]string, 0, 4)
 	s = append(s, "&docmanagerModel.SelectAllBorrowFormReq{")
-	if this.XXX_unrecognized != nil {
-		s = append(s, "XXX_unrecognized:"+fmt.Sprintf("%#v", this.XXX_unrecognized)+",\n")
-	}
 	s = append(s, "}")
 	return strings.Join(s, "")
 }
@@ -4568,8 +4986,28 @@ func (this *SelectAllBorrowFormResp) GoString() string {
 	if this.BorrowForms != nil {
 		s = append(s, "BorrowForms: "+fmt.Sprintf("%#v", this.BorrowForms)+",\n")
 	}
-	if this.XXX_unrecognized != nil {
-		s = append(s, "XXX_unrecognized:"+fmt.Sprintf("%#v", this.XXX_unrecognized)+",\n")
+	s = append(s, "}")
+	return strings.Join(s, "")
+}
+func (this *SelectAllUnReturnBorrowFormReq) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := make([]string, 0, 4)
+	s = append(s, "&docmanagerModel.SelectAllUnReturnBorrowFormReq{")
+	s = append(s, "}")
+	return strings.Join(s, "")
+}
+func (this *SelectAllUnReturnBorrowFormResp) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := make([]string, 0, 7)
+	s = append(s, "&docmanagerModel.SelectAllUnReturnBorrowFormResp{")
+	s = append(s, "Code: "+fmt.Sprintf("%#v", this.Code)+",\n")
+	s = append(s, "Message: "+fmt.Sprintf("%#v", this.Message)+",\n")
+	if this.BorrowForms != nil {
+		s = append(s, "BorrowForms: "+fmt.Sprintf("%#v", this.BorrowForms)+",\n")
 	}
 	s = append(s, "}")
 	return strings.Join(s, "")
@@ -4581,9 +5019,6 @@ func (this *SelectBorrowFormByIDReq) GoString() string {
 	s := make([]string, 0, 5)
 	s = append(s, "&docmanagerModel.SelectBorrowFormByIDReq{")
 	s = append(s, "BorrowFormID: "+fmt.Sprintf("%#v", this.BorrowFormID)+",\n")
-	if this.XXX_unrecognized != nil {
-		s = append(s, "XXX_unrecognized:"+fmt.Sprintf("%#v", this.XXX_unrecognized)+",\n")
-	}
 	s = append(s, "}")
 	return strings.Join(s, "")
 }
@@ -4598,9 +5033,6 @@ func (this *SelectBorrowFormByIDResp) GoString() string {
 	if this.Borrowform != nil {
 		s = append(s, "Borrowform: "+fmt.Sprintf("%#v", this.Borrowform)+",\n")
 	}
-	if this.XXX_unrecognized != nil {
-		s = append(s, "XXX_unrecognized:"+fmt.Sprintf("%#v", this.XXX_unrecognized)+",\n")
-	}
 	s = append(s, "}")
 	return strings.Join(s, "")
 }
@@ -4613,9 +5045,6 @@ func (this *SaveBorrowFormReq) GoString() string {
 	if this.Borrowform != nil {
 		s = append(s, "Borrowform: "+fmt.Sprintf("%#v", this.Borrowform)+",\n")
 	}
-	if this.XXX_unrecognized != nil {
-		s = append(s, "XXX_unrecognized:"+fmt.Sprintf("%#v", this.XXX_unrecognized)+",\n")
-	}
 	s = append(s, "}")
 	return strings.Join(s, "")
 }
@@ -4627,9 +5056,6 @@ func (this *SaveBorrowFormResp) GoString() string {
 	s = append(s, "&docmanagerModel.SaveBorrowFormResp{")
 	s = append(s, "Code: "+fmt.Sprintf("%#v", this.Code)+",\n")
 	s = append(s, "Message: "+fmt.Sprintf("%#v", this.Message)+",\n")
-	if this.XXX_unrecognized != nil {
-		s = append(s, "XXX_unrecognized:"+fmt.Sprintf("%#v", this.XXX_unrecognized)+",\n")
-	}
 	s = append(s, "}")
 	return strings.Join(s, "")
 }
@@ -4640,9 +5066,6 @@ func (this *DeleteBorrowFormReq) GoString() string {
 	s := make([]string, 0, 5)
 	s = append(s, "&docmanagerModel.DeleteBorrowFormReq{")
 	s = append(s, "BorrowFormID: "+fmt.Sprintf("%#v", this.BorrowFormID)+",\n")
-	if this.XXX_unrecognized != nil {
-		s = append(s, "XXX_unrecognized:"+fmt.Sprintf("%#v", this.XXX_unrecognized)+",\n")
-	}
 	s = append(s, "}")
 	return strings.Join(s, "")
 }
@@ -4654,9 +5077,6 @@ func (this *DeleteBorrowFormResp) GoString() string {
 	s = append(s, "&docmanagerModel.DeleteBorrowFormResp{")
 	s = append(s, "Code: "+fmt.Sprintf("%#v", this.Code)+",\n")
 	s = append(s, "Message: "+fmt.Sprintf("%#v", this.Message)+",\n")
-	if this.XXX_unrecognized != nil {
-		s = append(s, "XXX_unrecognized:"+fmt.Sprintf("%#v", this.XXX_unrecognized)+",\n")
-	}
 	s = append(s, "}")
 	return strings.Join(s, "")
 }
@@ -4666,9 +5086,6 @@ func (this *SelectAllSaleBillReq) GoString() string {
 	}
 	s := make([]string, 0, 4)
 	s = append(s, "&docmanagerModel.SelectAllSaleBillReq{")
-	if this.XXX_unrecognized != nil {
-		s = append(s, "XXX_unrecognized:"+fmt.Sprintf("%#v", this.XXX_unrecognized)+",\n")
-	}
 	s = append(s, "}")
 	return strings.Join(s, "")
 }
@@ -4683,9 +5100,6 @@ func (this *SelectAllSaleBillResp) GoString() string {
 	if this.SaleBills != nil {
 		s = append(s, "SaleBills: "+fmt.Sprintf("%#v", this.SaleBills)+",\n")
 	}
-	if this.XXX_unrecognized != nil {
-		s = append(s, "XXX_unrecognized:"+fmt.Sprintf("%#v", this.XXX_unrecognized)+",\n")
-	}
 	s = append(s, "}")
 	return strings.Join(s, "")
 }
@@ -4696,9 +5110,6 @@ func (this *SelectAllSaleBillByIDReq) GoString() string {
 	s := make([]string, 0, 5)
 	s = append(s, "&docmanagerModel.SelectAllSaleBillByIDReq{")
 	s = append(s, "SaleBillID: "+fmt.Sprintf("%#v", this.SaleBillID)+",\n")
-	if this.XXX_unrecognized != nil {
-		s = append(s, "XXX_unrecognized:"+fmt.Sprintf("%#v", this.XXX_unrecognized)+",\n")
-	}
 	s = append(s, "}")
 	return strings.Join(s, "")
 }
@@ -4713,9 +5124,6 @@ func (this *SelectAllSaleBillByIDResp) GoString() string {
 	if this.SaleBills != nil {
 		s = append(s, "SaleBills: "+fmt.Sprintf("%#v", this.SaleBills)+",\n")
 	}
-	if this.XXX_unrecognized != nil {
-		s = append(s, "XXX_unrecognized:"+fmt.Sprintf("%#v", this.XXX_unrecognized)+",\n")
-	}
 	s = append(s, "}")
 	return strings.Join(s, "")
 }
@@ -4728,9 +5136,6 @@ func (this *SaveSaleBillReq) GoString() string {
 	if this.SaleBill != nil {
 		s = append(s, "SaleBill: "+fmt.Sprintf("%#v", this.SaleBill)+",\n")
 	}
-	if this.XXX_unrecognized != nil {
-		s = append(s, "XXX_unrecognized:"+fmt.Sprintf("%#v", this.XXX_unrecognized)+",\n")
-	}
 	s = append(s, "}")
 	return strings.Join(s, "")
 }
@@ -4742,9 +5147,6 @@ func (this *SaveSaleBillResp) GoString() string {
 	s = append(s, "&docmanagerModel.SaveSaleBillResp{")
 	s = append(s, "Code: "+fmt.Sprintf("%#v", this.Code)+",\n")
 	s = append(s, "Message: "+fmt.Sprintf("%#v", this.Message)+",\n")
-	if this.XXX_unrecognized != nil {
-		s = append(s, "XXX_unrecognized:"+fmt.Sprintf("%#v", this.XXX_unrecognized)+",\n")
-	}
 	s = append(s, "}")
 	return strings.Join(s, "")
 }
@@ -4755,9 +5157,6 @@ func (this *DeleteSaleBillReq) GoString() string {
 	s := make([]string, 0, 5)
 	s = append(s, "&docmanagerModel.DeleteSaleBillReq{")
 	s = append(s, "SaleBillID: "+fmt.Sprintf("%#v", this.SaleBillID)+",\n")
-	if this.XXX_unrecognized != nil {
-		s = append(s, "XXX_unrecognized:"+fmt.Sprintf("%#v", this.XXX_unrecognized)+",\n")
-	}
 	s = append(s, "}")
 	return strings.Join(s, "")
 }
@@ -4769,9 +5168,6 @@ func (this *DeleteSaleBillResp) GoString() string {
 	s = append(s, "&docmanagerModel.DeleteSaleBillResp{")
 	s = append(s, "Code: "+fmt.Sprintf("%#v", this.Code)+",\n")
 	s = append(s, "Message: "+fmt.Sprintf("%#v", this.Message)+",\n")
-	if this.XXX_unrecognized != nil {
-		s = append(s, "XXX_unrecognized:"+fmt.Sprintf("%#v", this.XXX_unrecognized)+",\n")
-	}
 	s = append(s, "}")
 	return strings.Join(s, "")
 }
@@ -4797,11 +5193,14 @@ const _ = grpc.SupportPackageIsVersion4
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type DocmanagerClient interface {
 	SelectAllBarcode(ctx context.Context, in *SelectAllBarcodeReq, opts ...grpc.CallOption) (*SelectAllBarcodeResp, error)
+	SelectAllSellingBarcode(ctx context.Context, in *SelectAllSellingBarcodeReq, opts ...grpc.CallOption) (*SelectAllSellingBarcodeResp, error)
+	SelectAllDamageBarcode(ctx context.Context, in *SelectAllDamageBarcodeReq, opts ...grpc.CallOption) (*SelectAllDamageBarcodeResp, error)
 	SelectBarcodeByID(ctx context.Context, in *SelectBarcodeByIDReq, opts ...grpc.CallOption) (*SelectBarcodeByIDResp, error)
 	SaveBarcode(ctx context.Context, in *SaveBarcodeReq, opts ...grpc.CallOption) (*SaveBarcodeResp, error)
 	UpdateBarcode(ctx context.Context, in *UpdateBarcodeReq, opts ...grpc.CallOption) (*UpdateBarcodeResp, error)
 	DeleteBarcode(ctx context.Context, in *DeleteBarcodeReq, opts ...grpc.CallOption) (*DeleteBarcodeResp, error)
 	SelectAllBorrowForm(ctx context.Context, in *SelectAllBorrowFormReq, opts ...grpc.CallOption) (*SelectAllBorrowFormResp, error)
+	SelectAllUnReturnBorrowForm(ctx context.Context, in *SelectAllUnReturnBorrowFormReq, opts ...grpc.CallOption) (*SelectAllUnReturnBorrowFormResp, error)
 	SelectBorrowFormByID(ctx context.Context, in *SelectBorrowFormByIDReq, opts ...grpc.CallOption) (*SelectBorrowFormByIDResp, error)
 	SaveBorrowForm(ctx context.Context, in *SaveBorrowFormReq, opts ...grpc.CallOption) (*SaveBorrowFormResp, error)
 	DeleteBorrowForm(ctx context.Context, in *SaveBorrowFormReq, opts ...grpc.CallOption) (*SaveBorrowFormResp, error)
@@ -4822,6 +5221,24 @@ func NewDocmanagerClient(cc *grpc.ClientConn) DocmanagerClient {
 func (c *docmanagerClient) SelectAllBarcode(ctx context.Context, in *SelectAllBarcodeReq, opts ...grpc.CallOption) (*SelectAllBarcodeResp, error) {
 	out := new(SelectAllBarcodeResp)
 	err := c.cc.Invoke(ctx, "/model.Docmanager/SelectAllBarcode", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *docmanagerClient) SelectAllSellingBarcode(ctx context.Context, in *SelectAllSellingBarcodeReq, opts ...grpc.CallOption) (*SelectAllSellingBarcodeResp, error) {
+	out := new(SelectAllSellingBarcodeResp)
+	err := c.cc.Invoke(ctx, "/model.Docmanager/SelectAllSellingBarcode", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *docmanagerClient) SelectAllDamageBarcode(ctx context.Context, in *SelectAllDamageBarcodeReq, opts ...grpc.CallOption) (*SelectAllDamageBarcodeResp, error) {
+	out := new(SelectAllDamageBarcodeResp)
+	err := c.cc.Invoke(ctx, "/model.Docmanager/SelectAllDamageBarcode", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4867,6 +5284,15 @@ func (c *docmanagerClient) DeleteBarcode(ctx context.Context, in *DeleteBarcodeR
 func (c *docmanagerClient) SelectAllBorrowForm(ctx context.Context, in *SelectAllBorrowFormReq, opts ...grpc.CallOption) (*SelectAllBorrowFormResp, error) {
 	out := new(SelectAllBorrowFormResp)
 	err := c.cc.Invoke(ctx, "/model.Docmanager/SelectAllBorrowForm", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *docmanagerClient) SelectAllUnReturnBorrowForm(ctx context.Context, in *SelectAllUnReturnBorrowFormReq, opts ...grpc.CallOption) (*SelectAllUnReturnBorrowFormResp, error) {
+	out := new(SelectAllUnReturnBorrowFormResp)
+	err := c.cc.Invoke(ctx, "/model.Docmanager/SelectAllUnReturnBorrowForm", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4939,11 +5365,14 @@ func (c *docmanagerClient) DeleteSaleBill(ctx context.Context, in *DeleteSaleBil
 // DocmanagerServer is the server API for Docmanager service.
 type DocmanagerServer interface {
 	SelectAllBarcode(context.Context, *SelectAllBarcodeReq) (*SelectAllBarcodeResp, error)
+	SelectAllSellingBarcode(context.Context, *SelectAllSellingBarcodeReq) (*SelectAllSellingBarcodeResp, error)
+	SelectAllDamageBarcode(context.Context, *SelectAllDamageBarcodeReq) (*SelectAllDamageBarcodeResp, error)
 	SelectBarcodeByID(context.Context, *SelectBarcodeByIDReq) (*SelectBarcodeByIDResp, error)
 	SaveBarcode(context.Context, *SaveBarcodeReq) (*SaveBarcodeResp, error)
 	UpdateBarcode(context.Context, *UpdateBarcodeReq) (*UpdateBarcodeResp, error)
 	DeleteBarcode(context.Context, *DeleteBarcodeReq) (*DeleteBarcodeResp, error)
 	SelectAllBorrowForm(context.Context, *SelectAllBorrowFormReq) (*SelectAllBorrowFormResp, error)
+	SelectAllUnReturnBorrowForm(context.Context, *SelectAllUnReturnBorrowFormReq) (*SelectAllUnReturnBorrowFormResp, error)
 	SelectBorrowFormByID(context.Context, *SelectBorrowFormByIDReq) (*SelectBorrowFormByIDResp, error)
 	SaveBorrowForm(context.Context, *SaveBorrowFormReq) (*SaveBorrowFormResp, error)
 	DeleteBorrowForm(context.Context, *SaveBorrowFormReq) (*SaveBorrowFormResp, error)
@@ -4960,6 +5389,12 @@ type UnimplementedDocmanagerServer struct {
 func (*UnimplementedDocmanagerServer) SelectAllBarcode(ctx context.Context, req *SelectAllBarcodeReq) (*SelectAllBarcodeResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SelectAllBarcode not implemented")
 }
+func (*UnimplementedDocmanagerServer) SelectAllSellingBarcode(ctx context.Context, req *SelectAllSellingBarcodeReq) (*SelectAllSellingBarcodeResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SelectAllSellingBarcode not implemented")
+}
+func (*UnimplementedDocmanagerServer) SelectAllDamageBarcode(ctx context.Context, req *SelectAllDamageBarcodeReq) (*SelectAllDamageBarcodeResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SelectAllDamageBarcode not implemented")
+}
 func (*UnimplementedDocmanagerServer) SelectBarcodeByID(ctx context.Context, req *SelectBarcodeByIDReq) (*SelectBarcodeByIDResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SelectBarcodeByID not implemented")
 }
@@ -4974,6 +5409,9 @@ func (*UnimplementedDocmanagerServer) DeleteBarcode(ctx context.Context, req *De
 }
 func (*UnimplementedDocmanagerServer) SelectAllBorrowForm(ctx context.Context, req *SelectAllBorrowFormReq) (*SelectAllBorrowFormResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SelectAllBorrowForm not implemented")
+}
+func (*UnimplementedDocmanagerServer) SelectAllUnReturnBorrowForm(ctx context.Context, req *SelectAllUnReturnBorrowFormReq) (*SelectAllUnReturnBorrowFormResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SelectAllUnReturnBorrowForm not implemented")
 }
 func (*UnimplementedDocmanagerServer) SelectBorrowFormByID(ctx context.Context, req *SelectBorrowFormByIDReq) (*SelectBorrowFormByIDResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SelectBorrowFormByID not implemented")
@@ -5015,6 +5453,42 @@ func _Docmanager_SelectAllBarcode_Handler(srv interface{}, ctx context.Context, 
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DocmanagerServer).SelectAllBarcode(ctx, req.(*SelectAllBarcodeReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Docmanager_SelectAllSellingBarcode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SelectAllSellingBarcodeReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DocmanagerServer).SelectAllSellingBarcode(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/model.Docmanager/SelectAllSellingBarcode",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DocmanagerServer).SelectAllSellingBarcode(ctx, req.(*SelectAllSellingBarcodeReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Docmanager_SelectAllDamageBarcode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SelectAllDamageBarcodeReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DocmanagerServer).SelectAllDamageBarcode(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/model.Docmanager/SelectAllDamageBarcode",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DocmanagerServer).SelectAllDamageBarcode(ctx, req.(*SelectAllDamageBarcodeReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -5105,6 +5579,24 @@ func _Docmanager_SelectAllBorrowForm_Handler(srv interface{}, ctx context.Contex
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DocmanagerServer).SelectAllBorrowForm(ctx, req.(*SelectAllBorrowFormReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Docmanager_SelectAllUnReturnBorrowForm_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SelectAllUnReturnBorrowFormReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DocmanagerServer).SelectAllUnReturnBorrowForm(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/model.Docmanager/SelectAllUnReturnBorrowForm",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DocmanagerServer).SelectAllUnReturnBorrowForm(ctx, req.(*SelectAllUnReturnBorrowFormReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -5244,6 +5736,14 @@ var _Docmanager_serviceDesc = grpc.ServiceDesc{
 			Handler:    _Docmanager_SelectAllBarcode_Handler,
 		},
 		{
+			MethodName: "SelectAllSellingBarcode",
+			Handler:    _Docmanager_SelectAllSellingBarcode_Handler,
+		},
+		{
+			MethodName: "SelectAllDamageBarcode",
+			Handler:    _Docmanager_SelectAllDamageBarcode_Handler,
+		},
+		{
 			MethodName: "SelectBarcodeByID",
 			Handler:    _Docmanager_SelectBarcodeByID_Handler,
 		},
@@ -5262,6 +5762,10 @@ var _Docmanager_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SelectAllBorrowForm",
 			Handler:    _Docmanager_SelectAllBorrowForm_Handler,
+		},
+		{
+			MethodName: "SelectAllUnReturnBorrowForm",
+			Handler:    _Docmanager_SelectAllUnReturnBorrowForm_Handler,
 		},
 		{
 			MethodName: "SelectBorrowFormByID",
@@ -5316,10 +5820,6 @@ func (m *Doc) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.UpdatedAt != nil {
 		{
 			size, err := m.UpdatedAt.MarshalToSizedBuffer(dAtA[:i])
@@ -5384,10 +5884,6 @@ func (m *DocVersion) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.UpdatedAt != nil {
 		{
 			size, err := m.UpdatedAt.MarshalToSizedBuffer(dAtA[:i])
@@ -5464,10 +5960,6 @@ func (m *Barcode) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.UpdatedAt != nil {
 		{
 			size, err := m.UpdatedAt.MarshalToSizedBuffer(dAtA[:i])
@@ -5532,10 +6024,6 @@ func (m *Payment) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.UpdatedAt != nil {
 		{
 			size, err := m.UpdatedAt.MarshalToSizedBuffer(dAtA[:i])
@@ -5624,10 +6112,6 @@ func (m *BorrowForm) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.UpdatedAt != nil {
 		{
 			size, err := m.UpdatedAt.MarshalToSizedBuffer(dAtA[:i])
@@ -5676,15 +6160,41 @@ func (m *BorrowForm) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x2a
 	}
-	if m.Status != 0 {
-		i = encodeVarintDocmanager(dAtA, i, uint64(m.Status))
+	if len(m.Status) > 0 {
+		dAtA18 := make([]byte, len(m.Status)*10)
+		var j17 int
+		for _, num := range m.Status {
+			for num >= 1<<7 {
+				dAtA18[j17] = uint8(uint64(num)&0x7f | 0x80)
+				num >>= 7
+				j17++
+			}
+			dAtA18[j17] = uint8(num)
+			j17++
+		}
+		i -= j17
+		copy(dAtA[i:], dAtA18[:j17])
+		i = encodeVarintDocmanager(dAtA, i, uint64(j17))
 		i--
-		dAtA[i] = 0x20
+		dAtA[i] = 0x22
 	}
-	if m.BarcodeID != 0 {
-		i = encodeVarintDocmanager(dAtA, i, uint64(m.BarcodeID))
+	if len(m.BarcodeID) > 0 {
+		dAtA20 := make([]byte, len(m.BarcodeID)*10)
+		var j19 int
+		for _, num := range m.BarcodeID {
+			for num >= 1<<7 {
+				dAtA20[j19] = uint8(uint64(num)&0x7f | 0x80)
+				num >>= 7
+				j19++
+			}
+			dAtA20[j19] = uint8(num)
+			j19++
+		}
+		i -= j19
+		copy(dAtA[i:], dAtA20[:j19])
+		i = encodeVarintDocmanager(dAtA, i, uint64(j19))
 		i--
-		dAtA[i] = 0x18
+		dAtA[i] = 0x1a
 	}
 	if m.LibrarianID != 0 {
 		i = encodeVarintDocmanager(dAtA, i, uint64(m.LibrarianID))
@@ -5719,43 +6229,51 @@ func (m *SaleBill) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
+	if m.CreatedAt != nil {
+		{
+			size, err := m.CreatedAt.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintDocmanager(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x22
 	}
 	if len(m.Price) > 0 {
-		dAtA18 := make([]byte, len(m.Price)*10)
-		var j17 int
+		dAtA23 := make([]byte, len(m.Price)*10)
+		var j22 int
 		for _, num := range m.Price {
 			for num >= 1<<7 {
-				dAtA18[j17] = uint8(uint64(num)&0x7f | 0x80)
+				dAtA23[j22] = uint8(uint64(num)&0x7f | 0x80)
 				num >>= 7
-				j17++
+				j22++
 			}
-			dAtA18[j17] = uint8(num)
-			j17++
+			dAtA23[j22] = uint8(num)
+			j22++
 		}
-		i -= j17
-		copy(dAtA[i:], dAtA18[:j17])
-		i = encodeVarintDocmanager(dAtA, i, uint64(j17))
+		i -= j22
+		copy(dAtA[i:], dAtA23[:j22])
+		i = encodeVarintDocmanager(dAtA, i, uint64(j22))
 		i--
 		dAtA[i] = 0x1a
 	}
 	if len(m.BarcodeId) > 0 {
-		dAtA20 := make([]byte, len(m.BarcodeId)*10)
-		var j19 int
+		dAtA25 := make([]byte, len(m.BarcodeId)*10)
+		var j24 int
 		for _, num := range m.BarcodeId {
 			for num >= 1<<7 {
-				dAtA20[j19] = uint8(uint64(num)&0x7f | 0x80)
+				dAtA25[j24] = uint8(uint64(num)&0x7f | 0x80)
 				num >>= 7
-				j19++
+				j24++
 			}
-			dAtA20[j19] = uint8(num)
-			j19++
+			dAtA25[j24] = uint8(num)
+			j24++
 		}
-		i -= j19
-		copy(dAtA[i:], dAtA20[:j19])
-		i = encodeVarintDocmanager(dAtA, i, uint64(j19))
+		i -= j24
+		copy(dAtA[i:], dAtA25[:j24])
+		i = encodeVarintDocmanager(dAtA, i, uint64(j24))
 		i--
 		dAtA[i] = 0x12
 	}
@@ -5787,10 +6305,6 @@ func (m *SelectAllBarcodeReq) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	return len(dAtA) - i, nil
 }
 
@@ -5814,10 +6328,6 @@ func (m *SelectAllBarcodeResp) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Barcodes) > 0 {
 		for iNdEx := len(m.Barcodes) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -5847,6 +6357,150 @@ func (m *SelectAllBarcodeResp) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *SelectAllSellingBarcodeReq) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *SelectAllSellingBarcodeReq) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *SelectAllSellingBarcodeReq) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
+func (m *SelectAllSellingBarcodeResp) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *SelectAllSellingBarcodeResp) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *SelectAllSellingBarcodeResp) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Barcodes) > 0 {
+		for iNdEx := len(m.Barcodes) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Barcodes[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintDocmanager(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x1a
+		}
+	}
+	if len(m.Message) > 0 {
+		i -= len(m.Message)
+		copy(dAtA[i:], m.Message)
+		i = encodeVarintDocmanager(dAtA, i, uint64(len(m.Message)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Code != 0 {
+		i = encodeVarintDocmanager(dAtA, i, uint64(m.Code))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *SelectAllDamageBarcodeReq) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *SelectAllDamageBarcodeReq) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *SelectAllDamageBarcodeReq) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Barcodes) > 0 {
+		for iNdEx := len(m.Barcodes) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Barcodes[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintDocmanager(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x1a
+		}
+	}
+	if len(m.Message) > 0 {
+		i -= len(m.Message)
+		copy(dAtA[i:], m.Message)
+		i = encodeVarintDocmanager(dAtA, i, uint64(len(m.Message)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Code != 0 {
+		i = encodeVarintDocmanager(dAtA, i, uint64(m.Code))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *SelectAllDamageBarcodeResp) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *SelectAllDamageBarcodeResp) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *SelectAllDamageBarcodeResp) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
 func (m *SelectBarcodeByIDReq) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -5867,10 +6521,6 @@ func (m *SelectBarcodeByIDReq) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.BarcodeID != 0 {
 		i = encodeVarintDocmanager(dAtA, i, uint64(m.BarcodeID))
 		i--
@@ -5899,10 +6549,6 @@ func (m *SelectBarcodeByIDResp) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.Barcode != nil {
 		{
 			size, err := m.Barcode.MarshalToSizedBuffer(dAtA[:i])
@@ -5950,10 +6596,6 @@ func (m *SaveBarcodeReq) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.Barcode != nil {
 		{
 			size, err := m.Barcode.MarshalToSizedBuffer(dAtA[:i])
@@ -5989,10 +6631,6 @@ func (m *SaveBarcodeResp) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Message) > 0 {
 		i -= len(m.Message)
 		copy(dAtA[i:], m.Message)
@@ -6028,10 +6666,6 @@ func (m *UpdateBarcodeReq) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.Barcode != nil {
 		{
 			size, err := m.Barcode.MarshalToSizedBuffer(dAtA[:i])
@@ -6067,10 +6701,6 @@ func (m *UpdateBarcodeResp) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Message) > 0 {
 		i -= len(m.Message)
 		copy(dAtA[i:], m.Message)
@@ -6106,10 +6736,6 @@ func (m *DeleteBarcodeReq) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.BarcodeID != 0 {
 		i = encodeVarintDocmanager(dAtA, i, uint64(m.BarcodeID))
 		i--
@@ -6138,10 +6764,6 @@ func (m *DeleteBarcodeResp) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Message) > 0 {
 		i -= len(m.Message)
 		copy(dAtA[i:], m.Message)
@@ -6177,10 +6799,6 @@ func (m *SelectAllBorrowFormReq) MarshalToSizedBuffer(dAtA []byte) (int, error) 
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	return len(dAtA) - i, nil
 }
 
@@ -6204,10 +6822,78 @@ func (m *SelectAllBorrowFormResp) MarshalToSizedBuffer(dAtA []byte) (int, error)
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
+	if len(m.BorrowForms) > 0 {
+		for iNdEx := len(m.BorrowForms) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.BorrowForms[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintDocmanager(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x1a
+		}
 	}
+	if len(m.Message) > 0 {
+		i -= len(m.Message)
+		copy(dAtA[i:], m.Message)
+		i = encodeVarintDocmanager(dAtA, i, uint64(len(m.Message)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Code != 0 {
+		i = encodeVarintDocmanager(dAtA, i, uint64(m.Code))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *SelectAllUnReturnBorrowFormReq) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *SelectAllUnReturnBorrowFormReq) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *SelectAllUnReturnBorrowFormReq) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
+func (m *SelectAllUnReturnBorrowFormResp) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *SelectAllUnReturnBorrowFormResp) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *SelectAllUnReturnBorrowFormResp) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
 	if len(m.BorrowForms) > 0 {
 		for iNdEx := len(m.BorrowForms) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -6257,10 +6943,6 @@ func (m *SelectBorrowFormByIDReq) MarshalToSizedBuffer(dAtA []byte) (int, error)
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.BorrowFormID != 0 {
 		i = encodeVarintDocmanager(dAtA, i, uint64(m.BorrowFormID))
 		i--
@@ -6289,10 +6971,6 @@ func (m *SelectBorrowFormByIDResp) MarshalToSizedBuffer(dAtA []byte) (int, error
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.Borrowform != nil {
 		{
 			size, err := m.Borrowform.MarshalToSizedBuffer(dAtA[:i])
@@ -6340,10 +7018,6 @@ func (m *SaveBorrowFormReq) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.Borrowform != nil {
 		{
 			size, err := m.Borrowform.MarshalToSizedBuffer(dAtA[:i])
@@ -6379,10 +7053,6 @@ func (m *SaveBorrowFormResp) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Message) > 0 {
 		i -= len(m.Message)
 		copy(dAtA[i:], m.Message)
@@ -6418,10 +7088,6 @@ func (m *DeleteBorrowFormReq) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.BorrowFormID != 0 {
 		i = encodeVarintDocmanager(dAtA, i, uint64(m.BorrowFormID))
 		i--
@@ -6450,10 +7116,6 @@ func (m *DeleteBorrowFormResp) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Message) > 0 {
 		i -= len(m.Message)
 		copy(dAtA[i:], m.Message)
@@ -6489,10 +7151,6 @@ func (m *SelectAllSaleBillReq) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	return len(dAtA) - i, nil
 }
 
@@ -6516,10 +7174,6 @@ func (m *SelectAllSaleBillResp) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.SaleBills) > 0 {
 		for iNdEx := len(m.SaleBills) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -6569,10 +7223,6 @@ func (m *SelectAllSaleBillByIDReq) MarshalToSizedBuffer(dAtA []byte) (int, error
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.SaleBillID != 0 {
 		i = encodeVarintDocmanager(dAtA, i, uint64(m.SaleBillID))
 		i--
@@ -6601,10 +7251,6 @@ func (m *SelectAllSaleBillByIDResp) MarshalToSizedBuffer(dAtA []byte) (int, erro
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.SaleBills) > 0 {
 		for iNdEx := len(m.SaleBills) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -6654,10 +7300,6 @@ func (m *SaveSaleBillReq) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.SaleBill != nil {
 		{
 			size, err := m.SaleBill.MarshalToSizedBuffer(dAtA[:i])
@@ -6693,10 +7335,6 @@ func (m *SaveSaleBillResp) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Message) > 0 {
 		i -= len(m.Message)
 		copy(dAtA[i:], m.Message)
@@ -6732,10 +7370,6 @@ func (m *DeleteSaleBillReq) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.SaleBillID != 0 {
 		i = encodeVarintDocmanager(dAtA, i, uint64(m.SaleBillID))
 		i--
@@ -6764,10 +7398,6 @@ func (m *DeleteSaleBillResp) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Message) > 0 {
 		i -= len(m.Message)
 		copy(dAtA[i:], m.Message)
@@ -6806,7 +7436,6 @@ func NewPopulatedDoc(r randyDocmanager, easy bool) *Doc {
 		this.UpdatedAt = model.NewPopulatedTime(r, easy)
 	}
 	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedDocmanager(r, 6)
 	}
 	return this
 }
@@ -6825,7 +7454,6 @@ func NewPopulatedDocVersion(r randyDocmanager, easy bool) *DocVersion {
 		this.UpdatedAt = model.NewPopulatedTime(r, easy)
 	}
 	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedDocmanager(r, 8)
 	}
 	return this
 }
@@ -6842,7 +7470,6 @@ func NewPopulatedBarcode(r randyDocmanager, easy bool) *Barcode {
 		this.UpdatedAt = model.NewPopulatedTime(r, easy)
 	}
 	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedDocmanager(r, 6)
 	}
 	return this
 }
@@ -6867,7 +7494,6 @@ func NewPopulatedPayment(r randyDocmanager, easy bool) *Payment {
 		this.UpdatedAt = model.NewPopulatedTime(r, easy)
 	}
 	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedDocmanager(r, 7)
 	}
 	return this
 }
@@ -6876,8 +7502,16 @@ func NewPopulatedBorrowForm(r randyDocmanager, easy bool) *BorrowForm {
 	this := &BorrowForm{}
 	this.ID = uint64(uint64(r.Uint32()))
 	this.LibrarianID = uint64(uint64(r.Uint32()))
-	this.BarcodeID = uint64(uint64(r.Uint32()))
-	this.Status = uint64(uint64(r.Uint32()))
+	v3 := r.Intn(10)
+	this.BarcodeID = make([]uint64, v3)
+	for i := 0; i < v3; i++ {
+		this.BarcodeID[i] = uint64(uint64(r.Uint32()))
+	}
+	v4 := r.Intn(10)
+	this.Status = make([]uint64, v4)
+	for i := 0; i < v4; i++ {
+		this.Status[i] = uint64(uint64(r.Uint32()))
+	}
 	if r.Intn(5) != 0 {
 		this.StartTime = model.NewPopulatedTime(r, easy)
 	}
@@ -6891,7 +7525,6 @@ func NewPopulatedBorrowForm(r randyDocmanager, easy bool) *BorrowForm {
 		this.UpdatedAt = model.NewPopulatedTime(r, easy)
 	}
 	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedDocmanager(r, 9)
 	}
 	return this
 }
@@ -6899,18 +7532,20 @@ func NewPopulatedBorrowForm(r randyDocmanager, easy bool) *BorrowForm {
 func NewPopulatedSaleBill(r randyDocmanager, easy bool) *SaleBill {
 	this := &SaleBill{}
 	this.ID = uint64(uint64(r.Uint32()))
-	v3 := r.Intn(10)
-	this.BarcodeId = make([]uint64, v3)
-	for i := 0; i < v3; i++ {
+	v5 := r.Intn(10)
+	this.BarcodeId = make([]uint64, v5)
+	for i := 0; i < v5; i++ {
 		this.BarcodeId[i] = uint64(uint64(r.Uint32()))
 	}
-	v4 := r.Intn(10)
-	this.Price = make([]uint64, v4)
-	for i := 0; i < v4; i++ {
+	v6 := r.Intn(10)
+	this.Price = make([]uint64, v6)
+	for i := 0; i < v6; i++ {
 		this.Price[i] = uint64(uint64(r.Uint32()))
 	}
+	if r.Intn(5) != 0 {
+		this.CreatedAt = model.NewPopulatedTime(r, easy)
+	}
 	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedDocmanager(r, 4)
 	}
 	return this
 }
@@ -6918,7 +7553,6 @@ func NewPopulatedSaleBill(r randyDocmanager, easy bool) *SaleBill {
 func NewPopulatedSelectAllBarcodeReq(r randyDocmanager, easy bool) *SelectAllBarcodeReq {
 	this := &SelectAllBarcodeReq{}
 	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedDocmanager(r, 1)
 	}
 	return this
 }
@@ -6931,14 +7565,65 @@ func NewPopulatedSelectAllBarcodeResp(r randyDocmanager, easy bool) *SelectAllBa
 	}
 	this.Message = string(randStringDocmanager(r))
 	if r.Intn(5) != 0 {
-		v5 := r.Intn(5)
-		this.Barcodes = make([]*Barcode, v5)
-		for i := 0; i < v5; i++ {
+		v7 := r.Intn(5)
+		this.Barcodes = make([]*Barcode, v7)
+		for i := 0; i < v7; i++ {
 			this.Barcodes[i] = NewPopulatedBarcode(r, easy)
 		}
 	}
 	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedDocmanager(r, 4)
+	}
+	return this
+}
+
+func NewPopulatedSelectAllSellingBarcodeReq(r randyDocmanager, easy bool) *SelectAllSellingBarcodeReq {
+	this := &SelectAllSellingBarcodeReq{}
+	if !easy && r.Intn(10) != 0 {
+	}
+	return this
+}
+
+func NewPopulatedSelectAllSellingBarcodeResp(r randyDocmanager, easy bool) *SelectAllSellingBarcodeResp {
+	this := &SelectAllSellingBarcodeResp{}
+	this.Code = int32(r.Int31())
+	if r.Intn(2) == 0 {
+		this.Code *= -1
+	}
+	this.Message = string(randStringDocmanager(r))
+	if r.Intn(5) != 0 {
+		v8 := r.Intn(5)
+		this.Barcodes = make([]*Barcode, v8)
+		for i := 0; i < v8; i++ {
+			this.Barcodes[i] = NewPopulatedBarcode(r, easy)
+		}
+	}
+	if !easy && r.Intn(10) != 0 {
+	}
+	return this
+}
+
+func NewPopulatedSelectAllDamageBarcodeReq(r randyDocmanager, easy bool) *SelectAllDamageBarcodeReq {
+	this := &SelectAllDamageBarcodeReq{}
+	this.Code = int32(r.Int31())
+	if r.Intn(2) == 0 {
+		this.Code *= -1
+	}
+	this.Message = string(randStringDocmanager(r))
+	if r.Intn(5) != 0 {
+		v9 := r.Intn(5)
+		this.Barcodes = make([]*Barcode, v9)
+		for i := 0; i < v9; i++ {
+			this.Barcodes[i] = NewPopulatedBarcode(r, easy)
+		}
+	}
+	if !easy && r.Intn(10) != 0 {
+	}
+	return this
+}
+
+func NewPopulatedSelectAllDamageBarcodeResp(r randyDocmanager, easy bool) *SelectAllDamageBarcodeResp {
+	this := &SelectAllDamageBarcodeResp{}
+	if !easy && r.Intn(10) != 0 {
 	}
 	return this
 }
@@ -6947,7 +7632,6 @@ func NewPopulatedSelectBarcodeByIDReq(r randyDocmanager, easy bool) *SelectBarco
 	this := &SelectBarcodeByIDReq{}
 	this.BarcodeID = uint64(uint64(r.Uint32()))
 	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedDocmanager(r, 2)
 	}
 	return this
 }
@@ -6963,7 +7647,6 @@ func NewPopulatedSelectBarcodeByIDResp(r randyDocmanager, easy bool) *SelectBarc
 		this.Barcode = NewPopulatedBarcode(r, easy)
 	}
 	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedDocmanager(r, 4)
 	}
 	return this
 }
@@ -6974,7 +7657,6 @@ func NewPopulatedSaveBarcodeReq(r randyDocmanager, easy bool) *SaveBarcodeReq {
 		this.Barcode = NewPopulatedBarcode(r, easy)
 	}
 	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedDocmanager(r, 2)
 	}
 	return this
 }
@@ -6987,7 +7669,6 @@ func NewPopulatedSaveBarcodeResp(r randyDocmanager, easy bool) *SaveBarcodeResp 
 	}
 	this.Message = string(randStringDocmanager(r))
 	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedDocmanager(r, 3)
 	}
 	return this
 }
@@ -6998,7 +7679,6 @@ func NewPopulatedUpdateBarcodeReq(r randyDocmanager, easy bool) *UpdateBarcodeRe
 		this.Barcode = NewPopulatedBarcode(r, easy)
 	}
 	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedDocmanager(r, 2)
 	}
 	return this
 }
@@ -7011,7 +7691,6 @@ func NewPopulatedUpdateBarcodeResp(r randyDocmanager, easy bool) *UpdateBarcodeR
 	}
 	this.Message = string(randStringDocmanager(r))
 	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedDocmanager(r, 3)
 	}
 	return this
 }
@@ -7020,7 +7699,6 @@ func NewPopulatedDeleteBarcodeReq(r randyDocmanager, easy bool) *DeleteBarcodeRe
 	this := &DeleteBarcodeReq{}
 	this.BarcodeID = uint64(uint64(r.Uint32()))
 	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedDocmanager(r, 2)
 	}
 	return this
 }
@@ -7033,7 +7711,6 @@ func NewPopulatedDeleteBarcodeResp(r randyDocmanager, easy bool) *DeleteBarcodeR
 	}
 	this.Message = string(randStringDocmanager(r))
 	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedDocmanager(r, 3)
 	}
 	return this
 }
@@ -7041,7 +7718,6 @@ func NewPopulatedDeleteBarcodeResp(r randyDocmanager, easy bool) *DeleteBarcodeR
 func NewPopulatedSelectAllBorrowFormReq(r randyDocmanager, easy bool) *SelectAllBorrowFormReq {
 	this := &SelectAllBorrowFormReq{}
 	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedDocmanager(r, 1)
 	}
 	return this
 }
@@ -7054,14 +7730,39 @@ func NewPopulatedSelectAllBorrowFormResp(r randyDocmanager, easy bool) *SelectAl
 	}
 	this.Message = string(randStringDocmanager(r))
 	if r.Intn(5) != 0 {
-		v6 := r.Intn(5)
-		this.BorrowForms = make([]*BorrowForm, v6)
-		for i := 0; i < v6; i++ {
+		v10 := r.Intn(5)
+		this.BorrowForms = make([]*BorrowForm, v10)
+		for i := 0; i < v10; i++ {
 			this.BorrowForms[i] = NewPopulatedBorrowForm(r, easy)
 		}
 	}
 	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedDocmanager(r, 4)
+	}
+	return this
+}
+
+func NewPopulatedSelectAllUnReturnBorrowFormReq(r randyDocmanager, easy bool) *SelectAllUnReturnBorrowFormReq {
+	this := &SelectAllUnReturnBorrowFormReq{}
+	if !easy && r.Intn(10) != 0 {
+	}
+	return this
+}
+
+func NewPopulatedSelectAllUnReturnBorrowFormResp(r randyDocmanager, easy bool) *SelectAllUnReturnBorrowFormResp {
+	this := &SelectAllUnReturnBorrowFormResp{}
+	this.Code = int32(r.Int31())
+	if r.Intn(2) == 0 {
+		this.Code *= -1
+	}
+	this.Message = string(randStringDocmanager(r))
+	if r.Intn(5) != 0 {
+		v11 := r.Intn(5)
+		this.BorrowForms = make([]*BorrowForm, v11)
+		for i := 0; i < v11; i++ {
+			this.BorrowForms[i] = NewPopulatedBorrowForm(r, easy)
+		}
+	}
+	if !easy && r.Intn(10) != 0 {
 	}
 	return this
 }
@@ -7070,7 +7771,6 @@ func NewPopulatedSelectBorrowFormByIDReq(r randyDocmanager, easy bool) *SelectBo
 	this := &SelectBorrowFormByIDReq{}
 	this.BorrowFormID = uint64(uint64(r.Uint32()))
 	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedDocmanager(r, 2)
 	}
 	return this
 }
@@ -7086,7 +7786,6 @@ func NewPopulatedSelectBorrowFormByIDResp(r randyDocmanager, easy bool) *SelectB
 		this.Borrowform = NewPopulatedBorrowForm(r, easy)
 	}
 	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedDocmanager(r, 4)
 	}
 	return this
 }
@@ -7097,7 +7796,6 @@ func NewPopulatedSaveBorrowFormReq(r randyDocmanager, easy bool) *SaveBorrowForm
 		this.Borrowform = NewPopulatedBorrowForm(r, easy)
 	}
 	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedDocmanager(r, 2)
 	}
 	return this
 }
@@ -7110,7 +7808,6 @@ func NewPopulatedSaveBorrowFormResp(r randyDocmanager, easy bool) *SaveBorrowFor
 	}
 	this.Message = string(randStringDocmanager(r))
 	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedDocmanager(r, 3)
 	}
 	return this
 }
@@ -7119,7 +7816,6 @@ func NewPopulatedDeleteBorrowFormReq(r randyDocmanager, easy bool) *DeleteBorrow
 	this := &DeleteBorrowFormReq{}
 	this.BorrowFormID = uint64(uint64(r.Uint32()))
 	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedDocmanager(r, 2)
 	}
 	return this
 }
@@ -7132,7 +7828,6 @@ func NewPopulatedDeleteBorrowFormResp(r randyDocmanager, easy bool) *DeleteBorro
 	}
 	this.Message = string(randStringDocmanager(r))
 	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedDocmanager(r, 3)
 	}
 	return this
 }
@@ -7140,7 +7835,6 @@ func NewPopulatedDeleteBorrowFormResp(r randyDocmanager, easy bool) *DeleteBorro
 func NewPopulatedSelectAllSaleBillReq(r randyDocmanager, easy bool) *SelectAllSaleBillReq {
 	this := &SelectAllSaleBillReq{}
 	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedDocmanager(r, 1)
 	}
 	return this
 }
@@ -7153,14 +7847,13 @@ func NewPopulatedSelectAllSaleBillResp(r randyDocmanager, easy bool) *SelectAllS
 	}
 	this.Message = string(randStringDocmanager(r))
 	if r.Intn(5) != 0 {
-		v7 := r.Intn(5)
-		this.SaleBills = make([]*SaleBill, v7)
-		for i := 0; i < v7; i++ {
+		v12 := r.Intn(5)
+		this.SaleBills = make([]*SaleBill, v12)
+		for i := 0; i < v12; i++ {
 			this.SaleBills[i] = NewPopulatedSaleBill(r, easy)
 		}
 	}
 	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedDocmanager(r, 4)
 	}
 	return this
 }
@@ -7169,7 +7862,6 @@ func NewPopulatedSelectAllSaleBillByIDReq(r randyDocmanager, easy bool) *SelectA
 	this := &SelectAllSaleBillByIDReq{}
 	this.SaleBillID = uint64(uint64(r.Uint32()))
 	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedDocmanager(r, 2)
 	}
 	return this
 }
@@ -7182,14 +7874,13 @@ func NewPopulatedSelectAllSaleBillByIDResp(r randyDocmanager, easy bool) *Select
 	}
 	this.Message = string(randStringDocmanager(r))
 	if r.Intn(5) != 0 {
-		v8 := r.Intn(5)
-		this.SaleBills = make([]*SaleBill, v8)
-		for i := 0; i < v8; i++ {
+		v13 := r.Intn(5)
+		this.SaleBills = make([]*SaleBill, v13)
+		for i := 0; i < v13; i++ {
 			this.SaleBills[i] = NewPopulatedSaleBill(r, easy)
 		}
 	}
 	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedDocmanager(r, 4)
 	}
 	return this
 }
@@ -7200,7 +7891,6 @@ func NewPopulatedSaveSaleBillReq(r randyDocmanager, easy bool) *SaveSaleBillReq 
 		this.SaleBill = NewPopulatedSaleBill(r, easy)
 	}
 	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedDocmanager(r, 2)
 	}
 	return this
 }
@@ -7213,7 +7903,6 @@ func NewPopulatedSaveSaleBillResp(r randyDocmanager, easy bool) *SaveSaleBillRes
 	}
 	this.Message = string(randStringDocmanager(r))
 	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedDocmanager(r, 3)
 	}
 	return this
 }
@@ -7222,7 +7911,6 @@ func NewPopulatedDeleteSaleBillReq(r randyDocmanager, easy bool) *DeleteSaleBill
 	this := &DeleteSaleBillReq{}
 	this.SaleBillID = uint64(uint64(r.Uint32()))
 	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedDocmanager(r, 2)
 	}
 	return this
 }
@@ -7235,7 +7923,6 @@ func NewPopulatedDeleteSaleBillResp(r randyDocmanager, easy bool) *DeleteSaleBil
 	}
 	this.Message = string(randStringDocmanager(r))
 	if !easy && r.Intn(10) != 0 {
-		this.XXX_unrecognized = randUnrecognizedDocmanager(r, 3)
 	}
 	return this
 }
@@ -7259,9 +7946,9 @@ func randUTF8RuneDocmanager(r randyDocmanager) rune {
 	return rune(ru + 61)
 }
 func randStringDocmanager(r randyDocmanager) string {
-	v9 := r.Intn(100)
-	tmps := make([]rune, v9)
-	for i := 0; i < v9; i++ {
+	v14 := r.Intn(100)
+	tmps := make([]rune, v14)
+	for i := 0; i < v14; i++ {
 		tmps[i] = randUTF8RuneDocmanager(r)
 	}
 	return string(tmps)
@@ -7283,11 +7970,11 @@ func randFieldDocmanager(dAtA []byte, r randyDocmanager, fieldNumber int, wire i
 	switch wire {
 	case 0:
 		dAtA = encodeVarintPopulateDocmanager(dAtA, uint64(key))
-		v10 := r.Int63()
+		v15 := r.Int63()
 		if r.Intn(2) == 0 {
-			v10 *= -1
+			v15 *= -1
 		}
-		dAtA = encodeVarintPopulateDocmanager(dAtA, uint64(v10))
+		dAtA = encodeVarintPopulateDocmanager(dAtA, uint64(v15))
 	case 1:
 		dAtA = encodeVarintPopulateDocmanager(dAtA, uint64(key))
 		dAtA = append(dAtA, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
@@ -7336,9 +8023,6 @@ func (m *Doc) Size() (n int) {
 		l = m.UpdatedAt.Size()
 		n += 1 + l + sovDocmanager(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -7373,9 +8057,6 @@ func (m *DocVersion) Size() (n int) {
 		l = m.UpdatedAt.Size()
 		n += 1 + l + sovDocmanager(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -7402,9 +8083,6 @@ func (m *Barcode) Size() (n int) {
 	if m.UpdatedAt != nil {
 		l = m.UpdatedAt.Size()
 		n += 1 + l + sovDocmanager(uint64(l))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -7440,9 +8118,6 @@ func (m *Payment) Size() (n int) {
 		l = m.UpdatedAt.Size()
 		n += 1 + l + sovDocmanager(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -7458,11 +8133,19 @@ func (m *BorrowForm) Size() (n int) {
 	if m.LibrarianID != 0 {
 		n += 1 + sovDocmanager(uint64(m.LibrarianID))
 	}
-	if m.BarcodeID != 0 {
-		n += 1 + sovDocmanager(uint64(m.BarcodeID))
+	if len(m.BarcodeID) > 0 {
+		l = 0
+		for _, e := range m.BarcodeID {
+			l += sovDocmanager(uint64(e))
+		}
+		n += 1 + sovDocmanager(uint64(l)) + l
 	}
-	if m.Status != 0 {
-		n += 1 + sovDocmanager(uint64(m.Status))
+	if len(m.Status) > 0 {
+		l = 0
+		for _, e := range m.Status {
+			l += sovDocmanager(uint64(e))
+		}
+		n += 1 + sovDocmanager(uint64(l)) + l
 	}
 	if m.StartTime != nil {
 		l = m.StartTime.Size()
@@ -7479,9 +8162,6 @@ func (m *BorrowForm) Size() (n int) {
 	if m.UpdatedAt != nil {
 		l = m.UpdatedAt.Size()
 		n += 1 + l + sovDocmanager(uint64(l))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -7509,8 +8189,9 @@ func (m *SaleBill) Size() (n int) {
 		}
 		n += 1 + sovDocmanager(uint64(l)) + l
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
+	if m.CreatedAt != nil {
+		l = m.CreatedAt.Size()
+		n += 1 + l + sovDocmanager(uint64(l))
 	}
 	return n
 }
@@ -7521,9 +8202,6 @@ func (m *SelectAllBarcodeReq) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -7546,9 +8224,68 @@ func (m *SelectAllBarcodeResp) Size() (n int) {
 			n += 1 + l + sovDocmanager(uint64(l))
 		}
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
+	return n
+}
+
+func (m *SelectAllSellingBarcodeReq) Size() (n int) {
+	if m == nil {
+		return 0
 	}
+	var l int
+	_ = l
+	return n
+}
+
+func (m *SelectAllSellingBarcodeResp) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Code != 0 {
+		n += 1 + sovDocmanager(uint64(m.Code))
+	}
+	l = len(m.Message)
+	if l > 0 {
+		n += 1 + l + sovDocmanager(uint64(l))
+	}
+	if len(m.Barcodes) > 0 {
+		for _, e := range m.Barcodes {
+			l = e.Size()
+			n += 1 + l + sovDocmanager(uint64(l))
+		}
+	}
+	return n
+}
+
+func (m *SelectAllDamageBarcodeReq) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Code != 0 {
+		n += 1 + sovDocmanager(uint64(m.Code))
+	}
+	l = len(m.Message)
+	if l > 0 {
+		n += 1 + l + sovDocmanager(uint64(l))
+	}
+	if len(m.Barcodes) > 0 {
+		for _, e := range m.Barcodes {
+			l = e.Size()
+			n += 1 + l + sovDocmanager(uint64(l))
+		}
+	}
+	return n
+}
+
+func (m *SelectAllDamageBarcodeResp) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
 	return n
 }
 
@@ -7560,9 +8297,6 @@ func (m *SelectBarcodeByIDReq) Size() (n int) {
 	_ = l
 	if m.BarcodeID != 0 {
 		n += 1 + sovDocmanager(uint64(m.BarcodeID))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -7584,9 +8318,6 @@ func (m *SelectBarcodeByIDResp) Size() (n int) {
 		l = m.Barcode.Size()
 		n += 1 + l + sovDocmanager(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -7599,9 +8330,6 @@ func (m *SaveBarcodeReq) Size() (n int) {
 	if m.Barcode != nil {
 		l = m.Barcode.Size()
 		n += 1 + l + sovDocmanager(uint64(l))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -7619,9 +8347,6 @@ func (m *SaveBarcodeResp) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovDocmanager(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -7634,9 +8359,6 @@ func (m *UpdateBarcodeReq) Size() (n int) {
 	if m.Barcode != nil {
 		l = m.Barcode.Size()
 		n += 1 + l + sovDocmanager(uint64(l))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -7654,9 +8376,6 @@ func (m *UpdateBarcodeResp) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovDocmanager(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -7668,9 +8387,6 @@ func (m *DeleteBarcodeReq) Size() (n int) {
 	_ = l
 	if m.BarcodeID != 0 {
 		n += 1 + sovDocmanager(uint64(m.BarcodeID))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -7688,9 +8404,6 @@ func (m *DeleteBarcodeResp) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovDocmanager(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -7700,9 +8413,6 @@ func (m *SelectAllBorrowFormReq) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -7725,8 +8435,36 @@ func (m *SelectAllBorrowFormResp) Size() (n int) {
 			n += 1 + l + sovDocmanager(uint64(l))
 		}
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
+	return n
+}
+
+func (m *SelectAllUnReturnBorrowFormReq) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	return n
+}
+
+func (m *SelectAllUnReturnBorrowFormResp) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Code != 0 {
+		n += 1 + sovDocmanager(uint64(m.Code))
+	}
+	l = len(m.Message)
+	if l > 0 {
+		n += 1 + l + sovDocmanager(uint64(l))
+	}
+	if len(m.BorrowForms) > 0 {
+		for _, e := range m.BorrowForms {
+			l = e.Size()
+			n += 1 + l + sovDocmanager(uint64(l))
+		}
 	}
 	return n
 }
@@ -7739,9 +8477,6 @@ func (m *SelectBorrowFormByIDReq) Size() (n int) {
 	_ = l
 	if m.BorrowFormID != 0 {
 		n += 1 + sovDocmanager(uint64(m.BorrowFormID))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -7763,9 +8498,6 @@ func (m *SelectBorrowFormByIDResp) Size() (n int) {
 		l = m.Borrowform.Size()
 		n += 1 + l + sovDocmanager(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -7778,9 +8510,6 @@ func (m *SaveBorrowFormReq) Size() (n int) {
 	if m.Borrowform != nil {
 		l = m.Borrowform.Size()
 		n += 1 + l + sovDocmanager(uint64(l))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -7798,9 +8527,6 @@ func (m *SaveBorrowFormResp) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovDocmanager(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -7812,9 +8538,6 @@ func (m *DeleteBorrowFormReq) Size() (n int) {
 	_ = l
 	if m.BorrowFormID != 0 {
 		n += 1 + sovDocmanager(uint64(m.BorrowFormID))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -7832,9 +8555,6 @@ func (m *DeleteBorrowFormResp) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovDocmanager(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -7844,9 +8564,6 @@ func (m *SelectAllSaleBillReq) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -7869,9 +8586,6 @@ func (m *SelectAllSaleBillResp) Size() (n int) {
 			n += 1 + l + sovDocmanager(uint64(l))
 		}
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -7883,9 +8597,6 @@ func (m *SelectAllSaleBillByIDReq) Size() (n int) {
 	_ = l
 	if m.SaleBillID != 0 {
 		n += 1 + sovDocmanager(uint64(m.SaleBillID))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -7909,9 +8620,6 @@ func (m *SelectAllSaleBillByIDResp) Size() (n int) {
 			n += 1 + l + sovDocmanager(uint64(l))
 		}
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -7924,9 +8632,6 @@ func (m *SaveSaleBillReq) Size() (n int) {
 	if m.SaleBill != nil {
 		l = m.SaleBill.Size()
 		n += 1 + l + sovDocmanager(uint64(l))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -7944,9 +8649,6 @@ func (m *SaveSaleBillResp) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovDocmanager(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -7958,9 +8660,6 @@ func (m *DeleteSaleBillReq) Size() (n int) {
 	_ = l
 	if m.SaleBillID != 0 {
 		n += 1 + sovDocmanager(uint64(m.SaleBillID))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -7977,9 +8676,6 @@ func (m *DeleteSaleBillResp) Size() (n int) {
 	l = len(m.Message)
 	if l > 0 {
 		n += 1 + l + sovDocmanager(uint64(l))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -8176,7 +8872,6 @@ func (m *Doc) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -8423,7 +9118,6 @@ func (m *DocVersion) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -8619,7 +9313,6 @@ func (m *Barcode) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -8916,7 +9609,6 @@ func (m *Payment) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -8994,42 +9686,156 @@ func (m *BorrowForm) Unmarshal(dAtA []byte) error {
 				}
 			}
 		case 3:
-			if wireType != 0 {
+			if wireType == 0 {
+				var v uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return ErrIntOverflowDocmanager
+					}
+					if iNdEx >= l {
+						return io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					v |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				m.BarcodeID = append(m.BarcodeID, v)
+			} else if wireType == 2 {
+				var packedLen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return ErrIntOverflowDocmanager
+					}
+					if iNdEx >= l {
+						return io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					packedLen |= int(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if packedLen < 0 {
+					return ErrInvalidLengthDocmanager
+				}
+				postIndex := iNdEx + packedLen
+				if postIndex < 0 {
+					return ErrInvalidLengthDocmanager
+				}
+				if postIndex > l {
+					return io.ErrUnexpectedEOF
+				}
+				var elementCount int
+				var count int
+				for _, integer := range dAtA[iNdEx:postIndex] {
+					if integer < 128 {
+						count++
+					}
+				}
+				elementCount = count
+				if elementCount != 0 && len(m.BarcodeID) == 0 {
+					m.BarcodeID = make([]uint64, 0, elementCount)
+				}
+				for iNdEx < postIndex {
+					var v uint64
+					for shift := uint(0); ; shift += 7 {
+						if shift >= 64 {
+							return ErrIntOverflowDocmanager
+						}
+						if iNdEx >= l {
+							return io.ErrUnexpectedEOF
+						}
+						b := dAtA[iNdEx]
+						iNdEx++
+						v |= uint64(b&0x7F) << shift
+						if b < 0x80 {
+							break
+						}
+					}
+					m.BarcodeID = append(m.BarcodeID, v)
+				}
+			} else {
 				return fmt.Errorf("proto: wrong wireType = %d for field BarcodeID", wireType)
 			}
-			m.BarcodeID = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowDocmanager
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.BarcodeID |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
 		case 4:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Status", wireType)
-			}
-			m.Status = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowDocmanager
+			if wireType == 0 {
+				var v uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return ErrIntOverflowDocmanager
+					}
+					if iNdEx >= l {
+						return io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					v |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
 				}
-				if iNdEx >= l {
+				m.Status = append(m.Status, v)
+			} else if wireType == 2 {
+				var packedLen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return ErrIntOverflowDocmanager
+					}
+					if iNdEx >= l {
+						return io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					packedLen |= int(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if packedLen < 0 {
+					return ErrInvalidLengthDocmanager
+				}
+				postIndex := iNdEx + packedLen
+				if postIndex < 0 {
+					return ErrInvalidLengthDocmanager
+				}
+				if postIndex > l {
 					return io.ErrUnexpectedEOF
 				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.Status |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
+				var elementCount int
+				var count int
+				for _, integer := range dAtA[iNdEx:postIndex] {
+					if integer < 128 {
+						count++
+					}
 				}
+				elementCount = count
+				if elementCount != 0 && len(m.Status) == 0 {
+					m.Status = make([]uint64, 0, elementCount)
+				}
+				for iNdEx < postIndex {
+					var v uint64
+					for shift := uint(0); ; shift += 7 {
+						if shift >= 64 {
+							return ErrIntOverflowDocmanager
+						}
+						if iNdEx >= l {
+							return io.ErrUnexpectedEOF
+						}
+						b := dAtA[iNdEx]
+						iNdEx++
+						v |= uint64(b&0x7F) << shift
+						if b < 0x80 {
+							break
+						}
+					}
+					m.Status = append(m.Status, v)
+				}
+			} else {
+				return fmt.Errorf("proto: wrong wireType = %d for field Status", wireType)
 			}
 		case 5:
 			if wireType != 2 {
@@ -9190,7 +9996,6 @@ func (m *BorrowForm) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -9400,6 +10205,42 @@ func (m *SaleBill) Unmarshal(dAtA []byte) error {
 			} else {
 				return fmt.Errorf("proto: wrong wireType = %d for field Price", wireType)
 			}
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field CreatedAt", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDocmanager
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.CreatedAt == nil {
+				m.CreatedAt = &model.Time{}
+			}
+			if err := m.CreatedAt.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipDocmanager(dAtA[iNdEx:])
@@ -9415,7 +10256,6 @@ func (m *SaleBill) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -9469,7 +10309,6 @@ func (m *SelectAllBarcodeReq) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -9608,7 +10447,388 @@ func (m *SelectAllBarcodeResp) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *SelectAllSellingBarcodeReq) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowDocmanager
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: SelectAllSellingBarcodeReq: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: SelectAllSellingBarcodeReq: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipDocmanager(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *SelectAllSellingBarcodeResp) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowDocmanager
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: SelectAllSellingBarcodeResp: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: SelectAllSellingBarcodeResp: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Code", wireType)
+			}
+			m.Code = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDocmanager
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Code |= int32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Message", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDocmanager
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Message = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Barcodes", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDocmanager
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Barcodes = append(m.Barcodes, &Barcode{})
+			if err := m.Barcodes[len(m.Barcodes)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipDocmanager(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *SelectAllDamageBarcodeReq) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowDocmanager
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: SelectAllDamageBarcodeReq: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: SelectAllDamageBarcodeReq: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Code", wireType)
+			}
+			m.Code = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDocmanager
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Code |= int32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Message", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDocmanager
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Message = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Barcodes", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDocmanager
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Barcodes = append(m.Barcodes, &Barcode{})
+			if err := m.Barcodes[len(m.Barcodes)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipDocmanager(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *SelectAllDamageBarcodeResp) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowDocmanager
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: SelectAllDamageBarcodeResp: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: SelectAllDamageBarcodeResp: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipDocmanager(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
 			iNdEx += skippy
 		}
 	}
@@ -9681,7 +10901,6 @@ func (m *SelectBarcodeByIDReq) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -9822,7 +11041,6 @@ func (m *SelectBarcodeByIDResp) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -9912,7 +11130,6 @@ func (m *SaveBarcodeReq) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -10017,7 +11234,6 @@ func (m *SaveBarcodeResp) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -10107,7 +11323,6 @@ func (m *UpdateBarcodeReq) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -10212,7 +11427,6 @@ func (m *UpdateBarcodeResp) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -10285,7 +11499,6 @@ func (m *DeleteBarcodeReq) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -10390,7 +11603,6 @@ func (m *DeleteBarcodeResp) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -10444,7 +11656,6 @@ func (m *SelectAllBorrowFormReq) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -10583,7 +11794,197 @@ func (m *SelectAllBorrowFormResp) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *SelectAllUnReturnBorrowFormReq) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowDocmanager
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: SelectAllUnReturnBorrowFormReq: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: SelectAllUnReturnBorrowFormReq: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipDocmanager(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *SelectAllUnReturnBorrowFormResp) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowDocmanager
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: SelectAllUnReturnBorrowFormResp: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: SelectAllUnReturnBorrowFormResp: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Code", wireType)
+			}
+			m.Code = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDocmanager
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Code |= int32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Message", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDocmanager
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Message = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field BorrowForms", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDocmanager
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.BorrowForms = append(m.BorrowForms, &BorrowForm{})
+			if err := m.BorrowForms[len(m.BorrowForms)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipDocmanager(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
 			iNdEx += skippy
 		}
 	}
@@ -10656,7 +12057,6 @@ func (m *SelectBorrowFormByIDReq) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -10797,7 +12197,6 @@ func (m *SelectBorrowFormByIDResp) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -10887,7 +12286,6 @@ func (m *SaveBorrowFormReq) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -10992,7 +12390,6 @@ func (m *SaveBorrowFormResp) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -11065,7 +12462,6 @@ func (m *DeleteBorrowFormReq) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -11170,7 +12566,6 @@ func (m *DeleteBorrowFormResp) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -11224,7 +12619,6 @@ func (m *SelectAllSaleBillReq) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -11363,7 +12757,6 @@ func (m *SelectAllSaleBillResp) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -11436,7 +12829,6 @@ func (m *SelectAllSaleBillByIDReq) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -11575,7 +12967,6 @@ func (m *SelectAllSaleBillByIDResp) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -11665,7 +13056,6 @@ func (m *SaveSaleBillReq) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -11770,7 +13160,6 @@ func (m *SaveSaleBillResp) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -11843,7 +13232,6 @@ func (m *DeleteSaleBillReq) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -11948,7 +13336,6 @@ func (m *DeleteSaleBillResp) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}

@@ -19,12 +19,15 @@ option (gogoproto.unmarshaler_all) = true;
 
 service Docmanager {
     rpc SelectAllBarcode (SelectAllBarcodeReq) returns (SelectAllBarcodeResp);
+    rpc SelectAllSellingBarcode (SelectAllSellingBarcodeReq) returns (SelectAllSellingBarcodeResp);
+    rpc SelectAllDamageBarcode (SelectAllDamageBarcodeReq) returns (SelectAllDamageBarcodeResp);
     rpc SelectBarcodeByID (SelectBarcodeByIDReq) returns (SelectBarcodeByIDResp);
     rpc SaveBarcode (SaveBarcodeReq) returns (SaveBarcodeResp);
     rpc UpdateBarcode (UpdateBarcodeReq) returns (UpdateBarcodeResp);
     rpc DeleteBarcode (DeleteBarcodeReq) returns (DeleteBarcodeResp);
 
     rpc SelectAllBorrowForm (SelectAllBorrowFormReq) returns (SelectAllBorrowFormResp);
+    rpc SelectAllUnReturnBorrowForm (SelectAllUnReturnBorrowFormReq) returns (SelectAllUnReturnBorrowFormResp);
     rpc SelectBorrowFormByID (SelectBorrowFormByIDReq) returns (SelectBorrowFormByIDResp);
     rpc SaveBorrowForm (SaveBorrowFormReq) returns (SaveBorrowFormResp);
     rpc DeleteBorrowForm (SaveBorrowFormReq) returns (SaveBorrowFormResp);
@@ -40,7 +43,7 @@ message Doc {
     string Name = 2 [(gogoproto.jsontag) = "doc_name", (gogoproto.moretags) = "db:\"doc_name\""];
     uint64 Category_id = 3 [(gogoproto.jsontag) = "doc_type", (gogoproto.moretags) = "db:\"category_id\""];
     model.Time Created_at = 4 [(gogoproto.jsontag) = "created_at", (gogoproto.moretags) = "db:\"created_at\""];
-	model.Time Updated_at = 5 [(gogoproto.jsontag) = "updated_at", (gogoproto.moretags) = "db:\"updated_at\""];
+    model.Time Updated_at = 5 [(gogoproto.jsontag) = "updated_at", (gogoproto.moretags) = "db:\"updated_at\""];
 }
 
 message DocVersion {
@@ -72,8 +75,8 @@ message Payment {
 message BorrowForm {
     uint64 ID = 1 [(gogoproto.jsontag) = "id_receipt", (gogoproto.moretags) = "db:\"id_receipt\""];
     uint64 LibrarianID = 2 [(gogoproto.jsontag) = "id_librarian", (gogoproto.moretags) = "db:\"id_librarian\""];
-    uint64 BarcodeID = 3 [(gogoproto.jsontag) = "id_barcode", (gogoproto.moretags) = "db:\"id_barcode\""];
-    uint64 Status = 4 [(gogoproto.jsontag) = "status", (gogoproto.moretags) = "db:\"status\""];
+    repeated uint64 BarcodeID = 3 [(gogoproto.jsontag) = "id_barcode", (gogoproto.moretags) = "db:\"id_barcode\""];
+    repeated uint64 Status = 4 [(gogoproto.jsontag) = "status", (gogoproto.moretags) = "db:\"status\""];
     model.Time StartTime = 5 [(gogoproto.jsontag) = "start_time", (gogoproto.moretags) = "db:\"start_time\""];
     model.Time EndTime = 6 [(gogoproto.jsontag) = "end_time", (gogoproto.moretags) = "db:\"end_time\""];
     model.Time Created_at = 7 [(gogoproto.jsontag) = "created_at", (gogoproto.moretags) = "db:\"created_at\""];
@@ -84,6 +87,7 @@ message SaleBill {
     uint64 ID = 1 [(gogoproto.jsontag) = "id_sale_bill", (gogoproto.moretags) = "db:\"id_sale_bill\""];
     repeated uint64 barcode_id = 2 [(gogoproto.jsontag) = "barcode_id", (gogoproto.moretags) = "db:\"barcode_id\""];
     repeated uint64 price = 3 [(gogoproto.jsontag) = "price", (gogoproto.moretags) = "db:\"price\""];
+    model.Time Created_at = 4 [(gogoproto.jsontag) = "created_at", (gogoproto.moretags) = "db:\"created_at\""];
 }
 
 // ---------------------------------------------------------------
@@ -95,6 +99,26 @@ message SelectAllBarcodeResp {
     int32 code = 1;
     string message = 2;
     repeated Barcode barcodes = 3 [(gogoproto.nullable) = true]; 
+}
+
+message SelectAllSellingBarcodeReq {
+
+}
+
+message SelectAllSellingBarcodeResp {
+    int32 code = 1;
+    string message = 2;
+    repeated Barcode barcodes = 3 [(gogoproto.nullable) = true];
+}
+
+message SelectAllDamageBarcodeReq {
+    int32 code = 1;
+    string message = 2;
+    repeated Barcode barcodes = 3 [(gogoproto.nullable) = true];
+}
+
+message SelectAllDamageBarcodeResp {
+
 }
 
 message SelectBarcodeByIDReq {
@@ -141,6 +165,16 @@ message SelectAllBorrowFormReq {
 }
 
 message SelectAllBorrowFormResp {
+    int32 code = 1;
+    string message = 2;
+    repeated BorrowForm borrowForms = 3 [(gogoproto.nullable) = true];
+}
+
+message SelectAllUnReturnBorrowFormReq {
+    
+}
+
+message SelectAllUnReturnBorrowFormResp {
     int32 code = 1;
     string message = 2;
     repeated BorrowForm borrowForms = 3 [(gogoproto.nullable) = true];
