@@ -34,7 +34,7 @@ func (d *docManagerSrv) SelectAllSellingBarcode(ctx context.Context, req *docman
 	logger.LogInfo(d.lg, "RPC Req: Select all selling barcode")
 
 	// FIXME: add function
-	sellingBarcodes, err := dao.SelectAllBarcode(ctx, core.GetDB())
+	sellingBarcodes, err := dao.SelectAllSellingBarcode(ctx, core.GetDB())
 	if err != nil {
 		logger.LogErr(d.lg, err)
 		return &docmanagerModel.SelectAllSellingBarcodeResp{Code: 1, Message: err.Error()}, err
@@ -46,12 +46,13 @@ func (d *docManagerSrv) SelectAllSellingBarcode(ctx context.Context, req *docman
 	logger.LogInfo(d.lg, "RPC Resp: Select all selling barcode OK")
 	return &docmanagerModel.SelectAllSellingBarcodeResp{Code: 0, Barcodes: sellingBarcodes}, nil
 }
+
 func (d *docManagerSrv) SelectAllDamageBarcode(ctx context.Context, req *docmanagerModel.SelectAllDamageBarcodeReq) (resp *docmanagerModel.SelectAllDamageBarcodeResp, err error) {
 	logger.LogInfo(d.lg, "RPC Req: Select all damage barcode")
 
 	// FIXME: add function
 
-	damageBarcodes, err := dao.SelectAllBarcode(ctx, core.GetDB())
+	damageBarcodes, err := dao.SelectAllDamagedBarcode(ctx, core.GetDB())
 	if err != nil {
 		logger.LogErr(d.lg, err)
 		return &docmanagerModel.SelectAllDamageBarcodeResp{Code: 1, Message: err.Error()}, err
