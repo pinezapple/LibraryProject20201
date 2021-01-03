@@ -47,11 +47,11 @@ module.exports = function(){
        doc_returned: _.times(60, function(n){
         return {
             borrow_id: n,
-            id_doc:faker.random.number(60),
-            barcode : faker.phone.phoneNumberFormat(),
-            doc_name: faker.random.words(),
-            doc_author: faker.name.findName(),
-            doc_status : faker.commerce.color(2),
+            id_user:faker.random.number(60),
+            name_user : faker.name.findName(),
+            doc_status: n,
+            doc_date : faker.date.recent(),
+            fee: faker.commerce.price(),
         }
     }),
 // phiếu trả
