@@ -41,6 +41,58 @@ type reqSaveBorrowForm struct {
 	TTL    int32  `protobuf:"varint,6,opt,name=TTL,proto3" json:"ttl" db:"ttl"`
 }
 
+func SelectAllBarcode(c echo.Context) (erro error) {
+	return
+}
+
+func SelectAllAvailableBarcode(c echo.Context) (erro error) {
+	return
+}
+
+func SelectAllSellingBarcode(c echo.Context) (erro error) {
+	return
+}
+
+func SelectAllDamagedBarcode(c echo.Context) (erro error) {
+	return
+}
+
+func SelectAllBorrowForm(c echo.Context) (erro error) {
+	return
+}
+
+func SelectAllNotReturnedBorrowForm(c echo.Context) (erro error) {
+	return
+}
+
+func SelectAllPayment(c echo.Context) (erro error) {
+	return
+}
+
+func SelectAllSaleBill(c echo.Context) (erro error) {
+	return
+}
+
+func SelectBarcodeByID(c echo.Context) (erro error) {
+	return
+}
+
+func SelectBorrowFormByID(c echo.Context) (erro error) {
+	return
+}
+
+func SelectPaymentByID(c echo.Context) (erro error) {
+	return
+}
+
+func SelectSaleBillByID(c echo.Context) (erro error) {
+	return
+}
+
+func SaveDocumentByBatch(c echo.Context) (erro error) {
+	return
+}
+
 func SelectAllDoc(c echo.Context) (erro error) {
 
 	fmt.Println("in Select doc all")

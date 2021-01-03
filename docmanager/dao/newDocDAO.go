@@ -11,11 +11,14 @@ import (
 )
 
 const (
-	sqlSelectAllBarcode        = "SELECT * FROM barcodes"
-	sqlSelectBarcodeByID       = "SELECT * FROM barcodes WHERE barcode_id = ?"
-	sqlInsertNewBarcode        = "INSERT INTO barcodes(barcode_id, document_version, status) VALUES (?,?,?,?)"
-	sqlUpdateBarcodeSaleBillID = "UPDATE barcodes SET sale_bill_id = ? WHERE barcode_id = ?"
-	sqlUpdateBarcodeStatus     = "UPDATE barcodes SET status = ? WHERE barcode_id = ?"
+	sqlSelectAllBarcode          = "SELECT * FROM barcodes"
+	sqlSelectAllAvailableBarcode = "SELECT * FROM barcodes WHERE status = 0"
+	sqlSelectAllDamagedBarcode   = "SELECT * FROM barcodes WHERE status = 3"
+	sqlSelectAllSellingBarcode   = "SELECT * FROM barcodes WHERE status = 4"
+	sqlSelectBarcodeByID         = "SELECT * FROM barcodes WHERE barcode_id = ?"
+	sqlInsertNewBarcode          = "INSERT INTO barcodes(barcode_id, document_version, status) VALUES (?,?,?,?)"
+	sqlUpdateBarcodeSaleBillID   = "UPDATE barcodes SET sale_bill_id = ? WHERE barcode_id = ?"
+	sqlUpdateBarcodeStatus       = "UPDATE barcodes SET status = ? WHERE barcode_id = ?"
 
 	sqlSelectAllSaleBill  = "SELECT * FROM sale_bill"
 	sqlSelectSaleBillByID = "SELECT * FROM sale_bill WHERE sale_bill_id = ?"
@@ -34,6 +37,7 @@ const (
 
 type IDocDAO interface {
 	SelectAllBarcode(ctx context.Context, db *mssqlx.DBs) (result []*docmanagerModel.Barcode, err error)
+	SelectAllBarcodeAvail(ctx context.Context, db *mssqlx.DBs) (result []*docmanagerModel.Barcode, err error)
 	SelectBarcodeByID(ctx context.Context, db *mssqlx.DBs, barcodeID uint64) (result *docmanagerModel.Barcode, err error)
 	InsertBarcode(ctx context.Context, db *mssqlx.DBs, barcode *docmanagerModel.Barcode) (err error)
 	UpdateBarcodeSaleBill(ctx context.Context, db *mssqlx.DBs, barcodeID, saleBillID uint64) (err error)
@@ -63,6 +67,33 @@ func SelectAllBarcode(ctx context.Context, db *mssqlx.DBs) (result []*docmanager
 	}
 
 	err = db.SelectContext(ctx, &result, sqlSelectAllBarcode)
+	return
+}
+
+func SelectAllAvailableBarcode(ctx context.Context, db *mssqlx.DBs) (result []*docmanagerModel.Barcode, err error) {
+	if db == nil {
+		return nil, core.ErrDBObjNull
+	}
+
+	err = db.SelectContext(ctx, &result, sqlSelectAllAvailableBarcode)
+	return
+}
+
+func SelectAllDamagedBarcode(ctx context.Context, db *mssqlx.DBs) (result []*docmanagerModel.Barcode, err error) {
+	if db == nil {
+		return nil, core.ErrDBObjNull
+	}
+
+	err = db.SelectContext(ctx, &result, sqlSelectAllDamagedBarcode)
+	return
+}
+
+func SelectAllSellingBarcode(ctx context.Context, db *mssqlx.DBs) (result []*docmanagerModel.Barcode, err error) {
+	if db == nil {
+		return nil, core.ErrDBObjNull
+	}
+
+	err = db.SelectContext(ctx, &result, sqlSelectAllSellingBarcode)
 	return
 }
 
