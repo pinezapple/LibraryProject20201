@@ -1,5 +1,6 @@
 package dao
 
+/*
 import (
 	"context"
 	"fmt"
@@ -147,3 +148,4 @@ func SetDocDAO(d IDocDAO) {
 func GetDocDAO() (d IDocDAO) {
 	return dDao
 }
+*/

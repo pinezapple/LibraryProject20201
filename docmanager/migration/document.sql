@@ -1,16 +1,82 @@
-drop table if exists doc;
+drop table if exists documents;
+drop table if exists documents_version;
+drop table if exists categories;
+drop table if exists sale_bill;
+drop table if exists barcodes;
+drop table if exists authors;
+drop table if exists borrow_form;
+drop table if exists payments;
 
-create table doc 
-(
-	`id_doc` bigint(20) unsigned NOT NULL,
-	`doc_name` varchar(100) DEFAULT "",
-	`doc_author` varchar(30) DEFAULT "",
-	`doc_type` varchar(30) DEFAULT "",
-	`doc_description` varchar(100) DEFAULT "", 
-	`status` int DEFAULT 0,
-	`id_borrow` bigint(20) unsigned DEFAULT 0,
-	`fee` bigint(20) DEFAULT 0,
-	`created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	`updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	PRIMARY KEY(`id_doc`)
+CREATE TABLE `documents` (
+  `doc_id` bigint(20),
+  `doc_name` bigint(20),
+  `category_id` bigint(20),
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) Engine=InnoDB;
+
+CREATE TABLE `documents_version` (
+  `documents_version` varchar(255),
+  `doc_id` bigint(20),
+  `version` bigint(20),
+  `doc_description` varchar(255),
+  `author_id` bigint(20),
+  `fee` bigint(20),
+  `price` bigint(20),
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) Engine=InnoDB;
+
+CREATE TABLE `barcodes` (
+  `barcode_id` bigint(20),
+  `documents_version` varchar(255),
+  `status` bigint(20),
+  `sale_bill_id` bigint(20), 
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) Engine=InnoDB;
+
+CREATE TABLE `borrow_form` (
+  `borrow_form_id` bigint(20),
+  `librarian_id` bigint(20),
+  `barcode_id` bigint(20),
+  `status` bigint(20),
+  `borrow_start_time` timestamp DEFAULT CURRENT_TIMESTAMP,
+  `borrow_end_time` timestamp,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) Engine=InnoDB;
+
+CREATE TABLE `payments` (
+  `payments_id` bigint(20),
+  `borrow_form_id` bigint(20),
+  `barcode_id` BLOB, 
+  `barcode_status` BLOB,
+  `price` BLOB, 
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) Engine=InnoDB;
+
+CREATE TABLE `categories` (
+  `category_id` bigint(20),
+  `category_name` varchar(255),
+  `doc_description` varchar(255),
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) Engine=InnoDB;
+
+CREATE TABLE `authors` (
+  `author_id` bigint(20),
+  `author_name` varchar(255),
+  `description` varchar(255),
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) Engine=InnoDB;
+
+CREATE TABLE `sale_bill` (
+  `sale_bill_id` bigint(20),
+  `barcode_id` BLOB,
+  `sale_price` BLOB,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) Engine=InnoDB;
