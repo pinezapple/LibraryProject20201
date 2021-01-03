@@ -3,6 +3,7 @@ module.exports = function(){
     var _ = require("lodash")
     
     return {
+// tài liệu
        documents: _.times(60, function(n){
         return {
             id:n,
@@ -18,6 +19,7 @@ module.exports = function(){
             updated_at: faker.date.recent(),
         }
        }),
+// tài liệu bị hỏng
        doc_damaged: _.times(60, function(n){
            return {
                id_doc:n,
@@ -29,7 +31,7 @@ module.exports = function(){
                fee: faker.commerce.price()
            }
        }),
-
+// tài liệu đã mượn
        doc_returned: _.times(60, function(n){
         return {
             borrow_id: n,
@@ -40,7 +42,7 @@ module.exports = function(){
             doc_status : faker.commerce.color(2),
         }
     }),
-
+// phiếu trả
        returned_form: _.times(60, function(n){
            return{
                id:n,
@@ -64,7 +66,7 @@ module.exports = function(){
             fee: faker.commerce.price()
            }
        }),
-
+// phiếu mượn
        borrow_form: _.times(60, function(n){
         return{
             id:n,

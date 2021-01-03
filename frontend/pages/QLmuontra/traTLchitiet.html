@@ -389,10 +389,6 @@
   })
   .then(response => response.json())
   .then(obj =>{
-    // for(let prop in obj){
-    //   data.push(`${obj[prop]}`)
-    // }
-    // console.log(data)
       let borrowFormId = obj.id
       let readerId = obj.id_reader
       let duration = obj.duration
@@ -435,7 +431,6 @@
         formRow.querySelector("#docName").value = docs[i]["doc_name"]
         formRow.querySelector("#author").value = docs[i]["doc_author"]
         // formRow.querySelector("#docStatus").value = docs[i]["doc_status"]
-        
       }
 
   })
@@ -444,7 +439,7 @@
   });
     
     function subtotal(){
-      let currentFine = parseInt(data[0]["fine"])
+      let currentFine = parseInt(obj.fee)
       allDocFine = document.querySelectorAll("#fine")
       for (let i=0; i<allDocFine.length;i++){
         sub = parseInt(allDocFine[i].value)
@@ -455,17 +450,32 @@
 
     function createReturnForm(){
      let arr =[]
-     let docIds = document.querySelectorAll('#docId')
+     let borrowStatus = document.getElementById('status').value
      let barcodeIds = document.querySelectorAll('#barcode')
      let docStatus = document.querySelectorAll('#docStatus')
      let fines = document.querySelectorAll('#fine')
 
-     for (i=0; i< docIds.length; i++){
-       let obj = {"docId":docIds[i].value, "barcode": barcodeIds[i].value, "docStatus": docStatus[i].value, "fine": fines[i].value}
-       arr.push(obj)
+     for (i=0; i< barcodeIds.length; i++){
+       let doc = {"barcode": barcodeIds[i].value, "doc_status": docStatus[i].value, "doc_fine": fines[i].value}
+       arr.push(doc)
      }
-     console.log(arr)
+    //  console.log(arr)
+     fetch(borrowFormUrl,
+    {
+    method: 'PUT',
+    credentials: "omit",
+    headers: {
+       'Content-Type': 'application/json',
+      //  Authorization: "Bearer " + token,
+      },
+      body:JSON.stringify({id: borrowId, docs:arr, borrow_status: borrowStatus})
     }
+    ).then((res) => res.json())
+    .then(result => alert("Success", result))
+    .then(result => document.getElementById("borrowForm").reset())
+    .catch((err)=>alert("Something went wrong",err))
+
+   }
   </script>
 </body>
 
