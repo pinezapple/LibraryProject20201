@@ -2502,15 +2502,15 @@ func TestSelectAllSaleBillRespMarshalTo(t *testing.T) {
 	}
 }
 
-func TestSelectAllSaleBillByIDReqProto(t *testing.T) {
+func TestSelectSaleBillByIDReqProto(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
-	p := NewPopulatedSelectAllSaleBillByIDReq(popr, false)
+	p := NewPopulatedSelectSaleBillByIDReq(popr, false)
 	dAtA, err := github_com_gogo_protobuf_proto.Marshal(p)
 	if err != nil {
 		t.Fatalf("seed = %d, err = %v", seed, err)
 	}
-	msg := &SelectAllSaleBillByIDReq{}
+	msg := &SelectSaleBillByIDReq{}
 	if err := github_com_gogo_protobuf_proto.Unmarshal(dAtA, msg); err != nil {
 		t.Fatalf("seed = %d, err = %v", seed, err)
 	}
@@ -2536,10 +2536,10 @@ func TestSelectAllSaleBillByIDReqProto(t *testing.T) {
 	}
 }
 
-func TestSelectAllSaleBillByIDReqMarshalTo(t *testing.T) {
+func TestSelectSaleBillByIDReqMarshalTo(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
-	p := NewPopulatedSelectAllSaleBillByIDReq(popr, false)
+	p := NewPopulatedSelectSaleBillByIDReq(popr, false)
 	size := p.Size()
 	dAtA := make([]byte, size)
 	for i := range dAtA {
@@ -2549,7 +2549,7 @@ func TestSelectAllSaleBillByIDReqMarshalTo(t *testing.T) {
 	if err != nil {
 		t.Fatalf("seed = %d, err = %v", seed, err)
 	}
-	msg := &SelectAllSaleBillByIDReq{}
+	msg := &SelectSaleBillByIDReq{}
 	if err := github_com_gogo_protobuf_proto.Unmarshal(dAtA, msg); err != nil {
 		t.Fatalf("seed = %d, err = %v", seed, err)
 	}
@@ -2564,15 +2564,15 @@ func TestSelectAllSaleBillByIDReqMarshalTo(t *testing.T) {
 	}
 }
 
-func TestSelectAllSaleBillByIDRespProto(t *testing.T) {
+func TestSelectSaleBillByIDRespProto(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
-	p := NewPopulatedSelectAllSaleBillByIDResp(popr, false)
+	p := NewPopulatedSelectSaleBillByIDResp(popr, false)
 	dAtA, err := github_com_gogo_protobuf_proto.Marshal(p)
 	if err != nil {
 		t.Fatalf("seed = %d, err = %v", seed, err)
 	}
-	msg := &SelectAllSaleBillByIDResp{}
+	msg := &SelectSaleBillByIDResp{}
 	if err := github_com_gogo_protobuf_proto.Unmarshal(dAtA, msg); err != nil {
 		t.Fatalf("seed = %d, err = %v", seed, err)
 	}
@@ -2598,10 +2598,10 @@ func TestSelectAllSaleBillByIDRespProto(t *testing.T) {
 	}
 }
 
-func TestSelectAllSaleBillByIDRespMarshalTo(t *testing.T) {
+func TestSelectSaleBillByIDRespMarshalTo(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
-	p := NewPopulatedSelectAllSaleBillByIDResp(popr, false)
+	p := NewPopulatedSelectSaleBillByIDResp(popr, false)
 	size := p.Size()
 	dAtA := make([]byte, size)
 	for i := range dAtA {
@@ -2611,7 +2611,7 @@ func TestSelectAllSaleBillByIDRespMarshalTo(t *testing.T) {
 	if err != nil {
 		t.Fatalf("seed = %d, err = %v", seed, err)
 	}
-	msg := &SelectAllSaleBillByIDResp{}
+	msg := &SelectSaleBillByIDResp{}
 	if err := github_com_gogo_protobuf_proto.Unmarshal(dAtA, msg); err != nil {
 		t.Fatalf("seed = %d, err = %v", seed, err)
 	}
@@ -3714,16 +3714,16 @@ func TestSelectAllSaleBillRespJSON(t *testing.T) {
 		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
 	}
 }
-func TestSelectAllSaleBillByIDReqJSON(t *testing.T) {
+func TestSelectSaleBillByIDReqJSON(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
-	p := NewPopulatedSelectAllSaleBillByIDReq(popr, true)
+	p := NewPopulatedSelectSaleBillByIDReq(popr, true)
 	marshaler := github_com_gogo_protobuf_jsonpb.Marshaler{}
 	jsondata, err := marshaler.MarshalToString(p)
 	if err != nil {
 		t.Fatalf("seed = %d, err = %v", seed, err)
 	}
-	msg := &SelectAllSaleBillByIDReq{}
+	msg := &SelectSaleBillByIDReq{}
 	err = github_com_gogo_protobuf_jsonpb.UnmarshalString(jsondata, msg)
 	if err != nil {
 		t.Fatalf("seed = %d, err = %v", seed, err)
@@ -3735,16 +3735,16 @@ func TestSelectAllSaleBillByIDReqJSON(t *testing.T) {
 		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
 	}
 }
-func TestSelectAllSaleBillByIDRespJSON(t *testing.T) {
+func TestSelectSaleBillByIDRespJSON(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
-	p := NewPopulatedSelectAllSaleBillByIDResp(popr, true)
+	p := NewPopulatedSelectSaleBillByIDResp(popr, true)
 	marshaler := github_com_gogo_protobuf_jsonpb.Marshaler{}
 	jsondata, err := marshaler.MarshalToString(p)
 	if err != nil {
 		t.Fatalf("seed = %d, err = %v", seed, err)
 	}
-	msg := &SelectAllSaleBillByIDResp{}
+	msg := &SelectSaleBillByIDResp{}
 	err = github_com_gogo_protobuf_jsonpb.UnmarshalString(jsondata, msg)
 	if err != nil {
 		t.Fatalf("seed = %d, err = %v", seed, err)
@@ -5200,12 +5200,12 @@ func TestSelectAllSaleBillRespProtoCompactText(t *testing.T) {
 	}
 }
 
-func TestSelectAllSaleBillByIDReqProtoText(t *testing.T) {
+func TestSelectSaleBillByIDReqProtoText(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
-	p := NewPopulatedSelectAllSaleBillByIDReq(popr, true)
+	p := NewPopulatedSelectSaleBillByIDReq(popr, true)
 	dAtA := github_com_gogo_protobuf_proto.MarshalTextString(p)
-	msg := &SelectAllSaleBillByIDReq{}
+	msg := &SelectSaleBillByIDReq{}
 	if err := github_com_gogo_protobuf_proto.UnmarshalText(dAtA, msg); err != nil {
 		t.Fatalf("seed = %d, err = %v", seed, err)
 	}
@@ -5217,12 +5217,12 @@ func TestSelectAllSaleBillByIDReqProtoText(t *testing.T) {
 	}
 }
 
-func TestSelectAllSaleBillByIDReqProtoCompactText(t *testing.T) {
+func TestSelectSaleBillByIDReqProtoCompactText(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
-	p := NewPopulatedSelectAllSaleBillByIDReq(popr, true)
+	p := NewPopulatedSelectSaleBillByIDReq(popr, true)
 	dAtA := github_com_gogo_protobuf_proto.CompactTextString(p)
-	msg := &SelectAllSaleBillByIDReq{}
+	msg := &SelectSaleBillByIDReq{}
 	if err := github_com_gogo_protobuf_proto.UnmarshalText(dAtA, msg); err != nil {
 		t.Fatalf("seed = %d, err = %v", seed, err)
 	}
@@ -5234,12 +5234,12 @@ func TestSelectAllSaleBillByIDReqProtoCompactText(t *testing.T) {
 	}
 }
 
-func TestSelectAllSaleBillByIDRespProtoText(t *testing.T) {
+func TestSelectSaleBillByIDRespProtoText(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
-	p := NewPopulatedSelectAllSaleBillByIDResp(popr, true)
+	p := NewPopulatedSelectSaleBillByIDResp(popr, true)
 	dAtA := github_com_gogo_protobuf_proto.MarshalTextString(p)
-	msg := &SelectAllSaleBillByIDResp{}
+	msg := &SelectSaleBillByIDResp{}
 	if err := github_com_gogo_protobuf_proto.UnmarshalText(dAtA, msg); err != nil {
 		t.Fatalf("seed = %d, err = %v", seed, err)
 	}
@@ -5251,12 +5251,12 @@ func TestSelectAllSaleBillByIDRespProtoText(t *testing.T) {
 	}
 }
 
-func TestSelectAllSaleBillByIDRespProtoCompactText(t *testing.T) {
+func TestSelectSaleBillByIDRespProtoCompactText(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
-	p := NewPopulatedSelectAllSaleBillByIDResp(popr, true)
+	p := NewPopulatedSelectSaleBillByIDResp(popr, true)
 	dAtA := github_com_gogo_protobuf_proto.CompactTextString(p)
-	msg := &SelectAllSaleBillByIDResp{}
+	msg := &SelectSaleBillByIDResp{}
 	if err := github_com_gogo_protobuf_proto.UnmarshalText(dAtA, msg); err != nil {
 		t.Fatalf("seed = %d, err = %v", seed, err)
 	}
@@ -6004,14 +6004,14 @@ func TestSelectAllSaleBillRespVerboseEqual(t *testing.T) {
 		t.Fatalf("%#v !VerboseEqual %#v, since %v", msg, p, err)
 	}
 }
-func TestSelectAllSaleBillByIDReqVerboseEqual(t *testing.T) {
+func TestSelectSaleBillByIDReqVerboseEqual(t *testing.T) {
 	popr := math_rand.New(math_rand.NewSource(time.Now().UnixNano()))
-	p := NewPopulatedSelectAllSaleBillByIDReq(popr, false)
+	p := NewPopulatedSelectSaleBillByIDReq(popr, false)
 	dAtA, err := github_com_gogo_protobuf_proto.Marshal(p)
 	if err != nil {
 		panic(err)
 	}
-	msg := &SelectAllSaleBillByIDReq{}
+	msg := &SelectSaleBillByIDReq{}
 	if err := github_com_gogo_protobuf_proto.Unmarshal(dAtA, msg); err != nil {
 		panic(err)
 	}
@@ -6019,14 +6019,14 @@ func TestSelectAllSaleBillByIDReqVerboseEqual(t *testing.T) {
 		t.Fatalf("%#v !VerboseEqual %#v, since %v", msg, p, err)
 	}
 }
-func TestSelectAllSaleBillByIDRespVerboseEqual(t *testing.T) {
+func TestSelectSaleBillByIDRespVerboseEqual(t *testing.T) {
 	popr := math_rand.New(math_rand.NewSource(time.Now().UnixNano()))
-	p := NewPopulatedSelectAllSaleBillByIDResp(popr, false)
+	p := NewPopulatedSelectSaleBillByIDResp(popr, false)
 	dAtA, err := github_com_gogo_protobuf_proto.Marshal(p)
 	if err != nil {
 		panic(err)
 	}
-	msg := &SelectAllSaleBillByIDResp{}
+	msg := &SelectSaleBillByIDResp{}
 	if err := github_com_gogo_protobuf_proto.Unmarshal(dAtA, msg); err != nil {
 		panic(err)
 	}
@@ -6614,9 +6614,9 @@ func TestSelectAllSaleBillRespGoString(t *testing.T) {
 		t.Fatal(err)
 	}
 }
-func TestSelectAllSaleBillByIDReqGoString(t *testing.T) {
+func TestSelectSaleBillByIDReqGoString(t *testing.T) {
 	popr := math_rand.New(math_rand.NewSource(time.Now().UnixNano()))
-	p := NewPopulatedSelectAllSaleBillByIDReq(popr, false)
+	p := NewPopulatedSelectSaleBillByIDReq(popr, false)
 	s1 := p.GoString()
 	s2 := fmt.Sprintf("%#v", p)
 	if s1 != s2 {
@@ -6627,9 +6627,9 @@ func TestSelectAllSaleBillByIDReqGoString(t *testing.T) {
 		t.Fatal(err)
 	}
 }
-func TestSelectAllSaleBillByIDRespGoString(t *testing.T) {
+func TestSelectSaleBillByIDRespGoString(t *testing.T) {
 	popr := math_rand.New(math_rand.NewSource(time.Now().UnixNano()))
-	p := NewPopulatedSelectAllSaleBillByIDResp(popr, false)
+	p := NewPopulatedSelectSaleBillByIDResp(popr, false)
 	s1 := p.GoString()
 	s2 := fmt.Sprintf("%#v", p)
 	if s1 != s2 {
@@ -7572,10 +7572,10 @@ func TestSelectAllSaleBillRespSize(t *testing.T) {
 	}
 }
 
-func TestSelectAllSaleBillByIDReqSize(t *testing.T) {
+func TestSelectSaleBillByIDReqSize(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
-	p := NewPopulatedSelectAllSaleBillByIDReq(popr, true)
+	p := NewPopulatedSelectSaleBillByIDReq(popr, true)
 	size2 := github_com_gogo_protobuf_proto.Size(p)
 	dAtA, err := github_com_gogo_protobuf_proto.Marshal(p)
 	if err != nil {
@@ -7594,10 +7594,10 @@ func TestSelectAllSaleBillByIDReqSize(t *testing.T) {
 	}
 }
 
-func TestSelectAllSaleBillByIDRespSize(t *testing.T) {
+func TestSelectSaleBillByIDRespSize(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
-	p := NewPopulatedSelectAllSaleBillByIDResp(popr, true)
+	p := NewPopulatedSelectSaleBillByIDResp(popr, true)
 	size2 := github_com_gogo_protobuf_proto.Size(p)
 	dAtA, err := github_com_gogo_protobuf_proto.Marshal(p)
 	if err != nil {

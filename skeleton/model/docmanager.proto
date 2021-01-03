@@ -24,13 +24,13 @@ service Docmanager {
     rpc SelectBarcodeByID (SelectBarcodeByIDReq) returns (SelectBarcodeByIDResp);
     rpc SaveBarcode (SaveBarcodeReq) returns (SaveBarcodeResp);
     rpc UpdateBarcode (UpdateBarcodeReq) returns (UpdateBarcodeResp);
-    rpc DeleteBarcode (DeleteBarcodeReq) returns (DeleteBarcodeResp);
+    // rpc DeleteBarcode (DeleteBarcodeReq) returns (DeleteBarcodeResp);
 
     rpc SelectAllBorrowForm (SelectAllBorrowFormReq) returns (SelectAllBorrowFormResp);
     rpc SelectAllUnReturnBorrowForm (SelectAllUnReturnBorrowFormReq) returns (SelectAllUnReturnBorrowFormResp);
     rpc SelectBorrowFormByID (SelectBorrowFormByIDReq) returns (SelectBorrowFormByIDResp);
     rpc SaveBorrowForm (SaveBorrowFormReq) returns (SaveBorrowFormResp);
-    rpc DeleteBorrowForm (SaveBorrowFormReq) returns (SaveBorrowFormResp);
+    // rpc DeleteBorrowForm (SaveBorrowFormReq) returns (SaveBorrowFormResp);
 
     rpc SelectAllPayment (SelectAllPaymentReq) returns (SelectAllPaymentResp);
     rpc SelectPaymentByID (SelectPaymentByIDReq) returns (SelectPaymentByIDResp);
@@ -38,9 +38,9 @@ service Docmanager {
     rpc SavePayment (SavePaymentReq) returns (SavePaymentResp);
 
     rpc SelectAllSaleBill (SelectAllSaleBillReq) returns (SelectAllSaleBillResp);
-    rpc SelectAllSaleBillByID (SelectAllSaleBillByIDReq) returns (SelectAllSaleBillByIDResp);
+    rpc SelecSaleBillByID (SelectSaleBillByIDReq) returns (SelectSaleBillByIDResp);
     rpc SaveSaleBill (SaveSaleBillReq) returns (SaveSaleBillResp);
-    rpc DeleteSaleBill (DeleteSaleBillReq) returns (DeleteSaleBillResp);
+    // rpc DeleteSaleBill (DeleteSaleBillReq) returns (DeleteSaleBillResp);
 }
 
 message Doc {
@@ -267,14 +267,14 @@ message SelectAllSaleBillResp {
     repeated SaleBill SaleBills = 3 [(gogoproto.nullable) = true];
 }
 
-message SelectAllSaleBillByIDReq {
+message SelectSaleBillByIDReq {
     uint64 SaleBillID = 1;
 }
 
-message SelectAllSaleBillByIDResp {
+message SelectSaleBillByIDResp {
     int32 Code = 1;
     string Message = 2;
-    repeated SaleBill SaleBills = 3 [(gogoproto.nullable) = true];
+    SaleBill SaleBill = 3 [(gogoproto.nullable) = true];
 }
 
 message SaveSaleBillReq {
