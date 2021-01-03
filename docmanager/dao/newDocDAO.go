@@ -62,6 +62,9 @@ type IDocDAO interface {
 type docDAO struct {
 }
 
+// ---------------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------- Barcode ----------------------------------------------------------
+
 func SelectAllBarcode(ctx context.Context, db *mssqlx.DBs) (result []*docmanagerModel.Barcode, err error) {
 	if db == nil {
 		return nil, core.ErrDBObjNull
@@ -115,8 +118,10 @@ func InsertBarcode(ctx context.Context, db *mssqlx.DBs, barcode *docmanagerModel
 
 	_, err = db.ExecContext(ctx, sqlInsertNewBarcode, barcode.ID, barcode.DocVer, barcode.Status)
 	return
-
 }
+
+// -----------------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------- Sale bill ----------------------------------------------------------
 
 func UpdateBarcodeSaleBill(ctx context.Context, db *mssqlx.DBs, barcodeID, saleBillID uint64) (err error) {
 	if db == nil {
@@ -218,6 +223,9 @@ func InsertSaleBill(ctx context.Context, db *mssqlx.DBs, saleBill *docmanagerMod
 	_, err = db.Exec(sqlInsertPayment, saleBill.ID, barcode, price)
 	return
 }
+
+// -------------------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------- Borrow form ----------------------------------------------------------
 
 func SelectAllBorrowForm(ctx context.Context, db *mssqlx.DBs) (result []*docmanagerModel.BorrowForm, err error) {
 	if db == nil {
@@ -378,6 +386,9 @@ func SelectAllPayment(ctx context.Context, db *mssqlx.DBs) (result []*docmanager
 	}
 	return
 }
+
+// ---------------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------- Payment ----------------------------------------------------------
 
 func SelectPaymentByID(ctx context.Context, db *mssqlx.DBs, paymentsID uint64) (result *docmanagerModel.Payment, err error) {
 	if db == nil {

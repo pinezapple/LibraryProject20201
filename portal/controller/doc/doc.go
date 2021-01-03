@@ -41,13 +41,14 @@ type reqSaveBorrowForm struct {
 }
 
 type reqSaveDoc struct {
-	DocName   string `json:"doc_name"`
-	Author    string `json:"author"`
-	Category  string `json:"category"`
-	Publisher string `json:"publisher"`
-	Version   string `json:"version"`
-	Number    uint64 `json:"number"`
-	Price     uint64 `json:"price"`
+	DocName     string `json:"doc_name"`
+	Author      string `json:"author"`
+	Category    string `json:"category"`
+	Publisher   string `json:"publisher"`
+	Version     string `json:"version"`
+	Description string `json:"description"`
+	Number      uint64 `json:"number"`
+	Price       uint64 `json:"price"`
 }
 
 func SelectAllBarcode(c echo.Context) (erro error) {

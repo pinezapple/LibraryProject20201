@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/google/uuid"
+
 	"github.com/labstack/echo"
 	"github.com/pinezapple/LibraryProject20201/portal/core"
 	"github.com/pinezapple/LibraryProject20201/portal/dao/cache"
@@ -454,67 +456,113 @@ func saveDocumentByBatch(c echo.Context, request interface{}) (statusCode int, d
 	}
 
 	// search author ID
-	/*
-		authorID, err := dao.GetDocDAO.GetAuthorID(req.Author)
-		if err != nil {
 
-		}
-	*/
+	authorID, er := cache.SelectAuthorID(ctx, core.GetDB(), req.Author)
+	if er != nil {
+		statusCode, err = http.StatusInternalServerError, er
+		return
+	}
 
 	// search category ID
-	/*
-		catID, err := dao.GetDocDAO.GetCategoryID(req.Category)
-		if err != nil {
 
-		}
-	*/
+	catID, er := cache.SelectCategoryID(ctx, core.GetDB(), req.Category)
+	if er != nil {
+		statusCode, err = http.StatusInternalServerError, er
+		return
+	}
+
 	// check if exist document, then create
-	/*
-		reqDoc := &docmanagerModel.Doc{
-			Name: req.DocName,
-			CategoryId: catID,
-		}
+	uuidDocId, er := uuid.NewUUID()
+	if er != nil {
+		statusCode, err = http.StatusInternalServerError, er
+		return
+	}
+	reqDoc := &portalModel.DocumentsDAOobj{
+		DocID:      uint64(core.GetHash(uuidDocId.String())),
+		DocName:    req.DocName,
+		CategoryID: catID,
+	}
 
-		docID, err := dao.GetDocDAO().ExistOrCreateDocument(ctx, reqDoc)
-		if err != nil {
+	docID, er := cache.FirstOrCreateDocument(ctx, core.GetDB(), reqDoc)
+	if er != nil {
+		statusCode, err = http.StatusInternalServerError, er
+		return
+	}
 
-		}
-	*/
+	if docID != 0 {
+		reqDoc.DocID = docID
+	}
 
 	// check if exist document version, then create
-	/*
-		reqDocVer := &docmanagerModel.DocVersion{
-			DocID: docID,
-			DocVer: req.Version,
-			Price: req.Price,
-			Publisher: req.Publisher,
+	uuidDocVersion, er := uuid.NewUUID()
+	if er != nil {
+		statusCode, err = http.StatusInternalServerError, er
+		return
+	}
+	reqDocVer := &portalModel.DocumentVersionDAOobj{
+		DocumentVersion: uuidDocVersion.String(),
+		DocID:           reqDoc.DocID,
+		Version:         req.Version,
+		DocDescription:  req.Description,
+		AuthorID:        authorID,
+		Price:           req.Price,
+	}
+	docVer, err := cache.FirstOrCreateDocumentVersion(ctx, core.GetDB(), reqDocVer)
+	if err != nil {
+		statusCode, err = http.StatusInternalServerError, er
+		return
+	}
+
+	if docVer != "" {
+		reqDocVer.DocumentVersion = docVer
+	}
+
+	// SAVE BARCODES TO DOCMANAGER
+	// get Shard for barcode by documentVersion
+	shardID := core.GetShardID(core.GetHash(reqDocVer.DocumentVersion))
+	shardService := microservice.GetDocmanagerShardServices()
+	if shardService == nil {
+		fmt.Println("nil shardService")
+		statusCode, err = http.StatusInternalServerError, fmt.Errorf("nil shardService")
+		return
+	}
+
+	ser, ok := shardService[uint64(shardID)]
+	if !ok {
+		fmt.Println("nil shardID")
+		statusCode, err = http.StatusInternalServerError, fmt.Errorf("no shard id")
+		return
+	}
+
+	// create list barcodes
+	var (
+		saveBarcodes = make([]*docmanagerModel.SaveBarcodeReq, req.Number)
+	)
+	for i := range saveBarcodes {
+		uuidBarcode, er := uuid.NewUUID()
+		if er != nil {
+			statusCode, err = http.StatusInternalServerError, er
+			return
 		}
-		docVer, err := dao.GetDocDAO.ExistOrCreateDocumentVersion(ctx, reqDocVer)
-		if err != nil {
-
+		saveBarcodes[i] = &docmanagerModel.SaveBarcodeReq{
+			Barcode: &docmanagerModel.Barcode{
+				ID:     uint64(core.GetHash(uuidBarcode.String())),
+				DocVer: reqDocVer.DocumentVersion,
+				Status: 0, //FIXME: define barcode status
+			},
 		}
-	*/
+	}
 
-	// create barcode
-	/*
-		var (
-			saveBarcodes = make([]docmanagerModel.Barcode, req.Number)
-		)
-		BarcodesID := sth.CreateBarcode(req.Number)
-		for i := range BarcodesID {
-			saveBarcodes[i] = &docmanagerModel.Barcode{
-			ID: BarcodesID[i],
-			DocVer: docVer,
-			Status: statusTrongKho,
+	// send grpc request
+	respBarcodeIDs := make([]uint64, req.Number)
+	for i := range saveBarcodes {
+		resp, er := ser.Docmanager.SaveBarcode(ctx, saveBarcodes[i])
+		if er != nil || resp.Code != 0 {
+			statusCode, err = http.StatusInternalServerError, fmt.Errorf("grpc Error")
+			return
 		}
+		respBarcodeIDs = append(respBarcodeIDs, saveBarcodes[i].Barcode.ID)
+	}
 
-		for i := range saveBarcodes {
-			getShard()
-			send saveBarcodes rpc
-		}
-
-
-	*/
-
-	return http.StatusOK, nil, lg, false, nil
+	return http.StatusOK, respBarcodeIDs, lg, false, nil
 }

@@ -1,4 +1,8 @@
 skeleton/go.mod
+skeleton/go.sum
 docmanager/go.mod
 docmanager/go.sum
-skeleton/go.sum
+docmanager/docmanager
+portal/go.mod
+portal/go.sum
+portal/portal
