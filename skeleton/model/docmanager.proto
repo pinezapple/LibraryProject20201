@@ -38,7 +38,7 @@ service Docmanager {
     rpc SavePayment (SavePaymentReq) returns (SavePaymentResp);
 
     rpc SelectAllSaleBill (SelectAllSaleBillReq) returns (SelectAllSaleBillResp);
-    rpc SelecSaleBillByID (SelectSaleBillByIDReq) returns (SelectSaleBillByIDResp);
+    rpc SelectSaleBillByID (SelectSaleBillByIDReq) returns (SelectSaleBillByIDResp);
     rpc SaveSaleBill (SaveSaleBillReq) returns (SaveSaleBillResp);
     // rpc DeleteSaleBill (DeleteSaleBillReq) returns (DeleteSaleBillResp);
 }
@@ -120,13 +120,13 @@ message SelectAllSellingBarcodeResp {
 }
 
 message SelectAllDamageBarcodeReq {
-    int32 Code = 1;
-    string Message = 2;
-    repeated Barcode Barcodes = 3 [(gogoproto.nullable) = true];
+
 }
 
 message SelectAllDamageBarcodeResp {
-
+    int32 Code = 1;
+    string Message = 2;
+    repeated Barcode Barcodes = 3 [(gogoproto.nullable) = true];
 }
 
 message SelectBarcodeByIDReq {
@@ -244,7 +244,7 @@ message SelectPaymentByBorrowFormIDReq {
 message SelectPaymentByBorrowFormIDResp {
     int32 Code = 1;
     string Message = 2;
-    repeated Payment Payment = 3 [(gogoproto.nullable) = true];
+    Payment Payment = 3 [(gogoproto.nullable) = true];
 }
 
 message SavePaymentReq {

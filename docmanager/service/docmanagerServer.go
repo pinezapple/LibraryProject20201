@@ -50,21 +50,18 @@ func (d *docManagerSrv) SelectAllDamageBarcode(ctx context.Context, req *docmana
 	logger.LogInfo(d.lg, "RPC Req: Select all damage barcode")
 
 	// FIXME: add function
-	/*
-		damageBarcodes, err := dao.SelectAllBarcode(ctx, core.GetDB())
-		if err != nil {
-			logger.LogErr(d.lg, err)
-			//return &docmanagerModel.SelectAllDamageBarcodeResp{Code: 1, Message: err.Error()}, err
-			return &docmanagerModel.SelectAllDamageBarcodeResp{}, err
-		}
-	*/
+
+	damageBarcodes, err := dao.SelectAllBarcode(ctx, core.GetDB())
+	if err != nil {
+		logger.LogErr(d.lg, err)
+		return &docmanagerModel.SelectAllDamageBarcodeResp{Code: 1, Message: err.Error()}, err
+	}
 
 	d.lg.Message = "DAO: Still use select all"
 	logger.LogWarning(d.lg)
 
 	logger.LogInfo(d.lg, "RPC Resp: Select all damage barcode OK")
-	//return &docmanagerModel.SelectAllDamageBarcodeResp{Code: 0, Barcodes: damageBarcodes}, nil
-	return &docmanagerModel.SelectAllDamageBarcodeResp{}, err
+	return &docmanagerModel.SelectAllDamageBarcodeResp{Code: 0, Barcodes: damageBarcodes}, nil
 }
 
 func (d *docManagerSrv) SelectBarcodeByID(ctx context.Context, req *docmanagerModel.SelectBarcodeByIDReq) (resp *docmanagerModel.SelectBarcodeByIDResp, err error) {
@@ -205,17 +202,14 @@ func (d *docManagerSrv) SelectPaymentByID(ctx context.Context, req *docmanagerMo
 func (d *docManagerSrv) SelectPaymentByBorrowFormID(ctx context.Context, req *docmanagerModel.SelectPaymentByBorrowFormIDReq) (resp *docmanagerModel.SelectPaymentByBorrowFormIDResp, err error) {
 	logger.LogInfo(d.lg, "RPC Req: Select payment by borrow form ID")
 
-	/*
-		payment, err := dao.SelectPaymentByBorrowFormID(ctx, core.GetDB(), req.BorrowFormID)
-		if err != nil {
-			logger.LogErr(d.lg, err)
-			return &docmanagerModel.SelectPaymentByBorrowFormIDResp{Code: 1, Message: err.Error()}, err
-		}
-	*/
+	payment, err := dao.SelectPaymentByBorrowFormID(ctx, core.GetDB(), req.BorrowFormID)
+	if err != nil {
+		logger.LogErr(d.lg, err)
+		return &docmanagerModel.SelectPaymentByBorrowFormIDResp{Code: 1, Message: err.Error()}, err
+	}
 
 	logger.LogInfo(d.lg, "RPC Resp: Select payment by borrow form ID OK")
-	//return &docmanagerModel.SelectPaymentByBorrowFormIDResp{Code: 0, Payment: payment}, nil
-	return &docmanagerModel.SelectPaymentByBorrowFormIDResp{Code: 0}, nil
+	return &docmanagerModel.SelectPaymentByBorrowFormIDResp{Code: 0, Payment: payment}, nil
 }
 
 func (d *docManagerSrv) SavePayment(ctx context.Context, req *docmanagerModel.SavePaymentReq) (resp *docmanagerModel.SavePaymentResp, err error) {
