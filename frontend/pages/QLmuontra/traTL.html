@@ -229,6 +229,7 @@
                 <thead class="thead-light">
                   <tr>
                     <th>Mã phiếu mượn</th>
+                    <th>Mã độc giả</th>
                     <th>Độc giả</th>
                     <th>Người cho mượn</th>
                     <th>Tình trạng mượn</th>
@@ -239,6 +240,7 @@
                 <tfoot>
                   <tr>
                     <th>Mã phiếu mượn</th>
+                    <th>Mã độc giả</th>
                     <th>Độc giả</th>
                     <th>Người cho mượn</th>
                     <th>Tình trạng mượn</th>
@@ -247,30 +249,6 @@
                   </tr>
                 </tfoot>
                 <tbody>
-                  <tr>
-                  <td>01</td>
-                  <td>Trần Văn B</td>
-                  <td>Phạm Thị C</td>
-                  <td>Còn hạn</td>
-                  <td>0</td>
-                  <td><button type="button" id="update" class="btn btn-info btn-sm" onclick="document.location='traTLchitiet.html'">Chỉnh sửa</button></td>
-                </tr>
-                <tr>
-                  <td>02</td>
-                  <td>Nguyễn Thị L</td>
-                  <td>Phan Huy</td>
-                  <td>Quá hạn</td>
-                  <td>10000</td>
-                  <td><button type="button" id="update" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-form">Chỉnh sửa</button></td>
-                </tr>
-                <tr>
-                  <td>03</td>
-                  <td>Duy Trầm</td>
-                  <td>Vũ Du</td>
-                  <td>Còn hạn</td>
-                  <td>0</td>
-                  <td><button type="button" id="update" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-form">Chỉnh sửa</button></td>
-                </tr>
                 </tbody>
               </table>
             </div>
@@ -418,10 +396,53 @@
   <script src="../../assets/js/demo.min.js"></script>
   <script>
 var table = $('#datatable-basic').DataTable();
+let arr = [{'0': "Đã trả"},{'1': "Đang mượn"},{'2':'Quá hạn'}]
+let url ='http://localhost:3000/returned_form/'
+
+fetch (url,  {
+  method: 'GET',
+  credentials: "omit",
+  headers: {
+     'Content-Type': 'application/json',
+    //  Authorization: "Bearer " + token,
+    },
+  })
+  .then(response => response.json())
+  .then(formList =>{
+    formList.forEach(form =>{
+
+      let data =[]
+      // get borrow form data
+    
+      let borrowId = `${form.id}`
+      let readerId= `${form.id_reader}`
+      let reader = `${form.reader}`
+      let librarianId = `${form.id_librarian}`
+      let librarian = `${form.librarian}`
+      let status = `${form.borrow_status}`
+      let fee = `${form.fee}`
+      let btn = '<button type="button" id="update" class="btn btn-info btn-sm">Chỉnh sửa</button>'
+      
+      // replace number value of borrow form status
+      let stage = status.toString()
+      let borrowStatus = arr[stage][status]
+      
+      // push to array
+      data.push (borrowId,readerId,reader,librarian,borrowStatus,fee,btn)
+
+      // add to table
+      table.row.add(data).draw()
+    })
+  })
+  .catch(error => {
+  console.error('Error:', error);
+  });
+
 $('#datatable-basic tbody').on( 'click', 'button', function () {
         var data = table.row( $(this).parents('tr') ).data();
-        
-    } );
+        let borrowId = data[0]
+        window.location.replace('traTLchitiet.html?id='+borrowId)
+    });
 
   </script>
 </body>

@@ -50,17 +50,18 @@ module.exports = function(){
                librarian:faker.name.findName(),
                docs: [
                    {barcode : faker.phone.phoneNumberFormat(),id_doc:faker.random.number(60),doc_name: faker.random.words(),
-                    doc_author: faker.name.findName(),doc_status : faker.commerce.color(2)},
+                    doc_author: faker.name.findName(),doc_status : faker.commerce.color(2),doc_fine:faker.commerce.price()},
                     {barcode : faker.phone.phoneNumberFormat(),id_doc:faker.random.number(60),doc_name: faker.random.words(),
-                    doc_author: faker.name.findName(),doc_status : faker.commerce.color(2)},
+                    doc_author: faker.name.findName(),doc_status : faker.commerce.color(2),doc_fine:faker.commerce.price()},
                     {barcode : faker.phone.phoneNumberFormat(),id_doc:faker.random.number(60),doc_name: faker.random.words(),
-                    doc_author: faker.name.findName(),doc_status : faker.commerce.color(2)}
+                    doc_author: faker.name.findName(),doc_status : faker.commerce.color(2),doc_fine:faker.commerce.price()}
                ],
                duration: faker.random.number(7),
                borrow_status: faker.random.number({
                 'min': 0,
                 'max': 2
-            })
+            }),
+            fee: faker.commerce.price()
            }
        }),
 
@@ -71,9 +72,9 @@ module.exports = function(){
             reader: faker.name.findName(),
             id_librarian: faker.random.number(60),
             docs: [
-                {barcode : faker.phone.phoneNumberFormat(),id_doc:faker.random.number(60)},
-                {barcode : faker.phone.phoneNumberFormat(),id_doc:faker.random.number(60)},
-                {barcode : faker.phone.phoneNumberFormat(),id_doc:faker.random.number(60)}
+                {barcode : faker.phone.phoneNumberFormat()},
+                {barcode : faker.phone.phoneNumberFormat()},
+                {barcode : faker.phone.phoneNumberFormat()}
             ],
             duration: faker.random.number(7),
             borrow_status: faker.random.number({

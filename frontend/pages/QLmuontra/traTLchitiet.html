@@ -207,9 +207,9 @@
               <h6 class="h2 text-white d-inline-block mb-0">Phiếu mượn tài liệu</h6>
               <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                 <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-                  <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-                  <li class="breadcrumb-item"><a href="#">Quản lý mượn trả</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Tạo phiếu mượn</li>
+                  <li class="breadcrumb-item"><a href="../dashboards/dashboard.html"><i class="fas fa-home"></i></a></li>
+                  <li class="breadcrumb-item"><a href="traTL.html">Trả tài liệu</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Tạo phiếu trả</li>
                 </ol>
               </nav>
             </div>
@@ -277,7 +277,6 @@
                               <option value="0">Đã trả</option>
                               <option value="1">Đang mượn</option>
                               <option value="2">Quá hạn</option>
-                              <option value="3">Hủy</option>
                             </select>
                         
                       </div>
@@ -355,7 +354,7 @@
 
   <!-- Argon JS -->
   <script src="../../assets/js/argon.js?v=1.1.0"></script>
-  
+ 
   <!-- Demo JS - remove this in your project -->
   <script src="../../assets/js/demo.min.js"></script>
   <script>
@@ -363,7 +362,6 @@
     let barcodeForm ='<div class="col"><div class="form-group"><label class="form-control-label">Mã vạch</label><input class="form-control" id="barcode" placeholder="Mã vạch" type="text" disabled ></div></div>'
     let docNameForm ='<div class="col"><div class="form-group"><label class="form-control-label">Tên tài liệu</label><input class="form-control" id="docName" placeholder="Tên tài liệu" type="text" disabled></div></div>'
     let authorForm ='<div class="col"><div class="form-group"><label class="form-control-label">Tác giả</label><input class="form-control" id="author" placeholder="Tác giả" type="text" disabled ></div></div> '
-    
     let docStatus = ' <div class="col"><div class="form-group"><label class="form-control-label">Tình trạng tài liệu</label><select class="form-control" id= "docStatus" data-toggle="select" title="Tình trạng tài liệu" data-live-search="true" data-live-search-placeholder="Select"><option value="0">Nguyên vẹn</option><option value="1">Hư hỏng</option></select></div></div>'
     let fineDoc = ' <div class="col"><div class="form-group"><label class="form-control-label">Phí</label><input class="form-control" id="fine" placeholder="Tiền phạt" value="0" type="number"></div></div>'
 
@@ -373,43 +371,43 @@
     let buttonSubmit = document.querySelector('#formButton')
     let total = document.querySelector('#total')
 
-    let librarianId = "007"
-    let data = [
-      {
-      "borrowId" :"01",
-      "userId" :"01",
-      "duration" : 3,
-      "status": 2,
-      "fine" : 10000,
-      "docs" : [
-        {"docId": "01", "barcode":"312312", "docName":"Tin học", "author": "Nguyễn Văn A"},
-        {"docId": "02", "barcode":"144142", "docName":"Tiếng Anh", "author": "Trần Văn B"}
-      ]
-    
-      }
-    ]
-      
-    
-    $(document).ready(function(){
+    let url_str =  window.location.href
+    let url = new URL(url_str);
+    let search_params = url.searchParams; 
+    let borrowId = search_params.get('id')
+    let borrowFormUrl = 'http://localhost:3000/returned_form/'+borrowId
+  
+    let data =[]
 
-      // get data
-      let borrowId = data[0]['borrowId']
-      let userId = data[0]["userId"]
-      let duration = data[0]["duration"]
-      let status = data[0]["status"]
-      let fine = data[0]["fine"]
-      let doc = []
+    fetch (borrowFormUrl,  {
+  method: 'GET',
+  credentials: "omit",
+  headers: {
+     'Content-Type': 'application/json',
+    //  Authorization: "Bearer " + token,
+    },
+  })
+  .then(response => response.json())
+  .then(obj =>{
+    // for(let prop in obj){
+    //   data.push(`${obj[prop]}`)
+    // }
+    // console.log(data)
+      let borrowFormId = obj.id
+      let readerId = obj.id_reader
+      let duration = obj.duration
+      let borrowStatus = obj.borrow_status
+      let fine = obj.fee
+      let docs = obj.docs
 
-      // add value to input field
-      $("#borrowId").val(borrowId)
-      // $("#librarian").val(librarianId)
-      $("#userId").val(userId)
+        // add value to input field
+      $("#borrowId").val(borrowFormId)
+      $("#userId").val(readerId)
       $("#duration").val(duration)
-      $("#status").val(status)
+      $("#status").val(borrowStatus)
       $("#totalFine").val(fine)
-     
 
-      for (let i = 0; i < data[0]["docs"].length; i++){
+        for (let i = 0; i < docs.length; i++){
         
         let formRow = document.createElement("div")
         formRow.setAttribute('class','form-row')
@@ -432,17 +430,19 @@
         formRow.appendChild(inputFine)
         
         // add data 
-        formRow.querySelector("#docId").value = data[0]["docs"][i]["docId"]
-        formRow.querySelector("#barcode").value = data[0]["docs"][i]["barcode"]
-        formRow.querySelector("#docName").value = data[0]["docs"][i]["docName"]
-        formRow.querySelector("#author").value = data[0]["docs"][i]["author"]
-        
+        formRow.querySelector("#docId").value = docs[i]["id_doc"]
+        formRow.querySelector("#barcode").value = docs[i]["barcode"]
+        formRow.querySelector("#docName").value = docs[i]["doc_name"]
+        formRow.querySelector("#author").value = docs[i]["doc_author"]
+        // formRow.querySelector("#docStatus").value = docs[i]["doc_status"]
         
       }
 
-     
-    });
-  
+  })
+  .catch(error => {
+  console.error('Error:', error);
+  });
+    
     function subtotal(){
       let currentFine = parseInt(data[0]["fine"])
       allDocFine = document.querySelectorAll("#fine")
@@ -466,8 +466,6 @@
      }
      console.log(arr)
     }
-   
-
   </script>
 </body>
 

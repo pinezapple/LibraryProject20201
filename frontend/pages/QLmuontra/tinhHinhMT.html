@@ -229,20 +229,20 @@
                 <thead class="thead-light">
                   <tr>
                     <th>Mã phiếu mượn</th>
+                    <th>Mã độc giả</th>
                     <th>Độc Giả</th>
                     <th>Người cho mượn</th>
                     <th>Tình trạng mượn</th>
-                    <th>Tình trạng tài liệu</th>
                     <th>Phí</th>
                   </tr>
                 </thead>
                 <tfoot>
                   <tr>
                     <th>Mã phiếu mượn</th>
+                    <th>Mã độc giả</th>
                     <th>Độc Giả</th>
                     <th>Người cho mượn</th>
                     <th>Tình trạng mượn</th>
-                    <th>Tình trạng tài liệu</th>
                     <th>Phí</th>
                   </tr>
                 </tfoot>
@@ -304,19 +304,59 @@
 </body>
 
 <script>
-  $(document).ready(function() {
+  var table = $('#datatable-basic').DataTable();
+  let arr = [{'0': "Đã trả"},{'1': "Đang mượn"},{'2':'Quá hạn'}]
+  let url ='http://localhost:3000/returned_form/'
 
-  
-if ( $.fn.dataTable.isDataTable( '#datatable-basic' ) ) {
-  table = $('#datatable-basic').DataTable();
-}
-else {
-  table = $('#datatable-basic').DataTable( {
-    orderCellsTop: true,
-    fixedHeader: true
-  } );
-}
+  // fetch data
+  fetch (url,  {
+  method: 'GET',
+  credentials: "omit",
+  headers: {
+     'Content-Type': 'application/json',
+    //  Authorization: "Bearer " + token,
+    },
+  })
+  .then(response => response.json())
+  .then(formList =>{
+    formList.forEach(form =>{
 
+     
+      let data =[]
+      // get all borrow form data
+    
+      let borrowId = `${form.id}`
+      let readerId= `${form.id_reader}`
+      let reader = `${form.reader}`
+      let librarian = `${form.librarian}`
+      let status = `${form.borrow_status}` //return a number
+      let fee = `${form.fee}`
+      
+      // replace number value of borrow form status
+      let stage = status.toString()
+      let borrowStatus = arr[stage][status]
+
+      // push to array
+      data.push (borrowId,readerId,reader,librarian,borrowStatus,fee)
+
+      // add to table
+      table.row.add(data).draw()
+    })
+  })
+  .catch(error => {
+  console.error('Error:', error);
+  });
+
+  $(document).ready(function() {  
+  if ( $.fn.dataTable.isDataTable( '#datatable-basic' ) ) {
+    table = $('#datatable-basic').DataTable();
+  }
+  else {
+    table = $('#datatable-basic').DataTable( {
+      orderCellsTop: true,
+      fixedHeader: true
+    } );
+  }
   // Setup - add a text input to each footer cell
   $('#datatable-basic thead tr').clone().appendTo( '#datatable-basic thead' );
 

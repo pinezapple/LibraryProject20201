@@ -456,13 +456,15 @@
       formRow.querySelector("#author").value = data[3]
 
     });
-
+  
+  // remove from borrow form
   $(document).on('click', '#delete', function(e) {
    e.preventDefault();
    $(this).closest('#newRow').remove();
    return false;
   });
 
+  // create borrow form
   function createBorrowForm(){
     let docIds = document.querySelectorAll('#docId')
     let barcodeIds = document.querySelectorAll('#barcode')
@@ -471,8 +473,8 @@
     let librarian = document.getElementById('librarian').value
 
     let arrayId =[]
-     for (let i = 0; i < docIds.length; i++) {
-      let obj = {"docId":docIds[i].value, "barcode": barcodeIds[i].value}
+     for (let i = 0; i < barcodeIds.length; i++) {
+      let obj = {"barcode": barcodeIds[i].value}
       arrayId.push(obj)
       }
     // console.log(arrayId)
@@ -485,17 +487,22 @@
        'Content-Type': 'application/json',
       //  Authorization: "Bearer " + token,
       },
-      body:JSON.stringify({id_reader: reader, id_librarian: librarian, docs:arrayId, duration: duration,borrow_status:"1"})
+      body:JSON.stringify({id_reader: reader, id_librarian: librarian, docs:arrayId, duration: duration,borrow_status:1})
      
   }
   ).then((res) => res.json())
   .then(result => alert("Success", result))
+  .then(result => document.getElementById("borrowForm").reset())
   .catch((err)=>alert("Something went wrong",err))
 
-  document.getElementById("borrowForm").reset();
-   
+  let div = document.querySelectorAll("#newRow")
+  for (let j=0; j< div.length;j++){
+    div[j].remove()
+  }
+  
   }
 
+// fetch data 
   fetch (url,
   {
     method: 'GET',
