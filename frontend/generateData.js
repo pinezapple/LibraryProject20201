@@ -34,6 +34,7 @@ module.exports = function(){
             borrow_id: n,
             id_doc:faker.random.number(60),
             barcode : faker.phone.phoneNumberFormat(),
+            doc_date: faker.date.recent(),
             doc_name: faker.random.words(),
             doc_author: faker.name.findName(),
             doc_status : faker.commerce.color(2),

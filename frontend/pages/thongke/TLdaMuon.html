@@ -230,6 +230,7 @@
                     <th>Mã phiếu mượn</th>
                     <th>Mã tài liệu</th>
                     <th>Mã vạch</th>
+                    <th>Thời gian trả</th>
                     <th>Tên tài liệu</th>
                     <th>Tác giả</th>
                     <th>Trạng thái tài liệu</th>
@@ -240,13 +241,14 @@
                     <th>Mã phiếu mượn</th>
                     <th>Mã tài liệu</th>
                     <th>Mã vạch</th>
+                    <th>Thời gian trả</th>
                     <th>Tên tài liệu</th>
                     <th>Tác giả</th>
                     <th>Trạng thái tài liệu</th>
                   </tr>
                 </tfoot>
                 <tbody>
-                <tr>
+                <!-- <tr>
                   <td>01</td>
                   <td>fhalf</td>
                   <td>022</td>
@@ -281,7 +283,7 @@
                   <td>dfa</td>
                   <td>àds</td>
                   <td>adfa</td>
-                </tr>
+                </tr> -->
                 </tbody>
                 
               </table>
@@ -363,11 +365,12 @@
       let borrowId = `${doc.borrow_id}`
       let docId= `${doc.id_doc}`
       let barcode = `${doc.barcode}`
+      let docDate = `${doc.doc_date}`
       let docName = `${doc.doc_name}`
       let author = `${doc.doc_author}`
       let status = `${doc.doc_status}`
      
-      data.push (borrowId,docId,barcode,docName,author,status)
+      data.push (borrowId,docId,barcode,docDate,docName,author,status)
       // add to table
       table.row.add(data).draw()
     })
