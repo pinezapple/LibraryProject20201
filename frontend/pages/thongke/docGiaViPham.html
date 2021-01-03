@@ -109,13 +109,16 @@
               <div class="collapse" id="navbar-tables">
                 <ul class="nav nav-sm flex-column">
                   <li class="nav-item">
-                    <a href="../../pages/thongke/TLdaMuon.html" class="nav-link">Tài liệu đã mượn</a>
+                    <a href="../../pages/thongke/TLdaMuon.html" class="nav-link">Phiếu mượn</a>
                   </li>
                   <li class="nav-item">
-                    <a href="../../pages/thongke/TLthanhtoan.html" class="nav-link">Tài liệu thanh lý</a>
+                    <a href="../../pages/thongke/TLthanhtoan.html" class="nav-link">Phiếu thanh lý</a>
                   </li>
                   <li class="nav-item">
                     <a href="../../pages/thongke/TLthanhToanNhap.html" class="nav-link">Tài liệu nhập</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="../../pages/thongke/TLhuhong.html" class="nav-link">Tài liệu hư hỏng</a>
                   </li>
                   <li class="nav-item">
                     <a href="../../pages/thongke/docGiaViPham.html" class="nav-link">Độc giả vi phạm</a>
@@ -230,24 +233,20 @@
                   <tr>
                     <th>Mã độc giả</th>
                     <th>Tên độc giả</th>
-                    <th>Mã phiếu mượn</th>
-                    <th>Trạng thái mượn</th>
-                    <th>Tình trạng tài liệu</th>
-                    <th>Phí</th>
+                    <th>Số lần vi phạm</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <tfoot>
                   <tr>
                     <th>Mã độc giả</th>
                     <th>Tên độc giả</th>
-                    <th>Mã phiếu mượn</th>
-                    <th>Trạng thái mượn</th>
-                    <th>Tình trạng tài liệu</th>
-                    <th>Phí</th>
+                    <th>Số lần vi phạm</th>
+                    <th>Action</th>
                   </tr>
                 </tfoot>
                 <tbody>
-                  <tr>
+                  <!-- <tr>
                     <td>01</td>
                     <td>Nguyễn Văn A</td>
                     <td>01</td>
@@ -282,7 +281,7 @@
                     <td>Còn nguyên vẹn</td>
                     <td>1000</td>
                     
-                  </tr>
+                  </tr> -->
                 </tbody>
               </table>
             </div>
@@ -409,6 +408,61 @@
 
 
   })
+  </script>
+  <script>
+    let url ='http://localhost:3000/violated_user'
+    let table = $('#datatable-buttons').DataTable();
+    fetch (url,  {
+  method: 'GET',
+  credentials: "omit",
+  headers: {
+     'Content-Type': 'application/json',
+    //  Authorization: "Bearer " + token,
+    },
+  })
+  .then(response => response.json())
+  .then(docList =>{
+    docList.forEach(doc =>{
+
+      let data =[]
+      // get doc data
+    
+    
+      let userID= `${doc.user_id}`
+      let userName = `${doc.user_name}`
+      let violateTime = `${doc.violate_time}`
+      let btn = '<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-form" id="edit">Chi tiết</button>'
+
+      data.push (userID,userName,violateTime,btn)
+
+
+      // add to table
+      table.row.add(data).draw()
+    })
+  })
+  .catch(error => {
+  console.error('Error:', error);
+  });
+
+    // add search box
+    $(document).ready(function() {
+  // var table = $('#datatable-buttons').DataTable();
+
+    $('#datatable-buttons tfoot th').each( function () {
+        var title = $(this).text();
+        $(this).html( '<input type="text" placeholder="Tìm '+title+'" />' );
+    } );
+    table.columns().every(function () {
+        var that = this;
+        $( 'input', this.footer() ).on( 'keyup change clear', function () {
+            if ( that.search() !== this.value ) {
+                that
+                    .search( this.value )
+                    .draw();
+            }
+        } );
+    } );
+});
   </script>
 </body>
 

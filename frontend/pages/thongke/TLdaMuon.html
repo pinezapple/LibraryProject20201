@@ -19,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
   <meta name="author" content="Creative Tim">
-  <title>Tài liệu đã mượn</title>
+  <title>Phiếu mượn</title>
   <!-- Favicon -->
   <link rel="icon" href="../../assets/img/brand/favicon.png" type="image/png">
   <!-- Fonts -->
@@ -109,13 +109,16 @@
               <div class="collapse" id="navbar-tables">
                 <ul class="nav nav-sm flex-column">
                   <li class="nav-item">
-                    <a href="../../pages/thongke/TLdaMuon.html" class="nav-link">Tài liệu đã mượn</a>
+                    <a href="../../pages/thongke/TLdaMuon.html" class="nav-link">Phiếu mượn</a>
                   </li>
                   <li class="nav-item">
-                    <a href="../../pages/thongke/TLthanhtoan.html" class="nav-link">Tài liệu thanh lý</a>
+                    <a href="../../pages/thongke/TLthanhtoan.html" class="nav-link">Phiếu thanh lý</a>
                   </li>
                   <li class="nav-item">
                     <a href="../../pages/thongke/TLthanhToanNhap.html" class="nav-link">Tài liệu nhập</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="../../pages/thongke/TLhuhong.html" class="nav-link">Tài liệu hư hỏng</a>
                   </li>
                   <li class="nav-item">
                     <a href="../../pages/thongke/docGiaViPham.html" class="nav-link">Độc giả vi phạm</a>
@@ -205,7 +208,7 @@
                 <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                   <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
                   <li class="breadcrumb-item"><a href="#">Thống kê</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Tài liệu đã mượn</li>
+                  <li class="breadcrumb-item active" aria-current="page">Phiếu mượn</li>
                 </ol>
               </nav>
             </div>
@@ -221,7 +224,7 @@
           <div class="card">
             <!-- Card header -->
             <div class="card-header">
-              <h3 class="mb-0">Tài liệu đã mượn</h3>
+              <h3 class="mb-0">Phiếu mượn</h3>
             </div>
             <div class="table-responsive py-4">
               <table class="table table-flush" id="datatable-buttons">
@@ -230,6 +233,7 @@
                     <th>Mã phiếu mượn</th>
                     <th>Mã tài liệu</th>
                     <th>Mã vạch</th>
+                    <th>Thời gian trả</th>
                     <th>Tên tài liệu</th>
                     <th>Tác giả</th>
                     <th>Trạng thái tài liệu</th>
@@ -240,13 +244,14 @@
                     <th>Mã phiếu mượn</th>
                     <th>Mã tài liệu</th>
                     <th>Mã vạch</th>
+                    <th>Thời gian trả</th>
                     <th>Tên tài liệu</th>
                     <th>Tác giả</th>
                     <th>Trạng thái tài liệu</th>
                   </tr>
                 </tfoot>
                 <tbody>
-                <tr>
+                <!-- <tr>
                   <td>01</td>
                   <td>fhalf</td>
                   <td>022</td>
@@ -281,7 +286,7 @@
                   <td>dfa</td>
                   <td>àds</td>
                   <td>adfa</td>
-                </tr>
+                </tr> -->
                 </tbody>
                 
               </table>
@@ -363,11 +368,12 @@
       let borrowId = `${doc.borrow_id}`
       let docId= `${doc.id_doc}`
       let barcode = `${doc.barcode}`
+      let docDate = `${doc.doc_date}`
       let docName = `${doc.doc_name}`
       let author = `${doc.doc_author}`
       let status = `${doc.doc_status}`
      
-      data.push (borrowId,docId,barcode,docName,author,status)
+      data.push (borrowId,docId,barcode,docDate,docName,author,status)
       // add to table
       table.row.add(data).draw()
     })
