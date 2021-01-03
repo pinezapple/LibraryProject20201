@@ -14,7 +14,7 @@ module.exports = function(){
             doc_publisher: faker.company.bs(10),
             doc_edition : faker.random.number(),
             doc_price : faker.commerce.price(),
-            doc_status : faker.commerce.color(2),
+            doc_status : faker.random.number(2),
             created_at: faker.date.recent(),
             updated_at: faker.date.recent(),
         }
