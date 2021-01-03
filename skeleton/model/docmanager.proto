@@ -19,6 +19,7 @@ option (gogoproto.unmarshaler_all) = true;
 
 service Docmanager {
     rpc SelectAllBarcode (SelectAllBarcodeReq) returns (SelectAllBarcodeResp); 
+    rpc SelectAllAvailableBarcode (SelectAllAvailableBarcodeReq) returns (SelectAllAvailableBarcodeResp);
     rpc SelectAllSellingBarcode (SelectAllSellingBarcodeReq) returns (SelectAllSellingBarcodeResp);
     rpc SelectAllDamageBarcode (SelectAllDamageBarcodeReq) returns (SelectAllDamageBarcodeResp);
     rpc SelectBarcodeByID (SelectBarcodeByIDReq) returns (SelectBarcodeByIDResp);
@@ -107,6 +108,16 @@ message SelectAllBarcodeResp {
     int32 Code = 1;
     string Message = 2;
     repeated Barcode Barcodes = 3 [(gogoproto.nullable) = true]; 
+}
+
+message SelectAllAvailableBarcodeReq {
+
+}
+
+message SelectAllAvailableBarcodeResp {
+    int32 Code = 1;
+    string Message = 2;
+    repeated Barcode Barcodes = 3 [(gogoproto.nullable) = true];
 }
 
 message SelectAllSellingBarcodeReq {

@@ -30,6 +30,23 @@ func (d *docManagerSrv) SelectAllBarcode(ctx context.Context, req *docmanagerMod
 	return &docmanagerModel.SelectAllBarcodeResp{Code: 0, Barcodes: barcodes}, nil
 }
 
+func (d *docManagerSrv) SelectAllAvailableBarcode(ctx context.Context, req *docmanagerModel.SelectAllAvailableBarcodeReq) (resp *docmanagerModel.SelectAllAvailableBarcodeResp, err error) {
+	logger.LogInfo(d.lg, "RPC Req: Select all available barcode")
+
+	//FIXME: add functions
+	barcodes, err := dao.SelectAllBarcode(ctx, core.GetDB())
+	if err != nil {
+		logger.LogErr(d.lg, err)
+		return &docmanagerModel.SelectAllAvailableBarcodeResp{Code: 1, Message: err.Error()}, err
+	}
+
+	d.lg.Message = "Still using select all barcode"
+	logger.LogWarning(d.lg)
+
+	logger.LogInfo(d.lg, "RPC Resp: Select all available barcode OK")
+	return &docmanagerModel.SelectAllAvailableBarcodeResp{Code: 0, Barcodes: barcodes}, nil
+}
+
 func (d *docManagerSrv) SelectAllSellingBarcode(ctx context.Context, req *docmanagerModel.SelectAllSellingBarcodeReq) (resp *docmanagerModel.SelectAllSellingBarcodeResp, err error) {
 	logger.LogInfo(d.lg, "RPC Req: Select all selling barcode")
 
