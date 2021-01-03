@@ -19,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
   <meta name="author" content="Creative Tim">
-  <title>Tài liệu thanh toán</title>
+  <title>Phiếu thanh lý</title>
   <!-- Favicon -->
   <link rel="icon" href="../../assets/img/brand/favicon.png" type="image/png">
   <!-- Fonts -->
@@ -109,10 +109,10 @@
               <div class="collapse" id="navbar-tables">
                 <ul class="nav nav-sm flex-column">
                   <li class="nav-item">
-                    <a href="../../pages/thongke/TLdaMuon.html" class="nav-link">Tài liệu đã mượn</a>
+                    <a href="../../pages/thongke/TLdaMuon.html" class="nav-link">Phiếu mượn</a>
                   </li>
                   <li class="nav-item">
-                    <a href="../../pages/thongke/TLthanhtoan.html" class="nav-link">Tài liệu thanh lý</a>
+                    <a href="../../pages/thongke/TLthanhtoan.html" class="nav-link">Phiếu thanh lý</a>
                   </li>
                   <li class="nav-item">
                     <a href="../../pages/thongke/TLthanhToanNhap.html" class="nav-link">Tài liệu nhập</a>
@@ -201,12 +201,12 @@
         <div class="header-body">
           <div class="row align-items-center py-4">
             <div class="col-lg-6 col-7">
-              <h6 class="h2 text-white d-inline-block mb-0">Thống kê tài liệu thanh lý</h6>
+              <h6 class="h2 text-white d-inline-block mb-0">Thống kê phiếu thanh lý</h6>
               <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                 <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                   <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
                   <li class="breadcrumb-item"><a href="#">Thống kê</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Tài liệu thanh lý</li>
+                  <li class="breadcrumb-item active" aria-current="page">Phiếu thanh lý</li>
                 </ol>
               </nav>
             </div>
@@ -224,30 +224,26 @@
           <div class="card">
             <!-- Card header -->
             <div class="card-header">
-              <h3 class="mb-0">Tài liệu thanh lý</h3>
+              <h3 class="mb-0">Phiếu thanh lý</h3>
             </div>
             <div class="table-responsive py-4">
               <table class="table table-flush" id="datatable-buttons">
                 <thead class="thead-light">
                   <tr>
-                    <th>Mã tài liệu</th>
-                    <th>Mã vạch</th>
-                    <th>Tên tài liệu</th>
-                    <th>Tác giả</th>
+                    <th>Mã phiếu</th>
                     <th>Người thanh lý</th>
                     <th>Ngày thanh lý</th>
-                    <th>Phí</th>
+                    <th>Tổng tiền</th>     
+                    <th>Action</th>             
                   </tr>
                 </thead>
                 <tfoot>
                   <tr>
-                    <th>Mã tài liệu</th>
-                    <th>Mã vạch</th>
-                    <th>Tên tài liệu</th>
-                    <th>Tác giả</th>
+                    <th>Mã phiếu</th>
                     <th>Người thanh lý</th>
                     <th>Ngày thanh lý</th>
-                    <th>Phí</th>
+                    <th>Tổng tiền</th>
+                    <th>Action</th>
                   </tr>
                 </tfoot>
               </table>
@@ -325,15 +321,14 @@
       // get doc data
     
     
-      let docId= `${doc.id_doc}`
-      let barcode = `${doc.barcode}`
-      let docName = `${doc.doc_name}`
-      let author = `${doc.doc_author}`
-      let librarian= `${doc.librarian}`
+      let idSale= `${doc.id_sale}`
+      let soldBy = `${doc.sold_by}`
       let date = `${doc.date}`
-      let fee = `${doc.fee}`
+      let total = `${doc.total}`
+      let btn = '<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-form" id="edit">Chi tiết</button>'
 
-      data.push (docId,barcode,docName,author,librarian,date,fee)
+      data.push (idSale,soldBy,date,total,btn)
+
 
       // add to table
       table.row.add(data).draw()

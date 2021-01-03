@@ -22,13 +22,10 @@ module.exports = function(){
 // tài liệu bị hỏng
        doc_damaged: _.times(60, function(n){
            return {
-               id_doc:n,
-               barcode : faker.phone.phoneNumberFormat(),
-               doc_name: faker.random.words(),
-               doc_author: faker.name.findName(),
-               librarian:faker.name.findName(),
+               id_sale:n,
+               sold_by : faker.name.findName(),
                date: faker.date.recent(),
-               fee: faker.commerce.price()
+               total: faker.commerce.price()
            }
        }),
 // tài liệu đã mượn
