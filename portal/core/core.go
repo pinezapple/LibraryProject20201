@@ -28,6 +28,7 @@ const (
 
 var (
 	ServiceName   = "portal"
+	ShardNumber   int
 	ErrBadRequest = fmt.Errorf("Bad request")
 
 	ErrExtTermChanCapInvalid = fmt.Errorf("Term chan capacity is invalid")
@@ -94,6 +95,7 @@ func GetNumShards() uint64 {
 
 func InitCore(shardNumber int) {
 	SetNumShards(shardNumber)
+	ShardNumber = shardNumber
 	lg = logger.MustGet(ServiceName)
 
 	config.Store(&Config{
