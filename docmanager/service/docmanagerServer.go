@@ -30,7 +30,7 @@ func (d *docManagerSrv) SelectAllBarcode(ctx context.Context, req *docmanagerMod
 	return &docmanagerModel.SelectAllBarcodeResp{Code: 0, Barcodes: barcodes}, nil
 }
 
-func (d *docManagerSrv) SelectAllSellingBarcode(ctx context.Context, req *docmanagerModel.SelectAllSellingBarcodeReq) (resp *docmanagerModel.SelectAllBarcodeResp, err error) {
+func (d *docManagerSrv) SelectAllSellingBarcode(ctx context.Context, req *docmanagerModel.SelectAllSellingBarcodeReq) (resp *docmanagerModel.SelectAllSellingBarcodeResp, err error) {
 	logger.LogInfo(d.lg, "RPC Req: Select all selling barcode")
 
 	// FIXME: add function
@@ -46,22 +46,25 @@ func (d *docManagerSrv) SelectAllSellingBarcode(ctx context.Context, req *docman
 	logger.LogInfo(d.lg, "RPC Resp: Select all selling barcode OK")
 	return &docmanagerModel.SelectAllSellingBarcodeResp{Code: 0, Barcodes: sellingBarcodes}, nil
 }
-
 func (d *docManagerSrv) SelectAllDamageBarcode(ctx context.Context, req *docmanagerModel.SelectAllDamageBarcodeReq) (resp *docmanagerModel.SelectAllDamageBarcodeResp, err error) {
 	logger.LogInfo(d.lg, "RPC Req: Select all damage barcode")
 
 	// FIXME: add function
-	damageBarcodes, err := dao.SelectAllBarcode(ctx, core.GetDB())
-	if err != nil {
-		logger.LogErr(d.lg, err)
-		return &docmanagerModel.SelectAllDamageBarcodeResp{Code: 1, Message: err.Error()}, err
-	}
+	/*
+		damageBarcodes, err := dao.SelectAllBarcode(ctx, core.GetDB())
+		if err != nil {
+			logger.LogErr(d.lg, err)
+			//return &docmanagerModel.SelectAllDamageBarcodeResp{Code: 1, Message: err.Error()}, err
+			return &docmanagerModel.SelectAllDamageBarcodeResp{}, err
+		}
+	*/
 
 	d.lg.Message = "DAO: Still use select all"
 	logger.LogWarning(d.lg)
 
 	logger.LogInfo(d.lg, "RPC Resp: Select all damage barcode OK")
-	return &docmanagerModel.SelectAllDamageBarcodeResp{Code: 0, Barcodes: damageBarcodes}, nil
+	//return &docmanagerModel.SelectAllDamageBarcodeResp{Code: 0, Barcodes: damageBarcodes}, nil
+	return &docmanagerModel.SelectAllDamageBarcodeResp{}, err
 }
 
 func (d *docManagerSrv) SelectBarcodeByID(ctx context.Context, req *docmanagerModel.SelectBarcodeByIDReq) (resp *docmanagerModel.SelectBarcodeByIDResp, err error) {
@@ -121,7 +124,7 @@ func (d *docManagerSrv) SelectAllBorrowForm(ctx context.Context, req *docmanager
 	borrowForms, err := dao.SelectAllBorrowForm(ctx, core.GetDB())
 	if err != nil {
 		logger.LogErr(d.lg, err)
-		return &docmanagerModel.SelectAllBorrowFormReq{Code: 1, Message: err.Error()}, err
+		return &docmanagerModel.SelectAllBorrowFormResp{Code: 1, Message: err.Error()}, err
 	}
 
 	logger.LogInfo(d.lg, "RPC Resp: Select all borrow form OK")
@@ -139,7 +142,7 @@ func (d *docManagerSrv) SelectAllUnReturnBorrowForm(ctx context.Context, req *do
 	}
 
 	d.lg.Message = "Using select all borrow form func"
-	logger.LogWarning(lg)
+	logger.LogWarning(d.lg)
 
 	logger.LogInfo(d.lg, "RPC Resp: Select all unreturn borrow form OK")
 	return &docmanagerModel.SelectAllUnReturnBorrowFormResp{Code: 0, BorrowForms: unReturnBorrowForms}, nil
@@ -155,7 +158,7 @@ func (d *docManagerSrv) SelectBorrowFormByID(ctx context.Context, req *docmanage
 	}
 
 	logger.LogInfo(d.lg, "RPC Resp: Select borrow form by ID OK")
-	return &docmanagerModel.SelectBorrowFormByIDResp{Code: 0, Borrowform: borrowFrom}, nil
+	return &docmanagerModel.SelectBorrowFormByIDResp{Code: 0, Borrowform: borrowForm}, nil
 }
 
 func (d *docManagerSrv) SaveBorrowForm(ctx context.Context, req *docmanagerModel.SaveBorrowFormReq) (resp *docmanagerModel.SaveBorrowFormResp, err error) {
@@ -173,13 +176,13 @@ func (d *docManagerSrv) SaveBorrowForm(ctx context.Context, req *docmanagerModel
 // ---------------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------- PAYMENT ----------------------------------------------------------
 
-func (d *docManagerSrv) SelectAllPayment(ctx context.Context, req *docmanagerModel.SelectAllPaymentReq) (resp *docmanagerModel.SelectAllBorrowFormResp, err error) {
+func (d *docManagerSrv) SelectAllPayment(ctx context.Context, req *docmanagerModel.SelectAllPaymentReq) (resp *docmanagerModel.SelectAllPaymentResp, err error) {
 	logger.LogInfo(d.lg, "RPC Req: Select all payment")
 
 	payments, err := dao.SelectAllPayment(ctx, core.GetDB())
 	if err != nil {
 		logger.LogErr(d.lg, err)
-		return &docmanagerModel.SelectAllBorrowFormResp{Code: 1, Message: err.Error()}, err
+		return &docmanagerModel.SelectAllPaymentResp{Code: 1, Message: err.Error()}, err
 	}
 
 	logger.LogInfo(d.lg, "RPC Resp: Select all payment OK")
@@ -202,17 +205,20 @@ func (d *docManagerSrv) SelectPaymentByID(ctx context.Context, req *docmanagerMo
 func (d *docManagerSrv) SelectPaymentByBorrowFormID(ctx context.Context, req *docmanagerModel.SelectPaymentByBorrowFormIDReq) (resp *docmanagerModel.SelectPaymentByBorrowFormIDResp, err error) {
 	logger.LogInfo(d.lg, "RPC Req: Select payment by borrow form ID")
 
-	payment, err := dao.SelectPaymentByBorrowFormID(ctx, core.GetDB(), req.BorrowFormID)
-	if err != nil {
-		logger.LogErr(d.lg, err)
-		return &docmanagerModel.SelectPaymentByBorrowFormIDResp{Code: 1, Message: err.Error()}, err
-	}
+	/*
+		payment, err := dao.SelectPaymentByBorrowFormID(ctx, core.GetDB(), req.BorrowFormID)
+		if err != nil {
+			logger.LogErr(d.lg, err)
+			return &docmanagerModel.SelectPaymentByBorrowFormIDResp{Code: 1, Message: err.Error()}, err
+		}
+	*/
 
 	logger.LogInfo(d.lg, "RPC Resp: Select payment by borrow form ID OK")
-	return &docmanagerModel.SelectPaymentByBorrowFormIDResp{Code: 0, Payment: payment}, nil
+	//return &docmanagerModel.SelectPaymentByBorrowFormIDResp{Code: 0, Payment: payment}, nil
+	return &docmanagerModel.SelectPaymentByBorrowFormIDResp{Code: 0}, nil
 }
 
-func (d *docmanagerSrv) SavePayment(ctx context.Context, req *docmanagerModel.SavePaymentReq) (resp *docmanagerModel.SavePaymentResp, err error) {
+func (d *docManagerSrv) SavePayment(ctx context.Context, req *docmanagerModel.SavePaymentReq) (resp *docmanagerModel.SavePaymentResp, err error) {
 	logger.LogInfo(d.lg, "RPC Req: Save payment")
 
 	if err = dao.InsertPayment(ctx, core.GetDB(), req.Payment); err != nil {
@@ -227,17 +233,17 @@ func (d *docmanagerSrv) SavePayment(ctx context.Context, req *docmanagerModel.Sa
 // -----------------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------- Sale bill ----------------------------------------------------------
 
-func (d *docmanagerSrv) SelectAllSaleBill(ctx context.Context, req *docmanagerModel.SelectAllSaleBillByIDReq) (resp *docmanagerModel.SelectAllSaleBillResp, err error) {
+func (d *docManagerSrv) SelectAllSaleBill(ctx context.Context, req *docmanagerModel.SelectAllSaleBillReq) (resp *docmanagerModel.SelectAllSaleBillResp, err error) {
 	logger.LogInfo(d.lg, "RPC Req: Select all sale bill")
 
 	saleBills, err := dao.SelectAllSaleBill(ctx, core.GetDB())
 	if err != nil {
 		logger.LogErr(d.lg, err)
-		return &docmanagerModel.SelectAllSaleBillByIDResp{Code: 1, Message: err.Error()}, err
+		return &docmanagerModel.SelectAllSaleBillResp{Code: 1, Message: err.Error()}, err
 	}
 
 	logger.LogInfo(d.lg, "RPC Resp: Select all sale bill OK")
-	return &docmanagerModel.SelectAllSaleBillByIDResp{Code: 0, SaleBills: saleBills}, nil
+	return &docmanagerModel.SelectAllSaleBillResp{Code: 0, SaleBills: saleBills}, nil
 }
 
 func (d *docManagerSrv) SelectSaleBillByID(ctx context.Context, req *docmanagerModel.SelectSaleBillByIDReq) (resp *docmanagerModel.SelectSaleBillByIDResp, err error) {
@@ -246,14 +252,14 @@ func (d *docManagerSrv) SelectSaleBillByID(ctx context.Context, req *docmanagerM
 	saleBill, err := dao.SelectSaleBillByID(ctx, core.GetDB(), req.SaleBillID)
 	if err != nil {
 		logger.LogErr(d.lg, err)
-		return &docmanagerModel.SelectAllSaleBillResp{Code: 1, Message: err.Error()}
+		return &docmanagerModel.SelectSaleBillByIDResp{Code: 1, Message: err.Error()}, err
 	}
 
 	logger.LogInfo(d.lg, "RPC Resp: Select sale bill by ID OK")
 	return &docmanagerModel.SelectSaleBillByIDResp{Code: 0, SaleBill: saleBill}, nil
 }
 
-func (d *docmanagerSrv) SaveSaleBill(ctx context.Context, req *docmanagerModel.SaveSaleBillReq) (resp *docmanagerModel.SaveSaleBillResp, err error) {
+func (d *docManagerSrv) SaveSaleBill(ctx context.Context, req *docmanagerModel.SaveSaleBillReq) (resp *docmanagerModel.SaveSaleBillResp, err error) {
 	logger.LogInfo(d.lg, "RPC Req: Save sale bill")
 
 	if err = dao.InsertSaleBill(ctx, core.GetDB(), req.SaleBill); err != nil {
@@ -262,5 +268,5 @@ func (d *docmanagerSrv) SaveSaleBill(ctx context.Context, req *docmanagerModel.S
 	}
 
 	logger.LogInfo(d.lg, "RPC Resp: Save sale bill OK")
-	return &docmanagerModel.SaveSaleBillResp{Code: 0}
+	return &docmanagerModel.SaveSaleBillResp{Code: 0}, nil
 }

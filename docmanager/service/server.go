@@ -30,7 +30,7 @@ func GRPCServer(ctx context.Context) (daemon model.Daemon, err error) {
 		core.GetEtcdClient(),
 		*conf,
 		func(s *grpc.Server) {
-			docmanagerModel.RegisterDocmanagerServer(s, &docmanagerServer{lg: lg})
+			docmanagerModel.RegisterDocmanagerServer(s, &docManagerSrv{lg: lg})
 		},
 		grpc.KeepaliveParams(keepalive.ServerParameters{MaxConnectionIdle: conf.MaxConnectionIdle}),
 	)

@@ -95,7 +95,7 @@ func UpdateBarcodeSaleBill(ctx context.Context, db *mssqlx.DBs, barcodeID, saleB
 	return
 }
 
-func UpdateBarcodeStatus(ctx context.Context, db *mssqlx.DBs, barcodeID uint64, status int) (err error) {
+func UpdateBarcodeStatus(ctx context.Context, db *mssqlx.DBs, barcodeID uint64, status uint64) (err error) {
 	if db == nil {
 		return core.ErrDBObjNull
 	}
