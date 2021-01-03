@@ -31,6 +31,18 @@ module.exports = function(){
                fee: faker.commerce.price()
            }
        }),
+// phiếu tài liệu thanh lý
+       sale_form: _.times(60, function(n){
+        return {
+            id: n,
+            id_librarian : faker.random.number(60),
+            barcodes: [
+                {barcode : faker.phone.phoneNumberFormat(),doc_price:faker.commerce.price()},
+                {barcode : faker.phone.phoneNumberFormat(),doc_price:faker.commerce.price()}
+            ],
+            date: faker.date.recent()
+        }
+    }),
 // tài liệu đã mượn
        doc_returned: _.times(60, function(n){
         return {
