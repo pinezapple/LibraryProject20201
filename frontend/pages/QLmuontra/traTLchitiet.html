@@ -362,7 +362,7 @@
     let barcodeForm ='<div class="col"><div class="form-group"><label class="form-control-label">Mã vạch</label><input class="form-control" id="barcode" placeholder="Mã vạch" type="text" disabled ></div></div>'
     let docNameForm ='<div class="col"><div class="form-group"><label class="form-control-label">Tên tài liệu</label><input class="form-control" id="docName" placeholder="Tên tài liệu" type="text" disabled></div></div>'
     let authorForm ='<div class="col"><div class="form-group"><label class="form-control-label">Tác giả</label><input class="form-control" id="author" placeholder="Tác giả" type="text" disabled ></div></div> '
-    let docStatus = ' <div class="col"><div class="form-group"><label class="form-control-label">Tình trạng tài liệu</label><select class="form-control" id= "docStatus" data-toggle="select" title="Tình trạng tài liệu" data-live-search="true" data-live-search-placeholder="Select"><option value="0">Nguyên vẹn</option><option value="1">Hư hỏng</option></select></div></div>'
+    let docStatus = ' <div class="col"><div class="form-group"><label class="form-control-label">Tình trạng tài liệu</label><select class="form-control" id= "docStatus" data-toggle="select" title="Tình trạng tài liệu" data-live-search="true" data-live-search-placeholder="Select"><option value="0">Nguyên vẹn</option><option value="1">Hư hỏng</option><option value="2">Làm mất</option></select></div></div>'
     let fineDoc = ' <div class="col"><div class="form-group"><label class="form-control-label">Phí</label><input class="form-control" id="fine" placeholder="Tiền phạt" value="0" type="number"></div></div>'
 
     let range = document.createRange()
@@ -439,7 +439,7 @@
   });
     
     function subtotal(){
-      let currentFine = parseInt(obj.fee)
+      let currentFine = parseInt(fine)
       allDocFine = document.querySelectorAll("#fine")
       for (let i=0; i<allDocFine.length;i++){
         sub = parseInt(allDocFine[i].value)
@@ -471,9 +471,9 @@
       body:JSON.stringify({id: borrowId, docs:arr, borrow_status: borrowStatus})
     }
     ).then((res) => res.json())
-    .then(result => alert("Success", result))
-    .then(result => document.getElementById("borrowForm").reset())
-    .catch((err)=>alert("Something went wrong",err))
+    .then(result => alert("Đã cập nhật trả tài liệu", result))
+    .then(result =>  window.location.replace('traTL.html'))
+    .catch((err)=>{alert("Đã xảy ra lỗi",err); console.log(err)})
 
    }
   </script>

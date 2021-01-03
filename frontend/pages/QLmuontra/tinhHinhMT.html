@@ -234,6 +234,7 @@
                     <th>Người cho mượn</th>
                     <th>Tình trạng mượn</th>
                     <th>Phí</th>
+                    <th></th>
                   </tr>
                 </thead>
                 <tfoot>
@@ -244,13 +245,12 @@
                     <th>Người cho mượn</th>
                     <th>Tình trạng mượn</th>
                     <th>Phí</th>
+                    <th></th>
                   </tr>
                 </tfoot>
-               
               </table>
             </div>
           </div>
-          
         </div>
       </div>
       <!-- Footer -->
@@ -281,6 +281,7 @@
       </footer>
     </div>
   </div>
+  
   <!-- Argon Scripts -->
   <!-- Core -->
   <script src="../../assets/vendor/jquery/dist/jquery.min.js"></script>
@@ -331,13 +332,14 @@
       let librarian = `${form.librarian}`
       let status = `${form.borrow_status}` //return a number
       let fee = `${form.fee}`
+      let btn ='<button type="button" id="add" class="btn btn-secondary btn-sm">Chi tiết</button>'
       
       // replace number value of borrow form status
       let stage = status.toString()
       let borrowStatus = arr[stage][status]
 
       // push to array
-      data.push (borrowId,readerId,reader,librarian,borrowStatus,fee)
+      data.push (borrowId,readerId,reader,librarian,borrowStatus,fee,btn)
 
       // add to table
       table.row.add(data).draw()

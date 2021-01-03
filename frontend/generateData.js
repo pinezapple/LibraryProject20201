@@ -7,7 +7,7 @@ module.exports = function(){
        documents: _.times(60, function(n){
         return {
             id:n,
-            barcode : faker.phone.phoneNumberFormat(),
+            barcode : n,
             doc_name: faker.random.words(),
             doc_author: faker.name.findName(),
             doc_type: faker.commerce.color(),

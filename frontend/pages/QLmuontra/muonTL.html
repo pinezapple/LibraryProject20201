@@ -491,9 +491,9 @@
      
   }
   ).then((res) => res.json())
-  .then(result => alert("Success", result))
+  .then(result => alert("Đã tạo phiếu mượn thành công", result))
   .then(result => document.getElementById("borrowForm").reset())
-  .catch((err)=>alert("Something went wrong",err))
+  .catch((err)=>alert("Đã xảy ra lỗi",err))
 
   let div = document.querySelectorAll("#newRow")
   for (let j=0; j< div.length;j++){

@@ -378,10 +378,10 @@
                          
                               <label class="form-control-label">Thể loại</label>
                               <select class="form-control" id= "type" data-toggle="select" title="Thể loại" data-live-search="true" data-live-search-placeholder="Select">
-                                <option value ="0">Giáo trình</option>
-                                <option  value ="1">Tạp chí</option>
-                                <option value ="2">Sách tham khảo</option>
-                                <option value ="3">Sách nước ngoài</option>
+                                <option>Giáo trình</option>
+                                <option>Tạp chí</option>
+                                <option>Sách tham khảo</option>
+                                <option>Sách nước ngoài</option>
                               </select>
                         
                         </div>
@@ -474,6 +474,7 @@ fetch (url,
       let price = `${doc.doc_price}`
       let btn = '<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-form" id="edit">Chỉnh sửa</button><button type="button" class="btn btn-danger btn-sm"  data-toggle="sweet-alert" id="delete" >Xóa</button>'
       let statusData;
+
      if(status ==0){
       statusData = "Nguyên vẹn";
      }else if(status == 1){
@@ -481,6 +482,7 @@ fetch (url,
      }else{
       statusData ="Đang thanh lý";
      }
+    
       data.push (docId,barcode,docName,author,type,edition,publisher,statusData,price,btn)
       // add to table
       table.row.add(data).draw()
@@ -510,22 +512,13 @@ fetch (url,
       let status = data[7];
       let price = data[8];
       
+      
       if(status =="Nguyên vẹn"){
         status = "0";
      }else if(status == "Hư hỏng"){
       status = "1";
      }else if(status == "Đang thanh lý"){
       status = "2";
-     }
-
-     if(status =="Giáo trình"){
-        status = "0";
-     }else if(status == "Tạp chí"){
-      status = "1";
-     }else if(status == "Sách tham khảo"){
-      status = "2";
-     }else if(status == "Sách nước ngoài"){
-      status = "3";
      }
 
       // add data to input field
@@ -546,6 +539,7 @@ fetch (url,
     
 
     let id = parseInt(document.getElementById('docId').value,10);
+    let barcode = parseInt(document.getElementById('barcode').value,10);
     let name = document.getElementById('docName').value;
     let author = document.getElementById('author').value;
     let type = document.getElementById('type').value;
@@ -556,7 +550,7 @@ fetch (url,
 
     let url = 'http://localhost:3000/documents/'
 
-      fetch(url + id, 
+      fetch(url + barcode, 
         {
           method: 'PUT',
           credentials: "omit",
@@ -569,7 +563,7 @@ fetch (url,
      ).then((res) => res.json())
      .then(result => alert("Đã sửa thông tin tài liệu", result))
      .then(result => location.reload() )
-     .catch((err)=>alert("Đã xảy ra lỗi",err))
+     .catch((err)=>{alert("Đã xảy ra lỗi",err); console.log(err)})
     //  location.reload();
 
   })
@@ -584,7 +578,7 @@ fetch (url,
      
       // get data from table
       let data = table.row( $(this).parents('tr') ).data();
-      let docId =  data[0]
+      let barcode =  data[1]
       let url = 'http://localhost:3000/documents/'
 
       // sweet alert
@@ -599,7 +593,7 @@ fetch (url,
     }).then((result) => {
       if (result.value) {
         // delete in db
-        fetch( url + docId,
+        fetch( url + barcode,
         {
           method: 'DELETE',
           credentials: "omit",
@@ -620,7 +614,7 @@ fetch (url,
         .catch(error => console.log(error))
       }
     })
-     
+
     });
 
 
