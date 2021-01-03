@@ -346,3 +346,79 @@ func updateStatus(c echo.Context, request interface{}) (statusCode int, data int
 
 	return http.StatusOK, nil, lg, false, nil
 }
+
+func saveDocumentByBatch(c echo.Context, request interface{}) (statusCode int, data interface{}, lg *model.LogFormat, logResponse bool, err error) {
+	fmt.Println("in saveDocumentByBatch")
+	req := request.(*reqSaveDoc)
+	ctx := c.Request().Context()
+	lg = &model.LogFormat{
+		Source: c.Request().RemoteAddr,
+		Action: "saveDocumentByBatch",
+		Data:   req,
+	}
+
+	// search author ID
+	/*
+		authorID, err := dao.GetDocDAO.GetAuthorID(req.Author)
+		if err != nil {
+
+		}
+	*/
+
+	// search category ID
+	/*
+		catID, err := dao.GetDocDAO.GetCategoryID(req.Category)
+		if err != nil {
+
+		}
+	*/
+	// check if exist document, then create
+	/*
+		reqDoc := &docmanagerModel.Doc{
+			Name: req.DocName,
+			CategoryId: catID,
+		}
+
+		docID, err := dao.GetDocDAO().ExistOrCreateDocument(ctx, reqDoc)
+		if err != nil {
+
+		}
+	*/
+
+	// check if exist document version, then create
+	/*
+		reqDocVer := &docmanagerModel.DocVersion{
+			DocID: docID,
+			DocVer: req.Version,
+			Price: req.Price,
+			Publisher: req.Publisher,
+		}
+		docVer, err := dao.GetDocDAO.ExistOrCreateDocumentVersion(ctx, reqDocVer)
+		if err != nil {
+
+		}
+	*/
+
+	// create barcode
+	/*
+		var (
+			saveBarcodes = make([]docmanagerModel.Barcode, req.Number)
+		)
+		BarcodesID := sth.CreateBarcode(req.Number)
+		for i := range BarcodesID {
+			saveBarcodes[i] = &docmanagerModel.Barcode{
+			ID: BarcodesID[i],
+			DocVer: docVer,
+			Status: statusTrongKho,
+		}
+
+		for i := range saveBarcodes {
+			getShard()
+			send saveBarcodes rpc
+		}
+
+
+	*/
+
+	return http.StatusOK, nil, lg, false, nil
+}
