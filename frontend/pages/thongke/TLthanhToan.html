@@ -98,6 +98,9 @@
                    <li class="nav-item">
                      <a href="../../pages/QLtailieu/thongTinTL.html" class="nav-link">Thông tin tài liệu</a>
                    </li>
+                   <li class="nav-item">
+                    <a href="../../pages/QLtailieu/thanhLy.html" class="nav-link">Thanh lý tài liệu</a>
+                  </li>
                  </ul>
                </div>
              </li>
@@ -106,23 +109,25 @@
                  <i class="ni ni-align-left-2 text-default"></i>
                  <span class="nav-link-text">Thống kê</span>
                </a>
-               <li class="nav-item">
-                     <a href="../../pages/thongke/TLdaMuon.html" class="nav-link">Phiếu mượn</a>
-                   </li>
-                   <li class="nav-item">
-                     <a href="../../pages/thongke/TLthanhtoan.html" class="nav-link">Phiếu thanh lý</a>
-                   </li>
-                   <li class="nav-item">
-                     <a href="../../pages/thongke/TLthanhToanNhap.html" class="nav-link">Tài liệu nhập</a>
-                   </li>
-                   <li class="nav-item">
-                     <a href="../../pages/thongke/TLhuhong.html" class="nav-link">Tài liệu hư hỏng</a>
-                   </li>
-                   <li class="nav-item">
-                     <a href="../../pages/thongke/docGiaViPham.html" class="nav-link">Độc giả vi phạm</a>
-                   </li>
-                 </ul>
-               </div>
+               <div class="collapse" id="navbar-tables">
+                <ul class="nav nav-sm flex-column">
+                  <li class="nav-item">
+                    <a href="../../pages/thongke/TLdaMuon.html" class="nav-link">Phiếu mượn</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="../../pages/thongke/TLthanhtoan.html" class="nav-link">Phiếu thanh lý</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="../../pages/thongke/TLthanhToanNhap.html" class="nav-link">Tài liệu nhập</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="../../pages/thongke/TLhuhong.html" class="nav-link">Tài liệu hư hỏng</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="../../pages/thongke/docGiaViPham.html" class="nav-link">Độc giả vi phạm</a>
+                  </li>
+                </ul>
+              </div>
              </li>
            </ul>
            <!-- Divider -->
@@ -304,7 +309,7 @@
    <!-- Demo JS - remove this in your project -->
    <script src="../../assets/js/demo.min.js"></script>
    <script>
-     let url ='http://localhost:3000/doc_damaged'
+     let url ='http://localhost:3000/doc_bad'
      let table = $('#datatable-buttons').DataTable();
      fetch (url,  {
    method: 'GET',

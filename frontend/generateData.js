@@ -20,15 +20,19 @@ module.exports = function(){
         }
        }),
 // tài liệu bị hỏng
-       doc_damaged: _.times(60, function(n){
+       doc_bad: _.times(60, function(n){
            return {
+               id_sale: n,
+               sold_by : faker.name.findName(),
                id_doc:n,
                barcode : faker.phone.phoneNumberFormat(),
                doc_name: faker.random.words(),
+               doc_date : faker.date.recent(),
                doc_author: faker.name.findName(),
                librarian:faker.name.findName(),
                date: faker.date.recent(),
-               fee: faker.commerce.price()
+               fee: faker.commerce.price(),
+               total: faker.commerce.price()
            }
        }),
 // phiếu tài liệu thanh lý
@@ -96,6 +100,14 @@ module.exports = function(){
              'max': 2
          })
         }
-    })
+    }),
+// độc giả vi phạm
+    violated_user: _.times(60, function (n) {
+        return {
+          user_id: faker.random.number(60),
+          user_name: faker.name.findName(),
+          violate_time: n,
+        };
+      }),
     }       
 }
