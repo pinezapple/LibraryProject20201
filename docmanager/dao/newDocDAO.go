@@ -28,7 +28,7 @@ const (
 
 	sqlSelectAllPayment            = "SELECT * FROM payments"
 	sqlSelectPaymentByID           = "SELECT * FROM payments WHERE payments_id = ?"
-	sqlInsertPayment               = "INSERT INTO payments(payments_id, borrow_form_id, barcode_id, money) VALUES (?,?,?,?)"
+	sqlInsertPayment               = "INSERT INTO payments(payments_id, borrow_form_id, barcode_id, barcode_status, money) VALUES (?,?,?,?,?)"
 	sqlSelectPaymentByBorrowFormID = "SELECT * FROM payments WHERE borrow_form_id = ?"
 )
 
@@ -278,5 +278,138 @@ func UpdateBorrowFormStatus(ctx context.Context, db *mssqlx.DBs, borrowFormID ui
 }
 
 func SelectAllPayment(ctx context.Context, db *mssqlx.DBs) (result []*docmanagerModel.Payment, err error) {
+	if db == nil {
+		return nil, core.ErrDBObjNull
+	}
+
+	var tempResp []*model.PaymentDAOobj
+	err = db.SelectContext(ctx, &tempResp, sqlSelectAllPayment)
+	for i := 0; i < len(tempResp); i++ {
+		var barcode, barcodestatus, price []uint64
+
+		err = json.Unmarshal(tempResp[i].BarcodeID, &barcode)
+		if err != nil {
+			return nil, err
+		}
+		err = json.Unmarshal(tempResp[i].BarcodeStatus, &barcodestatus)
+		if err != nil {
+			return nil, err
+		}
+		err = json.Unmarshal(tempResp[i].Money, &price)
+		if err != nil {
+			return nil, err
+		}
+		tmp := &docmanagerModel.Payment{
+			ID:            tempResp[i].ID,
+			BorrowFormID:  tempResp[i].BorrowFormID,
+			BarcodeID:     barcode,
+			BarcodeStatus: barcodestatus,
+			Money:         price,
+			CreatedAt:     tempResp[i].CreatedAt,
+			UpdatedAt:     tempResp[i].UpdatedAt,
+		}
+		result = append(result, tmp)
+	}
+	return
+}
+
+func SelectPaymentByID(ctx context.Context, db *mssqlx.DBs, paymentsID uint64) (result *docmanagerModel.Payment, err error) {
+	if db == nil {
+		return nil, core.ErrDBObjNull
+	}
+
+	var tempResp = &model.PaymentDAOobj{}
+
+	err = db.GetContext(ctx, tempResp, sqlSelectPaymentByID, paymentsID)
+	if err != nil {
+		return nil, err
+	}
+
+	var barcode, barcodestatus, price []uint64
+	err = json.Unmarshal(tempResp.BarcodeID, &barcode)
+	if err != nil {
+		return nil, err
+	}
+	err = json.Unmarshal(tempResp.BarcodeStatus, &barcodestatus)
+	if err != nil {
+		return nil, err
+	}
+	err = json.Unmarshal(tempResp.Money, &price)
+	if err != nil {
+		return nil, err
+	}
+
+	result = &docmanagerModel.Payment{
+		ID:            tempResp.ID,
+		BorrowFormID:  tempResp.BorrowFormID,
+		BarcodeID:     barcode,
+		BarcodeStatus: barcodestatus,
+		Money:         price,
+		CreatedAt:     tempResp.CreatedAt,
+		UpdatedAt:     tempResp.UpdatedAt,
+	}
+
+	return
+}
+
+func SelectPaymentByBorrowFormID(ctx context.Context, db *mssqlx.DBs, borrowFormID uint64) (result *docmanagerModel.Payment, err error) {
+	if db == nil {
+		return nil, core.ErrDBObjNull
+	}
+
+	var tempResp = &model.PaymentDAOobj{}
+
+	err = db.GetContext(ctx, tempResp, sqlSelectPaymentByBorrowFormID, borrowFormID)
+	if err != nil {
+		return nil, err
+	}
+
+	var barcode, barcodestatus, price []uint64
+	err = json.Unmarshal(tempResp.BarcodeID, &barcode)
+	if err != nil {
+		return nil, err
+	}
+	err = json.Unmarshal(tempResp.BarcodeStatus, &barcodestatus)
+	if err != nil {
+		return nil, err
+	}
+	err = json.Unmarshal(tempResp.Money, &price)
+	if err != nil {
+		return nil, err
+	}
+
+	result = &docmanagerModel.Payment{
+		ID:            tempResp.ID,
+		BorrowFormID:  tempResp.BorrowFormID,
+		BarcodeID:     barcode,
+		BarcodeStatus: barcodestatus,
+		Money:         price,
+		CreatedAt:     tempResp.CreatedAt,
+		UpdatedAt:     tempResp.UpdatedAt,
+	}
+
+	return
+}
+
+func InsertPayment(ctx context.Context, db *mssqlx.DBs, payment *docmanagerModel.Payment) (err error) {
+	if db == nil {
+		return core.ErrDBObjNull
+	}
+
+	barcode, err := json.Marshal(payment.BarcodeID)
+	if err != nil {
+		return
+	}
+	barcodestatus, err := json.Marshal(payment.BarcodeStatus)
+	if err != nil {
+		return
+	}
+	money, err := json.Marshal(payment.Money)
+	if err != nil {
+		return
+	}
+
+	_, err = db.Exec(sqlInsertPayment, payment.ID, payment.BorrowFormID, barcode, barcodestatus, money)
+
 	return
 }
