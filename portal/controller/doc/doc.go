@@ -41,6 +41,16 @@ type reqSaveBorrowForm struct {
 	TTL    int32  `protobuf:"varint,6,opt,name=TTL,proto3" json:"ttl" db:"ttl"`
 }
 
+type reqSaveDoc struct {
+	DocName   string `json:"doc_name"`
+	Author    string `json:"author"`
+	Category  string `json:"category"`
+	Publisher string `json:"publisher"`
+	Version   string `json:"version"`
+	Number    uint64 `json:"number"`
+	Price     uint64 `json:"price"`
+}
+
 func SelectAllBarcode(c echo.Context) (erro error) {
 	return
 }
@@ -90,6 +100,7 @@ func SelectSaleBillByID(c echo.Context) (erro error) {
 }
 
 func SaveDocumentByBatch(c echo.Context) (erro error) {
+	fmt.Println("In Save Document By Batch")
 	return
 }
 

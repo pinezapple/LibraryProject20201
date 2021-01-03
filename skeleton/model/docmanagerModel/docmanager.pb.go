@@ -110,10 +110,11 @@ type DocVersion struct {
 	DocVer         string      `protobuf:"bytes,1,opt,name=DocVer,proto3" json:"doc_ver" db:"doc_ver"`
 	DocID          uint64      `protobuf:"varint,2,opt,name=DocID,proto3" json:"doc_id" db:"doc_id"`
 	Version        uint64      `protobuf:"varint,3,opt,name=Version,proto3" json:"version" db:"version"`
-	DocDescription string      `protobuf:"bytes,4,opt,name=DocDescription,proto3" json:"doc_description" db:"doc_description"`
-	Price          uint64      `protobuf:"varint,5,opt,name=Price,proto3" json:"price" db:"price"`
-	CreatedAt      *model.Time `protobuf:"bytes,6,opt,name=Created_at,json=CreatedAt,proto3" json:"created_at" db:"created_at"`
-	UpdatedAt      *model.Time `protobuf:"bytes,7,opt,name=Updated_at,json=UpdatedAt,proto3" json:"updated_at" db:"updated_at"`
+	Price          uint64      `protobuf:"varint,4,opt,name=Price,proto3" json:"price" db:"price"`
+	DocDescription string      `protobuf:"bytes,5,opt,name=DocDescription,proto3" json:"doc_description" db:"doc_description"`
+	Publisher      string      `protobuf:"bytes,6,opt,name=Publisher,proto3" json:"publisher" db:"publisher"`
+	CreatedAt      *model.Time `protobuf:"bytes,7,opt,name=Created_at,json=CreatedAt,proto3" json:"created_at" db:"created_at"`
+	UpdatedAt      *model.Time `protobuf:"bytes,8,opt,name=Updated_at,json=UpdatedAt,proto3" json:"updated_at" db:"updated_at"`
 }
 
 func (m *DocVersion) Reset()         { *m = DocVersion{} }
@@ -170,6 +171,13 @@ func (m *DocVersion) GetVersion() uint64 {
 	return 0
 }
 
+func (m *DocVersion) GetPrice() uint64 {
+	if m != nil {
+		return m.Price
+	}
+	return 0
+}
+
 func (m *DocVersion) GetDocDescription() string {
 	if m != nil {
 		return m.DocDescription
@@ -177,11 +185,11 @@ func (m *DocVersion) GetDocDescription() string {
 	return ""
 }
 
-func (m *DocVersion) GetPrice() uint64 {
+func (m *DocVersion) GetPublisher() string {
 	if m != nil {
-		return m.Price
+		return m.Publisher
 	}
-	return 0
+	return ""
 }
 
 func (m *DocVersion) GetCreatedAt() *model.Time {
@@ -639,6 +647,102 @@ func (m *SelectAllBarcodeResp) GetBarcodes() []*Barcode {
 	return nil
 }
 
+type SelectAllAvailableBarcodeReq struct {
+}
+
+func (m *SelectAllAvailableBarcodeReq) Reset()         { *m = SelectAllAvailableBarcodeReq{} }
+func (m *SelectAllAvailableBarcodeReq) String() string { return proto.CompactTextString(m) }
+func (*SelectAllAvailableBarcodeReq) ProtoMessage()    {}
+func (*SelectAllAvailableBarcodeReq) Descriptor() ([]byte, []int) {
+	return fileDescriptor_3bc93e03df457931, []int{8}
+}
+func (m *SelectAllAvailableBarcodeReq) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *SelectAllAvailableBarcodeReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_SelectAllAvailableBarcodeReq.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *SelectAllAvailableBarcodeReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SelectAllAvailableBarcodeReq.Merge(m, src)
+}
+func (m *SelectAllAvailableBarcodeReq) XXX_Size() int {
+	return m.Size()
+}
+func (m *SelectAllAvailableBarcodeReq) XXX_DiscardUnknown() {
+	xxx_messageInfo_SelectAllAvailableBarcodeReq.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_SelectAllAvailableBarcodeReq proto.InternalMessageInfo
+
+type SelectAllAvailableBarcodeResp struct {
+	Code     int32      `protobuf:"varint,1,opt,name=Code,proto3" json:"Code,omitempty"`
+	Message  string     `protobuf:"bytes,2,opt,name=Message,proto3" json:"Message,omitempty"`
+	Barcodes []*Barcode `protobuf:"bytes,3,rep,name=Barcodes,proto3" json:"Barcodes,omitempty"`
+}
+
+func (m *SelectAllAvailableBarcodeResp) Reset()         { *m = SelectAllAvailableBarcodeResp{} }
+func (m *SelectAllAvailableBarcodeResp) String() string { return proto.CompactTextString(m) }
+func (*SelectAllAvailableBarcodeResp) ProtoMessage()    {}
+func (*SelectAllAvailableBarcodeResp) Descriptor() ([]byte, []int) {
+	return fileDescriptor_3bc93e03df457931, []int{9}
+}
+func (m *SelectAllAvailableBarcodeResp) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *SelectAllAvailableBarcodeResp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_SelectAllAvailableBarcodeResp.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *SelectAllAvailableBarcodeResp) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SelectAllAvailableBarcodeResp.Merge(m, src)
+}
+func (m *SelectAllAvailableBarcodeResp) XXX_Size() int {
+	return m.Size()
+}
+func (m *SelectAllAvailableBarcodeResp) XXX_DiscardUnknown() {
+	xxx_messageInfo_SelectAllAvailableBarcodeResp.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_SelectAllAvailableBarcodeResp proto.InternalMessageInfo
+
+func (m *SelectAllAvailableBarcodeResp) GetCode() int32 {
+	if m != nil {
+		return m.Code
+	}
+	return 0
+}
+
+func (m *SelectAllAvailableBarcodeResp) GetMessage() string {
+	if m != nil {
+		return m.Message
+	}
+	return ""
+}
+
+func (m *SelectAllAvailableBarcodeResp) GetBarcodes() []*Barcode {
+	if m != nil {
+		return m.Barcodes
+	}
+	return nil
+}
+
 type SelectAllSellingBarcodeReq struct {
 }
 
@@ -646,7 +750,7 @@ func (m *SelectAllSellingBarcodeReq) Reset()         { *m = SelectAllSellingBarc
 func (m *SelectAllSellingBarcodeReq) String() string { return proto.CompactTextString(m) }
 func (*SelectAllSellingBarcodeReq) ProtoMessage()    {}
 func (*SelectAllSellingBarcodeReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{8}
+	return fileDescriptor_3bc93e03df457931, []int{10}
 }
 func (m *SelectAllSellingBarcodeReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -685,7 +789,7 @@ func (m *SelectAllSellingBarcodeResp) Reset()         { *m = SelectAllSellingBar
 func (m *SelectAllSellingBarcodeResp) String() string { return proto.CompactTextString(m) }
 func (*SelectAllSellingBarcodeResp) ProtoMessage()    {}
 func (*SelectAllSellingBarcodeResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{9}
+	return fileDescriptor_3bc93e03df457931, []int{11}
 }
 func (m *SelectAllSellingBarcodeResp) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -742,7 +846,7 @@ func (m *SelectAllDamageBarcodeReq) Reset()         { *m = SelectAllDamageBarcod
 func (m *SelectAllDamageBarcodeReq) String() string { return proto.CompactTextString(m) }
 func (*SelectAllDamageBarcodeReq) ProtoMessage()    {}
 func (*SelectAllDamageBarcodeReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{10}
+	return fileDescriptor_3bc93e03df457931, []int{12}
 }
 func (m *SelectAllDamageBarcodeReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -781,7 +885,7 @@ func (m *SelectAllDamageBarcodeResp) Reset()         { *m = SelectAllDamageBarco
 func (m *SelectAllDamageBarcodeResp) String() string { return proto.CompactTextString(m) }
 func (*SelectAllDamageBarcodeResp) ProtoMessage()    {}
 func (*SelectAllDamageBarcodeResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{11}
+	return fileDescriptor_3bc93e03df457931, []int{13}
 }
 func (m *SelectAllDamageBarcodeResp) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -839,7 +943,7 @@ func (m *SelectBarcodeByIDReq) Reset()         { *m = SelectBarcodeByIDReq{} }
 func (m *SelectBarcodeByIDReq) String() string { return proto.CompactTextString(m) }
 func (*SelectBarcodeByIDReq) ProtoMessage()    {}
 func (*SelectBarcodeByIDReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{12}
+	return fileDescriptor_3bc93e03df457931, []int{14}
 }
 func (m *SelectBarcodeByIDReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -885,7 +989,7 @@ func (m *SelectBarcodeByIDResp) Reset()         { *m = SelectBarcodeByIDResp{} }
 func (m *SelectBarcodeByIDResp) String() string { return proto.CompactTextString(m) }
 func (*SelectBarcodeByIDResp) ProtoMessage()    {}
 func (*SelectBarcodeByIDResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{13}
+	return fileDescriptor_3bc93e03df457931, []int{15}
 }
 func (m *SelectBarcodeByIDResp) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -943,7 +1047,7 @@ func (m *SaveBarcodeReq) Reset()         { *m = SaveBarcodeReq{} }
 func (m *SaveBarcodeReq) String() string { return proto.CompactTextString(m) }
 func (*SaveBarcodeReq) ProtoMessage()    {}
 func (*SaveBarcodeReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{14}
+	return fileDescriptor_3bc93e03df457931, []int{16}
 }
 func (m *SaveBarcodeReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -988,7 +1092,7 @@ func (m *SaveBarcodeResp) Reset()         { *m = SaveBarcodeResp{} }
 func (m *SaveBarcodeResp) String() string { return proto.CompactTextString(m) }
 func (*SaveBarcodeResp) ProtoMessage()    {}
 func (*SaveBarcodeResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{15}
+	return fileDescriptor_3bc93e03df457931, []int{17}
 }
 func (m *SaveBarcodeResp) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1039,7 +1143,7 @@ func (m *UpdateBarcodeReq) Reset()         { *m = UpdateBarcodeReq{} }
 func (m *UpdateBarcodeReq) String() string { return proto.CompactTextString(m) }
 func (*UpdateBarcodeReq) ProtoMessage()    {}
 func (*UpdateBarcodeReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{16}
+	return fileDescriptor_3bc93e03df457931, []int{18}
 }
 func (m *UpdateBarcodeReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1084,7 +1188,7 @@ func (m *UpdateBarcodeResp) Reset()         { *m = UpdateBarcodeResp{} }
 func (m *UpdateBarcodeResp) String() string { return proto.CompactTextString(m) }
 func (*UpdateBarcodeResp) ProtoMessage()    {}
 func (*UpdateBarcodeResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{17}
+	return fileDescriptor_3bc93e03df457931, []int{19}
 }
 func (m *UpdateBarcodeResp) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1135,7 +1239,7 @@ func (m *DeleteBarcodeReq) Reset()         { *m = DeleteBarcodeReq{} }
 func (m *DeleteBarcodeReq) String() string { return proto.CompactTextString(m) }
 func (*DeleteBarcodeReq) ProtoMessage()    {}
 func (*DeleteBarcodeReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{18}
+	return fileDescriptor_3bc93e03df457931, []int{20}
 }
 func (m *DeleteBarcodeReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1180,7 +1284,7 @@ func (m *DeleteBarcodeResp) Reset()         { *m = DeleteBarcodeResp{} }
 func (m *DeleteBarcodeResp) String() string { return proto.CompactTextString(m) }
 func (*DeleteBarcodeResp) ProtoMessage()    {}
 func (*DeleteBarcodeResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{19}
+	return fileDescriptor_3bc93e03df457931, []int{21}
 }
 func (m *DeleteBarcodeResp) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1230,7 +1334,7 @@ func (m *SelectAllBorrowFormReq) Reset()         { *m = SelectAllBorrowFormReq{}
 func (m *SelectAllBorrowFormReq) String() string { return proto.CompactTextString(m) }
 func (*SelectAllBorrowFormReq) ProtoMessage()    {}
 func (*SelectAllBorrowFormReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{20}
+	return fileDescriptor_3bc93e03df457931, []int{22}
 }
 func (m *SelectAllBorrowFormReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1269,7 +1373,7 @@ func (m *SelectAllBorrowFormResp) Reset()         { *m = SelectAllBorrowFormResp
 func (m *SelectAllBorrowFormResp) String() string { return proto.CompactTextString(m) }
 func (*SelectAllBorrowFormResp) ProtoMessage()    {}
 func (*SelectAllBorrowFormResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{21}
+	return fileDescriptor_3bc93e03df457931, []int{23}
 }
 func (m *SelectAllBorrowFormResp) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1326,7 +1430,7 @@ func (m *SelectAllUnReturnBorrowFormReq) Reset()         { *m = SelectAllUnRetur
 func (m *SelectAllUnReturnBorrowFormReq) String() string { return proto.CompactTextString(m) }
 func (*SelectAllUnReturnBorrowFormReq) ProtoMessage()    {}
 func (*SelectAllUnReturnBorrowFormReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{22}
+	return fileDescriptor_3bc93e03df457931, []int{24}
 }
 func (m *SelectAllUnReturnBorrowFormReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1365,7 +1469,7 @@ func (m *SelectAllUnReturnBorrowFormResp) Reset()         { *m = SelectAllUnRetu
 func (m *SelectAllUnReturnBorrowFormResp) String() string { return proto.CompactTextString(m) }
 func (*SelectAllUnReturnBorrowFormResp) ProtoMessage()    {}
 func (*SelectAllUnReturnBorrowFormResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{23}
+	return fileDescriptor_3bc93e03df457931, []int{25}
 }
 func (m *SelectAllUnReturnBorrowFormResp) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1423,7 +1527,7 @@ func (m *SelectBorrowFormByIDReq) Reset()         { *m = SelectBorrowFormByIDReq
 func (m *SelectBorrowFormByIDReq) String() string { return proto.CompactTextString(m) }
 func (*SelectBorrowFormByIDReq) ProtoMessage()    {}
 func (*SelectBorrowFormByIDReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{24}
+	return fileDescriptor_3bc93e03df457931, []int{26}
 }
 func (m *SelectBorrowFormByIDReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1469,7 +1573,7 @@ func (m *SelectBorrowFormByIDResp) Reset()         { *m = SelectBorrowFormByIDRe
 func (m *SelectBorrowFormByIDResp) String() string { return proto.CompactTextString(m) }
 func (*SelectBorrowFormByIDResp) ProtoMessage()    {}
 func (*SelectBorrowFormByIDResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{25}
+	return fileDescriptor_3bc93e03df457931, []int{27}
 }
 func (m *SelectBorrowFormByIDResp) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1527,7 +1631,7 @@ func (m *SaveBorrowFormReq) Reset()         { *m = SaveBorrowFormReq{} }
 func (m *SaveBorrowFormReq) String() string { return proto.CompactTextString(m) }
 func (*SaveBorrowFormReq) ProtoMessage()    {}
 func (*SaveBorrowFormReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{26}
+	return fileDescriptor_3bc93e03df457931, []int{28}
 }
 func (m *SaveBorrowFormReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1572,7 +1676,7 @@ func (m *SaveBorrowFormResp) Reset()         { *m = SaveBorrowFormResp{} }
 func (m *SaveBorrowFormResp) String() string { return proto.CompactTextString(m) }
 func (*SaveBorrowFormResp) ProtoMessage()    {}
 func (*SaveBorrowFormResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{27}
+	return fileDescriptor_3bc93e03df457931, []int{29}
 }
 func (m *SaveBorrowFormResp) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1623,7 +1727,7 @@ func (m *DeleteBorrowFormReq) Reset()         { *m = DeleteBorrowFormReq{} }
 func (m *DeleteBorrowFormReq) String() string { return proto.CompactTextString(m) }
 func (*DeleteBorrowFormReq) ProtoMessage()    {}
 func (*DeleteBorrowFormReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{28}
+	return fileDescriptor_3bc93e03df457931, []int{30}
 }
 func (m *DeleteBorrowFormReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1668,7 +1772,7 @@ func (m *DeleteBorrowFormResp) Reset()         { *m = DeleteBorrowFormResp{} }
 func (m *DeleteBorrowFormResp) String() string { return proto.CompactTextString(m) }
 func (*DeleteBorrowFormResp) ProtoMessage()    {}
 func (*DeleteBorrowFormResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{29}
+	return fileDescriptor_3bc93e03df457931, []int{31}
 }
 func (m *DeleteBorrowFormResp) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1719,7 +1823,7 @@ func (m *SelectAllPaymentReq) Reset()         { *m = SelectAllPaymentReq{} }
 func (m *SelectAllPaymentReq) String() string { return proto.CompactTextString(m) }
 func (*SelectAllPaymentReq) ProtoMessage()    {}
 func (*SelectAllPaymentReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{30}
+	return fileDescriptor_3bc93e03df457931, []int{32}
 }
 func (m *SelectAllPaymentReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1758,7 +1862,7 @@ func (m *SelectAllPaymentResp) Reset()         { *m = SelectAllPaymentResp{} }
 func (m *SelectAllPaymentResp) String() string { return proto.CompactTextString(m) }
 func (*SelectAllPaymentResp) ProtoMessage()    {}
 func (*SelectAllPaymentResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{31}
+	return fileDescriptor_3bc93e03df457931, []int{33}
 }
 func (m *SelectAllPaymentResp) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1816,7 +1920,7 @@ func (m *SelectPaymentByIDReq) Reset()         { *m = SelectPaymentByIDReq{} }
 func (m *SelectPaymentByIDReq) String() string { return proto.CompactTextString(m) }
 func (*SelectPaymentByIDReq) ProtoMessage()    {}
 func (*SelectPaymentByIDReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{32}
+	return fileDescriptor_3bc93e03df457931, []int{34}
 }
 func (m *SelectPaymentByIDReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1862,7 +1966,7 @@ func (m *SelectPaymentByIDResp) Reset()         { *m = SelectPaymentByIDResp{} }
 func (m *SelectPaymentByIDResp) String() string { return proto.CompactTextString(m) }
 func (*SelectPaymentByIDResp) ProtoMessage()    {}
 func (*SelectPaymentByIDResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{33}
+	return fileDescriptor_3bc93e03df457931, []int{35}
 }
 func (m *SelectPaymentByIDResp) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1920,7 +2024,7 @@ func (m *SelectPaymentByBorrowFormIDReq) Reset()         { *m = SelectPaymentByB
 func (m *SelectPaymentByBorrowFormIDReq) String() string { return proto.CompactTextString(m) }
 func (*SelectPaymentByBorrowFormIDReq) ProtoMessage()    {}
 func (*SelectPaymentByBorrowFormIDReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{34}
+	return fileDescriptor_3bc93e03df457931, []int{36}
 }
 func (m *SelectPaymentByBorrowFormIDReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1966,7 +2070,7 @@ func (m *SelectPaymentByBorrowFormIDResp) Reset()         { *m = SelectPaymentBy
 func (m *SelectPaymentByBorrowFormIDResp) String() string { return proto.CompactTextString(m) }
 func (*SelectPaymentByBorrowFormIDResp) ProtoMessage()    {}
 func (*SelectPaymentByBorrowFormIDResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{35}
+	return fileDescriptor_3bc93e03df457931, []int{37}
 }
 func (m *SelectPaymentByBorrowFormIDResp) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -2024,7 +2128,7 @@ func (m *SavePaymentReq) Reset()         { *m = SavePaymentReq{} }
 func (m *SavePaymentReq) String() string { return proto.CompactTextString(m) }
 func (*SavePaymentReq) ProtoMessage()    {}
 func (*SavePaymentReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{36}
+	return fileDescriptor_3bc93e03df457931, []int{38}
 }
 func (m *SavePaymentReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -2069,7 +2173,7 @@ func (m *SavePaymentResp) Reset()         { *m = SavePaymentResp{} }
 func (m *SavePaymentResp) String() string { return proto.CompactTextString(m) }
 func (*SavePaymentResp) ProtoMessage()    {}
 func (*SavePaymentResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{37}
+	return fileDescriptor_3bc93e03df457931, []int{39}
 }
 func (m *SavePaymentResp) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -2119,7 +2223,7 @@ func (m *SelectAllSaleBillReq) Reset()         { *m = SelectAllSaleBillReq{} }
 func (m *SelectAllSaleBillReq) String() string { return proto.CompactTextString(m) }
 func (*SelectAllSaleBillReq) ProtoMessage()    {}
 func (*SelectAllSaleBillReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{38}
+	return fileDescriptor_3bc93e03df457931, []int{40}
 }
 func (m *SelectAllSaleBillReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -2158,7 +2262,7 @@ func (m *SelectAllSaleBillResp) Reset()         { *m = SelectAllSaleBillResp{} }
 func (m *SelectAllSaleBillResp) String() string { return proto.CompactTextString(m) }
 func (*SelectAllSaleBillResp) ProtoMessage()    {}
 func (*SelectAllSaleBillResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{39}
+	return fileDescriptor_3bc93e03df457931, []int{41}
 }
 func (m *SelectAllSaleBillResp) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -2216,7 +2320,7 @@ func (m *SelectSaleBillByIDReq) Reset()         { *m = SelectSaleBillByIDReq{} }
 func (m *SelectSaleBillByIDReq) String() string { return proto.CompactTextString(m) }
 func (*SelectSaleBillByIDReq) ProtoMessage()    {}
 func (*SelectSaleBillByIDReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{40}
+	return fileDescriptor_3bc93e03df457931, []int{42}
 }
 func (m *SelectSaleBillByIDReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -2262,7 +2366,7 @@ func (m *SelectSaleBillByIDResp) Reset()         { *m = SelectSaleBillByIDResp{}
 func (m *SelectSaleBillByIDResp) String() string { return proto.CompactTextString(m) }
 func (*SelectSaleBillByIDResp) ProtoMessage()    {}
 func (*SelectSaleBillByIDResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{41}
+	return fileDescriptor_3bc93e03df457931, []int{43}
 }
 func (m *SelectSaleBillByIDResp) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -2320,7 +2424,7 @@ func (m *SaveSaleBillReq) Reset()         { *m = SaveSaleBillReq{} }
 func (m *SaveSaleBillReq) String() string { return proto.CompactTextString(m) }
 func (*SaveSaleBillReq) ProtoMessage()    {}
 func (*SaveSaleBillReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{42}
+	return fileDescriptor_3bc93e03df457931, []int{44}
 }
 func (m *SaveSaleBillReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -2365,7 +2469,7 @@ func (m *SaveSaleBillResp) Reset()         { *m = SaveSaleBillResp{} }
 func (m *SaveSaleBillResp) String() string { return proto.CompactTextString(m) }
 func (*SaveSaleBillResp) ProtoMessage()    {}
 func (*SaveSaleBillResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{43}
+	return fileDescriptor_3bc93e03df457931, []int{45}
 }
 func (m *SaveSaleBillResp) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -2416,7 +2520,7 @@ func (m *DeleteSaleBillReq) Reset()         { *m = DeleteSaleBillReq{} }
 func (m *DeleteSaleBillReq) String() string { return proto.CompactTextString(m) }
 func (*DeleteSaleBillReq) ProtoMessage()    {}
 func (*DeleteSaleBillReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{44}
+	return fileDescriptor_3bc93e03df457931, []int{46}
 }
 func (m *DeleteSaleBillReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -2461,7 +2565,7 @@ func (m *DeleteSaleBillResp) Reset()         { *m = DeleteSaleBillResp{} }
 func (m *DeleteSaleBillResp) String() string { return proto.CompactTextString(m) }
 func (*DeleteSaleBillResp) ProtoMessage()    {}
 func (*DeleteSaleBillResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{45}
+	return fileDescriptor_3bc93e03df457931, []int{47}
 }
 func (m *DeleteSaleBillResp) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -2513,6 +2617,8 @@ func init() {
 	proto.RegisterType((*SaleBill)(nil), "model.SaleBill")
 	proto.RegisterType((*SelectAllBarcodeReq)(nil), "model.SelectAllBarcodeReq")
 	proto.RegisterType((*SelectAllBarcodeResp)(nil), "model.SelectAllBarcodeResp")
+	proto.RegisterType((*SelectAllAvailableBarcodeReq)(nil), "model.SelectAllAvailableBarcodeReq")
+	proto.RegisterType((*SelectAllAvailableBarcodeResp)(nil), "model.SelectAllAvailableBarcodeResp")
 	proto.RegisterType((*SelectAllSellingBarcodeReq)(nil), "model.SelectAllSellingBarcodeReq")
 	proto.RegisterType((*SelectAllSellingBarcodeResp)(nil), "model.SelectAllSellingBarcodeResp")
 	proto.RegisterType((*SelectAllDamageBarcodeReq)(nil), "model.SelectAllDamageBarcodeReq")
@@ -2558,117 +2664,121 @@ func init() {
 }
 
 var fileDescriptor_3bc93e03df457931 = []byte{
-	// 1748 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xcc, 0x59, 0x4f, 0x6f, 0xdb, 0x46,
-	0x16, 0x37, 0x2d, 0xc9, 0xb2, 0x9f, 0x1c, 0xc7, 0x1e, 0x27, 0xb6, 0x22, 0x27, 0xa2, 0x33, 0x8b,
-	0x2c, 0x1c, 0x04, 0xf1, 0xdf, 0x0d, 0x82, 0x04, 0xd9, 0xcd, 0x5a, 0x66, 0xb2, 0x2b, 0x6c, 0x9c,
-	0x4d, 0xe9, 0xa4, 0x05, 0x0a, 0x14, 0x2a, 0x45, 0x4e, 0x54, 0xb5, 0x94, 0xc8, 0x90, 0xb4, 0x0b,
-	0x07, 0x2d, 0xfa, 0xe7, 0xd6, 0x9e, 0xfa, 0x31, 0xfa, 0x09, 0x8a, 0x1e, 0x7b, 0x6b, 0x80, 0x5e,
-	0x72, 0xec, 0x89, 0x48, 0x9c, 0x9b, 0x4e, 0x85, 0x4f, 0xbd, 0x14, 0x28, 0x38, 0x9c, 0x21, 0x87,
-	0x94, 0xe4, 0x48, 0x4e, 0x1a, 0xe4, 0xe6, 0x79, 0xf3, 0x7e, 0x6f, 0xde, 0xbc, 0xdf, 0x7b, 0xf3,
-	0x1e, 0x65, 0xa8, 0x36, 0x9a, 0xde, 0x47, 0xbb, 0xf5, 0x65, 0xdd, 0x6a, 0xad, 0xd8, 0xcd, 0x36,
-	0x79, 0xac, 0xd9, 0xb6, 0x49, 0x56, 0xee, 0x34, 0xeb, 0x8e, 0xe6, 0xec, 0xdf, 0x73, 0xac, 0x8f,
-	0x89, 0xee, 0xad, 0xaf, 0xae, 0xaf, 0xae, 0xad, 0xb8, 0x9f, 0x10, 0x93, 0x78, 0x56, 0x7b, 0xa5,
-	0x65, 0x19, 0xc4, 0x5c, 0x31, 0x2c, 0xbd, 0xa5, 0xb5, 0xb5, 0x06, 0x71, 0x96, 0x6d, 0xc7, 0xf2,
-	0x2c, 0x94, 0xa3, 0xf2, 0xd2, 0x65, 0xc1, 0x62, 0xc3, 0x6a, 0x58, 0x2b, 0x74, 0xb7, 0xbe, 0xfb,
-	0x90, 0xae, 0xe8, 0x82, 0xfe, 0x15, 0xa2, 0x4a, 0x5b, 0xc7, 0x76, 0xc0, 0x6b, 0xb6, 0x48, 0x68,
-	0x04, 0xff, 0x3c, 0x0a, 0x19, 0xc5, 0xd2, 0xd1, 0x45, 0x18, 0xad, 0x2a, 0x45, 0x69, 0x51, 0x5a,
-	0xca, 0x56, 0xce, 0x74, 0x7c, 0x79, 0xac, 0x69, 0xd4, 0x0c, 0x4b, 0x3f, 0xf4, 0xe5, 0x82, 0x51,
-	0xbf, 0x8e, 0xc3, 0x15, 0x56, 0x47, 0xab, 0x0a, 0x5a, 0x83, 0xec, 0x5d, 0xad, 0x45, 0x8a, 0xa3,
-	0x8b, 0xd2, 0xd2, 0x44, 0xe5, 0x5c, 0xc7, 0x97, 0xc7, 0x0d, 0x4b, 0xaf, 0xb5, 0xb5, 0x16, 0x39,
-	0xf4, 0xe5, 0x13, 0x81, 0x3a, 0x5f, 0x63, 0x95, 0xaa, 0x22, 0x05, 0x0a, 0x5b, 0x9a, 0x47, 0x1a,
-	0x96, 0xb3, 0x5f, 0x6b, 0x1a, 0xc5, 0x0c, 0x3d, 0xe6, 0x6f, 0x1d, 0x5f, 0x2e, 0xe8, 0xb1, 0xf8,
-	0xd0, 0x97, 0xa7, 0x03, 0xb0, 0x20, 0xc2, 0x2a, 0x70, 0x5c, 0xd5, 0x40, 0xdb, 0x00, 0x5b, 0x0e,
-	0xd1, 0x3c, 0x62, 0xd4, 0x34, 0xaf, 0x98, 0x5d, 0x94, 0x96, 0x0a, 0xeb, 0x85, 0x65, 0x7a, 0xa5,
-	0xe5, 0xfb, 0xcd, 0x16, 0xa9, 0x9c, 0xef, 0xf8, 0x32, 0xe8, 0x91, 0xca, 0xa1, 0x2f, 0x9f, 0xa4,
-	0x06, 0x23, 0x09, 0x56, 0x27, 0x98, 0x85, 0x4d, 0x2f, 0x30, 0xf7, 0xc0, 0x36, 0xb8, 0xb9, 0x5c,
-	0x1f, 0x73, 0xbb, 0x91, 0x0a, 0x37, 0x17, 0x4b, 0xb0, 0x3a, 0xc1, 0x2c, 0x6c, 0x7a, 0xf8, 0x97,
-	0x0c, 0x80, 0x62, 0xe9, 0xef, 0x12, 0xc7, 0x6d, 0x5a, 0x6d, 0xb4, 0x01, 0x63, 0xe1, 0x8a, 0x06,
-	0x75, 0xa2, 0xb2, 0xd0, 0xf1, 0xe5, 0x7c, 0x10, 0x97, 0x3d, 0xe2, 0x1c, 0xfa, 0xf2, 0x24, 0x0f,
-	0xd3, 0x1e, 0x71, 0xb0, 0xca, 0x54, 0xd1, 0x0a, 0xe4, 0x14, 0x4b, 0xaf, 0x2a, 0x34, 0xb6, 0x8c,
-	0x88, 0x40, 0x89, 0x06, 0xa7, 0xc0, 0x21, 0x41, 0x5c, 0x42, 0x3d, 0x74, 0x05, 0xf2, 0xec, 0x40,
-	0x16, 0x54, 0x7a, 0xcc, 0x5e, 0x28, 0xe2, 0xc7, 0xb0, 0x25, 0x56, 0xb9, 0x2e, 0xda, 0x81, 0x29,
-	0xc5, 0xd2, 0x15, 0xe2, 0xea, 0x4e, 0xd3, 0xf6, 0x02, 0x74, 0x96, 0x3a, 0x79, 0xa9, 0x13, 0xdc,
-	0xd1, 0xd2, 0x6b, 0x46, 0xbc, 0x75, 0xe8, 0xcb, 0xa7, 0xf8, 0xc9, 0x82, 0x18, 0xab, 0x29, 0x13,
-	0xe8, 0x32, 0xe4, 0xee, 0x39, 0x4d, 0x9d, 0xd0, 0x50, 0x66, 0x2b, 0xf3, 0x1d, 0x5f, 0xce, 0xd9,
-	0x81, 0xe0, 0xd0, 0x97, 0x21, 0xb0, 0x40, 0x17, 0x58, 0x0d, 0xb5, 0x52, 0x6c, 0x8e, 0xbd, 0x5e,
-	0x36, 0xf3, 0xaf, 0xca, 0xe6, 0x37, 0x19, 0xc8, 0x57, 0x34, 0x47, 0xb7, 0x0c, 0x82, 0xd6, 0x84,
-	0xda, 0xa0, 0x56, 0xea, 0xe1, 0x46, 0x48, 0x0b, 0xb5, 0x12, 0x4b, 0x78, 0x8d, 0x8c, 0xed, 0x78,
-	0x9a, 0xb7, 0xeb, 0x8a, 0x4c, 0xba, 0x54, 0xc2, 0x99, 0x0c, 0x57, 0x58, 0x65, 0x8a, 0xe8, 0x16,
-	0xc0, 0x8e, 0x66, 0x92, 0x4a, 0xd3, 0x34, 0xab, 0x0a, 0xe5, 0x23, 0x5b, 0xb9, 0xd0, 0xf1, 0xe5,
-	0x49, 0x57, 0x33, 0x49, 0xad, 0xde, 0x34, 0xcd, 0xf0, 0xbc, 0x19, 0x0a, 0x16, 0x64, 0x58, 0x15,
-	0x80, 0x42, 0xde, 0xe5, 0x06, 0xcf, 0xbb, 0xb7, 0x9b, 0x8b, 0x4e, 0x06, 0xf2, 0xf7, 0xb4, 0xfd,
-	0x16, 0x69, 0x7b, 0xdd, 0x5c, 0xd8, 0xe1, 0x86, 0xc0, 0x45, 0x2c, 0x09, 0xb9, 0xd8, 0x86, 0xc9,
-	0x8a, 0xe5, 0x38, 0xd6, 0xa7, 0xb7, 0x2d, 0xa7, 0x15, 0xd5, 0xd6, 0xc5, 0x8e, 0x2f, 0x4f, 0xd5,
-	0xa9, 0xbc, 0xf6, 0xd0, 0x72, 0x5a, 0xa1, 0x81, 0x59, 0x4a, 0x66, 0x42, 0x8a, 0xd5, 0x04, 0x1c,
-	0xdd, 0x84, 0x09, 0x96, 0x18, 0x55, 0xa5, 0x98, 0x59, 0xcc, 0x0c, 0x96, 0x14, 0x31, 0x06, 0xfd,
-	0x1f, 0x4e, 0xb0, 0x05, 0x4b, 0x91, 0x2c, 0x35, 0x12, 0x3a, 0xc4, 0x20, 0x51, 0xaa, 0xcc, 0x8a,
-	0x86, 0x78, 0xca, 0x24, 0xf1, 0x41, 0xe1, 0x6d, 0x5b, 0x6d, 0xb2, 0x5f, 0xcc, 0x51, 0x43, 0xb4,
-	0xf0, 0x5a, 0x81, 0x80, 0x17, 0x1e, 0x5d, 0x60, 0x35, 0xd4, 0x7a, 0xcb, 0xc9, 0xfe, 0x21, 0x0b,
-	0x10, 0xc7, 0x1b, 0x5d, 0x13, 0xf8, 0x1e, 0x82, 0xb2, 0x80, 0xf7, 0xff, 0x40, 0x21, 0xec, 0x85,
-	0x4d, 0xad, 0x1d, 0xd1, 0x4e, 0x2b, 0xca, 0xe4, 0x62, 0xa1, 0xa2, 0x44, 0x19, 0x56, 0x45, 0xa4,
-	0x50, 0xcc, 0x99, 0x41, 0x8b, 0x39, 0x91, 0x24, 0xd9, 0x63, 0x24, 0xc9, 0x1d, 0x98, 0xd8, 0xf1,
-	0x34, 0xc7, 0x0b, 0x22, 0xd8, 0xb7, 0x37, 0xb9, 0x81, 0x46, 0x2d, 0xe8, 0xe6, 0xdc, 0x5a, 0x2c,
-	0xc1, 0x6a, 0x6c, 0x00, 0x29, 0x90, 0xbf, 0xd5, 0x36, 0xa8, 0xad, 0x1e, 0x7c, 0xd3, 0x16, 0x4e,
-	0xda, 0x06, 0xb7, 0x44, 0x5b, 0x38, 0x5f, 0x63, 0x95, 0x43, 0x53, 0x89, 0x93, 0x7f, 0xbd, 0x89,
-	0x33, 0xfe, 0xaa, 0x89, 0xf3, 0xe5, 0x28, 0x8c, 0xf3, 0x77, 0x10, 0x5d, 0x11, 0xd2, 0x66, 0xc0,
-	0x47, 0x74, 0x34, 0x5d, 0xdb, 0xa3, 0xc7, 0xa0, 0x2d, 0xea, 0x81, 0x99, 0xb8, 0x14, 0x07, 0xee,
-	0x81, 0xaf, 0x3a, 0xd1, 0xe0, 0xd3, 0x30, 0xbb, 0x43, 0x4c, 0xa2, 0x7b, 0x9b, 0xa6, 0xc9, 0x7c,
-	0x52, 0xc9, 0x23, 0xbc, 0x07, 0xa7, 0xba, 0xc5, 0xae, 0x8d, 0x10, 0x64, 0xb7, 0x2c, 0x83, 0xd0,
-	0x30, 0xe5, 0x54, 0xfa, 0x37, 0x2a, 0x42, 0x7e, 0x9b, 0xb8, 0xae, 0xd6, 0x60, 0xf3, 0x9d, 0xca,
-	0x97, 0x68, 0x15, 0xc6, 0x19, 0xd8, 0xa5, 0xb7, 0x2b, 0xac, 0x4f, 0x31, 0x4f, 0x99, 0xb8, 0x92,
-	0x7d, 0xe2, 0xcb, 0x92, 0x1a, 0x69, 0xe1, 0xb3, 0x50, 0x8a, 0xce, 0xdd, 0x21, 0xa6, 0xd9, 0x6c,
-	0x37, 0x04, 0xaf, 0x3e, 0x87, 0x85, 0xbe, 0xbb, 0x6f, 0xc0, 0xb9, 0x05, 0x38, 0x13, 0x1d, 0xaf,
-	0x68, 0x2d, 0xad, 0x41, 0x04, 0xdf, 0x3e, 0x13, 0x3c, 0x4f, 0x6d, 0xbe, 0x01, 0xd7, 0xfe, 0xc1,
-	0xf9, 0xe2, 0x0a, 0xfb, 0x55, 0x45, 0x25, 0x8f, 0xd0, 0x59, 0x31, 0x3b, 0x69, 0x6e, 0x0b, 0xa9,
-	0x87, 0x77, 0xe1, 0x74, 0x0f, 0xd4, 0xd0, 0xee, 0x2e, 0x47, 0x73, 0x0f, 0x7d, 0xed, 0xfa, 0x79,
-	0xcb, 0x95, 0xf0, 0x75, 0x98, 0xda, 0xd1, 0xf6, 0x84, 0xe0, 0xa1, 0xa5, 0xd8, 0x82, 0xd4, 0xcb,
-	0x42, 0x8c, 0xbd, 0x09, 0x27, 0x13, 0xd8, 0x61, 0x9d, 0xc5, 0x37, 0x60, 0x3a, 0x7c, 0x00, 0x8e,
-	0x75, 0xfc, 0x26, 0xcc, 0xa4, 0xd0, 0x43, 0x3b, 0xb0, 0x0a, 0xd3, 0x4a, 0xf0, 0x69, 0x25, 0x3a,
-	0x70, 0x34, 0x4d, 0x9b, 0x30, 0x93, 0x42, 0x0c, 0x7d, 0x68, 0x11, 0xe6, 0xe2, 0x7a, 0x8e, 0x5a,
-	0x65, 0x90, 0xb7, 0x5f, 0x4b, 0x30, 0xdf, 0x73, 0x6b, 0xe8, 0x34, 0xb8, 0x06, 0x85, 0x18, 0xcf,
-	0x13, 0x77, 0x86, 0x47, 0x32, 0xda, 0x61, 0xd9, 0x20, 0xea, 0xe2, 0x45, 0x28, 0x47, 0x3e, 0x3c,
-	0x68, 0xab, 0xc4, 0xdb, 0x75, 0xda, 0x49, 0x37, 0xbf, 0x95, 0x40, 0x3e, 0x52, 0xe5, 0x4d, 0xba,
-	0xfb, 0x4f, 0x1e, 0x32, 0x41, 0x8d, 0x15, 0x1c, 0x4e, 0x4d, 0x8e, 0x21, 0x99, 0x09, 0x19, 0xfe,
-	0x4a, 0x82, 0x62, 0x6f, 0xfc, 0xd0, 0x97, 0xb8, 0xca, 0x27, 0x9f, 0x60, 0x8c, 0x61, 0xd5, 0xd7,
-	0xf7, 0x0e, 0x82, 0x2a, 0xbe, 0x0d, 0x33, 0xb4, 0x8e, 0xc4, 0x20, 0xa3, 0xb5, 0x84, 0x35, 0xa9,
-	0x8f, 0xb5, 0x84, 0x9d, 0x0a, 0xa0, 0xb4, 0x9d, 0xa1, 0x93, 0xf3, 0x1a, 0xcc, 0xb2, 0xfc, 0x4e,
-	0x78, 0x33, 0x48, 0x28, 0x15, 0x38, 0xd5, 0x0d, 0x1d, 0xda, 0x01, 0xb1, 0x09, 0xb2, 0xaf, 0x86,
-	0x74, 0x13, 0x8c, 0xc4, 0xc7, 0x79, 0xcc, 0x19, 0x38, 0xfd, 0x98, 0x33, 0x31, 0x7f, 0xcc, 0xb9,
-	0x56, 0xfc, 0x98, 0x73, 0x85, 0xf8, 0x31, 0x67, 0x92, 0xf8, 0x95, 0x88, 0x04, 0xf1, 0x63, 0x9e,
-	0x40, 0x1d, 0xe7, 0x31, 0x67, 0x06, 0x52, 0x8f, 0x79, 0xd2, 0x5b, 0xae, 0x84, 0x15, 0x5e, 0xba,
-	0xd1, 0xb1, 0x22, 0x41, 0x83, 0xf2, 0xf8, 0x05, 0xaf, 0xee, 0x3e, 0x56, 0xfe, 0xf2, 0x6b, 0xb0,
-	0x9e, 0x14, 0xb3, 0x1f, 0x34, 0x05, 0x6e, 0x41, 0xea, 0x65, 0x21, 0xc6, 0xb2, 0x9e, 0x74, 0xec,
-	0x14, 0xc1, 0x73, 0x42, 0xa2, 0xf1, 0x79, 0x34, 0x48, 0xc0, 0xc7, 0x9c, 0xd2, 0x84, 0x7c, 0xe8,
-	0x58, 0x6c, 0xc0, 0x04, 0x47, 0xf3, 0x14, 0x3c, 0xc9, 0xee, 0xc2, 0xe5, 0x2c, 0x1c, 0xb1, 0x1e,
-	0xbe, 0xca, 0xcf, 0x8e, 0x54, 0x58, 0x16, 0x96, 0x13, 0x3f, 0x3a, 0x84, 0x64, 0x0a, 0x12, 0xbc,
-	0xcf, 0x5b, 0x4d, 0x12, 0x38, 0xb4, 0xd7, 0x6b, 0xf1, 0x6c, 0xce, 0x28, 0xec, 0xe3, 0x74, 0xa4,
-	0x86, 0xff, 0x15, 0x12, 0x21, 0x84, 0x10, 0x5d, 0x12, 0xac, 0x48, 0x3d, 0xad, 0x08, 0xf8, 0x7f,
-	0xc3, 0x74, 0x12, 0x3f, 0x34, 0x93, 0x1b, 0xbc, 0x55, 0x8b, 0x3e, 0xbc, 0x2c, 0x62, 0x15, 0x40,
-	0x69, 0xd0, 0xb0, 0x07, 0xaf, 0xff, 0x01, 0xf4, 0xa7, 0x44, 0xf6, 0x23, 0x31, 0xfa, 0x1f, 0x4c,
-	0xa7, 0xe7, 0x77, 0x54, 0xe2, 0x17, 0xef, 0x9e, 0xf7, 0x4b, 0x0b, 0x7d, 0xf7, 0x5c, 0x1b, 0x7d,
-	0x28, 0x4c, 0x08, 0xc9, 0xb1, 0x1b, 0x9d, 0x4f, 0xe3, 0xba, 0x86, 0xf6, 0x12, 0x7e, 0x99, 0x8a,
-	0x6b, 0xa3, 0x0f, 0x84, 0xf1, 0x24, 0x31, 0x3c, 0xa3, 0xc5, 0x34, 0x3a, 0x3d, 0x78, 0x97, 0xce,
-	0xbf, 0x44, 0xc3, 0xb5, 0xd1, 0x5d, 0x98, 0xe9, 0x9a, 0x73, 0x51, 0xf2, 0xca, 0xc9, 0xb9, 0xb9,
-	0x74, 0xb6, 0xff, 0xa6, 0x6b, 0xa3, 0x1b, 0x50, 0x10, 0x86, 0x50, 0x74, 0x3a, 0xca, 0x28, 0x71,
-	0xa8, 0x2d, 0xcd, 0xf5, 0x12, 0xbb, 0x36, 0xaa, 0xc0, 0x89, 0xc4, 0x0c, 0x89, 0xe6, 0x99, 0x62,
-	0x7a, 0x2e, 0x2d, 0x15, 0x7b, 0x6f, 0xb8, 0x36, 0xba, 0x2f, 0x7e, 0xb6, 0xc5, 0x3f, 0x7d, 0x9c,
-	0xeb, 0xa2, 0x51, 0xec, 0xa8, 0xa5, 0xf2, 0x51, 0xdb, 0xae, 0x8d, 0x4c, 0xe1, 0xfb, 0xaa, 0x7b,
-	0xc6, 0x42, 0x17, 0xd2, 0xf0, 0x9e, 0xa3, 0x5a, 0xe9, 0xef, 0x83, 0xa8, 0xb9, 0x36, 0x7a, 0x2f,
-	0xfa, 0x66, 0x49, 0x4c, 0x41, 0x28, 0xe9, 0x65, 0xd7, 0x88, 0x55, 0x92, 0x8f, 0xdc, 0x77, 0x6d,
-	0x74, 0x8b, 0x7d, 0x5f, 0xc4, 0x9e, 0x17, 0x45, 0x2a, 0x12, 0xce, 0x9e, 0xe9, 0xb3, 0xe3, 0xda,
-	0x89, 0x1a, 0xe2, 0xbf, 0x25, 0x76, 0xd5, 0x50, 0xdc, 0x30, 0xba, 0x6b, 0x48, 0x6c, 0x08, 0x51,
-	0x0a, 0x0a, 0xdd, 0x39, 0x95, 0x82, 0xc9, 0x6e, 0x9f, 0x4a, 0xc1, 0x74, 0x53, 0x8f, 0xa8, 0xea,
-	0xd9, 0x30, 0x53, 0x54, 0xf5, 0x6b, 0xcd, 0x29, 0xaa, 0xfa, 0xf7, 0x5e, 0x96, 0xf0, 0x3c, 0x0a,
-	0x62, 0xc2, 0x0b, 0x01, 0x98, 0xeb, 0x25, 0x16, 0xef, 0x2e, 0xb4, 0x31, 0xd4, 0x15, 0x2d, 0xe1,
-	0xc5, 0x4c, 0xdd, 0x3d, 0xdd, 0xfd, 0xde, 0x01, 0xd4, 0xdd, 0x61, 0x50, 0x12, 0x93, 0xea, 0x5a,
-	0xa5, 0x73, 0x47, 0xec, 0xba, 0x36, 0xba, 0x09, 0x93, 0xe2, 0xcb, 0x8f, 0xc4, 0xab, 0x88, 0x8e,
-	0xcd, 0xf7, 0x94, 0xbb, 0x76, 0xe5, 0xf1, 0xb3, 0xe7, 0x65, 0xe9, 0xb7, 0xe7, 0x65, 0xe9, 0xf7,
-	0xe7, 0x65, 0xe9, 0xfb, 0x83, 0xb2, 0xf4, 0xe3, 0x41, 0x59, 0xfa, 0xe9, 0xa0, 0x3c, 0xf2, 0xe4,
-	0xa0, 0x2c, 0x3d, 0x3d, 0x28, 0x4b, 0xcf, 0x0e, 0xca, 0xd2, 0x77, 0x2f, 0xca, 0x23, 0x4f, 0x5f,
-	0x94, 0x47, 0x7e, 0x7d, 0x51, 0x1e, 0x79, 0xff, 0xbf, 0xaf, 0xe1, 0x9f, 0x81, 0xdb, 0xc1, 0xba,
-	0x3e, 0x46, 0xff, 0x2f, 0xb7, 0xf1, 0x67, 0x00, 0x00, 0x00, 0xff, 0xff, 0xa5, 0x52, 0xc8, 0x89,
-	0x5f, 0x1c, 0x00, 0x00,
+	// 1819 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xcc, 0x59, 0x4f, 0x6f, 0xdb, 0xc8,
+	0x15, 0x37, 0x2d, 0xc9, 0xb2, 0x9e, 0x1c, 0xc7, 0x1e, 0x27, 0xb6, 0x22, 0xdb, 0xa4, 0x33, 0xdb,
+	0x2d, 0xbc, 0x58, 0xac, 0xff, 0x76, 0xb1, 0xc8, 0x62, 0xb7, 0xa9, 0x65, 0x66, 0x5b, 0xa1, 0xeb,
+	0xad, 0x4b, 0xef, 0xb6, 0x40, 0x81, 0x42, 0xa5, 0xa8, 0x89, 0x96, 0x2d, 0x25, 0x32, 0x24, 0xed,
+	0xc2, 0x41, 0x8b, 0xb4, 0xbd, 0x35, 0xa7, 0x7e, 0x8c, 0x7e, 0x82, 0xa2, 0xc7, 0xde, 0x9a, 0x63,
+	0x8e, 0x3d, 0x11, 0x89, 0x83, 0x5e, 0x74, 0x2a, 0x74, 0xea, 0xb1, 0xe0, 0x70, 0x86, 0x1c, 0x52,
+	0x92, 0x6d, 0x39, 0xae, 0x91, 0x9b, 0xe6, 0xcd, 0xfb, 0xbd, 0x79, 0xf3, 0xfe, 0x0f, 0x05, 0xf5,
+	0xb6, 0xe9, 0x7f, 0x7b, 0xdc, 0xdc, 0x30, 0xec, 0xce, 0xa6, 0x63, 0x76, 0xc9, 0x53, 0xdd, 0x71,
+	0x2c, 0xb2, 0xf9, 0xa5, 0xd9, 0x74, 0x75, 0xf7, 0xf4, 0xd0, 0xb5, 0x7f, 0x4d, 0x0c, 0x7f, 0x67,
+	0x6b, 0x67, 0x6b, 0x7b, 0xd3, 0xfb, 0x0d, 0xb1, 0x88, 0x6f, 0x77, 0x37, 0x3b, 0x76, 0x8b, 0x58,
+	0x9b, 0x2d, 0xdb, 0xe8, 0xe8, 0x5d, 0xbd, 0x4d, 0xdc, 0x0d, 0xc7, 0xb5, 0x7d, 0x1b, 0x15, 0x28,
+	0xbd, 0xfa, 0x91, 0x20, 0xb1, 0x6d, 0xb7, 0xed, 0x4d, 0xba, 0xdb, 0x3c, 0x7e, 0x4c, 0x57, 0x74,
+	0x41, 0x7f, 0x45, 0xa8, 0xea, 0xfe, 0x95, 0x15, 0xf0, 0xcd, 0x0e, 0x89, 0x84, 0xe0, 0x7f, 0x4e,
+	0x42, 0x4e, 0xb5, 0x0d, 0xf4, 0x01, 0x4c, 0xd6, 0xd5, 0x8a, 0xb4, 0x26, 0xad, 0xe7, 0x6b, 0xf7,
+	0x7a, 0x81, 0x32, 0x65, 0xb6, 0x1a, 0x2d, 0xdb, 0xe8, 0x07, 0x4a, 0xb9, 0xd5, 0xfc, 0x14, 0x47,
+	0x2b, 0xac, 0x4d, 0xd6, 0x55, 0xb4, 0x0d, 0xf9, 0xaf, 0xf4, 0x0e, 0xa9, 0x4c, 0xae, 0x49, 0xeb,
+	0xa5, 0xda, 0x6a, 0x2f, 0x50, 0xa6, 0x5b, 0xb6, 0xd1, 0xe8, 0xea, 0x1d, 0xd2, 0x0f, 0x94, 0x5b,
+	0x21, 0x3b, 0x5f, 0x63, 0x8d, 0xb2, 0x22, 0x15, 0xca, 0xfb, 0xba, 0x4f, 0xda, 0xb6, 0x7b, 0xda,
+	0x30, 0x5b, 0x95, 0x1c, 0x3d, 0xe6, 0xbd, 0x5e, 0xa0, 0x94, 0x8d, 0x84, 0xdc, 0x0f, 0x94, 0xb9,
+	0x10, 0x2c, 0x90, 0xb0, 0x06, 0x1c, 0x57, 0x6f, 0xa1, 0x03, 0x80, 0x7d, 0x97, 0xe8, 0x3e, 0x69,
+	0x35, 0x74, 0xbf, 0x92, 0x5f, 0x93, 0xd6, 0xcb, 0x3b, 0xe5, 0x0d, 0x7a, 0xa5, 0x8d, 0xaf, 0xcd,
+	0x0e, 0xa9, 0xdd, 0xef, 0x05, 0x0a, 0x18, 0x31, 0x4b, 0x3f, 0x50, 0x6e, 0x53, 0x81, 0x31, 0x05,
+	0x6b, 0x25, 0x26, 0x61, 0xcf, 0x0f, 0xc5, 0x7d, 0xe3, 0xb4, 0xb8, 0xb8, 0xc2, 0x08, 0x71, 0xc7,
+	0x31, 0x0b, 0x17, 0x97, 0x50, 0xb0, 0x56, 0x62, 0x12, 0xf6, 0x7c, 0xfc, 0x3c, 0x0f, 0xa0, 0xda,
+	0xc6, 0xcf, 0x88, 0xeb, 0x99, 0x76, 0x17, 0xed, 0xc2, 0x54, 0xb4, 0xa2, 0x46, 0x2d, 0xd5, 0x96,
+	0x7b, 0x81, 0x52, 0x0c, 0xed, 0x72, 0x42, 0xdc, 0x7e, 0xa0, 0xcc, 0x70, 0x33, 0x9d, 0x10, 0x17,
+	0x6b, 0x8c, 0x15, 0x6d, 0x42, 0x41, 0xb5, 0x8d, 0xba, 0x4a, 0x6d, 0xcb, 0x1c, 0x11, 0x32, 0x51,
+	0xe3, 0x94, 0x39, 0x24, 0xb4, 0x4b, 0xc4, 0x87, 0x3e, 0x86, 0x22, 0x3b, 0x90, 0x19, 0x95, 0x1e,
+	0x73, 0x12, 0x91, 0xf8, 0x31, 0x6c, 0x89, 0x35, 0xce, 0x8b, 0x3e, 0x82, 0xc2, 0xa1, 0x6b, 0x1a,
+	0x84, 0x1a, 0x31, 0x5f, 0x5b, 0xea, 0x05, 0x4a, 0xc1, 0x09, 0x09, 0xfd, 0x40, 0x81, 0x10, 0x42,
+	0x17, 0x58, 0x8b, 0xb8, 0xd0, 0x11, 0xcc, 0xaa, 0xb6, 0xa1, 0x12, 0xcf, 0x70, 0x4d, 0xc7, 0x0f,
+	0x0f, 0x2b, 0xd0, 0x3b, 0x7d, 0xd8, 0x0b, 0x4d, 0x62, 0x1b, 0x8d, 0x56, 0xb2, 0xd5, 0x0f, 0x94,
+	0x3b, 0x5c, 0x51, 0x81, 0x8c, 0xb5, 0x8c, 0x08, 0xf4, 0x39, 0x94, 0x0e, 0x8f, 0x9b, 0x96, 0xe9,
+	0x7d, 0x4b, 0xdc, 0xca, 0x14, 0x95, 0xa7, 0xf4, 0x02, 0xa5, 0xe4, 0x70, 0x62, 0x3f, 0x50, 0x66,
+	0xa9, 0x2e, 0x9c, 0x80, 0xb5, 0x04, 0x91, 0x09, 0x86, 0xe2, 0xf5, 0x06, 0xc3, 0xf4, 0xdb, 0x06,
+	0xc3, 0x9f, 0x73, 0x50, 0xac, 0xe9, 0xae, 0x61, 0xb7, 0x08, 0xda, 0x16, 0x52, 0x8b, 0x4a, 0x69,
+	0x46, 0x1b, 0x91, 0x57, 0xa9, 0x94, 0x84, 0xc2, 0x53, 0x6c, 0xea, 0xc8, 0xd7, 0xfd, 0x63, 0x4f,
+	0x0c, 0x04, 0x8f, 0x52, 0x78, 0x20, 0x44, 0x2b, 0xac, 0x31, 0x46, 0xf4, 0x08, 0xe0, 0x48, 0xb7,
+	0x48, 0xcd, 0xb4, 0xac, 0xba, 0xca, 0xfc, 0xfa, 0x7e, 0x2f, 0x50, 0x66, 0x3c, 0xdd, 0x22, 0x8d,
+	0xa6, 0x69, 0x59, 0xd1, 0x79, 0xf3, 0x14, 0x2c, 0xd0, 0xb0, 0x26, 0x00, 0x85, 0xb0, 0x2d, 0x5c,
+	0x3e, 0x6c, 0xd3, 0xbe, 0x98, 0xba, 0x5e, 0x5f, 0x14, 0xdf, 0xd6, 0x17, 0xbd, 0x1c, 0x14, 0x0f,
+	0xf5, 0xd3, 0x0e, 0xe9, 0xfa, 0x83, 0xbe, 0x70, 0xa2, 0x0d, 0xc1, 0x17, 0x09, 0x25, 0xf2, 0xc5,
+	0x01, 0xcc, 0xd4, 0x6c, 0xd7, 0xb5, 0x7f, 0xfb, 0x85, 0xed, 0x76, 0xe2, 0xd4, 0xfc, 0xa0, 0x17,
+	0x28, 0xb3, 0x4d, 0x4a, 0x6f, 0x3c, 0xb6, 0xdd, 0x4e, 0x24, 0x60, 0x81, 0x3a, 0x33, 0x45, 0xc5,
+	0x5a, 0x0a, 0x8e, 0x1e, 0x42, 0x89, 0x05, 0x46, 0x5d, 0xad, 0xe4, 0xd6, 0x72, 0x97, 0x0b, 0x8a,
+	0x04, 0x83, 0x7e, 0x02, 0xb7, 0xd8, 0x82, 0x85, 0x48, 0x9e, 0x0a, 0x89, 0x14, 0x62, 0x90, 0x38,
+	0x54, 0x16, 0x44, 0x41, 0x3c, 0x64, 0xd2, 0xf8, 0xb0, 0x18, 0x1c, 0xd8, 0x5d, 0x72, 0x5a, 0x29,
+	0x50, 0x41, 0xb4, 0x18, 0x74, 0x42, 0x02, 0x2f, 0x06, 0x74, 0x81, 0xb5, 0x88, 0xeb, 0x1d, 0x77,
+	0xf6, 0xdf, 0xf2, 0x00, 0x89, 0xbd, 0xd1, 0x03, 0xc1, 0xdf, 0x63, 0xb8, 0x2c, 0xf4, 0xfb, 0x0f,
+	0xa1, 0x1c, 0xb5, 0x52, 0x53, 0xef, 0xc6, 0x6e, 0xa7, 0x19, 0x65, 0x71, 0xb2, 0x90, 0x51, 0x22,
+	0x0d, 0x6b, 0x22, 0x52, 0x48, 0xe6, 0xdc, 0x65, 0x93, 0x39, 0x15, 0x24, 0xf9, 0x2b, 0x04, 0xc9,
+	0x97, 0x50, 0x3a, 0xf2, 0x75, 0xd7, 0x0f, 0x2d, 0x38, 0xb2, 0xb5, 0x79, 0x21, 0x47, 0x23, 0x1c,
+	0x06, 0xb8, 0xb4, 0x84, 0x82, 0xb5, 0x44, 0x00, 0x52, 0xa1, 0xf8, 0xa8, 0xdb, 0xa2, 0xb2, 0x86,
+	0xf8, 0x9b, 0x4e, 0x00, 0xa4, 0xdb, 0xe2, 0x92, 0xe8, 0x04, 0xc0, 0xd7, 0x58, 0xe3, 0xd0, 0x77,
+	0xbc, 0x62, 0xff, 0x61, 0x12, 0xa6, 0x79, 0x1d, 0x44, 0x1f, 0x0b, 0x61, 0x73, 0xc9, 0x22, 0x3a,
+	0x99, 0xcd, 0xed, 0xc9, 0x2b, 0xb8, 0x2d, 0xee, 0xcb, 0xb9, 0x24, 0x15, 0xcf, 0xe9, 0xcb, 0xd7,
+	0x3b, 0x10, 0xe1, 0xbb, 0xb0, 0x70, 0x44, 0x2c, 0x62, 0xf8, 0x7b, 0x96, 0xc5, 0x74, 0xd2, 0xc8,
+	0x13, 0x7c, 0x02, 0x77, 0x06, 0xc9, 0x9e, 0x83, 0x10, 0xe4, 0xf7, 0xed, 0x16, 0xa1, 0x66, 0x2a,
+	0x68, 0xf4, 0x37, 0xaa, 0x40, 0xf1, 0x80, 0x78, 0x9e, 0xde, 0x66, 0xe3, 0xa1, 0xc6, 0x97, 0x68,
+	0x0b, 0xa6, 0x19, 0xd8, 0xa3, 0xb7, 0x2b, 0xef, 0xcc, 0x32, 0x4d, 0x19, 0xb9, 0x96, 0x7f, 0x11,
+	0x28, 0x92, 0x16, 0x73, 0x61, 0x19, 0x56, 0xe2, 0x73, 0xf7, 0x4e, 0x74, 0xd3, 0xd2, 0x9b, 0x16,
+	0x11, 0xf4, 0x7a, 0x06, 0xab, 0xe7, 0xec, 0xdf, 0x80, 0x82, 0x2b, 0x50, 0x8d, 0x15, 0x38, 0x22,
+	0x96, 0x65, 0x76, 0xdb, 0x82, 0x7a, 0xbf, 0x87, 0xe5, 0x91, 0xbb, 0x37, 0xa0, 0xdc, 0x32, 0xdc,
+	0x8b, 0x8f, 0x57, 0xf5, 0x8e, 0xde, 0x16, 0x4d, 0xf7, 0x3b, 0x41, 0xf3, 0xcc, 0xe6, 0x0d, 0xa8,
+	0xf6, 0x3d, 0x1e, 0x50, 0x9c, 0xe1, 0xb4, 0xae, 0x6a, 0xe4, 0x09, 0x5a, 0x11, 0xd3, 0x87, 0x26,
+	0x9f, 0x90, 0x1b, 0xf8, 0x18, 0xee, 0x0e, 0x41, 0x8d, 0xad, 0xee, 0x46, 0x3c, 0x98, 0xd1, 0x72,
+	0x3c, 0x4a, 0x5b, 0xce, 0x84, 0x3f, 0x85, 0xd9, 0x23, 0xfd, 0x44, 0x30, 0x1e, 0x5a, 0x4f, 0x24,
+	0x48, 0xc3, 0x24, 0x24, 0xd8, 0x87, 0x70, 0x3b, 0x85, 0x1d, 0x57, 0x59, 0xfc, 0x19, 0xcc, 0x45,
+	0x15, 0xea, 0x4a, 0xc7, 0xef, 0xc1, 0x7c, 0x06, 0x3d, 0xb6, 0x02, 0x5b, 0x30, 0xa7, 0x86, 0x4f,
+	0x47, 0x51, 0x81, 0xf3, 0xdd, 0xb4, 0x07, 0xf3, 0x19, 0xc4, 0xd8, 0x87, 0x56, 0x60, 0x31, 0x29,
+	0x38, 0x71, 0x2f, 0x0f, 0xe3, 0xf6, 0x4f, 0x12, 0x2c, 0x0d, 0xdd, 0x1a, 0x3b, 0x0c, 0x1e, 0x40,
+	0x39, 0xc1, 0xf3, 0xc0, 0x9d, 0xe7, 0x96, 0x8c, 0x77, 0x58, 0x34, 0x88, 0xbc, 0x78, 0x0d, 0xe4,
+	0x58, 0x87, 0x6f, 0xba, 0x1a, 0xf1, 0x8f, 0xdd, 0x6e, 0x5a, 0xcd, 0xe7, 0x12, 0x28, 0xe7, 0xb2,
+	0xdc, 0xa4, 0xba, 0x9f, 0x73, 0x93, 0x09, 0x6c, 0x2c, 0xe1, 0x70, 0x66, 0xb4, 0x8d, 0x9c, 0x99,
+	0xa2, 0xe1, 0x3f, 0x4a, 0x50, 0x19, 0x8e, 0x1f, 0xfb, 0x12, 0x9f, 0xf0, 0xd1, 0x2c, 0x9c, 0xb3,
+	0x58, 0xf6, 0x8d, 0xbc, 0x83, 0xc0, 0x8a, 0xbf, 0x80, 0x79, 0x9a, 0x47, 0xa2, 0x91, 0xd1, 0x76,
+	0x4a, 0x9a, 0x34, 0x42, 0x5a, 0x4a, 0x4e, 0x0d, 0x50, 0x56, 0xce, 0xd8, 0xc1, 0xf9, 0x00, 0x16,
+	0x58, 0x7c, 0xa7, 0xb4, 0xb9, 0x8c, 0x29, 0x55, 0xb8, 0x33, 0x08, 0x1d, 0x5b, 0x01, 0xb1, 0x4b,
+	0xb3, 0x67, 0x4d, 0xb6, 0x4b, 0xc7, 0xe4, 0xab, 0x14, 0x73, 0x06, 0xce, 0x16, 0x73, 0x46, 0xe6,
+	0xc5, 0x9c, 0x73, 0x25, 0xc5, 0x9c, 0x33, 0x24, 0xc5, 0x9c, 0x51, 0x92, 0x2a, 0x11, 0x13, 0x92,
+	0x62, 0x9e, 0x42, 0x5d, 0xa5, 0x98, 0x33, 0x01, 0x99, 0x62, 0x9e, 0xd6, 0x96, 0x33, 0x61, 0x95,
+	0xa7, 0x6e, 0x7c, 0xac, 0xe8, 0xa0, 0xcb, 0xfa, 0xf1, 0x19, 0xcf, 0xee, 0x11, 0x52, 0xfe, 0xef,
+	0xd7, 0x60, 0x3d, 0x29, 0xf1, 0x7e, 0xd8, 0x14, 0xb8, 0x04, 0x69, 0x98, 0x84, 0x04, 0xcb, 0x7a,
+	0xd2, 0x95, 0x43, 0x04, 0x2f, 0x0a, 0x81, 0xc6, 0x07, 0xe6, 0x30, 0x00, 0x9f, 0x72, 0x97, 0xa6,
+	0xe8, 0x63, 0xdb, 0x62, 0x17, 0x4a, 0x1c, 0xcd, 0x43, 0xf0, 0x36, 0xbb, 0x0b, 0xa7, 0x33, 0x73,
+	0x24, 0x7c, 0xf8, 0x13, 0x7e, 0x76, 0xcc, 0xc2, 0xa2, 0x50, 0x4e, 0x7d, 0x15, 0x89, 0x9c, 0x29,
+	0x50, 0xf0, 0x29, 0x6f, 0x35, 0x69, 0xe0, 0xd8, 0x5a, 0x6f, 0x27, 0x8f, 0x07, 0xe6, 0xc2, 0x11,
+	0x4a, 0xc7, 0x6c, 0xf8, 0xfb, 0x91, 0x23, 0x04, 0x13, 0xa2, 0x0f, 0x05, 0x29, 0xd2, 0x50, 0x29,
+	0x02, 0xfe, 0x07, 0x30, 0x97, 0xc6, 0x8f, 0xed, 0xc9, 0x5d, 0xde, 0xaa, 0x45, 0x1d, 0x2e, 0xb2,
+	0x58, 0x0d, 0x50, 0x16, 0x34, 0xee, 0xc1, 0x3b, 0xff, 0x2e, 0xd3, 0x4f, 0xa5, 0xec, 0x23, 0x38,
+	0xfa, 0x31, 0xcc, 0x65, 0x1f, 0x18, 0xa8, 0xca, 0x2f, 0x3e, 0xf8, 0x20, 0xa9, 0x2e, 0x8f, 0xdc,
+	0xf3, 0x1c, 0xf4, 0x58, 0x98, 0x7b, 0xb3, 0xaf, 0x02, 0xf4, 0x5e, 0x16, 0x39, 0xe4, 0x5d, 0x51,
+	0xfd, 0xce, 0xc5, 0x4c, 0x9e, 0x83, 0x7e, 0x25, 0x4c, 0x22, 0xe9, 0xf1, 0x1e, 0xdd, 0xcf, 0x0a,
+	0x18, 0x78, 0x1c, 0x54, 0xf1, 0x45, 0x2c, 0x9e, 0x83, 0x7e, 0x29, 0x8c, 0x41, 0xa9, 0x21, 0x1d,
+	0xad, 0x65, 0xd1, 0xd9, 0x01, 0xbf, 0x7a, 0xff, 0x02, 0x0e, 0xcf, 0x41, 0x5f, 0xc1, 0xfc, 0xc0,
+	0x3c, 0x8d, 0xd2, 0xa6, 0x4d, 0xcf, 0xe7, 0xd5, 0x95, 0xd1, 0x9b, 0x9e, 0x83, 0x3e, 0x83, 0xb2,
+	0x30, 0xec, 0xa2, 0xbb, 0x71, 0xe4, 0x8a, 0xc3, 0x73, 0x75, 0x71, 0x18, 0xd9, 0x73, 0x50, 0x0d,
+	0x6e, 0xa5, 0x66, 0x55, 0xb4, 0xc4, 0x18, 0xb3, 0xf3, 0x6f, 0xb5, 0x32, 0x7c, 0xc3, 0x73, 0xd0,
+	0xd7, 0xe2, 0xfb, 0x35, 0xf9, 0x06, 0xb4, 0x3a, 0x10, 0x2e, 0x62, 0xe7, 0xae, 0xca, 0xe7, 0x6d,
+	0x7b, 0x0e, 0xb2, 0x84, 0x77, 0xdc, 0xe0, 0x2c, 0x87, 0xde, 0xcf, 0xc2, 0x87, 0x8e, 0x84, 0xd5,
+	0xef, 0x5e, 0x86, 0xcd, 0x73, 0xd0, 0xcf, 0xe3, 0xb7, 0x51, 0x6a, 0xda, 0x42, 0x69, 0x2d, 0x07,
+	0x46, 0xb9, 0xaa, 0x72, 0xee, 0xbe, 0xe7, 0xa0, 0x47, 0xec, 0x1d, 0x93, 0x68, 0x5e, 0x11, 0x5d,
+	0x91, 0x52, 0xf6, 0xde, 0x88, 0x1d, 0xcf, 0x49, 0xe5, 0x2a, 0xff, 0xa8, 0x3a, 0x90, 0xab, 0x49,
+	0x63, 0x1a, 0xcc, 0x55, 0xb1, 0xf1, 0xc4, 0x21, 0x28, 0x4c, 0x01, 0x99, 0x10, 0x4c, 0x4f, 0x15,
+	0x99, 0x10, 0xcc, 0x0e, 0x0f, 0xb1, 0xab, 0x86, 0x36, 0xe6, 0x8c, 0xab, 0x46, 0x8d, 0x00, 0x19,
+	0x57, 0x8d, 0xee, 0xf1, 0x2c, 0xe0, 0xb9, 0x15, 0xc4, 0x80, 0x17, 0x0c, 0xb0, 0x38, 0x8c, 0x2c,
+	0xde, 0x5d, 0x68, 0x97, 0x68, 0xc0, 0x5a, 0x42, 0x65, 0xce, 0xdc, 0x3d, 0xdb, 0x65, 0x7f, 0x0a,
+	0x68, 0xb0, 0x93, 0xa1, 0x34, 0x26, 0xd3, 0x1d, 0xab, 0xab, 0xe7, 0xec, 0x7a, 0x0e, 0x7a, 0x08,
+	0x33, 0x62, 0x87, 0x41, 0xe2, 0x55, 0x44, 0xc5, 0x96, 0x86, 0xd2, 0x3d, 0xa7, 0xf6, 0xf4, 0xd5,
+	0x6b, 0x59, 0xfa, 0xcf, 0x6b, 0x59, 0xfa, 0xef, 0x6b, 0x59, 0xfa, 0xeb, 0x99, 0x2c, 0xfd, 0xfd,
+	0x4c, 0x96, 0xfe, 0x71, 0x26, 0x4f, 0xbc, 0x38, 0x93, 0xa5, 0x97, 0x67, 0xb2, 0xf4, 0xea, 0x4c,
+	0x96, 0xfe, 0xf2, 0x46, 0x9e, 0x78, 0xf9, 0x46, 0x9e, 0xf8, 0xd7, 0x1b, 0x79, 0xe2, 0x17, 0x3f,
+	0xba, 0x86, 0x3f, 0x55, 0x0f, 0xc2, 0x75, 0x73, 0x8a, 0xfe, 0xbf, 0xb9, 0xfb, 0xbf, 0x00, 0x00,
+	0x00, 0xff, 0xff, 0x54, 0x24, 0x59, 0x18, 0xa7, 0x1d, 0x00, 0x00,
 }
 
 func (this *Doc) VerboseEqual(that interface{}) error {
@@ -2783,11 +2893,14 @@ func (this *DocVersion) VerboseEqual(that interface{}) error {
 	if this.Version != that1.Version {
 		return fmt.Errorf("Version this(%v) Not Equal that(%v)", this.Version, that1.Version)
 	}
+	if this.Price != that1.Price {
+		return fmt.Errorf("Price this(%v) Not Equal that(%v)", this.Price, that1.Price)
+	}
 	if this.DocDescription != that1.DocDescription {
 		return fmt.Errorf("DocDescription this(%v) Not Equal that(%v)", this.DocDescription, that1.DocDescription)
 	}
-	if this.Price != that1.Price {
-		return fmt.Errorf("Price this(%v) Not Equal that(%v)", this.Price, that1.Price)
+	if this.Publisher != that1.Publisher {
+		return fmt.Errorf("Publisher this(%v) Not Equal that(%v)", this.Publisher, that1.Publisher)
 	}
 	if !this.CreatedAt.Equal(that1.CreatedAt) {
 		return fmt.Errorf("CreatedAt this(%v) Not Equal that(%v)", this.CreatedAt, that1.CreatedAt)
@@ -2825,10 +2938,13 @@ func (this *DocVersion) Equal(that interface{}) bool {
 	if this.Version != that1.Version {
 		return false
 	}
+	if this.Price != that1.Price {
+		return false
+	}
 	if this.DocDescription != that1.DocDescription {
 		return false
 	}
-	if this.Price != that1.Price {
+	if this.Publisher != that1.Publisher {
 		return false
 	}
 	if !this.CreatedAt.Equal(that1.CreatedAt) {
@@ -3338,6 +3454,130 @@ func (this *SelectAllBarcodeResp) Equal(that interface{}) bool {
 	that1, ok := that.(*SelectAllBarcodeResp)
 	if !ok {
 		that2, ok := that.(SelectAllBarcodeResp)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		return this == nil
+	} else if this == nil {
+		return false
+	}
+	if this.Code != that1.Code {
+		return false
+	}
+	if this.Message != that1.Message {
+		return false
+	}
+	if len(this.Barcodes) != len(that1.Barcodes) {
+		return false
+	}
+	for i := range this.Barcodes {
+		if !this.Barcodes[i].Equal(that1.Barcodes[i]) {
+			return false
+		}
+	}
+	return true
+}
+func (this *SelectAllAvailableBarcodeReq) VerboseEqual(that interface{}) error {
+	if that == nil {
+		if this == nil {
+			return nil
+		}
+		return fmt.Errorf("that == nil && this != nil")
+	}
+
+	that1, ok := that.(*SelectAllAvailableBarcodeReq)
+	if !ok {
+		that2, ok := that.(SelectAllAvailableBarcodeReq)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *SelectAllAvailableBarcodeReq")
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return nil
+		}
+		return fmt.Errorf("that is type *SelectAllAvailableBarcodeReq but is nil && this != nil")
+	} else if this == nil {
+		return fmt.Errorf("that is type *SelectAllAvailableBarcodeReq but is not nil && this == nil")
+	}
+	return nil
+}
+func (this *SelectAllAvailableBarcodeReq) Equal(that interface{}) bool {
+	if that == nil {
+		return this == nil
+	}
+
+	that1, ok := that.(*SelectAllAvailableBarcodeReq)
+	if !ok {
+		that2, ok := that.(SelectAllAvailableBarcodeReq)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		return this == nil
+	} else if this == nil {
+		return false
+	}
+	return true
+}
+func (this *SelectAllAvailableBarcodeResp) VerboseEqual(that interface{}) error {
+	if that == nil {
+		if this == nil {
+			return nil
+		}
+		return fmt.Errorf("that == nil && this != nil")
+	}
+
+	that1, ok := that.(*SelectAllAvailableBarcodeResp)
+	if !ok {
+		that2, ok := that.(SelectAllAvailableBarcodeResp)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *SelectAllAvailableBarcodeResp")
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return nil
+		}
+		return fmt.Errorf("that is type *SelectAllAvailableBarcodeResp but is nil && this != nil")
+	} else if this == nil {
+		return fmt.Errorf("that is type *SelectAllAvailableBarcodeResp but is not nil && this == nil")
+	}
+	if this.Code != that1.Code {
+		return fmt.Errorf("Code this(%v) Not Equal that(%v)", this.Code, that1.Code)
+	}
+	if this.Message != that1.Message {
+		return fmt.Errorf("Message this(%v) Not Equal that(%v)", this.Message, that1.Message)
+	}
+	if len(this.Barcodes) != len(that1.Barcodes) {
+		return fmt.Errorf("Barcodes this(%v) Not Equal that(%v)", len(this.Barcodes), len(that1.Barcodes))
+	}
+	for i := range this.Barcodes {
+		if !this.Barcodes[i].Equal(that1.Barcodes[i]) {
+			return fmt.Errorf("Barcodes this[%v](%v) Not Equal that[%v](%v)", i, this.Barcodes[i], i, that1.Barcodes[i])
+		}
+	}
+	return nil
+}
+func (this *SelectAllAvailableBarcodeResp) Equal(that interface{}) bool {
+	if that == nil {
+		return this == nil
+	}
+
+	that1, ok := that.(*SelectAllAvailableBarcodeResp)
+	if !ok {
+		that2, ok := that.(SelectAllAvailableBarcodeResp)
 		if ok {
 			that1 = &that2
 		} else {
@@ -5643,13 +5883,14 @@ func (this *DocVersion) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := make([]string, 0, 11)
+	s := make([]string, 0, 12)
 	s = append(s, "&docmanagerModel.DocVersion{")
 	s = append(s, "DocVer: "+fmt.Sprintf("%#v", this.DocVer)+",\n")
 	s = append(s, "DocID: "+fmt.Sprintf("%#v", this.DocID)+",\n")
 	s = append(s, "Version: "+fmt.Sprintf("%#v", this.Version)+",\n")
-	s = append(s, "DocDescription: "+fmt.Sprintf("%#v", this.DocDescription)+",\n")
 	s = append(s, "Price: "+fmt.Sprintf("%#v", this.Price)+",\n")
+	s = append(s, "DocDescription: "+fmt.Sprintf("%#v", this.DocDescription)+",\n")
+	s = append(s, "Publisher: "+fmt.Sprintf("%#v", this.Publisher)+",\n")
 	if this.CreatedAt != nil {
 		s = append(s, "CreatedAt: "+fmt.Sprintf("%#v", this.CreatedAt)+",\n")
 	}
@@ -5753,6 +5994,29 @@ func (this *SelectAllBarcodeResp) GoString() string {
 	}
 	s := make([]string, 0, 7)
 	s = append(s, "&docmanagerModel.SelectAllBarcodeResp{")
+	s = append(s, "Code: "+fmt.Sprintf("%#v", this.Code)+",\n")
+	s = append(s, "Message: "+fmt.Sprintf("%#v", this.Message)+",\n")
+	if this.Barcodes != nil {
+		s = append(s, "Barcodes: "+fmt.Sprintf("%#v", this.Barcodes)+",\n")
+	}
+	s = append(s, "}")
+	return strings.Join(s, "")
+}
+func (this *SelectAllAvailableBarcodeReq) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := make([]string, 0, 4)
+	s = append(s, "&docmanagerModel.SelectAllAvailableBarcodeReq{")
+	s = append(s, "}")
+	return strings.Join(s, "")
+}
+func (this *SelectAllAvailableBarcodeResp) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := make([]string, 0, 7)
+	s = append(s, "&docmanagerModel.SelectAllAvailableBarcodeResp{")
 	s = append(s, "Code: "+fmt.Sprintf("%#v", this.Code)+",\n")
 	s = append(s, "Message: "+fmt.Sprintf("%#v", this.Message)+",\n")
 	if this.Barcodes != nil {
@@ -6219,6 +6483,7 @@ const _ = grpc.SupportPackageIsVersion4
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type DocmanagerClient interface {
 	SelectAllBarcode(ctx context.Context, in *SelectAllBarcodeReq, opts ...grpc.CallOption) (*SelectAllBarcodeResp, error)
+	SelectAllAvailableBarcode(ctx context.Context, in *SelectAllAvailableBarcodeReq, opts ...grpc.CallOption) (*SelectAllAvailableBarcodeResp, error)
 	SelectAllSellingBarcode(ctx context.Context, in *SelectAllSellingBarcodeReq, opts ...grpc.CallOption) (*SelectAllSellingBarcodeResp, error)
 	SelectAllDamageBarcode(ctx context.Context, in *SelectAllDamageBarcodeReq, opts ...grpc.CallOption) (*SelectAllDamageBarcodeResp, error)
 	SelectBarcodeByID(ctx context.Context, in *SelectBarcodeByIDReq, opts ...grpc.CallOption) (*SelectBarcodeByIDResp, error)
@@ -6248,6 +6513,15 @@ func NewDocmanagerClient(cc *grpc.ClientConn) DocmanagerClient {
 func (c *docmanagerClient) SelectAllBarcode(ctx context.Context, in *SelectAllBarcodeReq, opts ...grpc.CallOption) (*SelectAllBarcodeResp, error) {
 	out := new(SelectAllBarcodeResp)
 	err := c.cc.Invoke(ctx, "/model.Docmanager/SelectAllBarcode", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *docmanagerClient) SelectAllAvailableBarcode(ctx context.Context, in *SelectAllAvailableBarcodeReq, opts ...grpc.CallOption) (*SelectAllAvailableBarcodeResp, error) {
+	out := new(SelectAllAvailableBarcodeResp)
+	err := c.cc.Invoke(ctx, "/model.Docmanager/SelectAllAvailableBarcode", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -6401,6 +6675,7 @@ func (c *docmanagerClient) SaveSaleBill(ctx context.Context, in *SaveSaleBillReq
 // DocmanagerServer is the server API for Docmanager service.
 type DocmanagerServer interface {
 	SelectAllBarcode(context.Context, *SelectAllBarcodeReq) (*SelectAllBarcodeResp, error)
+	SelectAllAvailableBarcode(context.Context, *SelectAllAvailableBarcodeReq) (*SelectAllAvailableBarcodeResp, error)
 	SelectAllSellingBarcode(context.Context, *SelectAllSellingBarcodeReq) (*SelectAllSellingBarcodeResp, error)
 	SelectAllDamageBarcode(context.Context, *SelectAllDamageBarcodeReq) (*SelectAllDamageBarcodeResp, error)
 	SelectBarcodeByID(context.Context, *SelectBarcodeByIDReq) (*SelectBarcodeByIDResp, error)
@@ -6425,6 +6700,9 @@ type UnimplementedDocmanagerServer struct {
 
 func (*UnimplementedDocmanagerServer) SelectAllBarcode(ctx context.Context, req *SelectAllBarcodeReq) (*SelectAllBarcodeResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SelectAllBarcode not implemented")
+}
+func (*UnimplementedDocmanagerServer) SelectAllAvailableBarcode(ctx context.Context, req *SelectAllAvailableBarcodeReq) (*SelectAllAvailableBarcodeResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SelectAllAvailableBarcode not implemented")
 }
 func (*UnimplementedDocmanagerServer) SelectAllSellingBarcode(ctx context.Context, req *SelectAllSellingBarcodeReq) (*SelectAllSellingBarcodeResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SelectAllSellingBarcode not implemented")
@@ -6493,6 +6771,24 @@ func _Docmanager_SelectAllBarcode_Handler(srv interface{}, ctx context.Context, 
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DocmanagerServer).SelectAllBarcode(ctx, req.(*SelectAllBarcodeReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Docmanager_SelectAllAvailableBarcode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SelectAllAvailableBarcodeReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DocmanagerServer).SelectAllAvailableBarcode(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/model.Docmanager/SelectAllAvailableBarcode",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DocmanagerServer).SelectAllAvailableBarcode(ctx, req.(*SelectAllAvailableBarcodeReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -6794,6 +7090,10 @@ var _Docmanager_serviceDesc = grpc.ServiceDesc{
 			Handler:    _Docmanager_SelectAllBarcode_Handler,
 		},
 		{
+			MethodName: "SelectAllAvailableBarcode",
+			Handler:    _Docmanager_SelectAllAvailableBarcode_Handler,
+		},
+		{
 			MethodName: "SelectAllSellingBarcode",
 			Handler:    _Docmanager_SelectAllSellingBarcode_Handler,
 		},
@@ -6956,7 +7256,7 @@ func (m *DocVersion) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			i = encodeVarintDocmanager(dAtA, i, uint64(size))
 		}
 		i--
-		dAtA[i] = 0x3a
+		dAtA[i] = 0x42
 	}
 	if m.CreatedAt != nil {
 		{
@@ -6968,19 +7268,26 @@ func (m *DocVersion) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			i = encodeVarintDocmanager(dAtA, i, uint64(size))
 		}
 		i--
-		dAtA[i] = 0x32
+		dAtA[i] = 0x3a
 	}
-	if m.Price != 0 {
-		i = encodeVarintDocmanager(dAtA, i, uint64(m.Price))
+	if len(m.Publisher) > 0 {
+		i -= len(m.Publisher)
+		copy(dAtA[i:], m.Publisher)
+		i = encodeVarintDocmanager(dAtA, i, uint64(len(m.Publisher)))
 		i--
-		dAtA[i] = 0x28
+		dAtA[i] = 0x32
 	}
 	if len(m.DocDescription) > 0 {
 		i -= len(m.DocDescription)
 		copy(dAtA[i:], m.DocDescription)
 		i = encodeVarintDocmanager(dAtA, i, uint64(len(m.DocDescription)))
 		i--
-		dAtA[i] = 0x22
+		dAtA[i] = 0x2a
+	}
+	if m.Price != 0 {
+		i = encodeVarintDocmanager(dAtA, i, uint64(m.Price))
+		i--
+		dAtA[i] = 0x20
 	}
 	if m.Version != 0 {
 		i = encodeVarintDocmanager(dAtA, i, uint64(m.Version))
@@ -7401,6 +7708,78 @@ func (m *SelectAllBarcodeResp) MarshalTo(dAtA []byte) (int, error) {
 }
 
 func (m *SelectAllBarcodeResp) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Barcodes) > 0 {
+		for iNdEx := len(m.Barcodes) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Barcodes[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintDocmanager(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x1a
+		}
+	}
+	if len(m.Message) > 0 {
+		i -= len(m.Message)
+		copy(dAtA[i:], m.Message)
+		i = encodeVarintDocmanager(dAtA, i, uint64(len(m.Message)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Code != 0 {
+		i = encodeVarintDocmanager(dAtA, i, uint64(m.Code))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *SelectAllAvailableBarcodeReq) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *SelectAllAvailableBarcodeReq) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *SelectAllAvailableBarcodeReq) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
+func (m *SelectAllAvailableBarcodeResp) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *SelectAllAvailableBarcodeResp) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *SelectAllAvailableBarcodeResp) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -8812,8 +9191,9 @@ func NewPopulatedDocVersion(r randyDocmanager, easy bool) *DocVersion {
 	this.DocVer = string(randStringDocmanager(r))
 	this.DocID = uint64(uint64(r.Uint32()))
 	this.Version = uint64(uint64(r.Uint32()))
-	this.DocDescription = string(randStringDocmanager(r))
 	this.Price = uint64(uint64(r.Uint32()))
+	this.DocDescription = string(randStringDocmanager(r))
+	this.Publisher = string(randStringDocmanager(r))
 	if r.Intn(5) != 0 {
 		this.CreatedAt = model.NewPopulatedTime(r, easy)
 	}
@@ -8946,6 +9326,32 @@ func NewPopulatedSelectAllBarcodeResp(r randyDocmanager, easy bool) *SelectAllBa
 	return this
 }
 
+func NewPopulatedSelectAllAvailableBarcodeReq(r randyDocmanager, easy bool) *SelectAllAvailableBarcodeReq {
+	this := &SelectAllAvailableBarcodeReq{}
+	if !easy && r.Intn(10) != 0 {
+	}
+	return this
+}
+
+func NewPopulatedSelectAllAvailableBarcodeResp(r randyDocmanager, easy bool) *SelectAllAvailableBarcodeResp {
+	this := &SelectAllAvailableBarcodeResp{}
+	this.Code = int32(r.Int31())
+	if r.Intn(2) == 0 {
+		this.Code *= -1
+	}
+	this.Message = string(randStringDocmanager(r))
+	if r.Intn(5) != 0 {
+		v8 := r.Intn(5)
+		this.Barcodes = make([]*Barcode, v8)
+		for i := 0; i < v8; i++ {
+			this.Barcodes[i] = NewPopulatedBarcode(r, easy)
+		}
+	}
+	if !easy && r.Intn(10) != 0 {
+	}
+	return this
+}
+
 func NewPopulatedSelectAllSellingBarcodeReq(r randyDocmanager, easy bool) *SelectAllSellingBarcodeReq {
 	this := &SelectAllSellingBarcodeReq{}
 	if !easy && r.Intn(10) != 0 {
@@ -8961,9 +9367,9 @@ func NewPopulatedSelectAllSellingBarcodeResp(r randyDocmanager, easy bool) *Sele
 	}
 	this.Message = string(randStringDocmanager(r))
 	if r.Intn(5) != 0 {
-		v8 := r.Intn(5)
-		this.Barcodes = make([]*Barcode, v8)
-		for i := 0; i < v8; i++ {
+		v9 := r.Intn(5)
+		this.Barcodes = make([]*Barcode, v9)
+		for i := 0; i < v9; i++ {
 			this.Barcodes[i] = NewPopulatedBarcode(r, easy)
 		}
 	}
@@ -8987,9 +9393,9 @@ func NewPopulatedSelectAllDamageBarcodeResp(r randyDocmanager, easy bool) *Selec
 	}
 	this.Message = string(randStringDocmanager(r))
 	if r.Intn(5) != 0 {
-		v9 := r.Intn(5)
-		this.Barcodes = make([]*Barcode, v9)
-		for i := 0; i < v9; i++ {
+		v10 := r.Intn(5)
+		this.Barcodes = make([]*Barcode, v10)
+		for i := 0; i < v10; i++ {
 			this.Barcodes[i] = NewPopulatedBarcode(r, easy)
 		}
 	}
@@ -9100,9 +9506,9 @@ func NewPopulatedSelectAllBorrowFormResp(r randyDocmanager, easy bool) *SelectAl
 	}
 	this.Message = string(randStringDocmanager(r))
 	if r.Intn(5) != 0 {
-		v10 := r.Intn(5)
-		this.BorrowForms = make([]*BorrowForm, v10)
-		for i := 0; i < v10; i++ {
+		v11 := r.Intn(5)
+		this.BorrowForms = make([]*BorrowForm, v11)
+		for i := 0; i < v11; i++ {
 			this.BorrowForms[i] = NewPopulatedBorrowForm(r, easy)
 		}
 	}
@@ -9126,9 +9532,9 @@ func NewPopulatedSelectAllUnReturnBorrowFormResp(r randyDocmanager, easy bool) *
 	}
 	this.Message = string(randStringDocmanager(r))
 	if r.Intn(5) != 0 {
-		v11 := r.Intn(5)
-		this.BorrowForms = make([]*BorrowForm, v11)
-		for i := 0; i < v11; i++ {
+		v12 := r.Intn(5)
+		this.BorrowForms = make([]*BorrowForm, v12)
+		for i := 0; i < v12; i++ {
 			this.BorrowForms[i] = NewPopulatedBorrowForm(r, easy)
 		}
 	}
@@ -9217,9 +9623,9 @@ func NewPopulatedSelectAllPaymentResp(r randyDocmanager, easy bool) *SelectAllPa
 	}
 	this.Message = string(randStringDocmanager(r))
 	if r.Intn(5) != 0 {
-		v12 := r.Intn(5)
-		this.Payments = make([]*Payment, v12)
-		for i := 0; i < v12; i++ {
+		v13 := r.Intn(5)
+		this.Payments = make([]*Payment, v13)
+		for i := 0; i < v13; i++ {
 			this.Payments[i] = NewPopulatedPayment(r, easy)
 		}
 	}
@@ -9311,9 +9717,9 @@ func NewPopulatedSelectAllSaleBillResp(r randyDocmanager, easy bool) *SelectAllS
 	}
 	this.Message = string(randStringDocmanager(r))
 	if r.Intn(5) != 0 {
-		v13 := r.Intn(5)
-		this.SaleBills = make([]*SaleBill, v13)
-		for i := 0; i < v13; i++ {
+		v14 := r.Intn(5)
+		this.SaleBills = make([]*SaleBill, v14)
+		for i := 0; i < v14; i++ {
 			this.SaleBills[i] = NewPopulatedSaleBill(r, easy)
 		}
 	}
@@ -9406,9 +9812,9 @@ func randUTF8RuneDocmanager(r randyDocmanager) rune {
 	return rune(ru + 61)
 }
 func randStringDocmanager(r randyDocmanager) string {
-	v14 := r.Intn(100)
-	tmps := make([]rune, v14)
-	for i := 0; i < v14; i++ {
+	v15 := r.Intn(100)
+	tmps := make([]rune, v15)
+	for i := 0; i < v15; i++ {
 		tmps[i] = randUTF8RuneDocmanager(r)
 	}
 	return string(tmps)
@@ -9430,11 +9836,11 @@ func randFieldDocmanager(dAtA []byte, r randyDocmanager, fieldNumber int, wire i
 	switch wire {
 	case 0:
 		dAtA = encodeVarintPopulateDocmanager(dAtA, uint64(key))
-		v15 := r.Int63()
+		v16 := r.Int63()
 		if r.Intn(2) == 0 {
-			v15 *= -1
+			v16 *= -1
 		}
-		dAtA = encodeVarintPopulateDocmanager(dAtA, uint64(v15))
+		dAtA = encodeVarintPopulateDocmanager(dAtA, uint64(v16))
 	case 1:
 		dAtA = encodeVarintPopulateDocmanager(dAtA, uint64(key))
 		dAtA = append(dAtA, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
@@ -9502,12 +9908,16 @@ func (m *DocVersion) Size() (n int) {
 	if m.Version != 0 {
 		n += 1 + sovDocmanager(uint64(m.Version))
 	}
+	if m.Price != 0 {
+		n += 1 + sovDocmanager(uint64(m.Price))
+	}
 	l = len(m.DocDescription)
 	if l > 0 {
 		n += 1 + l + sovDocmanager(uint64(l))
 	}
-	if m.Price != 0 {
-		n += 1 + sovDocmanager(uint64(m.Price))
+	l = len(m.Publisher)
+	if l > 0 {
+		n += 1 + l + sovDocmanager(uint64(l))
 	}
 	if m.CreatedAt != nil {
 		l = m.CreatedAt.Size()
@@ -9675,6 +10085,37 @@ func (m *SelectAllBarcodeReq) Size() (n int) {
 }
 
 func (m *SelectAllBarcodeResp) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Code != 0 {
+		n += 1 + sovDocmanager(uint64(m.Code))
+	}
+	l = len(m.Message)
+	if l > 0 {
+		n += 1 + l + sovDocmanager(uint64(l))
+	}
+	if len(m.Barcodes) > 0 {
+		for _, e := range m.Barcodes {
+			l = e.Size()
+			n += 1 + l + sovDocmanager(uint64(l))
+		}
+	}
+	return n
+}
+
+func (m *SelectAllAvailableBarcodeReq) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	return n
+}
+
+func (m *SelectAllAvailableBarcodeResp) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -10572,6 +11013,25 @@ func (m *DocVersion) Unmarshal(dAtA []byte) error {
 				}
 			}
 		case 4:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Price", wireType)
+			}
+			m.Price = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDocmanager
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Price |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 5:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field DocDescription", wireType)
 			}
@@ -10603,11 +11063,11 @@ func (m *DocVersion) Unmarshal(dAtA []byte) error {
 			}
 			m.DocDescription = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 5:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Price", wireType)
+		case 6:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Publisher", wireType)
 			}
-			m.Price = 0
+			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowDocmanager
@@ -10617,12 +11077,25 @@ func (m *DocVersion) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Price |= uint64(b&0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-		case 6:
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Publisher = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 7:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field CreatedAt", wireType)
 			}
@@ -10658,7 +11131,7 @@ func (m *DocVersion) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
-		case 7:
+		case 8:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field UpdatedAt", wireType)
 			}
@@ -11993,6 +12466,197 @@ func (m *SelectAllBarcodeResp) Unmarshal(dAtA []byte) error {
 		}
 		if fieldNum <= 0 {
 			return fmt.Errorf("proto: SelectAllBarcodeResp: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Code", wireType)
+			}
+			m.Code = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDocmanager
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Code |= int32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Message", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDocmanager
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Message = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Barcodes", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDocmanager
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Barcodes = append(m.Barcodes, &Barcode{})
+			if err := m.Barcodes[len(m.Barcodes)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipDocmanager(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *SelectAllAvailableBarcodeReq) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowDocmanager
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: SelectAllAvailableBarcodeReq: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: SelectAllAvailableBarcodeReq: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipDocmanager(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *SelectAllAvailableBarcodeResp) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowDocmanager
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: SelectAllAvailableBarcodeResp: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: SelectAllAvailableBarcodeResp: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:

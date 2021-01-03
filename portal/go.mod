@@ -1,6 +1,6 @@
 module github.com/pinezapple/LibraryProject20201/portal
 
-replace github.com/pinezapple/LibraryProject20201/skeleton => /home/pine/go/src/github.com/pinezapple/LibraryProject20201/skeleton
+replace github.com/pinezapple/LibraryProject20201/skeleton => /home/tpp/go/src/github.com/pinezapple/LibraryProject20201/skeleton
 
 require (
 	github.com/dgrijalva/jwt-go v3.2.1-0.20190620180102-5e25c22bd5d6+incompatible

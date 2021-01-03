@@ -1,6 +1,6 @@
 module github.com/pinezapple/LibraryProject20201/docmanager
 
-replace github.com/pinezapple/LibraryProject20201/skeleton => /home/pine/go/src/github.com/pinezapple/LibraryProject20201/skeleton
+replace github.com/pinezapple/LibraryProject20201/skeleton => /home/tpp/go/src/github.com/pinezapple/LibraryProject20201/skeleton
 
 require (
 	github.com/go-sql-driver/mysql v1.4.1-0.20191114115753-b4242bab7dc5

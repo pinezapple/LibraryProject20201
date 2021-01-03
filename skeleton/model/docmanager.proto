@@ -19,6 +19,7 @@ option (gogoproto.unmarshaler_all) = true;
 
 service Docmanager {
     rpc SelectAllBarcode (SelectAllBarcodeReq) returns (SelectAllBarcodeResp); 
+    rpc SelectAllAvailableBarcode (SelectAllAvailableBarcodeReq) returns (SelectAllAvailableBarcodeResp);
     rpc SelectAllSellingBarcode (SelectAllSellingBarcodeReq) returns (SelectAllSellingBarcodeResp);
     rpc SelectAllDamageBarcode (SelectAllDamageBarcodeReq) returns (SelectAllDamageBarcodeResp);
     rpc SelectBarcodeByID (SelectBarcodeByIDReq) returns (SelectBarcodeByIDResp);
@@ -55,10 +56,11 @@ message DocVersion {
     string DocVer = 1 [(gogoproto.jsontag) = "doc_ver", (gogoproto.moretags) = "db:\"doc_ver\""];
     uint64 DocID = 2 [(gogoproto.jsontag) = "doc_id", (gogoproto.moretags) = "db:\"doc_id\""];
     uint64 Version = 3 [(gogoproto.jsontag) = "version", (gogoproto.moretags) = "db:\"version\""];
-    string DocDescription = 4 [(gogoproto.jsontag) = "doc_description", (gogoproto.moretags) = "db:\"doc_description\""];
-    uint64 Price = 5 [(gogoproto.jsontag) = "price", (gogoproto.moretags) = "db:\"price\""];
-    model.Time Created_at = 6 [(gogoproto.jsontag) = "created_at", (gogoproto.moretags) = "db:\"created_at\""];
-	model.Time Updated_at = 7 [(gogoproto.jsontag) = "updated_at", (gogoproto.moretags) = "db:\"updated_at\""];
+    uint64 Price = 4 [(gogoproto.jsontag) = "price", (gogoproto.moretags) = "db:\"price\""];
+    string DocDescription = 5 [(gogoproto.jsontag) = "doc_description", (gogoproto.moretags) = "db:\"doc_description\""];
+    string Publisher = 6 [(gogoproto.jsontag) = "publisher", (gogoproto.moretags) = "db:\"publisher\""];
+    model.Time Created_at = 7 [(gogoproto.jsontag) = "created_at", (gogoproto.moretags) = "db:\"created_at\""];
+	model.Time Updated_at = 8 [(gogoproto.jsontag) = "updated_at", (gogoproto.moretags) = "db:\"updated_at\""];
 }
 
 message Barcode {
@@ -107,6 +109,16 @@ message SelectAllBarcodeResp {
     int32 Code = 1;
     string Message = 2;
     repeated Barcode Barcodes = 3 [(gogoproto.nullable) = true]; 
+}
+
+message SelectAllAvailableBarcodeReq {
+
+}
+
+message SelectAllAvailableBarcodeResp {
+    int32 Code = 1;
+    string Message = 2;
+    repeated Barcode Barcodes = 3 [(gogoproto.nullable) = true];
 }
 
 message SelectAllSellingBarcodeReq {

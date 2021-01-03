@@ -30,18 +30,31 @@ func (d *docManagerSrv) SelectAllBarcode(ctx context.Context, req *docmanagerMod
 	return &docmanagerModel.SelectAllBarcodeResp{Code: 0, Barcodes: barcodes}, nil
 }
 
+func (d *docManagerSrv) SelectAllAvailableBarcode(ctx context.Context, req *docmanagerModel.SelectAllAvailableBarcodeReq) (resp *docmanagerModel.SelectAllAvailableBarcodeResp, err error) {
+	logger.LogInfo(d.lg, "RPC Req: Select all available barcode")
+
+	//FIXME: add functions
+	barcodes, err := dao.SelectAllBarcode(ctx, core.GetDB())
+	if err != nil {
+		logger.LogErr(d.lg, err)
+		return &docmanagerModel.SelectAllAvailableBarcodeResp{Code: 1, Message: err.Error()}, err
+	}
+
+	d.lg.Message = "Still using select all barcode"
+	logger.LogWarning(d.lg)
+
+	logger.LogInfo(d.lg, "RPC Resp: Select all available barcode OK")
+	return &docmanagerModel.SelectAllAvailableBarcodeResp{Code: 0, Barcodes: barcodes}, nil
+}
+
 func (d *docManagerSrv) SelectAllSellingBarcode(ctx context.Context, req *docmanagerModel.SelectAllSellingBarcodeReq) (resp *docmanagerModel.SelectAllSellingBarcodeResp, err error) {
 	logger.LogInfo(d.lg, "RPC Req: Select all selling barcode")
 
-	// FIXME: add function
 	sellingBarcodes, err := dao.SelectAllSellingBarcode(ctx, core.GetDB())
 	if err != nil {
 		logger.LogErr(d.lg, err)
 		return &docmanagerModel.SelectAllSellingBarcodeResp{Code: 1, Message: err.Error()}, err
 	}
-
-	d.lg.Message = "DAO: Still use select all"
-	logger.LogWarning(d.lg)
 
 	logger.LogInfo(d.lg, "RPC Resp: Select all selling barcode OK")
 	return &docmanagerModel.SelectAllSellingBarcodeResp{Code: 0, Barcodes: sellingBarcodes}, nil
@@ -50,16 +63,11 @@ func (d *docManagerSrv) SelectAllSellingBarcode(ctx context.Context, req *docman
 func (d *docManagerSrv) SelectAllDamageBarcode(ctx context.Context, req *docmanagerModel.SelectAllDamageBarcodeReq) (resp *docmanagerModel.SelectAllDamageBarcodeResp, err error) {
 	logger.LogInfo(d.lg, "RPC Req: Select all damage barcode")
 
-	// FIXME: add function
-
 	damageBarcodes, err := dao.SelectAllDamagedBarcode(ctx, core.GetDB())
 	if err != nil {
 		logger.LogErr(d.lg, err)
 		return &docmanagerModel.SelectAllDamageBarcodeResp{Code: 1, Message: err.Error()}, err
 	}
-
-	d.lg.Message = "DAO: Still use select all"
-	logger.LogWarning(d.lg)
 
 	logger.LogInfo(d.lg, "RPC Resp: Select all damage barcode OK")
 	return &docmanagerModel.SelectAllDamageBarcodeResp{Code: 0, Barcodes: damageBarcodes}, nil
