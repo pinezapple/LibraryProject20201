@@ -141,7 +141,7 @@ func (d *docManagerSrv) SelectAllUnReturnBorrowForm(ctx context.Context, req *do
 	logger.LogInfo(d.lg, "RPC Req: Select all unreturn borrow form")
 
 	//FIXME: add functions
-	unReturnBorrowForms, err := dao.SelectAllBorrowForm(ctx, core.GetDB())
+	unReturnBorrowForms, err := dao.SelectAllUnreturnedBorrowForm(ctx, core.GetDB())
 	if err != nil {
 		logger.LogErr(d.lg, err)
 		return &docmanagerModel.SelectAllUnReturnBorrowFormResp{Code: 1, Message: err.Error()}, err

@@ -32,7 +32,7 @@ type DocumentVersionDAOobj struct {
 
 type AuthorDAOobj struct {
 	AuthorID    uint64      `json:"author_id" db:"author_id"`
-	AuthorName  uint64      `json:"author_name" db:"author_name"`
+	AuthorName  string      `json:"author_name" db:"author_name"`
 	Description string      `json:"description" db:"description"`
 	CreatedAt   *model.Time `json:"created_at" db:"created_at"`
 	UpdatedAt   *model.Time `json:"updated_at" db:"updated_at"`

@@ -1,6 +1,6 @@
 module github.com/pinezapple/LibraryProject20201/portal
 
-replace github.com/pinezapple/LibraryProject20201/skeleton => /home/tpp/go/src/github.com/pinezapple/LibraryProject20201/skeleton
+replace github.com/pinezapple/LibraryProject20201/skeleton => /home/pine/go/src/github.com/pinezapple/LibraryProject20201/skeleton
 
 require (
 	github.com/dgrijalva/jwt-go v3.2.1-0.20190620180102-5e25c22bd5d6+incompatible
@@ -10,7 +10,7 @@ require (
 	github.com/labstack/echo v3.3.10+incompatible
 	github.com/linxGnu/mssqlx v1.0.7
 	github.com/pinezapple/LibraryProject20201/skeleton v0.0.0-20200521183651-bd8c417f6a21
-	github.com/prometheus/common v0.7.0
+	github.com/prometheus/common v0.7.0 // indirect
 	go.etcd.io/etcd v0.5.0-alpha.5.0.20191120073830-908ef19d865f
 	golang.org/x/crypto v0.0.0-20191011191535-87dc89f01550
 	google.golang.org/grpc v1.25.1

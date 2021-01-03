@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	"github.com/labstack/echo"
-	"github.com/pinezapple/LibraryProject20201/portal/controller"
 )
 
 type reqSelectByID struct {
@@ -102,59 +101,4 @@ func SelectSaleBillByID(c echo.Context) (erro error) {
 func SaveDocumentByBatch(c echo.Context) (erro error) {
 	fmt.Println("In Save Document By Batch")
 	return
-}
-
-func SelectAllDoc(c echo.Context) (erro error) {
-
-	fmt.Println("in Select doc all")
-	return controller.ExecHandler(c, nil, selectAllDoc)
-}
-
-func SelectAllDoc0(c echo.Context) (erro error) {
-
-	fmt.Println("in Select doc 0 all")
-	return controller.ExecHandler(c, nil, selectAllDoc0)
-}
-
-func SelectDocByID(c echo.Context) (erro error) {
-
-	fmt.Println("in select by id")
-	return controller.ExecHandler(c, &reqSelectByID{}, selectDocByID)
-}
-
-func SaveDoc(c echo.Context) (erro error) {
-
-	fmt.Println("in save doc")
-	return controller.ExecHandler(c, &reqDoc{}, saveDoc)
-}
-
-func DelDoc(c echo.Context) (erro error) {
-	fmt.Println("in del doc")
-	return controller.ExecHandler(c, &reqSelectByID{}, delDoc)
-}
-
-func UpdateDoc(c echo.Context) (erro error) {
-	fmt.Println("in update doc")
-	return controller.ExecHandler(c, &reqDoc{}, updateDoc)
-}
-
-func UpdateStatus(c echo.Context) (erro error) {
-	fmt.Println("in Update Status")
-	return controller.ExecHandler(c, &reqUpdateStatus{}, updateStatus)
-
-}
-
-func SelectAllForm(c echo.Context) (erro error) {
-	fmt.Println("in Select all form")
-	return controller.ExecHandler(c, nil, selectAllForm)
-}
-
-func SaveForm(c echo.Context) (erro error) {
-	fmt.Println("in save form")
-	return controller.ExecHandler(c, &reqSaveBorrowForm{}, saveForm)
-}
-
-func SelectFormByID(c echo.Context) (erro error) {
-	fmt.Println("in form by id")
-	return controller.ExecHandler(c, &reqSelectFormByID{}, selectFormByID)
 }

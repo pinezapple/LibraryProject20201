@@ -24,10 +24,11 @@ const (
 	sqlSelectSaleBillByID = "SELECT * FROM sale_bill WHERE sale_bill_id = ?"
 	sqlInsertSaleBill     = "INSERT INTO sale_bill(sale_bill_id, barcode_id, sale_price) VALUES (?,?,?)"
 
-	sqlSelectAllBorrowForm    = "SELECT * FROM borrow_form"
-	sqlSelectBorrowFormByID   = "SELECT * FROM borrow_form WHERE borrow_form_id = ?"
-	sqlInsertBorrowForm       = "INSERT INTO borrow_form(borrow_form_id, librarian_id, barcode_id, status, borrow_start_time, borrow_end_time) VALUES (?,?,?,?,?,?)"
-	sqlUpdateBorrowFormStatus = "UPDATE borrow_form SET status = ? WHERE borrow_form_id = ?"
+	sqlSelectAllBorrowForm           = "SELECT * FROM borrow_form"
+	sqlSelectAllUnreturnedBorrowForm = "SELECT * FROM borrow_form WHERE status <> 3"
+	sqlSelectBorrowFormByID          = "SELECT * FROM borrow_form WHERE borrow_form_id = ?"
+	sqlInsertBorrowForm              = "INSERT INTO borrow_form(borrow_form_id, librarian_id, barcode_id, status, borrow_start_time, borrow_end_time) VALUES (?,?,?,?,?,?)"
+	sqlUpdateBorrowFormStatus        = "UPDATE borrow_form SET status = ? WHERE borrow_form_id = ?"
 
 	sqlSelectAllPayment            = "SELECT * FROM payments"
 	sqlSelectPaymentByID           = "SELECT * FROM payments WHERE payments_id = ?"
@@ -225,6 +226,40 @@ func SelectAllBorrowForm(ctx context.Context, db *mssqlx.DBs) (result []*docmana
 
 	var tempResp []*model.BorrowFormDAOobj
 	err = db.SelectContext(ctx, &tempResp, sqlSelectAllBorrowForm)
+	if err != nil {
+		return nil, err
+	}
+
+	for i := 0; i < len(tempResp); i++ {
+		var barcode []uint64
+		err = json.Unmarshal(tempResp[i].BarcodeID, &barcode)
+		if err != nil {
+			return nil, err
+		}
+
+		tmp := &docmanagerModel.BorrowForm{
+			ID:          tempResp[i].ID,
+			LibrarianID: tempResp[i].LibrarianID,
+			Status:      tempResp[i].Status,
+			BarcodeID:   barcode,
+			StartTime:   tempResp[i].StartTime,
+			EndTime:     tempResp[i].EndTime,
+			CreatedAt:   tempResp[i].CreatedAt,
+			UpdatedAt:   tempResp[i].UpdatedAt,
+		}
+		result = append(result, tmp)
+	}
+	return
+
+}
+
+func SelectAllUnreturnedBorrowForm(ctx context.Context, db *mssqlx.DBs) (result []*docmanagerModel.BorrowForm, err error) {
+	if db == nil {
+		return nil, core.ErrDBObjNull
+	}
+
+	var tempResp []*model.BorrowFormDAOobj
+	err = db.SelectContext(ctx, &tempResp, sqlSelectAllUnreturnedBorrowForm)
 	if err != nil {
 		return nil, err
 	}

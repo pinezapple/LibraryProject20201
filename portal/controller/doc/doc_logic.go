@@ -6,6 +6,7 @@ import (
 
 	"github.com/labstack/echo"
 	"github.com/pinezapple/LibraryProject20201/portal/core"
+	"github.com/pinezapple/LibraryProject20201/portal/dao/cache"
 	"github.com/pinezapple/LibraryProject20201/portal/microservice"
 	"github.com/pinezapple/LibraryProject20201/skeleton/model"
 	"github.com/pinezapple/LibraryProject20201/skeleton/model/docmanagerModel"
@@ -18,6 +19,7 @@ func selectAllBarcode(c echo.Context, request interface{}) (statusCode int, data
 	// Log login info
 	lg = &model.LogFormat{Source: c.Request().RemoteAddr, Action: "Select all barcode from shard", Data: ""}
 	shardNum := core.ShardNumber
+	db := core.GetDB()
 
 	shardService := microservice.GetDocmanagerShardServices()
 	if shardService == nil {
@@ -26,7 +28,7 @@ func selectAllBarcode(c echo.Context, request interface{}) (statusCode int, data
 		return
 	}
 
-	var finalResp []*docmanagerModel.Barcode
+	var finalResp []*portalModel.BarcodeFrontEndResp
 	for i := 0; i < shardNum; i++ {
 		ser, ok := shardService[uint64(i)]
 		if !ok {
@@ -40,7 +42,46 @@ func selectAllBarcode(c echo.Context, request interface{}) (statusCode int, data
 			return
 		}
 
-		finalResp = append(finalResp, resp.Barcodes...)
+		for j := 0; j < len(resp.Barcodes); j++ {
+			docver, er := cache.SelectDocumentVersionByID(ctx, db, resp.Barcodes[j].DocVer)
+			if er != nil {
+				statusCode, err = http.StatusInternalServerError, er
+				return
+			}
+			doc, er := cache.SelectDocumentByID(ctx, db, docver.DocID)
+			if er != nil {
+				statusCode, err = http.StatusInternalServerError, er
+				return
+			}
+			aut, er := cache.SelectAuthorByID(ctx, db, docver.AuthorID)
+			if er != nil {
+				statusCode, err = http.StatusInternalServerError, er
+				return
+
+			}
+			cat, er := cache.SelectCategoriesByID(ctx, db, doc.CategoryID)
+			if er != nil {
+				statusCode, err = http.StatusInternalServerError, er
+				return
+			}
+
+			tmp := &portalModel.BarcodeFrontEndResp{
+				BarcodeID:   resp.Barcodes[j].ID,
+				Status:      resp.Barcodes[j].Status,
+				DocName:     doc.DocName,
+				Version:     docver.Version,
+				Author:      aut.AuthorName,
+				Fee:         docver.Fee,
+				Price:       docver.Price,
+				Category:    cat.CategoryName,
+				SaleBillID:  resp.Barcodes[j].SaleBillID,
+				Description: docver.DocDescription,
+				CreatedAt:   resp.Barcodes[j].CreatedAt,
+			}
+
+			finalResp = append(finalResp, tmp)
+		}
+
 	}
 	data = finalResp
 
@@ -51,6 +92,7 @@ func selectAllBarcodeSelling(c echo.Context, request interface{}) (statusCode in
 	ctx := c.Request().Context()
 	// Log login info
 	lg = &model.LogFormat{Source: c.Request().RemoteAddr, Action: "Select all selling barcode from shard", Data: ""}
+	db := core.GetDB()
 	shardNum := core.ShardNumber
 
 	shardService := microservice.GetDocmanagerShardServices()
@@ -60,7 +102,7 @@ func selectAllBarcodeSelling(c echo.Context, request interface{}) (statusCode in
 		return
 	}
 
-	var finalResp []*docmanagerModel.Barcode
+	var finalResp []*portalModel.BarcodeFrontEndResp
 	for i := 0; i < shardNum; i++ {
 		ser, ok := shardService[uint64(i)]
 		if !ok {
@@ -68,13 +110,52 @@ func selectAllBarcodeSelling(c echo.Context, request interface{}) (statusCode in
 			statusCode, err = http.StatusInternalServerError, fmt.Errorf("no shard id")
 			return
 		}
-		resp, er := ser.Docmanager.SelectAllSellingBarcode(ctx, &docmanagerModel.SelectAllSellingBarcodeReq{})
+		resp, er := ser.Docmanager.SelectAllBarcode(ctx, &docmanagerModel.SelectAllBarcodeReq{})
 		if er != nil || resp.Code != 0 {
 			statusCode, err = http.StatusInternalServerError, fmt.Errorf("grpc Error")
 			return
 		}
 
-		finalResp = append(finalResp, resp.Barcodes...)
+		for j := 0; j < len(resp.Barcodes); j++ {
+			docver, er := cache.SelectDocumentVersionByID(ctx, db, resp.Barcodes[j].DocVer)
+			if er != nil {
+				statusCode, err = http.StatusInternalServerError, er
+				return
+			}
+			doc, er := cache.SelectDocumentByID(ctx, db, docver.DocID)
+			if er != nil {
+				statusCode, err = http.StatusInternalServerError, er
+				return
+			}
+			aut, er := cache.SelectAuthorByID(ctx, db, docver.AuthorID)
+			if er != nil {
+				statusCode, err = http.StatusInternalServerError, er
+				return
+
+			}
+			cat, er := cache.SelectCategoriesByID(ctx, db, doc.CategoryID)
+			if er != nil {
+				statusCode, err = http.StatusInternalServerError, er
+				return
+			}
+
+			tmp := &portalModel.BarcodeFrontEndResp{
+				BarcodeID:   resp.Barcodes[j].ID,
+				Status:      resp.Barcodes[j].Status,
+				DocName:     doc.DocName,
+				Version:     docver.Version,
+				Author:      aut.AuthorName,
+				Fee:         docver.Fee,
+				Price:       docver.Price,
+				Category:    cat.CategoryName,
+				SaleBillID:  resp.Barcodes[j].SaleBillID,
+				Description: docver.DocDescription,
+				CreatedAt:   resp.Barcodes[j].CreatedAt,
+			}
+
+			finalResp = append(finalResp, tmp)
+		}
+
 	}
 	data = finalResp
 
@@ -84,6 +165,7 @@ func selectAllBarcodeSelling(c echo.Context, request interface{}) (statusCode in
 func selectAllBarcodeDamaged(c echo.Context, request interface{}) (statusCode int, data interface{}, lg *model.LogFormat, logResponse bool, err error) {
 	ctx := c.Request().Context()
 	// Log login info
+	db := core.GetDB()
 	lg = &model.LogFormat{Source: c.Request().RemoteAddr, Action: "Select all damaged barcode from shards", Data: ""}
 	shardNum := core.ShardNumber
 
@@ -94,7 +176,7 @@ func selectAllBarcodeDamaged(c echo.Context, request interface{}) (statusCode in
 		return
 	}
 
-	var finalResp []*docmanagerModel.Barcode
+	var finalResp []*portalModel.BarcodeFrontEndResp
 	for i := 0; i < shardNum; i++ {
 		ser, ok := shardService[uint64(i)]
 		if !ok {
@@ -102,13 +184,52 @@ func selectAllBarcodeDamaged(c echo.Context, request interface{}) (statusCode in
 			statusCode, err = http.StatusInternalServerError, fmt.Errorf("no shard id")
 			return
 		}
-		resp, er := ser.Docmanager.SelectAllDamageBarcode(ctx, &docmanagerModel.SelectAllDamageBarcodeReq{})
+		resp, er := ser.Docmanager.SelectAllBarcode(ctx, &docmanagerModel.SelectAllBarcodeReq{})
 		if er != nil || resp.Code != 0 {
 			statusCode, err = http.StatusInternalServerError, fmt.Errorf("grpc Error")
 			return
 		}
 
-		finalResp = append(finalResp, resp.Barcodes...)
+		for j := 0; j < len(resp.Barcodes); j++ {
+			docver, er := cache.SelectDocumentVersionByID(ctx, db, resp.Barcodes[j].DocVer)
+			if er != nil {
+				statusCode, err = http.StatusInternalServerError, er
+				return
+			}
+			doc, er := cache.SelectDocumentByID(ctx, db, docver.DocID)
+			if er != nil {
+				statusCode, err = http.StatusInternalServerError, er
+				return
+			}
+			aut, er := cache.SelectAuthorByID(ctx, db, docver.AuthorID)
+			if er != nil {
+				statusCode, err = http.StatusInternalServerError, er
+				return
+
+			}
+			cat, er := cache.SelectCategoriesByID(ctx, db, doc.CategoryID)
+			if er != nil {
+				statusCode, err = http.StatusInternalServerError, er
+				return
+			}
+
+			tmp := &portalModel.BarcodeFrontEndResp{
+				BarcodeID:   resp.Barcodes[j].ID,
+				Status:      resp.Barcodes[j].Status,
+				DocName:     doc.DocName,
+				Version:     docver.Version,
+				Author:      aut.AuthorName,
+				Fee:         docver.Fee,
+				Price:       docver.Price,
+				Category:    cat.CategoryName,
+				SaleBillID:  resp.Barcodes[j].SaleBillID,
+				Description: docver.DocDescription,
+				CreatedAt:   resp.Barcodes[j].CreatedAt,
+			}
+
+			finalResp = append(finalResp, tmp)
+		}
+
 	}
 	data = finalResp
 
@@ -258,6 +379,7 @@ func selectAllUnreturnedBorrowForm(c echo.Context, request interface{}) (statusC
 func selectBarcodeByID(c echo.Context, request interface{}) (statusCode int, data interface{}, lg *model.LogFormat, logResponse bool, err error) {
 	ctx := c.Request().Context()
 	req := request.(*portalModel.SelectBarcodeByIDReq)
+	db := core.GetDB()
 	// Log login info
 	lg = &model.LogFormat{Source: c.Request().RemoteAddr, Action: "Select barcode by id", Data: ""}
 
@@ -281,7 +403,44 @@ func selectBarcodeByID(c echo.Context, request interface{}) (statusCode int, dat
 		statusCode, err = http.StatusInternalServerError, fmt.Errorf("grpc Error")
 		return
 	}
+	docver, er := cache.SelectDocumentVersionByID(ctx, db, resp.Barcode.DocVer)
+	if er != nil {
+		statusCode, err = http.StatusInternalServerError, er
+		return
+	}
+	doc, er := cache.SelectDocumentByID(ctx, db, docver.DocID)
+	if er != nil {
+		statusCode, err = http.StatusInternalServerError, er
+		return
+	}
+	aut, er := cache.SelectAuthorByID(ctx, db, docver.AuthorID)
+	if er != nil {
+		statusCode, err = http.StatusInternalServerError, er
+		return
+
+	}
+	cat, er := cache.SelectCategoriesByID(ctx, db, doc.CategoryID)
+	if er != nil {
+		statusCode, err = http.StatusInternalServerError, er
+		return
+	}
+
+	data = &portalModel.BarcodeFrontEndResp{
+		BarcodeID:   resp.Barcode.ID,
+		Status:      resp.Barcode.Status,
+		DocName:     doc.DocName,
+		Version:     docver.Version,
+		Author:      aut.AuthorName,
+		Fee:         docver.Fee,
+		Price:       docver.Price,
+		Category:    cat.CategoryName,
+		SaleBillID:  resp.Barcode.SaleBillID,
+		Description: docver.DocDescription,
+		CreatedAt:   resp.Barcode.CreatedAt,
+	}
+
 	// TODO: filter more information
+	return
 }
 
 func saveDocumentByBatch(c echo.Context, request interface{}) (statusCode int, data interface{}, lg *model.LogFormat, logResponse bool, err error) {
