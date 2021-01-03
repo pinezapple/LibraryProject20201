@@ -1,16 +1,46 @@
-drop table if exists doc;
+drop table if exists documents;
+drop table if exists document_version;
+drop table if exists categories;
+drop table if exists authors;
 
-create table doc 
+create table document_version
 (
-	`id_doc` bigint(20) unsigned NOT NULL,
-	`doc_name` varchar(100) DEFAULT "",
-	`doc_author` varchar(30) DEFAULT "",
-	`doc_type` varchar(30) DEFAULT "",
-	`doc_description` varchar(100) DEFAULT "", 
-	`status` int DEFAULT 0,
-	`id_borrow` bigint(20) unsigned DEFAULT 0,
-	`fee` bigint(20) DEFAULT 0,
+	`document_version` varchar(255),
+	`doc_id` bigint(20),
+	`version` bigint(20),
+	`doc_description` varchar(1000),
+	`author_id` bigint(20),
+	`fee` bigint(20),
+	`price` bigint(20),
 	`created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	`updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	PRIMARY KEY(`id_doc`)
+	`updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) Engine=InnoDB;
+
+create table documents
+(
+	`doc_id` bigint(20),
+	`doc_name` varchar(255),
+	`category_id` bigint(20),
+	`created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) Engine=InnoDB;
+
+create table categories
+(
+	`category_id` bigint(20),
+	`category_name` varchar(255),
+	`doc_description` varchar(1000),
+        `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) Engine=InnoDB;
+
+create table authors
+(
+	`author_id` bigint(20),
+	`author_name` varchar(1000),
+	`description` varchar(1000),
+        `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) Engine=InnoDB;
+
+

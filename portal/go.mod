@@ -1,18 +1,21 @@
 module github.com/pinezapple/LibraryProject20201/portal
 
+replace github.com/pinezapple/LibraryProject20201/skeleton => /home/pine/go/src/github.com/pinezapple/LibraryProject20201/skeleton
+
 require (
 	github.com/dgrijalva/jwt-go v3.2.1-0.20190620180102-5e25c22bd5d6+incompatible
 	github.com/go-sql-driver/mysql v1.4.1-0.20191114115753-b4242bab7dc5
 	github.com/gocql/gocql v0.0.0-20200505093417-effcbd8bcf0e
 	github.com/hashicorp/go-multierror v1.1.0
 	github.com/labstack/echo v3.3.10+incompatible
+	github.com/labstack/gommon v0.3.0 // indirect
 	github.com/linxGnu/mssqlx v1.0.7
-	github.com/pinezapple/LibraryProject20201/docmanager v0.0.0-20200605023818-e9abd0590d5b // indirect
 	github.com/pinezapple/LibraryProject20201/skeleton v0.0.0-20200521183651-bd8c417f6a21
-	github.com/prometheus/common v0.7.0
+	github.com/prometheus/common v0.7.0 // indirect
+	github.com/valyala/fasttemplate v1.2.1 // indirect
 	go.etcd.io/etcd v0.5.0-alpha.5.0.20191120073830-908ef19d865f
 	golang.org/x/crypto v0.0.0-20191011191535-87dc89f01550
-	google.golang.org/grpc v1.25.1
+	google.golang.org/grpc v1.27.0
 )
 
-go 1.13
+go 1.14
