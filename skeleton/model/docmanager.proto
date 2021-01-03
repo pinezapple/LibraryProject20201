@@ -18,7 +18,7 @@ option (gogoproto.sizer_all) = true;
 option (gogoproto.unmarshaler_all) = true;
 
 service Docmanager {
-    rpc SelectAllBarcode (SelectAllBarcodeReq) returns (SelectAllBarcodeResp);
+    rpc SelectAllBarcode (SelectAllBarcodeReq) returns (SelectAllBarcodeResp); 
     rpc SelectAllSellingBarcode (SelectAllSellingBarcodeReq) returns (SelectAllSellingBarcodeResp);
     rpc SelectAllDamageBarcode (SelectAllDamageBarcodeReq) returns (SelectAllDamageBarcodeResp);
     rpc SelectBarcodeByID (SelectBarcodeByIDReq) returns (SelectBarcodeByIDResp);
@@ -31,6 +31,11 @@ service Docmanager {
     rpc SelectBorrowFormByID (SelectBorrowFormByIDReq) returns (SelectBorrowFormByIDResp);
     rpc SaveBorrowForm (SaveBorrowFormReq) returns (SaveBorrowFormResp);
     rpc DeleteBorrowForm (SaveBorrowFormReq) returns (SaveBorrowFormResp);
+
+    rpc SelectAllPayment (SelectAllPaymentReq) returns (SelectAllPaymentResp);
+    rpc SelectPaymentByID (SelectPaymentByIDReq) returns (SelectPaymentByIDResp);
+    rpc SelectPaymentByBorrowFormID (SelectPaymentByBorrowFormIDReq) returns (SelectPaymentByBorrowFormIDResp);
+    rpc SavePayment (SavePaymentReq) returns (SavePaymentResp);
 
     rpc SelectAllSaleBill (SelectAllSaleBillReq) returns (SelectAllSaleBillResp);
     rpc SelectAllSaleBillByID (SelectAllSaleBillByIDReq) returns (SelectAllSaleBillByIDResp);
@@ -99,9 +104,9 @@ message SelectAllBarcodeReq {
 }
 
 message SelectAllBarcodeResp {
-    int32 code = 1;
-    string message = 2;
-    repeated Barcode barcodes = 3 [(gogoproto.nullable) = true]; 
+    int32 Code = 1;
+    string Message = 2;
+    repeated Barcode Barcodes = 3 [(gogoproto.nullable) = true]; 
 }
 
 message SelectAllSellingBarcodeReq {
@@ -109,15 +114,15 @@ message SelectAllSellingBarcodeReq {
 }
 
 message SelectAllSellingBarcodeResp {
-    int32 code = 1;
-    string message = 2;
-    repeated Barcode barcodes = 3 [(gogoproto.nullable) = true];
+    int32 Code = 1;
+    string Message = 2;
+    repeated Barcode Barcodes = 3 [(gogoproto.nullable) = true];
 }
 
 message SelectAllDamageBarcodeReq {
-    int32 code = 1;
-    string message = 2;
-    repeated Barcode barcodes = 3 [(gogoproto.nullable) = true];
+    int32 Code = 1;
+    string Message = 2;
+    repeated Barcode Barcodes = 3 [(gogoproto.nullable) = true];
 }
 
 message SelectAllDamageBarcodeResp {
@@ -125,40 +130,40 @@ message SelectAllDamageBarcodeResp {
 }
 
 message SelectBarcodeByIDReq {
-    uint64 barcodeID = 1;
+    uint64 BarcodeID = 1;
 }
 
 message SelectBarcodeByIDResp {
-    int32 code = 1;
-    string message = 2;
-    Barcode barcode = 3 [(gogoproto.nullable) = true]; 
+    int32 Code = 1;
+    string Message = 2;
+    Barcode Barcode = 3 [(gogoproto.nullable) = true]; 
 }
 
 message SaveBarcodeReq {
-    Barcode barcode = 1;
+    Barcode Barcode = 1;
 }
 
 message SaveBarcodeResp {
-    int32 code = 1;
-    string message = 2;
+    int32 Code = 1;
+    string Message = 2;
 }
 
 message UpdateBarcodeReq {
-    Barcode barcode = 1;
+    Barcode Barcode = 1;
 }
 
 message UpdateBarcodeResp {
-    int32 code = 1;
-    string message = 2;
+    int32 Code = 1;
+    string Message = 2;
 }
 
 message DeleteBarcodeReq {
-    uint64 barcodeID = 1;
+    uint64 BarcodeID = 1;
 }
 
 message DeleteBarcodeResp {
-    int32 code = 1;
-    string message = 2;
+    int32 Code = 1;
+    string Message = 2;
 }
 
 // ----------------- Borrow Form ------------------
@@ -168,9 +173,9 @@ message SelectAllBorrowFormReq {
 }
 
 message SelectAllBorrowFormResp {
-    int32 code = 1;
-    string message = 2;
-    repeated BorrowForm borrowForms = 3 [(gogoproto.nullable) = true];
+    int32 Code = 1;
+    string Message = 2;
+    repeated BorrowForm BorrowForms = 3 [(gogoproto.nullable) = true];
 }
 
 message SelectAllUnReturnBorrowFormReq {
@@ -178,9 +183,9 @@ message SelectAllUnReturnBorrowFormReq {
 }
 
 message SelectAllUnReturnBorrowFormResp {
-    int32 code = 1;
-    string message = 2;
-    repeated BorrowForm borrowForms = 3 [(gogoproto.nullable) = true];
+    int32 Code = 1;
+    string Message = 2;
+    repeated BorrowForm BorrowForms = 3 [(gogoproto.nullable) = true];
 }
 
 message SelectBorrowFormByIDReq {
@@ -188,29 +193,68 @@ message SelectBorrowFormByIDReq {
 }
 
 message SelectBorrowFormByIDResp {
-    int32 code = 1;
-    string message = 2;
-    BorrowForm borrowform = 3 [(gogoproto.nullable) = true]; 
+    int32 Code = 1;
+    string Message = 2;
+    BorrowForm Borrowform = 3 [(gogoproto.nullable) = true]; 
 }
 
 message SaveBorrowFormReq {
-    BorrowForm borrowform = 1;
+    BorrowForm Borrowform = 1;
 }
 
 message SaveBorrowFormResp {
-    int32 code = 1;
-    string message = 2;
+    int32 Code = 1;
+    string Message = 2;
 }
 
 message DeleteBorrowFormReq {
-    uint64 borrowFormID = 1;
+    uint64 BorrowFormID = 1;
 }
 
 message DeleteBorrowFormResp {
-    int32 code = 1;
-    string message = 2;
+    int32 Code = 1;
+    string Message = 2;
 }
 
+// ----------------- Payment ------------------
+message SelectAllPaymentReq {
+
+}
+
+message SelectAllPaymentResp {
+    int32 Code = 1;
+    string Message = 2;
+    repeated Payment Payments = 3 [(gogoproto.nullable) = true];
+}
+
+message SelectPaymentByIDReq {
+    uint64 PaymentID = 1;
+}
+
+message SelectPaymentByIDResp {
+    int32 Code = 1;
+    string Message = 2;
+    Payment Payment = 3 [(gogoproto.nullable) = true];
+}
+
+message SelectPaymentByBorrowFormIDReq {
+    uint64 BorrowFormID = 1;
+}
+
+message SelectPaymentByBorrowFormIDResp {
+    int32 Code = 1;
+    string Message = 2;
+    repeated Payment Payment = 3 [(gogoproto.nullable) = true];
+}
+
+message SavePaymentReq {
+    Payment Payment = 1;
+}
+
+message SavePaymentResp {
+    int32 Code = 1;
+    string Message = 2;
+}
 // ----------------- Sale Bill ------------------
 
 message SelectAllSaleBillReq {
@@ -218,35 +262,35 @@ message SelectAllSaleBillReq {
 }
 
 message SelectAllSaleBillResp {
-    int32 code = 1;
-    string message = 2;
-    repeated SaleBill saleBills = 3 [(gogoproto.nullable) = true];
+    int32 Code = 1;
+    string Message = 2;
+    repeated SaleBill SaleBills = 3 [(gogoproto.nullable) = true];
 }
 
 message SelectAllSaleBillByIDReq {
-    uint64 saleBillID = 1;
+    uint64 SaleBillID = 1;
 }
 
 message SelectAllSaleBillByIDResp {
-    int32 code = 1;
-    string message = 2;
-    repeated SaleBill saleBills = 3 [(gogoproto.nullable) = true];
+    int32 Code = 1;
+    string Message = 2;
+    repeated SaleBill SaleBills = 3 [(gogoproto.nullable) = true];
 }
 
 message SaveSaleBillReq {
-    SaleBill saleBill = 1;
+    SaleBill SaleBill = 1;
 }
 
 message SaveSaleBillResp {
-    int32 code = 1;
-    string message = 2;
+    int32 Code = 1;
+    string Message = 2;
 }
 
 message DeleteSaleBillReq {
-    uint64 saleBillID = 1; 
+    uint64 SaleBillID = 1; 
 }
 
 message DeleteSaleBillResp {
-    int32 code = 1;
-    string message = 2;
+    int32 Code = 1;
+    string Message = 2;
 }
