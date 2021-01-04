@@ -22,7 +22,7 @@ const (
 
 	sqlSelectAllSaleBill  = "SELECT * FROM sale_bill"
 	sqlSelectSaleBillByID = "SELECT * FROM sale_bill WHERE sale_bill_id = ?"
-	sqlInsertSaleBill     = "INSERT INTO sale_bill(sale_bill_id, barcode_id, sale_price) VALUES (?,?,?)"
+	sqlInsertSaleBill     = "INSERT INTO sale_bill(sale_bill_id, librarian_id,barcode_id, sale_price) VALUES (?,?,?,?)"
 
 	sqlSelectAllBorrowForm           = "SELECT * FROM borrow_form"
 	sqlSelectAllUnreturnedBorrowForm = "SELECT * FROM borrow_form WHERE status <> 3"
@@ -32,7 +32,7 @@ const (
 
 	sqlSelectAllPayment            = "SELECT * FROM payments"
 	sqlSelectPaymentByID           = "SELECT * FROM payments WHERE payments_id = ?"
-	sqlInsertPayment               = "INSERT INTO payments(payments_id, borrow_form_id, barcode_id, barcode_status, money) VALUES (?,?,?,?,?)"
+	sqlInsertPayment               = "INSERT INTO payments(payments_id, librarian_id,borrow_form_id, barcode_id, barcode_status, money) VALUES (?,?,?,?,?,?)"
 	sqlSelectPaymentByBorrowFormID = "SELECT * FROM payments WHERE borrow_form_id = ?"
 )
 
@@ -220,7 +220,7 @@ func InsertSaleBill(ctx context.Context, db *mssqlx.DBs, saleBill *docmanagerMod
 		return
 	}
 
-	_, err = db.Exec(sqlInsertPayment, saleBill.ID, barcode, price)
+	_, err = db.Exec(sqlInsertSaleBill, saleBill.ID, saleBill.LibrarianID, barcode, price)
 	return
 }
 
@@ -337,7 +337,7 @@ func InsertBorrowForm(ctx context.Context, db *mssqlx.DBs, borrowForm *docmanage
 		return
 	}
 
-	_, err = db.Exec(sqlInsertPayment, borrowForm.ID, borrowForm.LibrarianID, borrowForm.Status, barcode, borrowForm.StartTime, borrowForm.EndTime)
+	_, err = db.Exec(sqlInsertBorrowForm, borrowForm.ID, borrowForm.LibrarianID, borrowForm.Status, barcode, borrowForm.StartTime, borrowForm.EndTime)
 
 	return
 }
@@ -350,6 +350,9 @@ func UpdateBorrowFormStatus(ctx context.Context, db *mssqlx.DBs, borrowFormID ui
 	_, err = db.Exec(sqlUpdateBorrowFormStatus, status, borrowFormID)
 	return
 }
+
+// ---------------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------- Payment ----------------------------------------------------------
 
 func SelectAllPayment(ctx context.Context, db *mssqlx.DBs) (result []*docmanagerModel.Payment, err error) {
 	if db == nil {
@@ -386,9 +389,6 @@ func SelectAllPayment(ctx context.Context, db *mssqlx.DBs) (result []*docmanager
 	}
 	return
 }
-
-// ---------------------------------------------------------------------------------------------------------------------------
-// -------------------------------------------------------- Payment ----------------------------------------------------------
 
 func SelectPaymentByID(ctx context.Context, db *mssqlx.DBs, paymentsID uint64) (result *docmanagerModel.Payment, err error) {
 	if db == nil {
@@ -486,7 +486,7 @@ func InsertPayment(ctx context.Context, db *mssqlx.DBs, payment *docmanagerModel
 		return
 	}
 
-	_, err = db.Exec(sqlInsertPayment, payment.ID, payment.BorrowFormID, barcode, barcodestatus, money)
+	_, err = db.Exec(sqlInsertPayment, payment.ID, payment.LibrarianID, payment.BorrowFormID, barcode, barcodestatus, money)
 
 	return
 }
