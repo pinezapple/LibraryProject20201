@@ -274,7 +274,7 @@ func SelectDocVerFromCacheByBarcode(ctx context.Context, db *mssqlx.DBs, barcode
 	return
 }
 
-func SaveDocverToCache(ctx context.Context, db *mssqlx.DBs, barcode, docver uint64) (err error) {
+func SaveDocverToCache(ctx context.Context, db *mssqlx.DBs, barcode uint64, docver string) (err error) {
 	// Validate input
 	if db == nil {
 		err = core.ErrDBObjNull

@@ -621,7 +621,6 @@ func saveDocumentByBatch(c echo.Context, request interface{}) (statusCode int, d
 	}
 
 	// SAVE BARCODES TO DOCMANAGER
-	// get Shard for barcode by documentVersion
 	shardService := microservice.GetDocmanagerShardServices()
 	if shardService == nil {
 		fmt.Println("nil shardService")
@@ -661,8 +660,14 @@ func saveDocumentByBatch(c echo.Context, request interface{}) (statusCode int, d
 			statusCode, err = http.StatusInternalServerError, fmt.Errorf("grpc Error")
 			return
 		}
-		respBarcodeIDs = append(respBarcodeIDs, saveBarcodes[i].Barcode.ID)
+		respBarcodeIDs[i] = saveBarcodes[i].Barcode.ID
 
+		// Save to cache: Barcode - DocVer
+		//FIXME: change to cache
+		if er := cache.SaveDocverToCache(ctx, core.GetDB(), saveBarcodes[i].Barcode.ID, saveBarcodes[i].Barcode.DocVer); err != nil {
+			statusCode, err = http.StatusInternalServerError, er
+			return
+		}
 	}
 
 	return http.StatusOK, respBarcodeIDs, lg, false, nil
