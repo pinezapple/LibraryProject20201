@@ -14,6 +14,8 @@ type RespBarcodeOverview struct {
 	Status    uint64 `json:"status"`
 	DocName   string `json:"doc_name"`
 	Author    string `json:"author"`
+	Fee       uint64 `json:"fee"`
+	Price     uint64 `json:"price"`
 }
 
 type SelectAllAvailableBarcodeReq struct {
@@ -88,6 +90,14 @@ type SelectBorrowFormByIDResp struct {
 // ----------------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------- PAYMENTS ----------------------------------------------------------
 
+type SelectAllPaymentResp struct {
+	PaymentID    uint64      `json:"payment_id"`
+	BorrowFormID uint64      `json:"borrow_form_id"`
+	TotalMoney   uint64      `json:"total_money"`
+	LibrarianID  uint64      `json:"librarian_id"`
+	CreatedAt    *model.Time `json:"created_at"`
+}
+
 type RespBarcodePaymentOverview struct {
 	BarcodeID uint64 `json:"barcode_id"`
 	Status    uint64 `json:"status"`
@@ -96,24 +106,41 @@ type RespBarcodePaymentOverview struct {
 }
 
 type SelectPaymentByIDReq struct {
-	PaymentID uint64 `json:"payment_id"`
+	PaymentID    uint64 `json:"payment_id"`
+	BorrowFormID uint64 `json:"borrow_form_id"`
 }
 
 type SelectPaymentByIDResp struct {
 	PaymentID    uint64                        `json:"payment_id"`
 	BorrowFormID uint64                        `json:"borrow_form_id"`
-	TotalMoney   uint64                        `json:"TotalMoney"`
+	LibrarianID  uint64                        `json:"librarian_id"`
+	TotalMoney   uint64                        `json:"total_money"`
 	Barcodes     []*RespBarcodePaymentOverview `json:"barcodes"`
 }
 
 // ------------------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------- SALE BILLS ----------------------------------------------------------
+type SelectAllSaleBillResp struct {
+	SaleBillID  uint64 `json:"sale_bill_id"`
+	LibrarianID uint64 `json:"librarian_id"`
+	TotalMoney  uint64 `json:"total_money"`
+}
+
+type SaleBillDetail struct {
+	BarcodeID uint64 `json:"barcode_id"`
+	DocName   string `json:"doc_name"`
+	Money     uint64 `json:"money"`
+}
 
 type SelectSaleBillByIDReq struct {
 	SaleBillID uint64 `json:"sale_bill_id"`
 }
 
 type SelectSaleBillByIDResp struct {
+	SaleBillID    uint64            `json:"sale_bill_id"`
+	LibrarianID   uint64            `json:"librian_id"`
+	TotalMoney    uint64            `json:"total_money"`
+	BarcodeDetail []*SaleBillDetail `json:"barcodes"`
 }
 
 // ------------------------------------------------------------------------------------------------------------------------

@@ -28,6 +28,9 @@ const (
 	sqlSelectAuthorByID = "SELECT * FROM authors WHERE author_id = ?"
 	sqlSelectAuthorID   = "SELECT author_id FROM authors WHERE author_name = ?"
 	sqlInsertAuthor     = "INSERT INTO authors(author_id, author_name, description) VALUES (?,?,?)"
+
+	sqlSelectDocverFromCache = "SELECT document_version FROM barcode_cache WHERE barcode_id = ?"
+	sqlInsertDocverToCache   = "INSERT INTO barcode_cache(barcore_id, document_version) VALUES (?,?)"
 )
 
 type IDocDAO interface {
@@ -50,6 +53,8 @@ type IDocDAO interface {
 	SelectAuthorByID(ctx context.Context, db *mssqlx.DBs, id uint64) (result *model.AuthorDAOobj, err error)
 	SelectAuthorID(ctx context.Context, db *mssqlx.DBs, authorName string) (authorID uint64, err error)
 	SaveAuthor(ctx context.Context, db *mssqlx.DBs, aut *model.AuthorDAOobj) (err error)
+
+	SelectDocVerFromCacheByBarcode(ctx context.Context, db *mssqlx.DBs, barcodeID string) (docver string, err error)
 }
 
 type DocCacheDAO struct{}
@@ -255,5 +260,26 @@ func SaveAuthor(ctx context.Context, db *mssqlx.DBs, aut *model.AuthorDAOobj) (e
 		return
 	}
 	_, err = db.ExecContext(ctx, sqlInsertAuthor, aut.AuthorID, aut.AuthorName, aut.Description)
+	return
+}
+
+func SelectDocVerFromCacheByBarcode(ctx context.Context, db *mssqlx.DBs, barcodeID uint64) (docver string, err error) {
+	// Validate input
+	if db == nil {
+		err = core.ErrDBObjNull
+		return
+	}
+
+	err = db.GetContext(ctx, docver, sqlSelectDocverFromCache, barcodeID)
+	return
+}
+
+func SaveDocverToCache(ctx context.Context, db *mssqlx.DBs, barcode, docver uint64) (err error) {
+	// Validate input
+	if db == nil {
+		err = core.ErrDBObjNull
+		return
+	}
+	_, err = db.ExecContext(ctx, sqlInsertDocverToCache, barcode, docver)
 	return
 }
