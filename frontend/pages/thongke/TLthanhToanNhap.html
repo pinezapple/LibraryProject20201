@@ -350,8 +350,17 @@
       let price = `${doc.doc_price}`
       let date = `${doc.created_at}`
       let status = `${doc.doc_status}`
+      let statusData;
 
-      data.push (docId,barcode,docName,author,edition,type,publisher,date,status,price)
+     if(status ==0){
+      statusData = "Nguyên vẹn";
+     }else if(status == 1){
+      statusData = "Hư hỏng";
+     }else{
+      statusData ="Đang thanh lý";
+     }
+
+      data.push (docId,barcode,docName,author,edition,type,publisher,date,statusData,price)
 
       // add to table
       table.row.add(data).draw()

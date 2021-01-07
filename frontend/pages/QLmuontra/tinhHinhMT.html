@@ -443,7 +443,7 @@
       // get all borrow form data
     
       let borrowId = `${form.id}`
-      let readerId= `${form.id_reader}`
+      let readerId= `${form.reader_id}`
       let reader = `${form.reader}`
       let librarian = `${form.librarian}`
       let status = `${form.borrow_status}` //return a number
@@ -481,11 +481,11 @@ $('#datatable-basic tbody').on( 'click', 'button', function () {
   .then(response => response.json())
   .then(obj =>{
       let borrowFormId = obj.id
-      let readerId = obj.id_reader
+      let readerId = obj.reader_id
       let duration = obj.duration
       let borrowStatus = obj.borrow_status
       let fine = obj.fee
-      let docs = obj.docs
+      let docs = obj.barcode_update
       
 
         // add value to input field

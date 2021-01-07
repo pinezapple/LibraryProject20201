@@ -493,7 +493,7 @@
        'Content-Type': 'application/json',
       //  Authorization: "Bearer " + token,
       },
-      body:JSON.stringify({id_reader: reader, id_librarian: librarian, docs:arrayId, duration: duration,borrow_status:1})
+      body:JSON.stringify({reader_id: reader, librarian_id: librarian, barcodes:arrayId, borrow_days: duration})
      
   }
   ).then((res) => res.json())

@@ -335,6 +335,14 @@
                                   <option value="1">Đang mượn</option>
                                   <option value="2">Quá hạn</option>
                                 </select>
+                          </div>
+                        </div>
+
+                        <div class="col">
+                          <div class="form-group">
+                            
+                              <label class="form-control-label">Phí muộn (nếu có)</label>
+                              <input class="form-control" placeholder="phí muộn" id='fee' type="number" min="1" readonly>
                             
                           </div>
                         </div>
@@ -363,9 +371,9 @@
                           <div class="form-group">
                             <div class="input-group mb-3">
                               <input type="text" class="form-control" placeholder="Tổng tiền" id='totalFine'>
-                              <div class="input-group-append">
+                              <!-- <div class="input-group-append">
                                 <button class="btn btn-primary" type="button" onclick="subtotal()">Cập nhật</button>
-                              </div>
+                              </div> -->
                             </div>
                             
                           </div>
@@ -449,9 +457,9 @@ fetch (url,  {
       // get borrow form data
     
       let borrowId = `${form.id}`
-      let readerId= `${form.id_reader}`
+      let readerId= `${form.reader_id}`
       let reader = `${form.reader}`
-      let librarianId = `${form.id_librarian}`
+      let librarianId = `${form.librarian_id}`
       // let librarian = `${form.librarian}`
       let status = `${form.borrow_status}`
       let fee = `${form.fee}`
@@ -488,11 +496,11 @@ $('#datatable-basic tbody').on( 'click', 'button', function () {
   .then(response => response.json())
   .then(obj =>{
       let borrowFormId = obj.id
-      let readerId = obj.id_reader
+      let readerId = obj.reader_id
       let duration = obj.duration
       let borrowStatus = obj.borrow_status
       let fine = obj.fee
-      let docs = obj.docs
+      let docs = obj.barcode_update
 
         // add value to input field
       $("#borrowId").val(borrowFormId)
@@ -500,8 +508,9 @@ $('#datatable-basic tbody').on( 'click', 'button', function () {
       $("#duration").val(duration)
       $("#status").val(borrowStatus)
       $("#totalFine").val(fine)
+      $("#fee").val(fine)
 
-        for (let i = 0; i < docs.length; i++){
+      for (let i = 0; i < docs.length; i++){
         
         let formRow = document.createElement("div")
         formRow.setAttribute('class','form-row')
@@ -538,25 +547,36 @@ $('#datatable-basic tbody').on( 'click', 'button', function () {
     
     $("#modal-form").on('hide.bs.modal', function(){
       let div = document.querySelectorAll("#newRow")
-  for (let j=0; j< div.length;j++){
-    div[j].remove()
-  }
-  });
+      for (let j=0; j< div.length;j++){
+        div[j].remove()
+      }
+    });
+
+    $('#modal-form').on('shown.bs.modal', function (e) {
+      let currentFee = parseInt(document.getElementById('fee').value,10)
+      let fees = document.querySelectorAll('#fine')
+      fees.forEach(fee => {
+        fee.addEventListener('focusout',(event)=>{
+          currentFee += parseInt(fee.value)
+          document.getElementById('totalFine').value = currentFee
+        })
+      })
+    })
 
   function createReturnForm(){
      let arr =[]
      let borrowId = parseInt(document.getElementById('borrowId').value,10)
-     let borrowFormUrl = 'http://localhost:3000/returned_form/' + borrowId
-     let borrowStatus = document.getElementById('status').value
+     let borrowStatus = parseInt(document.getElementById('status').value,10)
      let barcodeIds = document.querySelectorAll('#barcode')
      let docStatus = document.querySelectorAll('#docStatus')
      let fines = document.querySelectorAll('#fine')
+     let borrowFormUrl = 'http://localhost:3000/updated_borrow_form/' + borrowId
 
      for (i=0; i< barcodeIds.length; i++){
-       let doc = {"barcode": barcodeIds[i].value, "doc_status": docStatus[i].value, "doc_fine": fines[i].value}
+       let doc = {"barcode_id": parseInt(barcodeIds[i].value,10), "barcode_status": parseInt(docStatus[i].value,10), "fee": parseInt(fines[i].value,10)}
        arr.push(doc)
      }
-    //  console.log(arr)
+    
      fetch(borrowFormUrl,
     {
     method: 'PUT',
@@ -565,13 +585,12 @@ $('#datatable-basic tbody').on( 'click', 'button', function () {
        'Content-Type': 'application/json',
       //  Authorization: "Bearer " + token,
       },
-      body:JSON.stringify({id: borrowId, docs:arr, borrow_status: borrowStatus})
+      body:JSON.stringify({id: borrowId, status: borrowStatus, barcode_update:arr})
     }
     ).then((res) => res.json())
     .then(result => alert("Đã cập nhật trả tài liệu", result))
     .then(result =>  window.location.replace('traTL.html'))
     .catch((err)=>{alert("Đã xảy ra lỗi",err); console.log(err)})
-
    }
 
   </script>

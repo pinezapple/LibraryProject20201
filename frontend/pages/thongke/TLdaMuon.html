@@ -310,7 +310,8 @@
   <!-- Demo JS - remove this in your project -->
   <script src="../../assets/js/demo.min.js"></script>
   <script>
-     var table = $('#datatable-buttons').DataTable();
+    var table = $('#datatable-buttons').DataTable();
+    let arr = [{'0': "Đã trả"},{'1': "Đang mượn"},{'2':'Quá hạn'}]
     let url ='http://localhost:3000/doc_returned'
     fetch (url,
   {
@@ -330,11 +331,15 @@
       let borrowId = `${doc.borrow_id}`
       let idUser= `${doc.id_user}`
       let nameUser = `${doc.name_user}`
-      let docStatus = `${doc.doc_status}`
+      let status = `${doc.doc_status}`
       let docDate = `${doc.doc_date}`
       let fee = `${doc.fee}`
+
+      // replace number value of borrow form status
+      let stage = status.toString()
+      let borrowStatus = arr[stage][status]
      
-      data.push (borrowId,idUser,nameUser,docStatus,docDate,fee)
+      data.push (borrowId,idUser,nameUser,borrowStatus,docDate,fee)
       // add to table
       table.row.add(data).draw()
     })
