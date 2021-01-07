@@ -270,7 +270,7 @@ func SelectDocVerFromCacheByBarcode(ctx context.Context, db *mssqlx.DBs, barcode
 		return
 	}
 
-	err = db.GetContext(ctx, docver, sqlSelectDocverFromCache, barcodeID)
+	err = db.GetContext(ctx, &docver, sqlSelectDocverFromCache, barcodeID)
 	return
 }
 

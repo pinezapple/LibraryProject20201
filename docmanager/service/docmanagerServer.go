@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/pinezapple/LibraryProject20201/docmanager/core"
 	"github.com/pinezapple/LibraryProject20201/docmanager/dao"
@@ -162,6 +163,7 @@ func (d *docManagerSrv) SelectBorrowFormByID(ctx context.Context, req *docmanage
 		logger.LogErr(d.lg, err)
 		return &docmanagerModel.SelectBorrowFormByIDResp{Code: 1, Message: err.Error()}, err
 	}
+	fmt.Println(borrowForm)
 
 	logger.LogInfo(d.lg, "RPC Resp: Select borrow form by ID OK")
 	return &docmanagerModel.SelectBorrowFormByIDResp{Code: 0, Borrowform: borrowForm}, nil

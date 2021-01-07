@@ -101,19 +101,42 @@ func WebServer(ctx context.Context) (fn model.Daemon, err error) {
 }
 
 func initDocRouter(e *echo.Echo) {
-	d := e.Group("/doc")
-	d.POST("/save", doc.SaveDoc)
-	d.POST("/delete", doc.DelDoc)
-	d.POST("/update", doc.UpdateDoc)
-	d.POST("/alldoc", doc.SelectAllDoc)
-	d.POST("/alldoc0", doc.SelectAllDoc0)
-	d.POST("/onedoc", doc.SelectDocByID)
+	e.POST("/document/create", doc.SaveDocumentByBatch)
 
-	d.POST("/saveForm", doc.SaveForm)
-	d.POST("/allform", doc.SelectAllForm)
-	d.POST("/oneform", doc.SelectFormByID)
+	d := e.Group("/barcode")
+	d.POST("/avail", doc.SelectAllAvailableBarcode)
+	d.POST("/selling", doc.SelectAllSellingBarcode)
+	d.POST("/damaged", doc.SelectAllDamagedBarcode)
+	d.POST("/detail", doc.SelectBarcodeByID)
 
-	d.POST("/updateStatus", doc.UpdateStatus)
+	f := e.Group("/borrow")
+	f.POST("/all", doc.SelectAllBorrowForm)
+	f.POST("/unreturned", doc.SelectAllNotReturnedBorrowForm)
+	f.POST("/detail", doc.SelectBorrowFormByID)
+	f.POST("/save", doc.CreateBorrowForm)
+
+	g := e.Group("/payment")
+	g.POST("/all", doc.SelectAllPayment)
+	g.POST("/detail", doc.SelectPaymentByID)
+
+	h := e.Group("/salebill")
+	h.POST("/all", doc.SelectAllSaleBill)
+	h.POST("/detail", doc.SelectSaleBillByID)
+
+	/*
+		d.POST("/save", doc.SaveDoc)
+		d.POST("/delete", doc.DelDoc)
+		d.POST("/update", doc.UpdateDoc)
+		d.POST("/alldoc", doc.SelectAllDoc)
+		d.POST("/alldoc0", doc.SelectAllDoc0)
+		d.POST("/onedoc", doc.SelectDocByID)
+
+		d.POST("/saveForm", doc.SaveForm)
+		d.POST("/allform", doc.SelectAllForm)
+		d.POST("/oneform", doc.SelectFormByID)
+
+		d.POST("/updateStatus", doc.UpdateStatus)
+	*/
 }
 
 func initUserRouter(e *echo.Echo) {

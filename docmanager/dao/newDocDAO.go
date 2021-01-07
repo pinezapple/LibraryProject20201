@@ -3,6 +3,7 @@ package dao
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 
 	"github.com/linxGnu/mssqlx"
 	"github.com/pinezapple/LibraryProject20201/docmanager/core"
@@ -323,6 +324,7 @@ func SelectBorrowFormByID(ctx context.Context, db *mssqlx.DBs, borrowFormID uint
 		CreatedAt:   tempResp.CreatedAt,
 		UpdatedAt:   tempResp.UpdatedAt,
 	}
+	fmt.Println(result)
 
 	return
 }
@@ -337,7 +339,7 @@ func InsertBorrowForm(ctx context.Context, db *mssqlx.DBs, borrowForm *docmanage
 		return
 	}
 
-	_, err = db.Exec(sqlInsertBorrowForm, borrowForm.ID, borrowForm.LibrarianID, borrowForm.Status, barcode, borrowForm.StartTime, borrowForm.EndTime)
+	_, err = db.Exec(sqlInsertBorrowForm, borrowForm.ID, borrowForm.LibrarianID, barcode, borrowForm.Status, borrowForm.StartTime, borrowForm.EndTime)
 
 	return
 }

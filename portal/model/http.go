@@ -1,8 +1,6 @@
 package model
 
 import (
-	"time"
-
 	"github.com/pinezapple/LibraryProject20201/skeleton/model"
 	"github.com/pinezapple/LibraryProject20201/skeleton/model/docmanagerModel"
 )
@@ -84,8 +82,8 @@ type SelectBorrowFormByIDResp struct {
 	LibrarianID  uint64                 `json:"librarian_id"`
 	Status       uint64                 `json:"status"`
 	Barcodes     []*RespBarcodeOverview `json:"barcodes"`
-	StartTime    time.Time              `json:"start_time"`
-	EndTime      time.Time              `json:"end_time"`
+	StartTime    *model.Time            `json:"start_time"`
+	EndTime      *model.Time            `json:"end_time"`
 }
 
 type CreateBorrowFormReq struct {
@@ -169,4 +167,15 @@ type SelectAllViolatedUserReq struct {
 
 type SelectAllViolatedUserResp struct {
 	Users []*model.User `json:"users"`
+}
+
+type SaveDocReq struct {
+	DocName     string `json:"doc_name"`
+	Author      string `json:"author"`
+	Category    string `json:"category"`
+	Publisher   string `json:"publisher"`
+	Version     string `json:"version"`
+	Description string `json:"description"`
+	Number      uint64 `json:"number"`
+	Price       uint64 `json:"price"`
 }
