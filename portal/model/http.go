@@ -158,3 +158,14 @@ type SelectAllViolatedUserReq struct {
 type SelectAllViolatedUserResp struct {
 	Users []*model.User `json:"users"`
 }
+
+type SaveDocReq struct {
+	DocName     string `json:"doc_name"`
+	Author      string `json:"author"`
+	Category    string `json:"category"`
+	Publisher   string `json:"publisher"`
+	Version     string `json:"version"`
+	Description string `json:"description"`
+	Number      uint64 `json:"number"`
+	Price       uint64 `json:"price"`
+}

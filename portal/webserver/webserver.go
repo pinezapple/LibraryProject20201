@@ -101,6 +101,8 @@ func WebServer(ctx context.Context) (fn model.Daemon, err error) {
 }
 
 func initDocRouter(e *echo.Echo) {
+	e.POST("/document/create", doc.SaveDocumentByBatch)
+
 	d := e.Group("/barcode")
 	d.POST("/avail", doc.SelectAllAvailableBarcode)
 	d.POST("/selling", doc.SelectAllSellingBarcode)
@@ -111,6 +113,7 @@ func initDocRouter(e *echo.Echo) {
 	f.POST("/all", doc.SelectAllBorrowForm)
 	f.POST("/unreturned", doc.SelectAllNotReturnedBorrowForm)
 	f.POST("/detail", doc.SelectBorrowFormByID)
+	f.POST("/save", doc.CreateBorrowForm)
 
 	g := e.Group("/payment")
 	g.POST("/all", doc.SelectAllPayment)

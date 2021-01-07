@@ -1,8 +1,6 @@
 package doc
 
 import (
-	"fmt"
-
 	"github.com/labstack/echo"
 	"github.com/pinezapple/LibraryProject20201/portal/controller"
 	portalModel "github.com/pinezapple/LibraryProject20201/portal/model"
@@ -53,6 +51,9 @@ func SelectSaleBillByID(c echo.Context) (erro error) {
 }
 
 func SaveDocumentByBatch(c echo.Context) (erro error) {
-	fmt.Println("In Save Document By Batch")
-	return
+	return controller.ExecHandler(c, &portalModel.SaveDocReq{}, saveDocumentByBatch)
+}
+
+func CreateBorrowForm(c echo.Context) (erro error) {
+	return controller.ExecHandler(c, &portalModel.CreateBorrowFormReq{}, createBorrowForm)
 }

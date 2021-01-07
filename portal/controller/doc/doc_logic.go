@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/google/uuid"
 	"github.com/labstack/echo"
 	"github.com/pinezapple/LibraryProject20201/portal/core"
 	"github.com/pinezapple/LibraryProject20201/portal/dao/cache"
@@ -750,10 +751,9 @@ func selectSaleBillByID(c echo.Context, request interface{}) (statusCode int, da
 	return
 }
 
-/*
 func saveDocumentByBatch(c echo.Context, request interface{}) (statusCode int, data interface{}, lg *model.LogFormat, logResponse bool, err error) {
 	fmt.Println("in saveDocumentByBatch")
-	req := request.(*reqSaveDoc)
+	req := request.(*portalModel.SaveDocReq)
 	ctx := c.Request().Context()
 	lg = &model.LogFormat{
 		Source: c.Request().RemoteAddr,
@@ -875,4 +875,3 @@ func saveDocumentByBatch(c echo.Context, request interface{}) (statusCode int, d
 
 	return http.StatusOK, respBarcodeIDs, lg, false, nil
 }
-*/

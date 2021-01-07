@@ -39,7 +39,7 @@ CREATE TABLE `barcodes` (
 CREATE TABLE `borrow_form` (
   `borrow_form_id` bigint(20),
   `librarian_id` bigint(20),
-  `barcode_id` bigint(20),
+  `barcode_id` BLOB,
   `status` bigint(20),
   `borrow_start_time` timestamp DEFAULT CURRENT_TIMESTAMP,
   `borrow_end_time` timestamp,
@@ -48,11 +48,11 @@ CREATE TABLE `borrow_form` (
 ) Engine=InnoDB;
 
 CREATE TABLE `payments` (
-  `payments_id` bigint(20),
+  `payment_id` bigint(20),
   `borrow_form_id` bigint(20),
   `barcode_id` BLOB, 
   `barcode_status` BLOB,
-  `price` BLOB, 
+  `money` BLOB, 
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) Engine=InnoDB;
@@ -76,7 +76,6 @@ CREATE TABLE `authors` (
 CREATE TABLE `sale_bill` (
   `sale_bill_id` bigint(20),
   `barcode_id` BLOB,
-  `sale_price` BLOB,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `price` BLOB,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) Engine=InnoDB;
