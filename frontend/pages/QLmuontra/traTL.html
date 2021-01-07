@@ -237,7 +237,6 @@
                     <th>Mã phiếu mượn</th>
                     <th>Mã độc giả</th>
                     <th>Độc giả</th>
-                    <th>Người cho mượn</th>
                     <th>Tình trạng mượn</th>
                     <th>Phí</th>
                     <th></th>
@@ -248,7 +247,6 @@
                     <th>Mã phiếu mượn</th>
                     <th>Mã độc giả</th>
                     <th>Độc giả</th>
-                    <th>Người cho mượn</th>
                     <th>Tình trạng mượn</th>
                     <th>Phí</th>
                     <th></th>
@@ -296,76 +294,91 @@
 <!--* Modal footer *-->
 <!--* Modal init *-->
 <div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
-  <div class="modal-dialog modal- modal-dialog-centered modal-sm" role="document">
+  <div class="modal-dialog modal- modal-dialog-centered modal-lg" role="document">
       <div class="modal-content">
-        
         <div class="modal-body p-0">
               <div class="card bg-secondary border-0 mb-0">
                 <div class="card-body px-lg-5 py-lg-5">
                     <div class="text-center text-muted mb-4">
-                        <small>Chỉnh sửa</small>
+                        <small>Cập nhật phiếu mượn</small>
                     </div>
-                    <form role="form">
-                      <div class="form-group mb-3">
-                        <div class="input-group input-group-merge input-group-alternative">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="ni ni-ungroup"></i></span>
-                            </div>
-                            <input class="form-control" id="formId" placeholder="Mã phiếu mượn" type="text" readonly>
+                    <form role="form" id='borrowForm'>
+                      <div class="form-row" id="personalInfo">
+                        <div class="col">
+                          <div class="form-group">
+                            <label class="form-control-label">Mã phiếu mượn</label>
+                            <input type="text" class="form-control" id="borrowId" placeholder="Mã phiếu mượn" readonly>
+                          </div>
                         </div>
+                        <div class="col">
+                          <div class="form-group">
+                            <label class="form-control-label">Mã độc giả</label>
+                            <input type="text" class="form-control" id="userId" placeholder="Mã độc giả" readonly>
+                            
+                          </div>
+                        </div>
+                        <div class="col">
+                          <div class="form-group">
+                            
+                              <label class="form-control-label">Số ngày mượn</label>
+                              <input class="form-control" placeholder="Số ngày mượn" id='duration' type="number" min="1" readonly>
+                            
+                          </div>
+                        </div>
+    
+                        <div class="col">
+                          <div class="form-group">
+                            
+                                <label class="form-control-label">Tình trạng mượn</label>
+                                <select class="form-control" id= "status" data-toggle="select" title="Tình trạng mượn" data-live-search="true" data-live-search-placeholder="Select">
+                                  <option value="0">Đã trả</option>
+                                  <option value="1">Đang mượn</option>
+                                  <option value="2">Quá hạn</option>
+                                </select>
+                            
+                          </div>
+                        </div>
+    
+                      </div>
+                      <!-- Document Info-->
+                      <div class="col-lg-8">
+                        <p class="mb-0">
+                          Thông tin tài liệu
+                          <br /><br />
+                        </p>
+                      </div>
+                      <div class="form-row" id="addDoc">
+                      </div>
+    
+                      <!-- Tổng cộng -->
+                     
+                      <div class='form-row', id='total'>
+                        <div class="col-lg-8">
+                          <p class="mb-0">
+                            Tổng cộng
+                            <br /><br />
+                          </p>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                          <div class="form-group">
+                            <div class="input-group mb-3">
+                              <input type="text" class="form-control" placeholder="Tổng tiền" id='totalFine'>
+                              <div class="input-group-append">
+                                <button class="btn btn-primary" type="button" onclick="subtotal()">Cập nhật</button>
+                              </div>
+                            </div>
+                            
+                          </div>
+                        </div>
+                        
+                      </div>
+    
+                      <!-- button -->
+                    <div class="form-row" id="formButton">
+                      <button class="btn btn-primary" type="button" onclick="createReturnForm()" >Tạo phiếu trả</button>
+                      <button type="button" class="btn btn-danger" style="position: absolute; right: 3rem;" data-dismiss="modal">Hủy</button>
                     </div>
-                        <div class="form-group mb-3">
-                            <div class="input-group input-group-merge input-group-alternative">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="ni ni-book-bookmark"></i></span>
-                                </div>
-                                <input class="form-control" id="docId" placeholder="Mã tài liệu" type="text" readonly>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group input-group-merge input-group-alternative">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="ni ni-books"></i></span>
-                                </div>
-                                <input class="form-control" id="name" placeholder="Tên tài liệu" type="text" readonly>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                          <div class="input-group input-group-merge input-group-alternative">
-                              <div class="input-group-prepend">
-                                  <span class="input-group-text"><i class="fas fa-users"></i></span>
-                              </div>
-                              <input class="form-control" id="userId" placeholder="Độc giả" type="text"readonly>
-                          </div>
-                        </div>
-                        <div class="form-group">
-                          <div class="input-group input-group-merge input-group-alternative">
-                              <div class="input-group-prepend">
-                                  <span class="input-group-text"><i class="ni ni-folder-17"></i></span>
-                              </div>
-                              <select class="form-control" id= "borrowStatus" data-toggle="select" title="Tình trạng mượn" data-live-search="true" data-live-search-placeholder="Select">
-                                <option value="0">Đã trả</option>
-                                <option value="1">Đang mượn</option>
-                                <option value="2">Quá hạn</option>
-                                <option value="3">Hủy</option>
-                              </select>
-                          </div>
-                        </div>
-                        <div class="form-group">
-                          <div class="input-group input-group-merge input-group-alternative">
-                              <div class="input-group-prepend">
-                                  <span class="input-group-text"><i class="ni ni-folder-17"></i></span>
-                              </div>
-                              <select class="form-control" id= "docStatus" data-toggle="select" title="Tình trạng tài liệu" data-live-search="true" data-live-search-placeholder="Select">
-                                <option value="0">Còn nguyên vẹn</option>
-                                <option value="1">Hư hại</option>
-                              </select>
-                          </div>
-                        </div>                                   
-                        <div class="text-center">
-                            <button type="submit" id="submit" class="btn btn-primary my-4">Cập nhật</button>
-                            <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">Đóng</button>
-                        </div>
+                    
                     </form>
                 </div>
              </div> 
@@ -405,6 +418,21 @@ var table = $('#datatable-basic').DataTable();
 let arr = [{'0': "Đã trả"},{'1': "Đang mượn"},{'2':'Quá hạn'}]
 let url ='http://localhost:3000/returned_form/'
 
+
+let docIdForm ='<div class="col"><div class="form-group"> <label class="form-control-label">Mã tài liệu</label><input class="form-control" id="docId" placeholder="Mã tài liệu" type="text" disabled ></div></div>'
+let barcodeForm ='<div class="col"><div class="form-group"><label class="form-control-label">Mã vạch</label><input class="form-control" id="barcode" placeholder="Mã vạch" type="text" disabled ></div></div>'
+let docNameForm ='<div class="col"><div class="form-group"><label class="form-control-label">Tên tài liệu</label><input class="form-control" id="docName" placeholder="Tên tài liệu" type="text" disabled></div></div>'
+let authorForm ='<div class="col"><div class="form-group"><label class="form-control-label">Tác giả</label><input class="form-control" id="author" placeholder="Tác giả" type="text" disabled ></div></div> '
+let docStatus = ' <div class="col"><div class="form-group"><label class="form-control-label">Tình trạng tài liệu</label><select class="form-control" id= "docStatus" data-toggle="select" title="Tình trạng tài liệu" data-live-search="true" data-live-search-placeholder="Select"><option value="0">Nguyên vẹn</option><option value="1">Hư hỏng</option><option value="2">Làm mất</option></select></div></div>'
+let fineDoc = ' <div class="col"><div class="form-group"><label class="form-control-label">Phí</label><input class="form-control" id="fine" placeholder="Tiền phạt" value="0" type="number"></div></div>'
+
+let range = document.createRange()
+let form = document.querySelector('#borrowForm')
+let info = document.querySelector('#addDoc')
+let buttonSubmit = document.querySelector('#formButton')
+let total = document.querySelector('#total')
+
+
 fetch (url,  {
   method: 'GET',
   credentials: "omit",
@@ -424,17 +452,17 @@ fetch (url,  {
       let readerId= `${form.id_reader}`
       let reader = `${form.reader}`
       let librarianId = `${form.id_librarian}`
-      let librarian = `${form.librarian}`
+      // let librarian = `${form.librarian}`
       let status = `${form.borrow_status}`
       let fee = `${form.fee}`
-      let btn = '<button type="button" id="update" class="btn btn-info btn-sm">Chỉnh sửa</button>'
+      let btn = '<button type="button" id="update" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-form">Chỉnh sửa</button>'
       
       // replace number value of borrow form status
       let stage = status.toString()
       let borrowStatus = arr[stage][status]
       
       // push to array
-      data.push (borrowId,readerId,reader,librarian,borrowStatus,fee,btn)
+      data.push (borrowId,readerId,reader,borrowStatus,fee,btn)
 
       // add to table
       table.row.add(data).draw()
@@ -447,8 +475,104 @@ fetch (url,  {
 $('#datatable-basic tbody').on( 'click', 'button', function () {
         var data = table.row( $(this).parents('tr') ).data();
         let borrowId = data[0]
-        window.location.replace('traTLchitiet.html?id='+borrowId)
+        let borrowFormUrl = 'http://localhost:3000/returned_form/' + borrowId
+        // window.location.replace('traTLchitiet.html?id='+borrowId)
+        fetch (borrowFormUrl,  {
+  method: 'GET',
+  credentials: "omit",
+  headers: {
+     'Content-Type': 'application/json',
+    //  Authorization: "Bearer " + token,
+    },
+  })
+  .then(response => response.json())
+  .then(obj =>{
+      let borrowFormId = obj.id
+      let readerId = obj.id_reader
+      let duration = obj.duration
+      let borrowStatus = obj.borrow_status
+      let fine = obj.fee
+      let docs = obj.docs
+
+        // add value to input field
+      $("#borrowId").val(borrowFormId)
+      $("#userId").val(readerId)
+      $("#duration").val(duration)
+      $("#status").val(borrowStatus)
+      $("#totalFine").val(fine)
+
+        for (let i = 0; i < docs.length; i++){
+        
+        let formRow = document.createElement("div")
+        formRow.setAttribute('class','form-row')
+        formRow.setAttribute('id','newRow')
+        form.appendChild(formRow)
+        total.parentNode.insertBefore(formRow,total)
+
+        // add input field
+        // let inputDocId = range.createContextualFragment(docIdForm)
+        // formRow.appendChild(inputDocId)
+        let inputBarcode = range.createContextualFragment(barcodeForm)
+        formRow.appendChild(inputBarcode)
+        let inputDocName = range.createContextualFragment(docNameForm)
+        formRow.appendChild(inputDocName)
+        let inputAuthor = range.createContextualFragment(authorForm)
+        formRow.appendChild(inputAuthor)
+        let inputDocStatus = range.createContextualFragment(docStatus)
+        formRow.appendChild(inputDocStatus)
+        let inputFine = range.createContextualFragment(fineDoc)
+        formRow.appendChild(inputFine)
+        
+        // add data 
+        // formRow.querySelector("#docId").value = docs[i]["id_doc"]
+        formRow.querySelector("#barcode").value = docs[i]["barcode"]
+        formRow.querySelector("#docName").value = docs[i]["doc_name"]
+        formRow.querySelector("#author").value = docs[i]["doc_author"]
+        // formRow.querySelector("#docStatus").value = docs[i]["doc_status"]
+      }
+  })
+  .catch(error => {
+  console.error('Error:', error);
+  });
     });
+    
+    $("#modal-form").on('hide.bs.modal', function(){
+      let div = document.querySelectorAll("#newRow")
+  for (let j=0; j< div.length;j++){
+    div[j].remove()
+  }
+  });
+
+  function createReturnForm(){
+     let arr =[]
+     let borrowId = parseInt(document.getElementById('borrowId').value,10)
+     let borrowFormUrl = 'http://localhost:3000/returned_form/' + borrowId
+     let borrowStatus = document.getElementById('status').value
+     let barcodeIds = document.querySelectorAll('#barcode')
+     let docStatus = document.querySelectorAll('#docStatus')
+     let fines = document.querySelectorAll('#fine')
+
+     for (i=0; i< barcodeIds.length; i++){
+       let doc = {"barcode": barcodeIds[i].value, "doc_status": docStatus[i].value, "doc_fine": fines[i].value}
+       arr.push(doc)
+     }
+    //  console.log(arr)
+     fetch(borrowFormUrl,
+    {
+    method: 'PUT',
+    credentials: "omit",
+    headers: {
+       'Content-Type': 'application/json',
+      //  Authorization: "Bearer " + token,
+      },
+      body:JSON.stringify({id: borrowId, docs:arr, borrow_status: borrowStatus})
+    }
+    ).then((res) => res.json())
+    .then(result => alert("Đã cập nhật trả tài liệu", result))
+    .then(result =>  window.location.replace('traTL.html'))
+    .catch((err)=>{alert("Đã xảy ra lỗi",err); console.log(err)})
+
+   }
 
   </script>
 </body>

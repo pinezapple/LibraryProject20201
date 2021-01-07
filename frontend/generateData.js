@@ -68,11 +68,11 @@ module.exports = function(){
                librarian:faker.name.findName(),
                docs: [
                    {barcode : faker.phone.phoneNumberFormat(),id_doc:faker.random.number(60),doc_name: faker.random.words(),
-                    doc_author: faker.name.findName(),doc_status : faker.commerce.color(2),doc_fine:faker.commerce.price()},
+                    doc_author: faker.name.findName(),doc_status :faker.random.number({'min': 0,'max': 2 }),doc_fine:faker.commerce.price()},
                     {barcode : faker.phone.phoneNumberFormat(),id_doc:faker.random.number(60),doc_name: faker.random.words(),
-                    doc_author: faker.name.findName(),doc_status : faker.commerce.color(2),doc_fine:faker.commerce.price()},
+                    doc_author: faker.name.findName(),doc_status : faker.random.number({'min': 0,'max': 2 }),doc_fine:faker.commerce.price()},
                     {barcode : faker.phone.phoneNumberFormat(),id_doc:faker.random.number(60),doc_name: faker.random.words(),
-                    doc_author: faker.name.findName(),doc_status : faker.commerce.color(2),doc_fine:faker.commerce.price()}
+                    doc_author: faker.name.findName(),doc_status : faker.random.number({'min': 0,'max': 2 }),doc_fine:faker.commerce.price()}
                ],
                duration: faker.random.number(7),
                borrow_status: faker.random.number({
