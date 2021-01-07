@@ -9,6 +9,7 @@ import (
 
 // ----------------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------- BARCODES ----------------------------------------------------------
+
 type RespBarcodeOverview struct {
 	BarcodeID uint64 `json:"barcode_id"`
 	Status    uint64 `json:"status"`
@@ -87,8 +88,11 @@ type SelectBorrowFormByIDResp struct {
 	EndTime      time.Time              `json:"end_time"`
 }
 
-type CreateBorrowForm struct {
-	LibrarianID uint64 `json:"librarian_id"`
+type CreateBorrowFormReq struct {
+	LibrarianID uint64   `json:"librarian_id"`
+	ReaderID    uint64   `json:"reader_id"`
+	BorrowDays  uint64   `json:"borrow_days"`
+	Barcodes    []uint64 `json:"barcodes"`
 }
 
 // ----------------------------------------------------------------------------------------------------------------------------
