@@ -1,0 +1,488 @@
+<!-- =========================================================
+* Argon Dashboard PRO v1.1.0
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/argon-dashboard-pro
+* Copyright 2019 Creative Tim (https://www.creative-tim.com)
+
+* Coded by Creative Tim
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ -->
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
+  <meta name="author" content="Creative Tim">
+  <title>Mượn tài liệu</title>
+  <!-- Favicon -->
+  <link rel="icon" href="../../assets/img/brand/favicon.png" type="image/png">
+  <!-- Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+  <!-- Icons -->
+  <link rel="stylesheet" href="../../assets/vendor/nucleo/css/nucleo.css" type="text/css">
+  <link rel="stylesheet" href="../../assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
+  <!-- Page plugins -->
+  <link rel="stylesheet" href="../../assets/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="../../assets/vendor/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css">
+  <link rel="stylesheet" href="../../assets/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css">
+  <!-- Argon CSS -->
+  <link rel="stylesheet" href="../../assets/css/argon.css?v=1.1.0" type="text/css">
+</head>
+
+<body>
+  <!-- Sidenav -->
+  <nav class="sidenav navbar navbar-vertical fixed-left navbar-expand-xs navbar-light bg-white" id="sidenav-main">
+    <div class="scrollbar-inner">
+      <!-- Brand -->
+      <div class="sidenav-header d-flex align-items-center">
+        <a class="navbar-brand" href="../../pages/dashboards/dashboard.html">
+          <img src="../../assets/img/brand/blue.png" class="navbar-brand-img" alt="...">
+        </a>
+        <div class="ml-auto">
+          <!-- Sidenav toggler -->
+          <div class="sidenav-toggler d-none d-xl-block" data-action="sidenav-unpin" data-target="#sidenav-main">
+            <div class="sidenav-toggler-inner">
+              <i class="sidenav-toggler-line"></i>
+              <i class="sidenav-toggler-line"></i>
+              <i class="sidenav-toggler-line"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="navbar-inner">
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="sidenav-collapse-main">
+          <!-- Nav items -->
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="../../pages/dashboards/dashboard.html" role="button" aria-expanded="true" aria-controls="navbar-dashboards">
+                <i class="ni ni-shop text-primary"></i>
+                <span class="nav-link-text">Dashboard</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="#navbar-forms" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-forms">
+                <i class="ni ni-single-copy-04 text-pink"></i>
+                <span class="nav-link-text">Quản lý mượn trả</span>
+              </a>
+              <div class="collapse" id="navbar-forms">
+                <ul class="nav nav-sm flex-column">
+                  <li class="nav-item">
+                    <a href="../../pages/QLmuontra/muonTL.html" class="nav-link">Mượn tài liệu</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="../../pages/QLmuontra/traTL.html" class="nav-link">Trả tài liệu</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="../../pages/QLmuontra/tinhHinhMT.html" class="nav-link">Tình hình mượn trả</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#navbar-components" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-forms">
+                <i class="ni ni-books text-info"></i>
+                <span class="nav-link-text">Quản lý tài liệu</span>
+              </a>
+              <div class="collapse" id="navbar-components">
+                <ul class="nav nav-sm flex-column">
+                  <li class="nav-item">
+                    <a href="../../pages/QLtailieu/nhapTL.html" class="nav-link">Nhập tài liệu</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="../../pages/QLtailieu/thongTinTL.html" class="nav-link">Thông tin tài liệu</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="../../pages/QLtailieu/thanhLy.html" class="nav-link">Thanh lý tài liệu</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#navbar-tables" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-tables">
+                <i class="ni ni-align-left-2 text-default"></i>
+                <span class="nav-link-text">Thống kê</span>
+              </a>
+              <div class="collapse" id="navbar-tables">
+                <ul class="nav nav-sm flex-column">
+                  <li class="nav-item">
+                    <a href="../../pages/thongke/TLdaMuon.html" class="nav-link">Phiếu mượn</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="../../pages/thongke/TLthanhtoan.html" class="nav-link">Phiếu thanh lý</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="../../pages/thongke/TLthanhToanNhap.html" class="nav-link">Tài liệu nhập</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="../../pages/thongke/TLhuhong.html" class="nav-link">Tài liệu hư hỏng</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="../../pages/thongke/docGiaViPham.html" class="nav-link">Độc giả vi phạm</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+          <!-- Divider -->
+        </div>
+      </div>
+    </div>
+  </nav>
+  <!-- Main content -->
+  <div class="main-content" id="panel">
+    <!-- Topnav -->
+    <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
+      <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <!-- Search form -->
+          <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">
+            <div class="form-group mb-0">
+              <!-- <div class="input-group input-group-alternative input-group-merge">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fas fa-search"></i></span>
+                </div>
+                <input class="form-control" placeholder="Search" type="text">
+              </div> -->
+            </div>
+            <button type="button" class="close" data-action="search-close" data-target="#navbar-search-main" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </form>
+          <!-- Navbar links -->
+          <ul class="navbar-nav align-items-center ml-md-auto">
+            <li class="nav-item d-xl-none">
+              <!-- Sidenav toggler -->
+              <div class="pr-3 sidenav-toggler sidenav-toggler-dark" data-action="sidenav-pin" data-target="#sidenav-main">
+                <div class="sidenav-toggler-inner">
+                  <i class="sidenav-toggler-line"></i>
+                  <i class="sidenav-toggler-line"></i>
+                  <i class="sidenav-toggler-line"></i>
+                </div>
+              </div>
+            </li>
+            <li class="nav-item d-sm-none">
+              <a class="nav-link" href="#" data-action="search-show" data-target="#navbar-search-main">
+                <i class="ni ni-zoom-split-in"></i>
+              </a>
+            </li>
+          
+          </ul>
+          <ul class="navbar-nav align-items-center ml-auto ml-md-0">
+            <li class="nav-item dropdown">
+              <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <div class="media align-items-center">
+                  <div class="media-body ml-2 d-none d-lg-block">
+                    <span class="mb-0 text-sm  font-weight-bold">Xin chào</span>
+                  </div>
+                </div>
+              </a>
+              <div class="dropdown-menu dropdown-menu-right">
+                <a href="#!" class="dropdown-item">
+                  <i class="ni ni-single-02"></i>
+                  <span>My profile</span>
+                </a>
+                <a href="#!" class="dropdown-item">
+                  <i class="ni ni-settings-gear-65"></i>
+                  <span>Settings</span>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="#!" class="dropdown-item">
+                  <i class="ni ni-user-run"></i>
+                  <span>Logout</span>
+                </a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- Header -->
+    <!-- Header -->
+    <div class="header bg-primary pb-6">
+      <div class="container-fluid">
+        <div class="header-body">
+          <div class="row align-items-center py-4">
+            <div class="col-lg-6 col-7">
+              <h6 class="h2 text-white d-inline-block mb-0">Phiếu mượn tài liệu</h6>
+              <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                  <li class="breadcrumb-item"><a href="../dashboards/dashboard.html"><i class="fas fa-home"></i></a></li>
+                  <li class="breadcrumb-item"><a href="traTL.html">Trả tài liệu</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Tạo phiếu trả</li>
+                </ol>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Page content -->
+    <div class="container-fluid mt--6">
+      <div class="row">
+        <div class="col">
+          <div class="card-wrapper">
+            <!-- Custom form validation -->
+            <div class="card">
+              <!-- Card header -->
+              <div class="card-header">
+                <h3 class="mb-0">Trả tài liệu</h3>
+              </div>
+              <!-- Card body -->
+              <div class="card-body">
+                <div class="col-lg-8">
+                  <p class="mb-0">
+                    Thông tin chi tiết
+                    <br /><br />
+                  </p>
+                </div>
+                <form id='borrowForm'>
+                <!-- input groups with icon -->
+                  <div class="form-row" id="personalInfo">
+                    <div class="col">
+                      <div class="form-group">
+                        <label class="form-control-label">Mã phiếu mượn</label>
+                        <input type="text" class="form-control" id="borrowId" placeholder="Mã phiếu mượn" readonly>
+                      </div>
+                    </div>
+
+                    <!-- <div class="col">
+                      <div class="form-group">
+                        <label class="form-control-label">Mã phiếu mượn</label>
+                        <input type="text" class="form-control" id="librarian" placeholder="Mã phiếu mượn" readonly>
+                      </div>
+                    </div> -->
+
+                    <div class="col">
+                      <div class="form-group">
+                        <label class="form-control-label">Mã độc giả</label>
+                        <input type="text" class="form-control" id="userId" placeholder="Mã độc giả" readonly>
+                        
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="form-group">
+                        
+                          <label class="form-control-label">Số ngày mượn</label>
+                          <input class="form-control" placeholder="Số ngày mượn" id='duration' type="number" min="1" readonly>
+                        
+                      </div>
+                    </div>
+
+                    <div class="col">
+                      <div class="form-group">
+                        
+                            <label class="form-control-label">Tình trạng mượn</label>
+                            <select class="form-control" id= "status" data-toggle="select" title="Tình trạng mượn" data-live-search="true" data-live-search-placeholder="Select">
+                              <option value="0">Đã trả</option>
+                              <option value="1">Đang mượn</option>
+                              <option value="2">Quá hạn</option>
+                            </select>
+                        
+                      </div>
+                    </div>
+
+                  </div>
+                  <!-- Document Info-->
+                  <div class="col-lg-8">
+                    <p class="mb-0">
+                      Thông tin tài liệu
+                      <br /><br />
+                    </p>
+                  </div>
+                  <div class="form-row" id="addDoc">
+                  </div>
+
+                  <!-- Tổng cộng -->
+                 
+                  <div class='form-row', id='total'>
+                    <div class="col-lg-8">
+                      <p class="mb-0">
+                        Tổng cộng
+                        <br /><br />
+                      </p>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                      <div class="form-group">
+                        <div class="input-group mb-3">
+                          <input type="text" class="form-control" placeholder="Tổng tiền" id='totalFine'>
+                          <div class="input-group-append">
+                            <button class="btn btn-primary" type="button" onclick="subtotal()">Cập nhật</button>
+                          </div>
+                        </div>
+                        
+                      </div>
+                    </div>
+                    
+                  </div>
+
+                  <!-- button -->
+                <div class="form-row" id="formButton">
+                  <button class="btn btn-primary" type="button" onclick="createReturnForm()">Tạo phiếu trả</button>
+                  <button type="button" class="btn btn-danger" style="position: absolute; right: .5rem;" onclick="document.location='traTL.html'">Hủy</button>
+                </div>
+                
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+         <!-- Bảng tra cứu tài liệu -->
+        <div class="w-100"></div>
+    </div>     
+    </div>
+    </div>
+  </div>
+
+  <!-- Argon Scripts -->
+  <!-- Core -->
+  <script src="../../assets/vendor/jquery/dist/jquery.min.js"></script>
+  <script src="../../assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../../assets/vendor/js-cookie/js.cookie.js"></script>
+  <script src="../../assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
+  <script src="../../assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
+  
+  <!-- Optional JS -->
+  <script src="../../assets/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
+  <script src="../../assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+  <script src="../../assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+  <script src="../../assets/vendor/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
+  <script src="../../assets/vendor/datatables.net-buttons/js/buttons.html5.min.js"></script>
+  <script src="../../assets/vendor/datatables.net-buttons/js/buttons.flash.min.js"></script>
+  <script src="../../assets/vendor/datatables.net-buttons/js/buttons.print.min.js"></script>
+  <script src="../../assets/vendor/datatables.net-select/js/dataTables.select.min.js"></script>
+
+  <!-- Argon JS -->
+  <script src="../../assets/js/argon.js?v=1.1.0"></script>
+ 
+  <!-- Demo JS - remove this in your project -->
+  <script src="../../assets/js/demo.min.js"></script>
+  <script>
+    let docIdForm ='<div class="col"><div class="form-group"> <label class="form-control-label">Mã tài liệu</label><input class="form-control" id="docId" placeholder="Mã tài liệu" type="text" disabled ></div></div>'
+    let barcodeForm ='<div class="col"><div class="form-group"><label class="form-control-label">Mã vạch</label><input class="form-control" id="barcode" placeholder="Mã vạch" type="text" disabled ></div></div>'
+    let docNameForm ='<div class="col"><div class="form-group"><label class="form-control-label">Tên tài liệu</label><input class="form-control" id="docName" placeholder="Tên tài liệu" type="text" disabled></div></div>'
+    let authorForm ='<div class="col"><div class="form-group"><label class="form-control-label">Tác giả</label><input class="form-control" id="author" placeholder="Tác giả" type="text" disabled ></div></div> '
+    let docStatus = ' <div class="col"><div class="form-group"><label class="form-control-label">Tình trạng tài liệu</label><select class="form-control" id= "docStatus" data-toggle="select" title="Tình trạng tài liệu" data-live-search="true" data-live-search-placeholder="Select"><option value="0">Nguyên vẹn</option><option value="1">Hư hỏng</option><option value="2">Làm mất</option></select></div></div>'
+    let fineDoc = ' <div class="col"><div class="form-group"><label class="form-control-label">Phí</label><input class="form-control" id="fine" placeholder="Tiền phạt" value="0" type="number"></div></div>'
+
+    let range = document.createRange()
+    let form = document.querySelector('#borrowForm')
+    let info = document.querySelector('#addDoc')
+    let buttonSubmit = document.querySelector('#formButton')
+    let total = document.querySelector('#total')
+
+    let url_str =  window.location.href
+    let url = new URL(url_str);
+    let search_params = url.searchParams; 
+    let borrowId = search_params.get('id')
+    let borrowFormUrl = 'http://localhost:3000/returned_form/'+borrowId
+  
+    let data =[]
+
+    fetch (borrowFormUrl,  {
+  method: 'GET',
+  credentials: "omit",
+  headers: {
+     'Content-Type': 'application/json',
+    //  Authorization: "Bearer " + token,
+    },
+  })
+  .then(response => response.json())
+  .then(obj =>{
+      let borrowFormId = obj.id
+      let readerId = obj.id_reader
+      let duration = obj.duration
+      let borrowStatus = obj.borrow_status
+      let fine = obj.fee
+      let docs = obj.docs
+
+        // add value to input field
+      $("#borrowId").val(borrowFormId)
+      $("#userId").val(readerId)
+      $("#duration").val(duration)
+      $("#status").val(borrowStatus)
+      $("#totalFine").val(fine)
+
+        for (let i = 0; i < docs.length; i++){
+        
+        let formRow = document.createElement("div")
+        formRow.setAttribute('class','form-row')
+        formRow.setAttribute('id','newRow')
+        form.appendChild(formRow)
+        total.parentNode.insertBefore(formRow,total)
+
+        // add input field
+        let inputDocId = range.createContextualFragment(docIdForm)
+        formRow.appendChild(inputDocId)
+        let inputBarcode = range.createContextualFragment(barcodeForm)
+        formRow.appendChild(inputBarcode)
+        let inputDocName = range.createContextualFragment(docNameForm)
+        formRow.appendChild(inputDocName)
+        let inputAuthor = range.createContextualFragment(authorForm)
+        formRow.appendChild(inputAuthor)
+        let inputDocStatus = range.createContextualFragment(docStatus)
+        formRow.appendChild(inputDocStatus)
+        let inputFine = range.createContextualFragment(fineDoc)
+        formRow.appendChild(inputFine)
+        
+        // add data 
+        formRow.querySelector("#docId").value = docs[i]["id_doc"]
+        formRow.querySelector("#barcode").value = docs[i]["barcode"]
+        formRow.querySelector("#docName").value = docs[i]["doc_name"]
+        formRow.querySelector("#author").value = docs[i]["doc_author"]
+        // formRow.querySelector("#docStatus").value = docs[i]["doc_status"]
+      }
+
+  })
+  .catch(error => {
+  console.error('Error:', error);
+  });
+    
+    function subtotal(){
+      let currentFine = parseInt(fine)
+      allDocFine = document.querySelectorAll("#fine")
+      for (let i=0; i<allDocFine.length;i++){
+        sub = parseInt(allDocFine[i].value)
+        currentFine += sub
+      }
+     document.querySelector("#totalFine").value = currentFine
+    }
+
+    function createReturnForm(){
+     let arr =[]
+     let borrowStatus = document.getElementById('status').value
+     let barcodeIds = document.querySelectorAll('#barcode')
+     let docStatus = document.querySelectorAll('#docStatus')
+     let fines = document.querySelectorAll('#fine')
+
+     for (i=0; i< barcodeIds.length; i++){
+       let doc = {"barcode": barcodeIds[i].value, "doc_status": docStatus[i].value, "doc_fine": fines[i].value}
+       arr.push(doc)
+     }
+    //  console.log(arr)
+     fetch(borrowFormUrl,
+    {
+    method: 'PUT',
+    credentials: "omit",
+    headers: {
+       'Content-Type': 'application/json',
+      //  Authorization: "Bearer " + token,
+      },
+      body:JSON.stringify({id: borrowId, docs:arr, borrow_status: borrowStatus})
+    }
+    ).then((res) => res.json())
+    .then(result => alert("Đã cập nhật trả tài liệu", result))
+    .then(result =>  window.location.replace('traTL.html'))
+    .catch((err)=>{alert("Đã xảy ra lỗi",err); console.log(err)})
+
+   }
+  </script>
+</body>
+
+</html>

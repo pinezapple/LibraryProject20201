@@ -1,0 +1,662 @@
+<!-- =========================================================
+* Argon Dashboard PRO v1.1.0
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/argon-dashboard-pro
+* Copyright 2019 Creative Tim (https://www.creative-tim.com)
+
+* Coded by Creative Tim
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ -->
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
+  <meta name="author" content="Creative Tim">
+  <title>Thông tin tài liệu</title>
+  <!-- Favicon -->
+  <link rel="icon" href="../../assets/img/brand/favicon.png" type="image/png">
+  <!-- Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+  <!-- Icons -->
+  <link rel="stylesheet" href="../../assets/vendor/nucleo/css/nucleo.css" type="text/css">
+  <link rel="stylesheet" href="../../assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
+  <!-- Page plugins -->
+  <link rel="stylesheet" href="../../assets/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="../../assets/vendor/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css">
+  <link rel="stylesheet" href="../../assets/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css">
+  <link rel="stylesheet" href="../../assets/vendor/animate.css/animate.min.css">
+  <link rel="stylesheet" href="../../assets/vendor/sweetalert2/dist/sweetalert2.min.css">
+  <!-- Argon CSS -->
+  <link rel="stylesheet" href="../../assets/css/argon.css?v=1.1.0" type="text/css">
+</head>
+
+<body>
+  <!-- Sidenav -->
+  <nav class="sidenav navbar navbar-vertical fixed-left navbar-expand-xs navbar-light bg-white" id="sidenav-main">
+    <div class="scrollbar-inner">
+      <!-- Brand -->
+      <div class="sidenav-header d-flex align-items-center">
+        <a class="navbar-brand" href="../../pages/dashboards/dashboard.html">
+          <img src="../../assets/img/brand/blue.png" class="navbar-brand-img" alt="...">
+        </a>
+        <div class="ml-auto">
+          <!-- Sidenav toggler -->
+          <div class="sidenav-toggler d-none d-xl-block" data-action="sidenav-unpin" data-target="#sidenav-main">
+            <div class="sidenav-toggler-inner">
+              <i class="sidenav-toggler-line"></i>
+              <i class="sidenav-toggler-line"></i>
+              <i class="sidenav-toggler-line"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="navbar-inner">
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="sidenav-collapse-main">
+          <!-- Nav items -->
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="../../pages/dashboards/dashboard.html" role="button" aria-expanded="true" aria-controls="navbar-dashboards">
+                <i class="ni ni-shop text-primary"></i>
+                <span class="nav-link-text">Dashboard</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#navbar-forms" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-forms">
+                <i class="ni ni-single-copy-04 text-pink"></i>
+                <span class="nav-link-text">Quản lý mượn trả</span>
+              </a>
+              <div class="collapse" id="navbar-forms">
+                <ul class="nav nav-sm flex-column">
+                  <li class="nav-item">
+                    <a href="../../pages/QLmuontra/muonTL.html" class="nav-link">Mượn tài liệu</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="../../pages/QLmuontra/traTL.html" class="nav-link">Trả tài liệu</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="../../pages/QLmuontra/tinhHinhMT.html" class="nav-link">Tình hình mượn trả</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="#navbar-components" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-forms">
+                <i class="ni ni-books text-info"></i>
+                <span class="nav-link-text">Quản lý tài liệu</span>
+              </a>
+              <div class="collapse" id="navbar-components">
+                <ul class="nav nav-sm flex-column">
+                  <li class="nav-item">
+                    <a href="../../pages/QLtailieu/nhapTL.html" class="nav-link">Nhập tài liệu</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="../../pages/QLtailieu/thongTinTL.html" class="nav-link">Thông tin tài liệu</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="../../pages/QLtailieu/thanhLy.html" class="nav-link">Thanh lý tài liệu</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#navbar-tables" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-tables">
+                <i class="ni ni-align-left-2 text-default"></i>
+                <span class="nav-link-text">Thống kê</span>
+              </a>
+              <div class="collapse" id="navbar-tables">
+                <ul class="nav nav-sm flex-column">
+                  <li class="nav-item">
+                    <a href="../../pages/thongke/TLdaMuon.html" class="nav-link">Phiếu mượn</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="../../pages/thongke/TLthanhtoan.html" class="nav-link">Phiếu thanh lý</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="../../pages/thongke/TLthanhToanNhap.html" class="nav-link">Tài liệu nhập</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="../../pages/thongke/TLhuhong.html" class="nav-link">Tài liệu hư hỏng</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="../../pages/thongke/docGiaViPham.html" class="nav-link">Độc giả vi phạm</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+          <!-- Divider -->
+        </div>
+      </div>
+    </div>
+  </nav>
+  <!-- Main content -->
+  <div class="main-content" id="panel">
+    <!-- Topnav -->
+    <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
+      <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <!-- Search form -->
+          <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">
+            <!-- <div class="form-group mb-0">
+              <div class="input-group input-group-alternative input-group-merge">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fas fa-search"></i></span>
+                </div>
+                <input class="form-control" placeholder="Search" type="text">
+              </div>
+            </div> -->
+            <button type="button" class="close" data-action="search-close" data-target="#navbar-search-main" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </form>
+          <!-- Navbar links -->
+          <ul class="navbar-nav align-items-center ml-md-auto">
+            <li class="nav-item d-xl-none">
+              <!-- Sidenav toggler -->
+              <div class="pr-3 sidenav-toggler sidenav-toggler-dark" data-action="sidenav-pin" data-target="#sidenav-main">
+                <div class="sidenav-toggler-inner">
+                  <i class="sidenav-toggler-line"></i>
+                  <i class="sidenav-toggler-line"></i>
+                  <i class="sidenav-toggler-line"></i>
+                </div>
+              </div>
+            </li>
+            
+          </ul>
+          <ul class="navbar-nav align-items-center ml-auto ml-md-0">
+            <li class="nav-item dropdown">
+              <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <div class="media align-items-center">
+                  <div class="media-body ml-2 d-none d-lg-block">
+                    <span class="mb-0 text-sm  font-weight-bold">Xin chào</span>
+                  </div>
+                </div>
+              </a>
+              <div class="dropdown-menu dropdown-menu-right">
+                <a href="#!" class="dropdown-item">
+                  <i class="ni ni-single-02"></i>
+                  <span>My profile</span>
+                </a>
+                <a href="#!" class="dropdown-item">
+                  <i class="ni ni-settings-gear-65"></i>
+                  <span>Settings</span>
+                </a>
+                
+                <div class="dropdown-divider"></div>
+                <a href="#!" class="dropdown-item">
+                  <i class="ni ni-user-run"></i>
+                  <span>Logout</span>
+                </a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- Header -->
+    <!-- Header -->
+    <div class="header bg-primary pb-6">
+      <div class="container-fluid">
+        <div class="header-body">
+          <div class="row align-items-center py-4">
+            <div class="col-lg-6 col-7">
+              <h6 class="h2 text-white d-inline-block mb-0">Thông tin tài liệu</h6>
+              <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                  <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                  <li class="breadcrumb-item"><a href="#">Quản lý tài liệu</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Thông tin tài liệu</li>
+                </ol>
+              </nav>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Page content -->
+    <div class="container-fluid mt--6">
+      <!-- Table -->
+      <div class="row">
+        <div class="col">
+          <div class="card">
+            <!-- Card header -->
+            <div class="card-header">
+              <h3 class="mb-0">Thông tin tài liệu</h3>
+            </div>
+            <div class="table-responsive py-4">
+              <table class="table table-flush" id="datatable-basic">
+                <!-- <div class="col text-center">
+                  <div class="btn-group">
+                    <button type="button" id="add" class="btn btn-outline-primary">Add</button>
+                  </div>
+                </div> -->
+                <thead class="thead-light">
+                  <tr>
+                    <th>Mã tài liệu</th>
+                    <th>Mã vạch</th>
+                    <th>Tên tài liệu</th>
+                    <th>Tác giả</th>
+                    <th>Thể loại</th>
+                    <th>Tái bản</th>
+                    <th>NXB</th>
+                    <th>Tình trạng</th>
+                    <th>Giá</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tfoot>
+                  <tr>
+                    <th>Mã tài liệu</th>
+                    <th>Mã vạch</th>
+                    <th>Tên tài liệu</th>
+                    <th>Tác giả</th>
+                    <th>Thể loại</th>
+                    <th>Tái bản</th>
+                    <th>NXB</th>
+                    <th>Tình trạng</th>
+                    <th>Giá</th>
+                    <th>Action</th>
+                  </tr>
+                </tfoot>
+                <tbody>
+                <!-- <tr>
+                  <td>05</td>
+                  <td>0129323</td>
+                  <td>Tin học</td>
+                  <td>Nguyễn Văn A</td>
+                  <td>Giáo trình</td>
+                  <td>lần 1</td>
+                  <td>NXB Giáo dục</td>
+                  <td>Nguyên vẹn</td>
+                  <td>10000</td>
+                  <td><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-form" id="edit">Chỉnh sửa</button>
+                    <button type="button" class="btn btn-danger btn-sm"  data-toggle="sweet-alert" id="delete" >Xóa</button></td>
+                  </tr>
+                  <tr>
+                    <td>07</td>
+                    <td>409384</td>
+                    <td>Tiếng Anh</td>
+                    <td>Trần Văn B</td>
+                    <td>Giáo trình</td>
+                    <td>lần 5</td>
+                    <td>NXB Sự Thật</td>
+                    <td>Hư hỏng</td>
+                    <td>10000</td>
+                    <td><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-form" id="edit">Chỉnh sửa</button>
+                      <button type="button" class="btn btn-danger btn-sm"  data-toggle="sweet-alert" id="delete" >Xóa</button></td>
+                  </tr> -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Footer -->
+      <footer class="footer pt-0">
+        <div class="row align-items-center justify-content-lg-between">
+          <div class="col-lg-6">
+            <div class="copyright text-center text-lg-left text-muted">
+              &copy; 2019 <a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">Creative Tim</a>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+              <li class="nav-item">
+                <a href="https://www.creative-tim.com" class="nav-link" target="_blank">Creative Tim</a>
+              </li>
+              <li class="nav-item">
+                <a href="https://www.creative-tim.com/presentation" class="nav-link" target="_blank">About Us</a>
+              </li>
+              <li class="nav-item">
+                <a href="http://blog.creative-tim.com" class="nav-link" target="_blank">Blog</a>
+              </li>
+              <li class="nav-item">
+                <a href="https://www.creative-tim.com/license" class="nav-link" target="_blank">License</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+<!-- Modal cập nhật tài liệu -->
+<!--* Modal header *-->
+<!--* Modal body *-->
+<!--* Modal footer *-->
+<!--* Modal init *-->
+<div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
+  <div class="modal-dialog modal- modal-dialog-centered modal-sm" role="document">
+      <div class="modal-content">
+        
+        <div class="modal-body p-0">
+              <div class="card bg-secondary border-0 mb-0">
+                <div class="card-body px-lg-5 py-lg-5">
+                    <div class="text-center text-muted mb-4">
+                        <small>Chỉnh sửa</small>
+                    </div>
+                        <div class="form-group mb-3">
+                            
+                                <label class="form-control-label">Mã tài liệu</label>
+                                <input class="form-control" id="docId" placeholder="Mã tài liệu" type="text" readonly>
+
+                        </div>
+                        <div class="form-group mb-3">
+                         
+                              <label class="form-control-label">Mã vạch</label>
+                              <input class="form-control" id="barcode" placeholder="Mã vạch" type="text" readonly>
+
+                        </div>
+                        <div class="form-group">
+                      
+                                <label class="form-control-label">Tên tài liệu</label>
+                                <input class="form-control" id="docName" placeholder="Tên tài liệu" type="text" >
+
+                        </div>
+                        <div class="form-group">
+                        
+                              <label class="form-control-label">Tác giả</label>
+                              <input class="form-control" id="author" placeholder="Tác giả" type="text">
+                        
+                        </div>
+                        <div class="form-group">
+                        
+                              <label class="form-control-label">Tái bản</label>
+                              <input class="form-control" id="edition" placeholder="Tái bản" type="text">
+                        
+                        </div>
+                        <div class="form-group">
+                        
+                              <label class="form-control-label">Nhà xuất bản</label>
+                              <input class="form-control" id="publisher" placeholder="Nhà xuất bản" type="text">
+                         
+                        </div>
+                        <div class="form-group">
+                         
+                              <label class="form-control-label">Thể loại</label>
+                              <select class="form-control" id= "type" data-toggle="select" title="Thể loại" data-live-search="true" data-live-search-placeholder="Select">
+                                <option>Giáo trình</option>
+                                <option>Tạp chí</option>
+                                <option>Sách tham khảo</option>
+                                <option>Sách nước ngoài</option>
+                              </select>
+                        
+                        </div>
+                        <div class="form-group">
+                         
+                          <label class="form-control-label">Tình trạng</label>
+                          <select class="form-control" id= "status" data-toggle="select" title="Thể loại" data-live-search="true" data-live-search-placeholder="Select">
+                            <option value ="0">Nguyên vẹn</option>
+                            <option value ="1">Hư hỏng</option>
+                            <option value ="2">Đang thanh lý</option>
+                          </select>
+                    
+                    </div>
+                        <div class="form-group">
+                        
+                            <label class="form-control-label">Giá tiền</label>
+                            <input class="form-control" id="price" placeholder="Giá" type="text">
+                        
+                        </div> 
+                                                  
+                        <div class="text-center">
+                            <button type="submit" id="submit" class="btn btn-primary my-4">Cập nhật</button>
+                            <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">Đóng</button>
+                        </div>
+                    </form>
+                </div>
+             </div> 
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+  <!-- Argon Scripts -->
+  <!-- Core -->
+  <script src="../../assets/vendor/jquery/dist/jquery.min.js"></script>
+  <script src="../../assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../../assets/vendor/js-cookie/js.cookie.js"></script>
+  <script src="../../assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
+  <script src="../../assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
+  <!-- Optional JS -->
+  <script src="../../assets/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
+  <script src="../../assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+  <script src="../../assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+  <script src="../../assets/vendor/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
+  <script src="../../assets/vendor/datatables.net-buttons/js/buttons.html5.min.js"></script>
+  <script src="../../assets/vendor/datatables.net-buttons/js/buttons.flash.min.js"></script>
+  <script src="../../assets/vendor/datatables.net-buttons/js/buttons.print.min.js"></script>
+  <script src="../../assets/vendor/datatables.net-select/js/dataTables.select.min.js"></script>
+  <script src="../../assets/vendor/sweetalert2/dist/sweetalert2.min.js"></script>
+  <script src="../../assets/vendor/bootstrap-notify/bootstrap-notify.min.js"></script>
+  <script src='//cdn.datatables.net/plug-ins/1.10.22/api/column().title().js'></script>
+  <!-- Argon JS -->
+  <script src="../../assets/js/argon.js?v=1.1.0"></script>
+  <!-- Demo JS - remove this in your project -->
+  <script src="../../assets/js/demo.min.js"></script>
+  <script>
+// get data
+
+let url ="http://localhost:3000/documents"
+fetch (url,
+  {
+    method: 'GET',
+    credentials: "omit",
+    headers: {
+       'Content-Type': 'application/json',
+      //  Authorization: "Bearer " + token,
+      },
+  })
+  .then(response => response.json())
+  .then(docList =>{
+    docList.forEach(doc =>{
+
+      let data =[]
+      // get doc data
+      let docId= `${doc.id}`
+      let barcode = `${doc.barcode}`
+      let docName = `${doc.doc_name}`
+      let author = `${doc.doc_author}`
+      let type = `${doc.doc_type}`
+      let publisher = `${doc.doc_publisher}`
+      let edition = `${doc.doc_edition}`
+      let status = `${doc.doc_status}`
+      let price = `${doc.doc_price}`
+      let btn = '<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-form" id="edit">Chỉnh sửa</button><button type="button" class="btn btn-danger btn-sm"  data-toggle="sweet-alert" id="delete" >Xóa</button>'
+      let statusData;
+
+     if(status ==0){
+      statusData = "Nguyên vẹn";
+     }else if(status == 1){
+      statusData = "Hư hỏng";
+     }else{
+      statusData ="Đang thanh lý";
+     }
+    
+      data.push (docId,barcode,docName,author,type,edition,publisher,statusData,price,btn)
+      // add to table
+      table.row.add(data).draw()
+    })
+  })
+  .catch(error => {
+  console.error('Error:', error);
+  });
+
+// edit modal
+
+  $('#datatable-basic tbody').on( 'click', '#edit', function (event) {
+      // event prevent
+      event.preventDefault()
+     
+      // get data from table
+      let data = table.row( $(this).parents('tr') ).data();
+      // console.log(data)
+     
+      let docId =  data[0];
+      let barcode =  data[1];
+      let docName =  data[2];
+      let author = data[3];
+      let type = data[4];
+      let edition = data[5];
+      let publisher = data[6];
+      let status = data[7];
+      let price = data[8];
+      
+      
+      if(status =="Nguyên vẹn"){
+        status = "0";
+     }else if(status == "Hư hỏng"){
+      status = "1";
+     }else if(status == "Đang thanh lý"){
+      status = "2";
+     }
+
+      // add data to input field
+      $("#docId").val(docId);
+      $("#barcode").val(barcode);
+      $("#docName").val(docName);
+      $("#author").val(author);
+      $("#type").val(type);
+      $("#edition").val(edition);
+      $("#publisher").val(publisher);
+      $("#type").val(type);
+      $("#status").val(status);
+      $("#price").val(price);
+     
+    });
+
+    $("#submit").on('click',function(){
+    
+
+    let id = parseInt(document.getElementById('docId').value,10);
+    let barcode = parseInt(document.getElementById('barcode').value,10);
+    let name = document.getElementById('docName').value;
+    let author = document.getElementById('author').value;
+    let type = document.getElementById('type').value;
+    let publisher = document.getElementById('publisher').value;
+    let edition = document.getElementById('edition').value;
+    let status = document.getElementById('status').value;
+    let price = document.getElementById('price').value;
+
+    let url = 'http://localhost:3000/documents/'
+
+      fetch(url + barcode, 
+        {
+          method: 'PUT',
+          credentials: "omit",
+          headers: {
+             'Content-Type': 'application/json',
+            //  Authorization: "Bearer " + token,
+            },
+          body:JSON.stringify({doc_name:name, doc_author:author, doc_type:type, doc_publisher: publisher, doc_edition: edition,doc_status: status,doc_price:price})
+    }
+     ).then((res) => res.json())
+     .then(result => alert("Đã sửa thông tin tài liệu", result))
+     .then(result => location.reload() )
+     .catch((err)=>{alert("Đã xảy ra lỗi",err); console.log(err)})
+    //  location.reload();
+
+  })
+
+
+
+// delete doc
+
+    $('#datatable-basic tbody').on( 'click', '#delete', function (event) {
+      // event prevent
+      event.preventDefault()
+     
+      // get data from table
+      let data = table.row( $(this).parents('tr') ).data();
+      let barcode =  data[1]
+      let url = 'http://localhost:3000/documents/'
+
+      // sweet alert
+      swal({
+      title: 'Bạn có chắc chắn muốn xóa tài liệu này?',
+      text: "Bạn sẽ không thể làm lại",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Xóa tài liệu'
+    }).then((result) => {
+      if (result.value) {
+        // delete in db
+        fetch( url + barcode,
+        {
+          method: 'DELETE',
+          credentials: "omit",
+          headers: {
+             'Content-Type': 'application/json',
+            //  Authorization: "Bearer " + token,
+            },
+            // body:JSON.stringify({id_doc:documentId})
+            })
+        // remove data from table
+        .then(result =>  table.row('.selected').remove().draw( false ))
+        // show alert
+        .then(result =>  swal({
+          title:'Đã xóa',
+          text:'Tài liệu đã được xóa',
+          type:'success'
+        }))
+        .catch(error => console.log(error))
+      }
+    })
+
+    });
+
+
+// add search box 
+
+$(document).ready(function() {
+  if ( $.fn.dataTable.isDataTable( '#datatable-basic' ) ) {
+    table = $('#datatable-basic').DataTable();
+}
+else {
+    table = $('#datatable-basic').DataTable( {
+      orderCellsTop: true,
+      fixedHeader: true
+    } );
+}
+    // Setup - add a text input to each footer cell
+    $('#datatable-basic thead tr').clone().appendTo( '#datatable-basic thead' );
+
+    $('#datatable-basic thead tr:eq(1) th').each( function (i) {
+        var title = $(this).text();
+        // var abc = this
+        $(this).html( '<input type="text" placeholder="Tìm '+title+'" />' )
+ 
+        $( 'input', this ).on( 'keyup change', function () {
+            if ( table.column(i).search() !== this.value ) {
+                table
+                    .column(i)
+                    .search( this.value )
+                    .draw();
+            }
+        } );
+    } );
+} );
+
+
+  </script>
+</body>
+
+</html>
