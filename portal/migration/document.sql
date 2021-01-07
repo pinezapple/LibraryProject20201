@@ -43,4 +43,11 @@ create table authors
 	`updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) Engine=InnoDB;
 
+create table barcode_cache
+(
+  `barcode_id` bigint(20),
+  `document_version` varchar(255)
+) Engine=InnoDB;
+
+
 
