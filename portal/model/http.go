@@ -87,6 +87,10 @@ type SelectBorrowFormByIDResp struct {
 	EndTime      time.Time              `json:"end_time"`
 }
 
+type CreateBorrowForm struct {
+	LibrarianID uint64 `json:"librarian_id"`
+}
+
 // ----------------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------- PAYMENTS ----------------------------------------------------------
 
