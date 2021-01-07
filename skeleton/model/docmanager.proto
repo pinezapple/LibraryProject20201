@@ -30,6 +30,7 @@ service Docmanager {
     rpc SelectAllBorrowForm (SelectAllBorrowFormReq) returns (SelectAllBorrowFormResp);
     rpc SelectAllUnReturnBorrowForm (SelectAllUnReturnBorrowFormReq) returns (SelectAllUnReturnBorrowFormResp);
     rpc SelectBorrowFormByID (SelectBorrowFormByIDReq) returns (SelectBorrowFormByIDResp);
+    rpc UpdateBorrowFormStatus (UpdateBorrowFormStatusReq) returns (UpdateBorrowFormStatusResp);
     rpc SaveBorrowForm (SaveBorrowFormReq) returns (SaveBorrowFormResp);
     // rpc DeleteBorrowForm (SaveBorrowFormReq) returns (SaveBorrowFormResp);
 
@@ -217,6 +218,16 @@ message SaveBorrowFormReq {
 }
 
 message SaveBorrowFormResp {
+    int32 Code = 1;
+    string Message = 2;
+}
+
+message UpdateBorrowFormStatusReq {
+    uint64 BorrowFormID = 1;
+    uint64 Status = 2;
+}
+
+message UpdateBorrowFormStatusResp {
     int32 Code = 1;
     string Message = 2;
 }

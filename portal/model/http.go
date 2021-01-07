@@ -95,6 +95,16 @@ type CreateBorrowFormReq struct {
 	Barcodes    []uint64 `json:"barcodes"`
 }
 
+type UpdateBorrowFormReq struct {
+	BorrowFormID  uint64 `json:"borrow_form_id"`
+	Status        uint64 `json:"status"`
+	BarcodeUpdate []struct {
+		BarcodeID     uint64 `json:"barcode_id"`
+		BarcodeStatus uint64 `json:"barcode_status"`
+		Fee           uint64 `json:"fee"`
+	} `json:"barcode_update"`
+}
+
 // ----------------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------- PAYMENTS ----------------------------------------------------------
 
