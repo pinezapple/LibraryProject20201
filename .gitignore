@@ -9,5 +9,6 @@ portal/go.mod
 portal/go.sum
 portal/portal
 
-node_modules
+bootstrap/
+node_modules/
 .vscode/
