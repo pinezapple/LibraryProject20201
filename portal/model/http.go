@@ -95,6 +95,7 @@ type CreateBorrowFormReq struct {
 
 type UpdateBorrowFormReq struct {
 	BorrowFormID  uint64 `json:"borrow_form_id"`
+	LibrarianID   uint64 `json:"librarian_id"`
 	Status        uint64 `json:"status"`
 	BarcodeUpdate []struct {
 		BarcodeID     uint64 `json:"barcode_id"`
@@ -136,6 +137,7 @@ type SelectPaymentByIDResp struct {
 
 // ------------------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------- SALE BILLS ----------------------------------------------------------
+
 type SelectAllSaleBillResp struct {
 	SaleBillID  uint64 `json:"sale_bill_id"`
 	LibrarianID uint64 `json:"librarian_id"`

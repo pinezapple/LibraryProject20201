@@ -67,6 +67,16 @@ func createBorrowForm(c echo.Context, request interface{}) (statusCode int, data
 		return
 	}
 
+	// update barcode status to borrowing
+	barcodeUpdateBorrowStatus := make([]uint64, len(req.Barcodes))
+	for i := range barcodeUpdateBorrowStatus {
+		barcodeUpdateBorrowStatus[i] = model.BarcodeBorrowingStatus
+	}
+	if er := updateBarcodeStatusByBatch(ctx, req.Barcodes, barcodeUpdateBorrowStatus); er != nil {
+		statusCode, err = http.StatusInternalServerError, er
+		return
+	}
+
 	return http.StatusOK, nil, lg, false, nil
 }
 
@@ -110,19 +120,20 @@ func updateBorrowForm(c echo.Context, request interface{}) (statusCode int, data
 
 	// create batch to save barcode
 	var (
-		barcodeID              = make([]uint64, len(req.BarcodeUpdate))
-		barcodeStatus          = make([]uint64, len(req.BarcodeUpdate))
-		barcodeFee             = make([]uint64, len(req.BarcodeUpdate))
-		createPaymentFlag bool = false
+		barcodeID            = make([]uint64, len(req.BarcodeUpdate))
+		barcodeStatus        = make([]uint64, len(req.BarcodeUpdate))
+		paymentBarcodeStatus []uint64
+		barcodeFee           []uint64
 	)
 
 	for i := range req.BarcodeUpdate {
 		barcodeID[i] = req.BarcodeUpdate[i].BarcodeID
 		barcodeStatus[i] = req.BarcodeUpdate[i].BarcodeStatus
-		if req.BarcodeUpdate[i].Fee > 0 {
-			createPaymentFlag = true
+		if req.BarcodeUpdate[i].Fee == 0 && req.BarcodeUpdate[i].BarcodeStatus != model.BarcodeNormalStatus {
+			continue
 		}
-		barcodeFee[i] = req.BarcodeUpdate[i].Fee
+		paymentBarcodeStatus = append(paymentBarcodeStatus, req.BarcodeUpdate[i].BarcodeStatus)
+		barcodeFee = append(barcodeFee, req.BarcodeUpdate[i].Fee)
 	}
 
 	if er := updateBarcodeStatusByBatch(ctx, barcodeID, barcodeStatus); er != nil {
@@ -130,8 +141,12 @@ func updateBorrowForm(c echo.Context, request interface{}) (statusCode int, data
 		return
 	}
 
-	if createPaymentFlag {
-		// create payment by rpc
+	// create payment if necessary
+	if len(paymentBarcodeStatus) > 0 {
+		if er := createPayment(ctx, req.LibrarianID, req.BorrowFormID, barcodeID, paymentBarcodeStatus, barcodeFee); er != nil {
+			statusCode, err = http.StatusInternalServerError, er
+			return
+		}
 	}
 
 	return http.StatusOK, nil, lg, false, nil
