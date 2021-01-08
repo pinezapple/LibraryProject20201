@@ -161,6 +161,14 @@ type SelectSaleBillByIDResp struct {
 	Barcodes    []*SaleBillDetail `json:"barcodes"`
 }
 
+type CreateSaleBillReq struct {
+	LibrarianID uint64 `json:"librian_id"`
+	SaleBarcode []*struct {
+		BarcodeID uint64 `json:"barcode_id"`
+		Price     uint64 `json:"price"`
+	} `json:"sale_barcode"`
+}
+
 // ------------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------- USER ----------------------------------------------------------
 

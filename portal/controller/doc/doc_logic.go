@@ -848,7 +848,7 @@ func saveDocumentByBatch(c echo.Context, request interface{}) (statusCode int, d
 			Barcode: &docmanagerModel.Barcode{
 				ID:     uint64(core.GetHash(uuidBarcode.String())),
 				DocVer: reqDocVer.DocumentVersion,
-				Status: 0, //FIXME: define barcode status
+				Status: model.BarcodeNormalStatus,
 			},
 		}
 
@@ -867,7 +867,6 @@ func saveDocumentByBatch(c echo.Context, request interface{}) (statusCode int, d
 		respBarcodeIDs[i] = saveBarcodes[i].Barcode.ID
 
 		// Save to cache: Barcode - DocVer
-		//FIXME: change to cache
 		if er := cache.SaveDocverToCache(ctx, core.GetDB(), saveBarcodes[i].Barcode.ID, saveBarcodes[i].Barcode.DocVer); err != nil {
 			statusCode, err = http.StatusInternalServerError, er
 			return
