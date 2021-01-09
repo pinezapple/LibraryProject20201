@@ -14,6 +14,9 @@ import (
 	"github.com/pinezapple/LibraryProject20201/skeleton/model"
 )
 
+// -----------------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------- DOCUMENTS ----------------------------------------------------------
+
 func updateDocument(c echo.Context, request interface{}) (statusCode int, data interface{}, lg *model.LogFormat, logResponse bool, err error) {
 	var (
 		ctx = c.Request().Context()
@@ -60,6 +63,36 @@ func updateDocument(c echo.Context, request interface{}) (statusCode int, data i
 
 	if er = cache.UpdateDocument(ctx, core.GetDB(), updateDoc); er != nil {
 		statusCode, err = http.StatusInternalServerError, er
+		return
+	}
+
+	return http.StatusOK, nil, lg, false, nil
+}
+
+// ------------------------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------- DOCUMENT VERSION ----------------------------------------------------------
+
+func UpdateDocumentVersion(c echo.Context, request interface{}) (statusCode int, data interface{}, lg *model.LogFormat, logResponse bool, err error) {
+	var (
+		ctx = c.Request().Context()
+		req = request.(*portalModel.UpdateDocVerReq)
+	)
+
+	// search author ID
+	authUUID, er := uuid.NewUUID()
+	if er != nil {
+		statusCode, err = http.StatusInternalServerError, er
+		return
+	}
+
+	authorID, er := cache.FirstOrCreateAuthor(ctx, core.GetDB(), req.Author, uint64(core.GetHash(authUUID.String())))
+	if er != nil {
+		statusCode, err = http.StatusInternalServerError, er
+		return
+	}
+
+	if err = cache.UpdateDocumentVersion(ctx, core.GetDB(), req.DocVerID, req.DocVer, req.Publisher, authorID, req.Price); err != nil {
+		statusCode = http.StatusInternalServerError
 		return
 	}
 

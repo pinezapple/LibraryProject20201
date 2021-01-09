@@ -19,9 +19,9 @@ type CategoriesDAOobj struct {
 }
 
 type DocumentVersionDAOobj struct {
+	DocVerID        uint64      `json:"version" db:"document_version_id"`
 	DocumentVersion string      `json:"document_version" db:"document_version"`
 	DocID           uint64      `json:"doc_id" db:"doc_id"`
-	Version         string      `json:"version" db:"version"`
 	DocDescription  string      `json:"doc_description" db:"doc_description"`
 	Publisher       string      `json:"publisher" db:"publisher"`
 	AuthorID        uint64      `json:"author_id" db:"author_id"`

@@ -2,6 +2,8 @@ package cache
 
 import (
 	"context"
+	"database/sql"
+	"errors"
 
 	"github.com/linxGnu/mssqlx"
 	"github.com/pinezapple/LibraryProject20201/portal/core"
@@ -21,9 +23,10 @@ const (
 	sqlInsertCategories     = "INSERT INTO categories(category_id, category_name, doc_description) VALUE (?,?,?)"
 
 	sqlSelectAllDocumentVersion  = "SELECT * FROM documents_version"
-	sqlSelectDocumentVersionByID = "SELECT * FROM documents_version WHERE documents_version = ?"
-	sqlFirstDocumentVersion      = "SELECT document_version FROM documents_version WHERE doc_id = ? AND version = ? AND doc_description = ? AND author_id = ? AND fee = ? AND price = ? LIMIT 1"
-	sqlInsertDocumentVersion     = "INSERT INTO documents_version(document_version, doc_id, version, doc_description, publisher, author_id, fee, price) VALUES (?,?,?,?,?,?,?,?)"
+	sqlSelectDocumentVersionByID = "SELECT * FROM documents_version WHERE document_version_id = ?"
+	sqlFirstDocumentVersion      = "SELECT document_version_id FROM documents_version WHERE doc_id = ? AND document_version = ? AND doc_description = ? AND author_id = ? AND fee = ? AND price = ? LIMIT 1"
+	sqlInsertDocumentVersion     = "INSERT INTO documents_version(document_version_id, document_version, doc_id, doc_description, publisher, author_id, fee, price) VALUES (?,?,?,?,?,?,?,?)"
+	sqlUpdateDocumentVersion     = "UPDATE documents_version SET document_version = ?, publisher = ?, author_id = ?, price = ? WHERE document_version_id = ?"
 
 	sqlSelectAllAuthor  = "SELECT * FROM authors"
 	sqlSelectAuthorByID = "SELECT * FROM authors WHERE author_id = ?"
@@ -48,6 +51,7 @@ type IDocDAO interface {
 	SelectCategoriesByID(ctx context.Context, db *mssqlx.DBs, id uint64) (result *model.CategoriesDAOobj, err error)
 	SelectCategoryID(ctx context.Context, db *mssqlx.DBs, category string) (catID uint64, err error)
 	SaveCategories(ctx context.Context, db *mssqlx.DBs, cat *model.CategoriesDAOobj) (err error)
+	FirstOrCreateCategory(ctx context.Context, db *mssqlx.DBs, category string, catIDIfNotExist uint64) (catID uint64, err error)
 
 	SelectAllDocumentVersion(ctx context.Context, db *mssqlx.DBs) (result []*model.DocumentVersionDAOobj, err error)
 	SelectDocumentVersionByID(ctx context.Context, db *mssqlx.DBs, id string) (result *model.DocumentVersionDAOobj, err error)
@@ -58,6 +62,7 @@ type IDocDAO interface {
 	SelectAuthorByID(ctx context.Context, db *mssqlx.DBs, id uint64) (result *model.AuthorDAOobj, err error)
 	SelectAuthorID(ctx context.Context, db *mssqlx.DBs, authorName string) (authorID uint64, err error)
 	SaveAuthor(ctx context.Context, db *mssqlx.DBs, aut *model.AuthorDAOobj) (err error)
+	FirstOrCreateAuthor(ctx context.Context, db *mssqlx.DBs, author string, authIDIfNotExist uint64) (authorID uint64, err error)
 
 	SelectDocVerFromCacheByBarcode(ctx context.Context, db *mssqlx.DBs, barcodeID string) (docver string, err error)
 }
@@ -178,6 +183,34 @@ func SaveCategories(ctx context.Context, db *mssqlx.DBs, cat *model.CategoriesDA
 	return
 }
 
+func FirstOrCreateCategory(ctx context.Context, db *mssqlx.DBs, category string, catIDIfNotExist uint64) (catID uint64, err error) {
+	// Validate input
+	if db == nil {
+		err = core.ErrDBObjNull
+		return
+	}
+
+	catID, err = SelectCategoryID(ctx, db, category)
+	if err != nil && !errors.Is(err, sql.ErrNoRows) {
+		return 0, err
+	}
+
+	if catID == 0 {
+		newCat := &model.CategoriesDAOobj{
+			CategoryID:   catIDIfNotExist,
+			CategoryName: category,
+		}
+
+		if err = SaveCategories(ctx, db, newCat); err != nil {
+			return 0, err
+		}
+
+		return catIDIfNotExist, nil
+	}
+
+	return catID, nil
+}
+
 // ------------------------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------- DOCUMENT VERSION ----------------------------------------------------------
 
@@ -210,22 +243,37 @@ func SaveDocumentVersion(ctx context.Context, db *mssqlx.DBs, docver *model.Docu
 		err = core.ErrDBObjNull
 		return
 	}
-	_, err = db.ExecContext(ctx, sqlInsertDocumentVersion, docver.DocumentVersion, docver.DocID, docver.Version, docver.DocDescription, docver.Publisher, docver.AuthorID, docver.Fee, docver.Price)
+	_, err = db.ExecContext(ctx, sqlInsertDocumentVersion, docver.DocVerID, docver.DocumentVersion, docver.DocID, docver.DocDescription, docver.Publisher, docver.AuthorID, docver.Fee, docver.Price)
 	return
 }
 
-func FirstOrCreateDocumentVersion(ctx context.Context, db *mssqlx.DBs, docver *model.DocumentVersionDAOobj) (docVerID string, err error) {
+func UpdateDocumentVersion(ctx context.Context, db *mssqlx.DBs, docVerID uint64, documentVersion string, publisher string, authorID uint64, price uint64) (err error) {
+	// UPDATE documents_version SET document_version = ?, publisher = ?, author_id = ?, price = ? WHERE document_version_id = ?
 	if db == nil {
-		return "", core.ErrDBObjNull
-	}
-	// doc_id, version, doc_description, author_id, fee, price
-	if err = db.GetContext(ctx, &docVerID, sqlFirstDocumentVersion, docver.DocID, docver.Version, docver.DocDescription, docver.AuthorID, docver.Fee, docver.Price); err != nil {
-		return "", err
+		err = core.ErrDBObjNull
+		return
 	}
 
-	if docVerID == "" {
-		if _, err = db.Exec(sqlInsertDocumentVersion, docver.DocumentVersion, docver.DocID, docver.Version, docver.DocDescription, docver.AuthorID, docver.Fee, docver.Price); err != nil {
-			return "", err
+	if _, err = db.ExecContext(ctx, sqlUpdateDocumentVersion, docVerID, documentVersion, publisher, authorID, price); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func FirstOrCreateDocumentVersion(ctx context.Context, db *mssqlx.DBs, docver *model.DocumentVersionDAOobj) (docVerID uint64, err error) {
+	if db == nil {
+		return 0, core.ErrDBObjNull
+	}
+	// doc_id, version, doc_description, author_id, fee, price
+	if err = db.GetContext(ctx, &docVerID, sqlFirstDocumentVersion, docver.DocID, docver.DocumentVersion, docver.DocDescription, docver.AuthorID, docver.Fee, docver.Price); err != nil && !errors.Is(err, sql.ErrNoRows) {
+		return 0, err
+	}
+
+	if docVerID == 0 {
+		// INSERT INTO documents_version(document_version_id, document_version, doc_id, doc_description, publisher, author_id, fee, price) VALUES (?,?,?,?,?,?,?,?)
+		if _, err = db.Exec(sqlInsertDocumentVersion, docver.DocVerID, docver.DocumentVersion, docver.DocID, docver.DocDescription, docver.AuthorID, docver.Fee, docver.Price); err != nil {
+			return 0, err
 		}
 	}
 
@@ -278,6 +326,33 @@ func SaveAuthor(ctx context.Context, db *mssqlx.DBs, aut *model.AuthorDAOobj) (e
 	}
 	_, err = db.ExecContext(ctx, sqlInsertAuthor, aut.AuthorID, aut.AuthorName, aut.Description)
 	return
+}
+
+func FirstOrCreateAuthor(ctx context.Context, db *mssqlx.DBs, author string, authIDIfNotExist uint64) (authorID uint64, err error) {
+	// Validate input
+	if db == nil {
+		err = core.ErrDBObjNull
+		return
+	}
+
+	authorID, err = SelectAuthorID(ctx, db, author)
+	if err != nil && !errors.Is(err, sql.ErrNoRows) {
+		return 0, nil
+	}
+
+	if authorID == 0 {
+		newAuthor := &model.AuthorDAOobj{
+			AuthorID:   authIDIfNotExist,
+			AuthorName: author,
+		}
+		if err = SaveAuthor(ctx, db, newAuthor); err != nil {
+			return 0, err
+		}
+
+		return authIDIfNotExist, nil
+	}
+
+	return authorID, nil
 }
 
 // --------------------------------------------------------------------------------------------------------------------------

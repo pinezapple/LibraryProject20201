@@ -220,9 +220,9 @@ type SaveDocReq struct {
 //TODO: GetAllDocReq & Resp
 
 type UpdateDocReq struct {
-	DocID    uint64 `json:"document_id"`
-	DocName  string `json:"document_name"`
-	Category string `json:"category"` //First or create
+	DocID    uint64 `json:"document_id"`   //
+	DocName  string `json:"document_name"` //
+	Category string `json:"category"`      //First or create
 }
 
 // ------------------------------------------------------------------------------------------------------------------------------------
@@ -231,14 +231,16 @@ type UpdateDocReq struct {
 //TODO: GetAllDocVerReq & Resp
 
 type UpdateDocVerReq struct {
-	DocVer    string `json:"document_version"` // represent ID
-	Publisher string `json:"publisher"`        //First or create
-	Author    string `json:"author"`           //First or create
-	Price     uint64 `json:"price"`
+	DocVerID  uint64 `json:"document_version_id"` //
+	DocVer    string `json:"document_version"`    //
+	Publisher string `json:"publisher"`           //First or create
+	Author    string `json:"author"`              //First or create
+	Price     uint64 `json:"price"`               //
 }
 
 // ------------------------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------- BLACK LIST----------------------------------------------------------
+
 type SelectByUserIDReq struct {
 	UserID uint64 `json:"user_id"`
 }

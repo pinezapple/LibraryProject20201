@@ -70,11 +70,11 @@ func selectAllBarcode(c echo.Context, request interface{}) (statusCode int, data
 			}
 
 			tmp := &portalModel.BarcodeFrontEndResp{
-				BarcodeID:   resp.Barcodes[j].ID,
-				Status:      resp.Barcodes[j].Status,
-				DocName:     doc.DocName,
-				DocID:       doc.DocID,
-				Version:     docver.Version,
+				BarcodeID: resp.Barcodes[j].ID,
+				Status:    resp.Barcodes[j].Status,
+				DocName:   doc.DocName,
+				DocID:     doc.DocID,
+				// Version:     docver.Version,
 				Author:      aut.AuthorName,
 				Publisher:   docver.Publisher,
 				Fee:         docver.Fee,
@@ -146,11 +146,11 @@ func selectAllBarcodeSelling(c echo.Context, request interface{}) (statusCode in
 			}
 
 			tmp := &portalModel.BarcodeFrontEndResp{
-				BarcodeID:   resp.Barcodes[j].ID,
-				Status:      resp.Barcodes[j].Status,
-				DocName:     doc.DocName,
-				DocID:       doc.DocID,
-				Version:     docver.Version,
+				BarcodeID: resp.Barcodes[j].ID,
+				Status:    resp.Barcodes[j].Status,
+				DocName:   doc.DocName,
+				DocID:     doc.DocID,
+				// Version:     docver.Version,
 				Author:      aut.AuthorName,
 				Publisher:   docver.Publisher,
 				Fee:         docver.Fee,
@@ -222,11 +222,11 @@ func selectAllBarcodeAvail(c echo.Context, request interface{}) (statusCode int,
 			}
 
 			tmp := &portalModel.BarcodeFrontEndResp{
-				BarcodeID:   resp.Barcodes[j].ID,
-				Status:      resp.Barcodes[j].Status,
-				DocName:     doc.DocName,
-				DocID:       doc.DocID,
-				Version:     docver.Version,
+				BarcodeID: resp.Barcodes[j].ID,
+				Status:    resp.Barcodes[j].Status,
+				DocName:   doc.DocName,
+				DocID:     doc.DocID,
+				// Version:     docver.Version,
 				Author:      aut.AuthorName,
 				Publisher:   docver.Publisher,
 				Fee:         docver.Fee,
@@ -298,11 +298,11 @@ func selectAllBarcodeDamaged(c echo.Context, request interface{}) (statusCode in
 			}
 
 			tmp := &portalModel.BarcodeFrontEndResp{
-				BarcodeID:   resp.Barcodes[j].ID,
-				Status:      resp.Barcodes[j].Status,
-				DocName:     doc.DocName,
-				DocID:       doc.DocID,
-				Version:     docver.Version,
+				BarcodeID: resp.Barcodes[j].ID,
+				Status:    resp.Barcodes[j].Status,
+				DocName:   doc.DocName,
+				DocID:     doc.DocID,
+				// Version:     docver.Version,
 				Author:      aut.AuthorName,
 				Publisher:   docver.Publisher,
 				Fee:         docver.Fee,
@@ -626,11 +626,11 @@ func selectBarcodeByID(c echo.Context, request interface{}) (statusCode int, dat
 	}
 
 	data = &portalModel.BarcodeFrontEndResp{
-		BarcodeID:   resp.Barcode.ID,
-		Status:      resp.Barcode.Status,
-		DocName:     doc.DocName,
-		DocID:       doc.DocID,
-		Version:     docver.Version,
+		BarcodeID: resp.Barcode.ID,
+		Status:    resp.Barcode.Status,
+		DocName:   doc.DocName,
+		DocID:     doc.DocID,
+		// Version:     docver.Version,
 		Author:      aut.AuthorName,
 		Publisher:   docver.Publisher,
 		Fee:         docver.Fee,
@@ -900,16 +900,26 @@ func saveDocumentByBatch(c echo.Context, request interface{}) (statusCode int, d
 	}
 
 	// search author ID
+	authUUID, er := uuid.NewUUID()
+	if er != nil {
+		statusCode, err = http.StatusInternalServerError, er
+		return
+	}
 
-	authorID, er := cache.SelectAuthorID(ctx, core.GetDB(), req.Author)
+	authorID, er := cache.FirstOrCreateAuthor(ctx, core.GetDB(), req.Author, uint64(core.GetHash(authUUID.String())))
 	if er != nil {
 		statusCode, err = http.StatusInternalServerError, er
 		return
 	}
 
 	// search category ID
+	catUUID, er := uuid.NewUUID()
+	if er != nil {
+		statusCode, err = http.StatusInternalServerError, er
+		return
+	}
 
-	catID, er := cache.SelectCategoryID(ctx, core.GetDB(), req.Category)
+	catID, er := cache.FirstOrCreateCategory(ctx, core.GetDB(), req.Category, uint64(core.GetHash(catUUID.String())))
 	if er != nil {
 		statusCode, err = http.StatusInternalServerError, er
 		return
@@ -944,9 +954,9 @@ func saveDocumentByBatch(c echo.Context, request interface{}) (statusCode int, d
 		return
 	}
 	reqDocVer := &portalModel.DocumentVersionDAOobj{
-		DocumentVersion: uuidDocVersion.String(),
+		DocVerID:        uint64(core.GetHash(uuidDocVersion.String())),
+		DocumentVersion: req.Version,
 		DocID:           reqDoc.DocID,
-		Version:         req.Version,
 		DocDescription:  req.Description,
 		AuthorID:        authorID,
 		Price:           req.Price,
@@ -957,8 +967,8 @@ func saveDocumentByBatch(c echo.Context, request interface{}) (statusCode int, d
 		return
 	}
 
-	if docVer != "" {
-		reqDocVer.DocumentVersion = docVer
+	if docVer != 0 {
+		reqDocVer.DocVerID = docVer
 	}
 
 	// SAVE BARCODES TO DOCMANAGER
