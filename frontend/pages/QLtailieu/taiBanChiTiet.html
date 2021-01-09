@@ -19,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
   <meta name="author" content="Creative Tim">
-  <title>Thông tin tài liệu chi tiết</title>
+  <title>Chi tiết tái bản</title>
   <!-- Favicon -->
   <link rel="icon" href="../../assets/img/brand/favicon.png" type="image/png">
   <!-- Fonts -->
@@ -144,12 +144,6 @@
           <!-- Search form -->
           <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">
             <div class="form-group mb-0">
-              <!-- <div class="input-group input-group-alternative input-group-merge">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fas fa-search"></i></span>
-                </div>
-                <input class="form-control" placeholder="Search" type="text">
-              </div> -->
             </div>
             <button type="button" class="close" data-action="search-close" data-target="#navbar-search-main" aria-label="Close">
               <span aria-hidden="true">×</span>
@@ -237,10 +231,10 @@
               <!-- Card body -->
               <div class="card-body">
                 <div class="col-lg-8">
-                  <p class="mb-0">
-                    Thông tin chi tiết
+                  <h3 class="mb-0">
+                    Thông tin chung tài liệu
                     <br /><br />
-                  </p>
+                  </h3>
                 </div>
                 <form id='docForm'>
                 <!-- input groups with icon -->
@@ -255,77 +249,105 @@
                     <div class="col">
                       <div class="form-group">
                         <label class="form-control-label">Tên tài liệu</label>  
-                        <input class="form-control" id="docName" placeholder="Tên tài liệu" type="text">
+                        <input class="form-control" id="docName" placeholder="Tên tài liệu" type="text" readonly>
                       </div>
                     </div>
                     <div class="col">
                       <div class="form-group">
-                        
                         <label class="form-control-label">Thể loại</label>
-                        <select class="form-control" id= "type" data-toggle="select" title="Thể loại" data-live-search="true" data-live-search-placeholder="Select">
-                          <option>Giáo trình</option>
-                          <option>Tạp chí</option>
-                          <option>Sách tham khảo</option>
-                          <option>Sách nước ngoài</option>
-                        </select>
-                  </div>
+                        <input class="form-control" id="type" placeholder="Thể loại" type="text" readonly>
+                      </div>
                     </div>
-                  </div>                 
-                  <!-- button -->
-                <div class="form-row" id="formButton">
-                  <button class="btn btn-primary" type="button" onclick="createBorrowForm()">Lưu</button>
+                  </div> 
+                  <div class="col-lg-8">
+                    <h3 class="mb-0">
+                      Thông tin tái bản của tài liệu
+                      <br /><br />
+                    </h3>
+                  </div>
+                  <div class="form-row" id="versionInfo">
+                    <div class="col">
+                      <div class="form-group">
+                        <label class="form-control-label">ID</label>
+                        <input type="text" class="form-control" id="versionId" placeholder="ID" readonly>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="form-group">
+                        <label class="form-control-label">Tái bản</label>
+                        <input type="text" class="form-control" id="version" placeholder="Tái bản">
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="form-group">
+                        <label class="form-control-label">Tác giả</label>
+                        <input type="text" class="form-control" id="author" placeholder="Tác giả">
+                      </div>
+                    </div>
+                  </div>     
+                  <div class="form-row">
+                    <div class="col">
+                      <div class="form-group">
+                          <label class="form-control-label">Nhà xuất bản</label>
+                          <input class="form-control" placeholder="Nhà xuất bản" id='publisher'>
+                      </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label class="form-control-label">Số lượng</label>
+                            <input class="form-control" placeholder="Số lượng" id='quantity' readonly>
+                        </div>
+                      </div>
+                  <div class="col">
+                    <div class="form-group">
+                        <label class="form-control-label">Giá</label>
+                        <input class="form-control" placeholder="Giá" id='price' >
+                    </div>
+                  </div>
                 </div>
-                
+
+                <!-- button -->
+                <div class="form-row" id="formButton">
+                  <button class="btn btn-primary" type="button" onclick="saveVersion()" >Lưu</button>
+                  <button type="button" class="btn btn-danger" style="position: absolute; right: 3rem;" onclick="location.reload()">Hủy</button>
+                </div>
                 </form>
               </div>
             </div>
           </div>
         </div>
-         <!-- Bảng tra cứu tái bản -->
+         <!-- Bảng tra cứu barcodes -->
         <div class="w-100"></div>
         <div class="col">
         <div class="card">
           <!-- Card header -->
           <div class="card-header">
-            
               <h3 class="mb-0" style="display: inline-block;">Tài liệu</h3>
-              <button style="float: right;" class="btn btn-primary"data-toggle="modal" data-target="#modal-form-add">Thêm tái bản</button>
-
+              <button style="float: right;" class="btn btn-primary"data-toggle="modal" data-target="#modal-form-more">Thêm số lượng</button>
           </div>
           <div class="table-responsive py-4 w-100 d-block d-md-table">
             
             <table class="table table-flush " id="datatable-basic">
               <thead class="thead-light">
                 <tr>
-                  <th>ID</th>
-                  <th>Tái bản</th>
-                  <th>Nhà xuất bản</th>
-                  <th>Tác giả</th>
-                  <th>Số lượng</th>
-                  <th>Giá</th>
+                  <th>Mã vạch</th>
+                  <th>Tình trạng tài liệu</th>
                   <th></th>
                 </tr>
               </thead>
               <tfoot>
                 <tr>
-                  <th>ID</th>
-                  <th>Tái bản</th>
-                  <th>Nhà xuất bản</th>
-                  <th>Tác giả</th>
-                  <th>Số lượng</th>
-                  <th>Giá</th>
+                  <th>Mã vạch</th>
+                  <th>Tình trạng tài liệu</th>
                   <th></th>
                 </tr>
               </tfoot>
               <tbody>
                 <tr>
                   <td>23123</td>
-                  <td>2</td>
-                  <td>Sự thật</td>
-                  <td>Lmao</td>
-                  <td>50</td>
-                  <td>10000</td>
-                  <td><button type="button" class="btn btn-secondary btn-sm" id='detail' >Chi tiết</button></td>
+                  <td>Nguyên vẹn</td>
+                  <td><button type="button" id="edit" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-form-edit">Chỉnh sửa</button>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -337,77 +359,42 @@
     </div>
   </div>
 
-
-
-
-
-<!-- Modal thêm tái bản -->
+<!-- Modal thêm số lượng tái bản -->
 <!--* Modal header *-->
 <!--* Modal body *-->
 <!--* Modal footer *-->
 <!--* Modal init *-->
-<div class="modal fade" id="modal-form-add" tabindex="-1" role="dialog" aria-labelledby="modal-form-edit" aria-hidden="true">
+<div class="modal fade" id="modal-form-more" tabindex="-1" role="dialog" aria-labelledby="modal-form-edit" aria-hidden="true">
   <div class="modal-dialog modal- modal-dialog-centered modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-body p-0">
               <div class="card bg-secondary border-0 mb-0">
                 <div class="card-body px-lg-5 py-lg-5">
                     <div class="text-center text-muted mb-4">
-                       <h3 class="heading mb-0">Thêm thông tin tái bản của tài liệu </h3>
+                       <h3 class="heading mb-0">Cập nhật số lượng tái bản của tài liệu </h3>
                     </div>
                     <form role="form" id='versionForm'>
                       <div class="form-row">
-                      
                         <div class="col">
                           <div class="form-group">
-                            <label class="form-control-label">Tái bản</label>
-                            <input type="text" class="form-control" id="versionAdd" placeholder="Tái bản">
+                            <label class="form-control-label">ID</label>
+                            <input type="text" class="form-control" id="versionIdMore" placeholder="ID" readonly>
                           </div>
                         </div>
-                        <div class="col">
-                          <div class="form-group">
-                            <label class="form-control-label">Tác giả</label>
-                            <input type="text" class="form-control" id="authorAdd" placeholder="Tác giả">
-                            
-                          </div>
-                        </div>
-            
-                      </div>
-                      
-                      <div class="form-row">
-                        <div class="col">
-                        <div class="form-group">
-                          
-                            <label class="form-control-label">Nhà xuất bản</label>
-                            <input class="form-control" placeholder="Nhà xuất bản" id='publisherAdd'>
-                          
-                        </div>
-                      </div>
-                      <div class="col">
-                        <div class="form-group">
-                          
-                            <label class="form-control-label">Số lượng</label>
-                            <input class="form-control" placeholder="Số lượng" id='quantityAdd'>
-                          
-                        </div>
-                      </div>
-                      
-                      <div class="col">
-                        <div class="form-group">
-                          
-                            <label class="form-control-label">Giá</label>
-                            <input class="form-control" placeholder="Giá" id='priceAdd' >
-                          
-                        </div>
-                      </div>
 
+                      <div class="col">
+                        <div class="form-group">
+                            <label class="form-control-label">Số lượng thêm</label>
+                            <input class="form-control" placeholder="Số lượng thêm" id='quantityEditMore'>
+                        </div>
                       </div>
+                    </div>
                       <!-- button -->
                     <div class="form-row" id="formButton">
-                      <button class="btn btn-primary" type="button" onclick="saveNewVersion()" >Lưu</button>
+                      <button class="btn btn-primary" type="button" onclick="addBarcode()" >Thêm</button>
                       <button type="button" class="btn btn-danger" style="position: absolute; right: 3rem;" data-dismiss="modal">Hủy</button>
                     </div>
-                    
+
                     </form>
                 </div>
              </div> 
@@ -418,6 +405,56 @@
   </div>
 </div>
 
+<!-- Modal chỉnh sửa barcode -->
+<!--* Modal header *-->
+<!--* Modal body *-->
+<!--* Modal footer *-->
+<!--* Modal init *-->
+<div class="modal fade" id="modal-form-edit" tabindex="-1" role="dialog" aria-labelledby="modal-form-edit" aria-hidden="true">
+  <div class="modal-dialog modal- modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-body p-0">
+              <div class="card bg-secondary border-0 mb-0">
+                <div class="card-body px-lg-5 py-lg-5">
+                    <div class="text-center text-muted mb-4">
+                       <h3 class="heading mb-0">Cập nhật tình trạng của tài liệu </h3>
+                    </div>
+                    <form role="form" id='versionForm'>
+                      <div class="form-row">
+                        <div class="col">
+                          <div class="form-group">
+                            <label class="form-control-label">Mã vạch</label>
+                            <input type="text" class="form-control" id="barcode" placeholder="Mã vạch" readonly>
+                          </div>
+                        </div>
+
+                      <div class="col">
+                        <div class="form-group">
+                            <label class="form-control-label">Tình trạng tài liệu</label>
+                            <select class="form-control" id= "status" data-toggle="select" title="Thể loại" data-live-search="true" data-live-search-placeholder="Select">
+                              <option value ="0">Nguyên vẹn</option>
+                              <option value ="1">Hư hỏng</option>
+                              <option value ="2">Làm mất</option>
+                              <option value ="4">Đang thanh lý</option>
+                            </select>
+                        </div>
+                      </div>
+                    </div>
+                      <!-- button -->
+                    <div class="form-row" id="formButton">
+                      <button class="btn btn-primary" type="button" id="submit">Lưu</button>
+                      <button type="button" class="btn btn-danger" style="position: absolute; right: 3rem;" data-dismiss="modal">Hủy</button>
+                    </div>
+
+                    </form>
+                </div>
+             </div> 
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 
   <!-- Argon Scripts -->
@@ -444,22 +481,22 @@
   <!-- Demo JS - remove this in your project -->
   <script src="../../assets/js/demo.min.js"></script>
   <script>
+    let arr = [{'0': "Nguyên vẹn"},{'1': "Hư hỏng"},{'2':'Làm mất'},{'3':'Đang mượn'},{'4':'Đang thanh lý'},{'5':'Đã thanh lý'}]
     var table = $('#datatable-basic').DataTable();
 
     let url_str =  window.location.href
     let url = new URL(url_str);
     let search_params = url.searchParams; 
-    let docId = search_params.get('id')
-    
-    let docUrl = 'http://localhost:3000/returned_form/'+docId
-    let docVerUrl = ''
-    
-    document.getElementById('docId').value = docId
-    
+    let versionId = search_params.get('id')
+    document.getElementById('versionId').value = versionId
 
-  // fetch doc data for form
-  // cần sửa
-  fetch (docUrl,
+    let versionUrl = 'http://localhost:3000/returned_form/'+docId
+    let barcodeUrl = ''
+
+
+  // fetch document version data for form
+   // cần sửa
+   fetch (versionUrl,
   {
     method: 'POST',
     credentials: "omit",
@@ -472,22 +509,33 @@
   .then(docList =>{
     docList.forEach(doc =>{
 
-      let data =[]
       // get doc data
-      // let docId= `${doc.document_version}` 
+      let docId= `${doc.document_id}` 
       let docName = `${doc.doc_name}` 
       let type = `${doc.category}`
+      let version = `${doc.version}`
+      let publisher = `${doc.publisher}` // chưa có
+      let author = `${doc.author}`
+      let quantity =`${doc.number}` // chưa có
+      let price =`${doc.price}` 
+
      
-      data.push (docId,docName,type)
       // add to form
-      // document.getElementById('docId').value = docId
+      document.getElementById('docId').value = docId
       document.getElementById('docName').value = docName
       document.getElementById('type').value = type
+      document.getElementById('version').value = version
+      document.getElementById('publisher').value = publisher
+      document.getElementById('author').value = author
+      document.getElementById('quantity').value = quantity
+      document.getElementById('price').value = price
+      
     })
   })
   .catch(error => {
   console.error('Error:', error);
   });
+
 
 
     
@@ -499,43 +547,76 @@
       // get data from table
       let data = table.row( $(this).parents('tr') ).data();
       
-      // add data 
-      document.querySelector("#versionIdEdit").value = data[0]
-      document.querySelector("#versionEdit").value = data[1]
-      document.querySelector("#publisherEdit").value = data[2]
-      // document.querySelector("#quantityEdit").value = data[4]
-      document.querySelector("#authorEdit").value = data[3]
-      document.querySelector("#priceEdit").value = data[5]
-
+      // add data to form
+      document.querySelector("#barcode").value = data[0]
+      document.querySelector("#status").value = data[1]
     });
-  
-    // redirect link
-    $('#datatable-basic tbody').on( 'click', '#detail', function (event) {
-      // event prevent
-      event.preventDefault()
+
+    $("#submit").on('click',function(){  
+    let barcode = parseInt(document.getElementById('barcode').value,10);
+    let status = parseInt(document.getElementById('status').value,10);
+
+    let url = 'http://localhost:3000/documents/'
+
+      fetch(url + barcode, 
+        {
+          method: 'PUT',
+          credentials: "omit",
+          headers: {
+             'Content-Type': 'application/json',
+            //  Authorization: "Bearer " + token,
+            },
+          body:JSON.stringify({barcode: barcode, status: status}) // cần sửa
+    }
+     ).then((res) => res.json())
+     .then(result => alert("Đã sửa thông tin tài liệu", result))
+     .then(result => location.reload() )
+     .catch((err)=>{alert("Đã xảy ra lỗi",err); console.log(err)})
+    //  location.reload();
+
+  })
+    // add new barcode
+    $('#modal-form-more').on('show.bs.modal', function (e) {
+      document.querySelector("#versionIdMore").value = versionId
+    })
+
+    function addBarcode(){
+      
+      let id = parseInt(document.getElementById('versionIdMore').value,10)
+      let quantity = parseInt(document.getElementById('quantityEditMore').value,10)
+
+      console.log(id,quantity)
+
+      fetch(barcodeUrl, //cần sửa lại
+    {
+    method: 'POST',
+    credentials: "omit",
+    headers: {
+       'Content-Type': 'application/json',
+      //  Authorization: "Bearer " + token,
+      },
+      body:JSON.stringify({document_version_id:id,add_barcode_number:quantity})
      
-      // get data from table
-      let data = table.row( $(this).parents('tr') ).data();
-      let versionId = data[0]
-      let redirectUrl = 'taiLieuChiTiet.html?id='+versionId
-      // redirect 
-      window.location.replace(redirectUrl)
+    }).then((res) => res.json())
+    .then(result => alert("Đã thêm thành công", result))
+    .then(result => location.reload())
+    .catch((err)=>alert("Đã xảy ra lỗi",err))
 
-    });
+    }
+    
   
-
-  
-  // save new document version 
-  function saveNewVersion(){
-    let version = document.querySelector('#versionAdd').value
-    let publisher = document.getElementById('publisherAdd').value
-    let author = document.getElementById('authorAdd').value
-    let quantity = parseInt(document.getElementById('quantityAdd').value,10)
-    let price = parseInt(document.getElementById('priceAdd').value,10)
+  // edit version of document
+  function saveVersion(){
+    let docVerId = parseInt(document.querySelector('#versionId').value,10)
+    let version = document.querySelector('#version').value
+    let publisher = document.getElementById('publisher').value
+    let author = document.getElementById('author').value
+    // let quantity = document.getElementById('quantityEdit').value
+    let price = parseInt(document.getElementById('price').value,10)
 
     
 
-    fetch(docVerUrl, //cần sửa lại
+    fetch(barcodeUrl, //cần sửa lại
   {
     method: 'POST',
     credentials: "omit",
@@ -543,20 +624,20 @@
        'Content-Type': 'application/json',
       //  Authorization: "Bearer " + token,
       },
-      body:JSON.stringify({document_version: version, publisher: publisher, author:author, price: price, number: quantity})
+      body:JSON.stringify({document_version_id:docVerId,document_version: version, publisher: publisher, author:author, price: price})
      
   }
   ).then((res) => res.json())
-  .then(result => alert("Đã lưu thành công", result))
+  .then(result => alert("Đã sửa thành công", result))
   .then(result => location.reload())
   .catch((err)=>alert("Đã xảy ra lỗi",err))
 
-  
-  
   }
 
-// fetch version data for table
-  fetch (docUrl,
+
+// fetch data for table
+// cần sửa
+  fetch (versionUrl,
   {
     method: 'POST',
     credentials: "omit",
@@ -571,14 +652,16 @@
 
       let data =[]
       // get doc data
-      let version= `${doc.document_version}` 
-      let author = `${doc.author}`
-      let publisher = `${doc.publisher}` 
-      let quantity = `${doc.number}` // cân sửa
-      let price = `${doc.price}` 
-      let btn = '<button type="button" class="btn btn-secondary btn-sm" id="detail" >Chi tiết</button>'
+      let barcode= `${doc.barcode}` 
+      let status = `${doc.status}` // returns a number
+
+      // replace number value of barcode status
+      let stage = status.toString()
+      let barcodeStatus = arr[stage][status]
+
+      let btn = '<button type="button" id="edit" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-form-edit">Chỉnh sửa</button>'
      
-      data.push (version,publisher,author,quantity,price,btn)
+      data.push (barcode,barcodeStatus,btn)
       // add to table
       table.row.add(data).draw()
     })
@@ -587,6 +670,8 @@
   console.error('Error:', error);
   });
 
+  
+  
   
 
 
