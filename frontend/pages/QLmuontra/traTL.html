@@ -468,7 +468,7 @@ let total = document.querySelector('#total')
 
 // get all borrow form
 fetch (url,  {
-  method: 'GET',
+  method: 'POST',
   credentials: "omit",
   headers: {
      'Content-Type': 'application/json',
@@ -513,7 +513,7 @@ $('#datatable-basic tbody').on( 'click', 'button', function () {
         let borrowFormUrl = 'http://localhost:3000/returned_form/' + borrowId
         // window.location.replace('traTLchitiet.html?id='+borrowId)
         fetch (borrowFormUrl,  {
-  method: 'GET',
+  method: 'POST',
   credentials: "omit",
   headers: {
      'Content-Type': 'application/json',
@@ -609,7 +609,7 @@ $('#datatable-basic tbody').on( 'click', 'button', function () {
     
      fetch(borrowFormUrl,
     {
-    method: 'PUT',
+    method: 'POST',
     credentials: "omit",
     headers: {
        'Content-Type': 'application/json',

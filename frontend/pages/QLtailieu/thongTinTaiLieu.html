@@ -19,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
   <meta name="author" content="Creative Tim">
-  <title>Nhập tài liệu</title>
+  <title>Thông tin tài liệu</title>
   <!-- Favicon -->
   <link rel="icon" href="../../assets/img/brand/favicon.png" type="image/png">
   <!-- Fonts -->
@@ -28,6 +28,11 @@
   <link rel="stylesheet" href="../../assets/vendor/nucleo/css/nucleo.css" type="text/css">
   <link rel="stylesheet" href="../../assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
   <!-- Page plugins -->
+  <link rel="stylesheet" href="../../assets/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="../../assets/vendor/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css">
+  <link rel="stylesheet" href="../../assets/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css">
+  <link rel="stylesheet" href="../../assets/vendor/animate.css/animate.min.css">
+  <link rel="stylesheet" href="../../assets/vendor/sweetalert2/dist/sweetalert2.min.css">
   <!-- Argon CSS -->
   <link rel="stylesheet" href="../../assets/css/argon.css?v=1.1.0" type="text/css">
 </head>
@@ -140,14 +145,14 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <!-- Search form -->
           <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">
-            <div class="form-group mb-0">
-              <!-- <div class="input-group input-group-alternative input-group-merge">
+            <!-- <div class="form-group mb-0">
+              <div class="input-group input-group-alternative input-group-merge">
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="fas fa-search"></i></span>
                 </div>
                 <input class="form-control" placeholder="Search" type="text">
-              </div> -->
-            </div>
+              </div>
+            </div> -->
             <button type="button" class="close" data-action="search-close" data-target="#navbar-search-main" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
@@ -164,12 +169,7 @@
                 </div>
               </div>
             </li>
-            <li class="nav-item d-sm-none">
-              <a class="nav-link" href="#" data-action="search-show" data-target="#navbar-search-main">
-                <i class="ni ni-zoom-split-in"></i>
-              </a>
-            </li>
-          
+            
           </ul>
           <ul class="navbar-nav align-items-center ml-auto ml-md-0">
             <li class="nav-item dropdown">
@@ -181,7 +181,6 @@
                 </div>
               </a>
               <div class="dropdown-menu dropdown-menu-right">
-                
                 <a href="#!" class="dropdown-item">
                   <i class="ni ni-single-02"></i>
                   <span>My profile</span>
@@ -190,6 +189,7 @@
                   <i class="ni ni-settings-gear-65"></i>
                   <span>Settings</span>
                 </a>
+                
                 <div class="dropdown-divider"></div>
                 <a href="#!" class="dropdown-item">
                   <i class="ni ni-user-run"></i>
@@ -208,12 +208,12 @@
         <div class="header-body">
           <div class="row align-items-center py-4">
             <div class="col-lg-6 col-7">
-              <h6 class="h2 text-white d-inline-block mb-0">Nhập tài liệu</h6>
+              <h6 class="h2 text-white d-inline-block mb-0">Thông tin tài liệu</h6>
               <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                 <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                   <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
                   <li class="breadcrumb-item"><a href="#">Quản lý tài liệu</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Nhập tài liệu</li>
+                  <li class="breadcrumb-item active" aria-current="page">Thông tin tài liệu</li>
                 </ol>
               </nav>
             </div>
@@ -224,132 +224,40 @@
     </div>
     <!-- Page content -->
     <div class="container-fluid mt--6">
+      <!-- Table -->
       <div class="row">
         <div class="col">
-          <div class="card-wrapper">
-            <!-- Custom form validation -->
-            <div class="card">
-              <!-- Card header -->
-              <div class="card-header">
-                <h3 class="mb-0">Nhập thông tin tài liệu</h3>
-              </div>
-              <!-- Card body -->
-              <div class="card-body">
-                <form id='newDoc'>
-                  <!-- Input groups with icon -->
-                  <div class="col-lg-8">
-                    <h3 class="heading mb-0">
-                      Thông tin tài liệu
-                      <br /><br />
-                    </h3>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <div class="input-group input-group-merge">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="ni ni-books"></i></span>
-                          </div>
-                          <input class="form-control" id="docName" placeholder="Tên tài liệu" type="text" required>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <div class="input-group input-group-merge">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="ni ni-archive-2"></i></span>
-                          </div>
-                          <!-- <input class="form-control" id="type" placeholder="Thể loại" type="text"> -->
-                          <select class="form-control" id='type' data-toggle="select">
-                            <option>Giáo trình</option>
-                            <option>Tạp chí</option>
-                            <option>Sách tham khảo</option>
-                            <option>Sách nước ngoài</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                 
-                  <!-- Input groups with icon -->
-                  <div class="col-lg-8">
-                    <h3 class="heading mb-0">
-                      Thông tin tái bản
-                      <br /><br />
-                    </h3>
-                  </div>
-
-                  <div class="row">
-                    <div class="col">
-                      <div class="form-group">
-                        <div class="input-group input-group-merge">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="ni ni-box-2"></i></span>
-                          </div>
-                          <input class="form-control" id="edition" placeholder="Tái bản" type="text" required>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class='col'>
-                    <div class="form-group">
-                      <div class="input-group input-group-merge">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text"><i class="fas fa-users"></i></span>
-                        </div>
-                        <input class="form-control" id="author" placeholder="Tác giả" type="text" required>
-                      </div>
-                    </div>
-                  </div>
-                    
-                    <div class="col">
-                      <div class="form-group">
-                        <div class="input-group input-group-merge">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="ni ni-folder-17"></i></span>
-                          </div>
-                          <input class="form-control" id = "publisher" placeholder="Nhà xuất bản" type="text" required>
-                        </div>
-                      </div>
-                    </div>
-                  <!-- </div> -->
-
-                  <!-- Input -->
-                  <!-- <div class="row"> -->
-                    
-                    <div class="col">
-                      <div class="form-group">
-                        <div class="input-group input-group-merge">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="ni ni-fat-add"></i></span>
-                          </div>
-                          <input class="form-control" id="quantity" placeholder="Số lượng" type="text">
-                        </div>
-                      </div>
-                    </div>
-                  <!-- </div> -->
-
-                  <!-- Input -->
-                  <!-- <div class="row"> -->
-                    <div class="col">
-                      <div class="form-group">
-                        <div class="input-group input-group-merge">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="ni ni-money-coins"></i></span>
-                          </div>
-                          <input class="form-control" id="price" placeholder="Giá" type="text" required>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <button class="btn btn-primary" type="submit" id="submit">Thêm</button>
-                  <button type="button" class="btn btn-danger" style = "float: right;" onclick="reset()" >Hủy</button>
-                </form>
-              </div>
+          <div class="card">
+            <!-- Card header -->
+            <div class="card-header">
+              <h3 class="mb-0">Thông tin tài liệu</h3>
             </div>
-           
+            <div class="table-responsive py-4">
+              <table class="table table-flush" id="datatable-basic">
+                <!-- <div class="col text-center">
+                  <div class="btn-group">
+                    <button type="button" id="add" class="btn btn-outline-primary">Add</button>
+                  </div>
+                </div> -->
+                <thead class="thead-light">
+                  <tr>
+                    <th>Mã tài liệu</th>
+                    <th>Tên tài liệu</th>
+                    <th>Thể loại</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tfoot>
+                  <tr>
+                    <th>Mã tài liệu</th>
+                    <th>Tên tài liệu</th>
+                    <th>Thể loại</th>
+                    <th>Action</th>
+                  </tr>
+                </tfoot>
+               
+              </table>
+            </div>
           </div>
         </div>
       </div>
@@ -381,6 +289,7 @@
       </footer>
     </div>
   </div>
+
   <!-- Argon Scripts -->
   <!-- Core -->
   <script src="../../assets/vendor/jquery/dist/jquery.min.js"></script>
@@ -389,45 +298,99 @@
   <script src="../../assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
   <script src="../../assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
   <!-- Optional JS -->
+  <script src="../../assets/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
+  <script src="../../assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+  <script src="../../assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+  <script src="../../assets/vendor/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
+  <script src="../../assets/vendor/datatables.net-buttons/js/buttons.html5.min.js"></script>
+  <script src="../../assets/vendor/datatables.net-buttons/js/buttons.flash.min.js"></script>
+  <script src="../../assets/vendor/datatables.net-buttons/js/buttons.print.min.js"></script>
+  <script src="../../assets/vendor/datatables.net-select/js/dataTables.select.min.js"></script>
+  <script src="../../assets/vendor/sweetalert2/dist/sweetalert2.min.js"></script>
+  <script src="../../assets/vendor/bootstrap-notify/bootstrap-notify.min.js"></script>
+  <script src='//cdn.datatables.net/plug-ins/1.10.22/api/column().title().js'></script>
   <!-- Argon JS -->
   <script src="../../assets/js/argon.js?v=1.1.0"></script>
   <!-- Demo JS - remove this in your project -->
   <script src="../../assets/js/demo.min.js"></script>
   <script>
-    document.getElementById('newDoc').addEventListener('submit', newDoc);
-
-    $("#submit").on('click',function(){
-    
-    event.preventDefault();
-
-    let docName = document.getElementById('docName').value;
-    let author = document.getElementById('author').value;
-    let type = document.getElementById('type').value;
-    let publisher = document.getElementById('publisher').value;
-    let edition = document.getElementById('edition').value;
-    let price = parseInt(document.getElementById('price').value);
-    let quantity = parseInt(document.getElementById('quantity').value);
-
-    
-
-    let url = 'http://localhost:3000/documents'
-
-    fetch(url, 
-    {
-      method: 'POST',
-      credentials: "omit",
-      headers: {
-        'Content-Type': 'application/json',
-        // Authorization: "Bearer " + token,
-        },
-      body:JSON.stringify({doc_name:docName, author:author, category:type, publisher: publisher,version: edition, price: price, number:quantity})
-      }).then((res) => res.json())
-    .then(result => alert("Đã thêm tài liệu", result))
-    .catch((err)=>alert("Đã xảy ra lỗi, xin hãy nhập lại",err))
-
-    document.getElementById("newDoc").reset();
-      
+// get data for table
+let url ="http://localhost:3000/documents"
+fetch (url,
+  {
+    method: 'POST',
+    credentials: "omit",
+    headers: {
+       'Content-Type': 'application/json',
+      //  Authorization: "Bearer " + token,
+      },
   })
+  .then(response => response.json())
+  .then(docList =>{
+    docList.forEach(doc =>{
+
+      let data =[]
+      // get doc data
+      let docId= `${doc.document_id}` 
+      let docName = `${doc.document_name}`
+      let type = `${doc.category}`
+      let btn = '<button type="button" class="btn btn-secondary btn-sm" id="detail">Chi tiết</button>'
+      
+      data.push (docId,docName,type,btn)
+      // add to table
+      table.row.add(data).draw()
+    })
+  })
+  .catch(error => {
+  console.error('Error:', error);
+  });
+
+// redirect
+
+  $('#datatable-basic tbody').on( 'click', '#edit', function (event) {
+      // event prevent
+      event.preventDefault()
+     
+      // get data from table
+      let data = table.row( $(this).parents('tr') ).data();
+      let docId =  data[0];
+      // redirect page
+      let newUrl = 'taiLieuChiTiet.html?id=' + docId
+      window.location.replace(newUrl)
+    });
+
+// add search box 
+
+$(document).ready(function() {
+  if ( $.fn.dataTable.isDataTable( '#datatable-basic' ) ) {
+    table = $('#datatable-basic').DataTable();
+}
+else {
+    table = $('#datatable-basic').DataTable( {
+      orderCellsTop: true,
+      fixedHeader: true
+    } );
+}
+    // Setup - add a text input to each footer cell
+    $('#datatable-basic thead tr').clone().appendTo( '#datatable-basic thead' );
+
+    $('#datatable-basic thead tr:eq(1) th').each( function (i) {
+        var title = $(this).text();
+        // var abc = this
+        $(this).html( '<input type="text" placeholder="Tìm '+title+'" />' )
+ 
+        $( 'input', this ).on( 'keyup change', function () {
+            if ( table.column(i).search() !== this.value ) {
+                table
+                    .column(i)
+                    .search( this.value )
+                    .draw();
+            }
+        } );
+    } );
+} );
+
+
   </script>
 </body>
 

@@ -488,7 +488,7 @@ $('#datatable-buttons tbody').on( 'click', 'button', function () {
         let saleFormUrl = 'http://localhost:3000/detailed_sale_form/' + saleId
         
         fetch (saleFormUrl,  {
-  method: 'GET',
+  method: 'POST',
   credentials: "omit",
   headers: {
      'Content-Type': 'application/json',

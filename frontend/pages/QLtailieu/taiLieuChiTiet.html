@@ -19,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
   <meta name="author" content="Creative Tim">
-  <title>Nhập tài liệu</title>
+  <title>Mượn tài liệu</title>
   <!-- Favicon -->
   <link rel="icon" href="../../assets/img/brand/favicon.png" type="image/png">
   <!-- Fonts -->
@@ -28,6 +28,9 @@
   <link rel="stylesheet" href="../../assets/vendor/nucleo/css/nucleo.css" type="text/css">
   <link rel="stylesheet" href="../../assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
   <!-- Page plugins -->
+  <link rel="stylesheet" href="../../assets/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="../../assets/vendor/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css">
+  <link rel="stylesheet" href="../../assets/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css">
   <!-- Argon CSS -->
   <link rel="stylesheet" href="../../assets/css/argon.css?v=1.1.0" type="text/css">
 </head>
@@ -181,7 +184,6 @@
                 </div>
               </a>
               <div class="dropdown-menu dropdown-menu-right">
-                
                 <a href="#!" class="dropdown-item">
                   <i class="ni ni-single-02"></i>
                   <span>My profile</span>
@@ -208,16 +210,15 @@
         <div class="header-body">
           <div class="row align-items-center py-4">
             <div class="col-lg-6 col-7">
-              <h6 class="h2 text-white d-inline-block mb-0">Nhập tài liệu</h6>
+              <h6 class="h2 text-white d-inline-block mb-0">Thông tin chi tiết tài liệu</h6>
               <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                 <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                   <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
                   <li class="breadcrumb-item"><a href="#">Quản lý tài liệu</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Nhập tài liệu</li>
+                  <li class="breadcrumb-item active" aria-current="page">Chi tiết tài liệu</li>
                 </ol>
               </nav>
             </div>
-            
           </div>
         </div>
       </div>
@@ -231,156 +232,186 @@
             <div class="card">
               <!-- Card header -->
               <div class="card-header">
-                <h3 class="mb-0">Nhập thông tin tài liệu</h3>
+                <h3 class="mb-0">Thông tin chi tiết tài liệu</h3>
               </div>
               <!-- Card body -->
               <div class="card-body">
-                <form id='newDoc'>
-                  <!-- Input groups with icon -->
-                  <div class="col-lg-8">
-                    <h3 class="heading mb-0">
-                      Thông tin tài liệu
-                      <br /><br />
-                    </h3>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <div class="input-group input-group-merge">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="ni ni-books"></i></span>
-                          </div>
-                          <input class="form-control" id="docName" placeholder="Tên tài liệu" type="text" required>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <div class="input-group input-group-merge">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="ni ni-archive-2"></i></span>
-                          </div>
-                          <!-- <input class="form-control" id="type" placeholder="Thể loại" type="text"> -->
-                          <select class="form-control" id='type' data-toggle="select">
-                            <option>Giáo trình</option>
-                            <option>Tạp chí</option>
-                            <option>Sách tham khảo</option>
-                            <option>Sách nước ngoài</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                 
-                  <!-- Input groups with icon -->
-                  <div class="col-lg-8">
-                    <h3 class="heading mb-0">
-                      Thông tin tái bản
-                      <br /><br />
-                    </h3>
-                  </div>
-
-                  <div class="row">
+                <div class="col-lg-8">
+                  <p class="mb-0">
+                    Thông tin chi tiết
+                    <br /><br />
+                  </p>
+                </div>
+                <form id='docForm'>
+                <!-- input groups with icon -->
+                  <div class="form-row" id="docInfo">
                     <div class="col">
                       <div class="form-group">
-                        <div class="input-group input-group-merge">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="ni ni-box-2"></i></span>
-                          </div>
-                          <input class="form-control" id="edition" placeholder="Tái bản" type="text" required>
-                        </div>
+                        <label class="form-control-label">Mã tài liệu</label>  
+                        <input class="form-control" id='docId' placeholder="Mã tài liệu" type="text" readonly>
+                        
                       </div>
                     </div>
-
-                    <div class='col'>
-                    <div class="form-group">
-                      <div class="input-group input-group-merge">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text"><i class="fas fa-users"></i></span>
-                        </div>
-                        <input class="form-control" id="author" placeholder="Tác giả" type="text" required>
+                    <div class="col">
+                      <div class="form-group">
+                        <label class="form-control-label">Tên tài liệu</label>  
+                        <input class="form-control" id="docName" placeholder="Tên tài liệu" type="text">
                       </div>
                     </div>
+                    <div class="col">
+                      <div class="form-group">
+                        
+                        <label class="form-control-label">Thể loại</label>
+                        <select class="form-control" id= "type" data-toggle="select" title="Thể loại" data-live-search="true" data-live-search-placeholder="Select">
+                          <option>Giáo trình</option>
+                          <option>Tạp chí</option>
+                          <option>Sách tham khảo</option>
+                          <option>Sách nước ngoài</option>
+                        </select>
                   </div>
-                    
-                    <div class="col">
-                      <div class="form-group">
-                        <div class="input-group input-group-merge">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="ni ni-folder-17"></i></span>
-                          </div>
-                          <input class="form-control" id = "publisher" placeholder="Nhà xuất bản" type="text" required>
-                        </div>
-                      </div>
                     </div>
-                  <!-- </div> -->
-
-                  <!-- Input -->
-                  <!-- <div class="row"> -->
-                    
-                    <div class="col">
-                      <div class="form-group">
-                        <div class="input-group input-group-merge">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="ni ni-fat-add"></i></span>
-                          </div>
-                          <input class="form-control" id="quantity" placeholder="Số lượng" type="text">
-                        </div>
-                      </div>
-                    </div>
-                  <!-- </div> -->
-
-                  <!-- Input -->
-                  <!-- <div class="row"> -->
-                    <div class="col">
-                      <div class="form-group">
-                        <div class="input-group input-group-merge">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="ni ni-money-coins"></i></span>
-                          </div>
-                          <input class="form-control" id="price" placeholder="Giá" type="text" required>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <button class="btn btn-primary" type="submit" id="submit">Thêm</button>
-                  <button type="button" class="btn btn-danger" style = "float: right;" onclick="reset()" >Hủy</button>
+                  </div>                 
+                  <!-- button -->
+                <div class="form-row" id="formButton">
+                  <button class="btn btn-primary" type="button" onclick="createBorrowForm()">Lưu</button>
+                </div>
+                
                 </form>
               </div>
             </div>
-           
+          </div>
+        </div>
+         <!-- Bảng tra cứu tái bản -->
+        <div class="w-100"></div>
+        <div class="col">
+        <div class="card">
+          <!-- Card header -->
+          <div class="card-header">
+            <h3 class="mb-0">Tài liệu</h3>
+          </div>
+          <div class="table-responsive py-4 w-100 d-block d-md-table">
+            <table class="table table-flush " id="datatable-basic">
+              <thead class="thead-light">
+                <tr>
+                  <th>Tái bản</th>
+                  <th>Nhà xuất bản</th>
+                  <th>Tác giả</th>
+                  <th>Số lượng</th>
+                  <th>Giá</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tfoot>
+                <tr>
+                  <th>Tái bản</th>
+                  <th>Nhà xuất bản</th>
+                  <th>Tác giả</th>
+                  <th>Số lượng</th>
+                  <th>Giá</th>
+                  <th></th>
+                </tr>
+              </tfoot>
+              <tbody>
+                <tr>
+                  <td>2</td>
+                  <td>Sự thật</td>
+                  <td>Lmao</td>
+                  <td>50</td>
+                  <td>10000</td>
+                  <td><button type="button" id="edit" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-form-edit">Chỉnh sửa</button></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
-      <!-- Footer -->
-      <footer class="footer pt-0">
-        <div class="row align-items-center justify-content-lg-between">
-          <div class="col-lg-6">
-            <div class="copyright text-center text-lg-left text-muted">
-              &copy; 2019 <a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">Creative Tim</a>
-            </div>
-          </div>
-          <div class="col-lg-6">
-            <ul class="nav nav-footer justify-content-center justify-content-lg-end">
-              <li class="nav-item">
-                <a href="https://www.creative-tim.com" class="nav-link" target="_blank">Creative Tim</a>
-              </li>
-              <li class="nav-item">
-                <a href="https://www.creative-tim.com/presentation" class="nav-link" target="_blank">About Us</a>
-              </li>
-              <li class="nav-item">
-                <a href="http://blog.creative-tim.com" class="nav-link" target="_blank">Blog</a>
-              </li>
-              <li class="nav-item">
-                <a href="https://www.creative-tim.com/license" class="nav-link" target="_blank">License</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </footer>
+    </div>     
+    </div>
     </div>
   </div>
+
+
+<!-- Modal edit tái bản -->
+<!--* Modal header *-->
+<!--* Modal body *-->
+<!--* Modal footer *-->
+<!--* Modal init *-->
+<div class="modal fade" id="modal-form-edit" tabindex="-1" role="dialog" aria-labelledby="modal-form-edit" aria-hidden="true">
+  <div class="modal-dialog modal- modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-body p-0">
+              <div class="card bg-secondary border-0 mb-0">
+                <div class="card-body px-lg-5 py-lg-5">
+                    <div class="text-center text-muted mb-4">
+                        <small>Cập nhật tái bản tài liệu</small>
+                    </div>
+                    <form role="form" id='versionForm'>
+                      <div class="form-row">
+                        <div class="col">
+                          <div class="form-group">
+                            <label class="form-control-label">Tái bản</label>
+                            <input type="text" class="form-control" id="versionEdit" placeholder="Tái bản" readonly>
+                          </div>
+                        </div>
+                        <div class="col">
+                          <div class="form-group">
+                            <label class="form-control-label">Tác giả</label>
+                            <input type="text" class="form-control" id="authorEdit" placeholder="Tác giả">
+                            
+                          </div>
+                        </div>
+            
+                      </div>
+                      
+                      <div class="form-row">
+                        <div class="col">
+                        <div class="form-group">
+                          
+                            <label class="form-control-label">Nhà xuất bản</label>
+                            <input class="form-control" placeholder="Nhà xuất bản" id='publisherEdit'>
+                          
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="form-group">
+                          
+                            <label class="form-control-label">Số lượng thêm</label>
+                            <input class="form-control" placeholder="Số lượng thêm" id='quantityEdit' readonly>
+                          
+                        </div>
+                      </div>
+                      
+                      <div class="col">
+                        <div class="form-group">
+                          
+                            <label class="form-control-label">Giá</label>
+                            <input class="form-control" placeholder="Giá" id='priceEdit' readonly>
+                          
+                        </div>
+                      </div>
+
+                      </div>
+
+                    
+                     
+                      <!-- button -->
+                    <div class="form-row" id="formButton">
+                      <button class="btn btn-primary" type="button" onclick="saveVersion()" >Lưu</button>
+                      <button type="button" class="btn btn-danger" style="position: absolute; right: 3rem;" data-dismiss="modal">Hủy</button>
+                    </div>
+                    
+                    </form>
+                </div>
+             </div> 
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
   <!-- Argon Scripts -->
   <!-- Core -->
   <script src="../../assets/vendor/jquery/dist/jquery.min.js"></script>
@@ -388,46 +419,114 @@
   <script src="../../assets/vendor/js-cookie/js.cookie.js"></script>
   <script src="../../assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
   <script src="../../assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
+  
   <!-- Optional JS -->
+  <script src="../../assets/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
+  <script src="../../assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+  <script src="../../assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+  <script src="../../assets/vendor/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
+  <script src="../../assets/vendor/datatables.net-buttons/js/buttons.html5.min.js"></script>
+  <script src="../../assets/vendor/datatables.net-buttons/js/buttons.flash.min.js"></script>
+  <script src="../../assets/vendor/datatables.net-buttons/js/buttons.print.min.js"></script>
+  <script src="../../assets/vendor/datatables.net-select/js/dataTables.select.min.js"></script>
+
   <!-- Argon JS -->
   <script src="../../assets/js/argon.js?v=1.1.0"></script>
+  
   <!-- Demo JS - remove this in your project -->
   <script src="../../assets/js/demo.min.js"></script>
   <script>
-    document.getElementById('newDoc').addEventListener('submit', newDoc);
+    var table = $('#datatable-basic').DataTable();
 
-    $("#submit").on('click',function(){
-    
-    event.preventDefault();
+    let url_str =  window.location.href
+    let url = new URL(url_str);
+    let search_params = url.searchParams; 
+    let docId = search_params.get('id')
+    let docUrl = 'http://localhost:3000/returned_form/'+docId
+    let docVerUrl = ''
 
-    let docName = document.getElementById('docName').value;
-    let author = document.getElementById('author').value;
-    let type = document.getElementById('type').value;
-    let publisher = document.getElementById('publisher').value;
-    let edition = document.getElementById('edition').value;
-    let price = parseInt(document.getElementById('price').value);
-    let quantity = parseInt(document.getElementById('quantity').value);
 
     
-
-    let url = 'http://localhost:3000/documents'
-
-    fetch(url, 
-    {
-      method: 'POST',
-      credentials: "omit",
-      headers: {
-        'Content-Type': 'application/json',
-        // Authorization: "Bearer " + token,
-        },
-      body:JSON.stringify({doc_name:docName, author:author, category:type, publisher: publisher,version: edition, price: price, number:quantity})
-      }).then((res) => res.json())
-    .then(result => alert("Đã thêm tài liệu", result))
-    .catch((err)=>alert("Đã xảy ra lỗi, xin hãy nhập lại",err))
-
-    document.getElementById("newDoc").reset();
+  
+  $('#datatable-basic tbody').on( 'click', 'button', function (event) {
+      // event prevent
+      event.preventDefault()
+     
+      // get data from table
+      let data = table.row( $(this).parents('tr') ).data();
       
+      // add data 
+      document.querySelector("#versionEdit").value = data[0]
+      document.querySelector("#publisherEdit").value = data[1]
+      document.querySelector("#quantityEdit").value = data[3]
+      document.querySelector("#authorEdit").value = data[2]
+      document.querySelector("#priceEdit").value = data[4]
+
+    });
+  
+  
+  // create borrow form
+  function saveVersion(){
+    let docId = document.querySelector('#docId')
+    let version = document.querySelector('#versionEdit')
+    let publisher = document.getElementById('publisherEdit').value
+    let author = document.getElementById('authorEdit').value
+    let quantity = document.getElementById('quantityEdit').value
+    let price = document.getElementById('priceEdit').value
+
+    fetch(docVerUrl,
+  {
+    method: 'POST',
+    credentials: "omit",
+    headers: {
+       'Content-Type': 'application/json',
+      //  Authorization: "Bearer " + token,
+      },
+      body:JSON.stringify({document_version: version, publisher: publisher, author:author, price: price, number: quantity})
+     
+  }
+  ).then((res) => res.json())
+  .then(result => alert("Đã lưu thành công", result))
+  .then(result => location.reload())
+  .catch((err)=>alert("Đã xảy ra lỗi",err))
+
+  
+  
+  }
+
+// fetch data 
+  fetch (docUrl,
+  {
+    method: 'POST',
+    credentials: "omit",
+    headers: {
+       'Content-Type': 'application/json',
+      //  Authorization: "Bearer " + token,
+      },
   })
+  .then(response => response.json())
+  .then(docList =>{
+    docList.forEach(doc =>{
+
+      let data =[]
+      // get doc data
+      let version= `${doc.document_version}` 
+      let author = `${doc.author}`
+      let publisher = `${doc.publisher}` 
+      let quantity = `${doc.publisher}` // cân sửa
+      let price = `${doc.price}` 
+      let btn = '<button type="button" id="edit" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-form-edit">Chỉnh sửa</button>'
+     
+      data.push (version,publisher,author,quantity,price,btn)
+      // add to table
+      table.row.add(data).draw()
+    })
+  })
+  .catch(error => {
+  console.error('Error:', error);
+  });
+
+
   </script>
 </body>
 
