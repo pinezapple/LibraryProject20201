@@ -5,6 +5,8 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/pinezapple/LibraryProject20201/portal/dao/cache"
+
 	"github.com/google/uuid"
 	"github.com/labstack/echo"
 
@@ -98,18 +100,10 @@ func updateBorrowForm(c echo.Context, request interface{}) (statusCode int, data
 		Status:       req.Status,
 	}
 
-	// get shard
-	shardService := microservice.GetDocmanagerShardServices()
-	if shardService == nil {
-		fmt.Println("nil shardService")
-		statusCode, err = http.StatusInternalServerError, fmt.Errorf("nil shardService")
-		return
-	}
-	shardID := core.GetShardID(uint32(rpcUpdateBorrowFormReq.BorrowFormID))
-	ser, ok := shardService[uint64(shardID)]
-	if !ok {
-		fmt.Println("nil shardID")
-		statusCode, err = http.StatusInternalServerError, fmt.Errorf("no shard id")
+	// get shard by borrowform id
+	ser, er := getDocMangerServiceByUint64(rpcUpdateBorrowFormReq.BorrowFormID)
+	if er != nil {
+		statusCode, err = http.StatusInternalServerError, er
 		return
 	}
 
@@ -125,6 +119,7 @@ func updateBorrowForm(c echo.Context, request interface{}) (statusCode int, data
 		barcodeStatus        = make([]uint64, len(req.BarcodeUpdate))
 		paymentBarcodeStatus []uint64
 		barcodeFee           []uint64
+		totalFee             uint64
 	)
 
 	for i := range req.BarcodeUpdate {
@@ -135,6 +130,7 @@ func updateBorrowForm(c echo.Context, request interface{}) (statusCode int, data
 		}
 		paymentBarcodeStatus = append(paymentBarcodeStatus, req.BarcodeUpdate[i].BarcodeStatus)
 		barcodeFee = append(barcodeFee, req.BarcodeUpdate[i].Fee)
+		totalFee += req.BarcodeUpdate[i].Fee
 	}
 
 	if er := updateBarcodeStatusByBatch(ctx, barcodeID, barcodeStatus); er != nil {
@@ -148,6 +144,21 @@ func updateBorrowForm(c echo.Context, request interface{}) (statusCode int, data
 			statusCode, err = http.StatusInternalServerError, er
 			return
 		}
+	}
+
+	// insert to blacklist
+	rpcSelectBorrowFormReq := &docmanagerModel.SelectBorrowFormByIDReq{
+		BorrowFormID: req.BorrowFormID,
+	}
+	rpcSelectBorrowFormResp, er := ser.Docmanager.SelectBorrowFormByID(ctx, rpcSelectBorrowFormReq)
+	if er != nil || rpcSelectBorrowFormResp.Code != 0 || rpcSelectBorrowFormResp.Borrowform == nil {
+		statusCode, err = http.StatusInternalServerError, fmt.Errorf("grpc Error: %v", er)
+		return
+	}
+
+	if er := cache.InsertIntoBlackList(ctx, core.GetDB(), rpcSelectBorrowFormResp.Borrowform.ReaderID, req.BorrowFormID, totalFee); er != nil {
+		statusCode, err = http.StatusInternalServerError, er
+		return
 	}
 
 	return http.StatusOK, nil, lg, false, nil

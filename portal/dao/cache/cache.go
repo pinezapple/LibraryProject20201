@@ -13,6 +13,7 @@ const (
 	sqlSelectDocumentByID = "SELECT * FROM documents WHERE doc_id = ?"
 	sqlFirstDocumentID    = "SELECT doc_id FROM documents WHERE doc_name = ? AND category_id = ? LIMIT 1"
 	sqlInsertDocument     = "INSERT INTO documents(doc_id, doc_name, category_id) VALUES (?,?)"
+	sqlUpdateDocumentByID = "UPDATE documents SET doc_name = ?, category_id = ? WHERE doc_id = ?"
 
 	sqlSelectAllCategories  = "SELECT * FROM categories"
 	sqlSelectCategoryID     = "SELECT category_id FROM categories WHERE category_name = ?"
@@ -41,6 +42,7 @@ type IDocDAO interface {
 	SelectDocumentByID(ctx context.Context, db *mssqlx.DBs, id uint64) (result *model.DocumentsDAOobj, err error)
 	SaveDocument(ctx context.Context, db *mssqlx.DBs, doc *model.DocumentsDAOobj) (err error)
 	FirstOrCreateDocument(ctx context.Context, db *mssqlx.DBs, doc *model.DocumentsDAOobj) (docID uint64, err error)
+	UpdateDocument(ctx context.Context, db *mssqlx.DBs, doc *model.DocumentsDAOobj) (err error)
 
 	SelectAllCategories(ctx context.Context, db *mssqlx.DBs) (result []*model.CategoriesDAOobj, err error)
 	SelectCategoriesByID(ctx context.Context, db *mssqlx.DBs, id uint64) (result *model.CategoriesDAOobj, err error)
@@ -114,6 +116,18 @@ func FirstOrCreateDocument(ctx context.Context, db *mssqlx.DBs, doc *model.Docum
 	}
 
 	return docID, nil
+}
+
+func UpdateDocument(ctx context.Context, db *mssqlx.DBs, doc *model.DocumentsDAOobj) (err error) {
+	if db == nil {
+		return core.ErrDBObjNull
+	}
+
+	if _, err := db.ExecContext(ctx, sqlUpdateDocumentByID, doc.DocName, doc.CategoryID, doc.DocID); err != nil {
+		return err
+	}
+
+	return nil
 }
 
 // ------------------------------------------------------------------------------------------------------------------------------
@@ -292,6 +306,7 @@ func SaveDocverToCache(ctx context.Context, db *mssqlx.DBs, barcode uint64, docv
 
 // --------------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------- BLACK LIST ------------------------------------------------------
+
 func InsertIntoBlackList(ctx context.Context, db *mssqlx.DBs, userID, borrowFormID, money uint64) (err error) {
 	// Validate input
 	if db == nil {
