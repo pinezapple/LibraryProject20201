@@ -39,6 +39,7 @@ CREATE TABLE `barcodes` (
 CREATE TABLE `borrow_form` (
   `borrow_form_id` bigint(20),
   `librarian_id` bigint(20),
+  `reader_id` bigint(20),
   `barcode_id` BLOB,
   `status` bigint(20),
   `borrow_start_time` timestamp DEFAULT CURRENT_TIMESTAMP,
@@ -50,6 +51,7 @@ CREATE TABLE `borrow_form` (
 CREATE TABLE `payments` (
   `payment_id` bigint(20),
   `borrow_form_id` bigint(20),
+  `reader_id` bigint(20),
   `barcode_id` BLOB, 
   `barcode_status` BLOB,
   `money` BLOB, 

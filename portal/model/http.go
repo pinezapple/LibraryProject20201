@@ -156,7 +156,7 @@ type SelectSaleBillByIDReq struct {
 
 type SelectSaleBillByIDResp struct {
 	SaleBillID  uint64            `json:"sale_bill_id"`
-	LibrarianID uint64            `json:"librian_id"`
+	LibrarianID uint64            `json:"librarian_id"`
 	TotalMoney  uint64            `json:"total_money"`
 	Barcodes    []*SaleBillDetail `json:"barcodes"`
 }

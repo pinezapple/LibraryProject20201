@@ -28,12 +28,12 @@ const (
 	sqlSelectAllBorrowForm           = "SELECT * FROM borrow_form"
 	sqlSelectAllUnreturnedBorrowForm = "SELECT * FROM borrow_form WHERE status <> 3"
 	sqlSelectBorrowFormByID          = "SELECT * FROM borrow_form WHERE borrow_form_id = ?"
-	sqlInsertBorrowForm              = "INSERT INTO borrow_form(borrow_form_id, librarian_id, barcode_id, status, borrow_start_time, borrow_end_time) VALUES (?,?,?,?,?,?)"
+	sqlInsertBorrowForm              = "INSERT INTO borrow_form(borrow_form_id, librarian_id, reader_id, barcode_id, status, borrow_start_time, borrow_end_time) VALUES (?,?,?,?,?,?)"
 	sqlUpdateBorrowFormStatus        = "UPDATE borrow_form SET status = ? WHERE borrow_form_id = ?"
 
 	sqlSelectAllPayment            = "SELECT * FROM payments"
 	sqlSelectPaymentByID           = "SELECT * FROM payments WHERE payments_id = ?"
-	sqlInsertPayment               = "INSERT INTO payments(payments_id, librarian_id,borrow_form_id, barcode_id, barcode_status, money) VALUES (?,?,?,?,?,?)"
+	sqlInsertPayment               = "INSERT INTO payments(payments_id, librarian_id, reader_id, borrow_form_id, barcode_id, barcode_status, money) VALUES (?,?,?,?,?,?)"
 	sqlSelectPaymentByBorrowFormID = "SELECT * FROM payments WHERE borrow_form_id = ?"
 )
 

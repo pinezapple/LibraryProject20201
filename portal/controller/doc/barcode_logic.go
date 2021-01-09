@@ -21,7 +21,6 @@ func updateBarcodeStatusByBatch(ctx context.Context, barcodeID []uint64, barcode
 
 	shardService := microservice.GetDocmanagerShardServices()
 	if shardService == nil {
-		fmt.Println("nil shardService")
 		return fmt.Errorf("nil shardService")
 	}
 
