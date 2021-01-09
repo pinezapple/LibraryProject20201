@@ -95,8 +95,6 @@ type CreateBorrowFormReq struct {
 
 type UpdateBorrowFormReq struct {
 	BorrowFormID  uint64 `json:"borrow_form_id"`
-	LibrarianID   uint64 `json:"librarian_id"`
-	ReaderID      uint64 `json:"reader_id"`
 	Status        uint64 `json:"status"`
 	BarcodeUpdate []struct {
 		BarcodeID     uint64 `json:"barcode_id"`
@@ -189,4 +187,27 @@ type SaveDocReq struct {
 	Description string `json:"description"`
 	Number      uint64 `json:"number"`
 	Price       uint64 `json:"price"`
+}
+
+// -----------------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------- DOCUMENTS ----------------------------------------------------------
+
+//TODO: GetAllDocReq & Resp
+
+type UpdateDocReq struct {
+	DocID    uint64 `json:"document_id"`
+	DocName  string `json:"document_name"`
+	Category string `json:"category"` //First or create
+}
+
+// ------------------------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------- DOCUMENT VERSION ----------------------------------------------------------
+
+//TODO: GetAllDocVerReq & Resp
+
+type UpdateDocVerReq struct {
+	DocVer    string `json:"document_version"` // represent ID
+	Publisher string `json:"publisher"`        //First or create
+	Author    string `json:"author"`           //First or create
+	Price     uint64 `json:"price"`
 }

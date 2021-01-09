@@ -144,7 +144,7 @@ func updateBorrowForm(c echo.Context, request interface{}) (statusCode int, data
 
 	// create payment if necessary
 	if len(paymentBarcodeStatus) > 0 {
-		if er := createPayment(ctx, req.LibrarianID, req.ReaderID, req.BorrowFormID, barcodeID, paymentBarcodeStatus, barcodeFee); er != nil {
+		if er := createPayment(ctx, req.BorrowFormID, barcodeID, paymentBarcodeStatus, barcodeFee); er != nil {
 			statusCode, err = http.StatusInternalServerError, er
 			return
 		}
