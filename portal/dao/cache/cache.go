@@ -33,8 +33,8 @@ const (
 	sqlSelectAuthorID   = "SELECT author_id FROM authors WHERE author_name = ?"
 	sqlInsertAuthor     = "INSERT INTO authors(author_id, author_name, description) VALUES (?,?,?)"
 
-	sqlSelectDocverFromCache = "SELECT document_version FROM barcode_cache WHERE barcode_id = ?"
-	sqlInsertDocverToCache   = "INSERT INTO barcode_cache(barcore_id, document_version) VALUES (?,?)"
+	sqlSelectDocverIDFromCache = "SELECT document_version_id FROM barcode_cache WHERE barcode_id = ?"
+	sqlInsertDocverIDToCache   = "INSERT INTO barcode_cache(barcore_id, document_version_id) VALUES (?,?)"
 
 	sqlInsertBlackList           = "INSERT INTO black_list(user_id, borrow_form_id, money) VALUES (?,?,?)"
 	sqlSelectFromBlackListWithID = "SELECT * FROM black_list WHERE user_id = ?"
@@ -358,24 +358,27 @@ func FirstOrCreateAuthor(ctx context.Context, db *mssqlx.DBs, author string, aut
 // --------------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------- CACHE -----------------------------------------------------------
 
-func SelectDocVerFromCacheByBarcode(ctx context.Context, db *mssqlx.DBs, barcodeID uint64) (docver string, err error) {
+func SelectDocVerIDFromCacheByBarcode(ctx context.Context, db *mssqlx.DBs, barcodeID uint64) (docverID uint64, err error) {
 	// Validate input
 	if db == nil {
 		err = core.ErrDBObjNull
 		return
 	}
 
-	err = db.GetContext(ctx, &docver, sqlSelectDocverFromCache, barcodeID)
+	//TODO: fix model
+	err = db.GetContext(ctx, &docverID, sqlSelectDocverIDFromCache, barcodeID)
 	return
 }
 
-func SaveDocverToCache(ctx context.Context, db *mssqlx.DBs, barcode uint64, docver string) (err error) {
+func SaveDocverIDToCache(ctx context.Context, db *mssqlx.DBs, barcode uint64, docverID uint64) (err error) {
 	// Validate input
 	if db == nil {
 		err = core.ErrDBObjNull
 		return
 	}
-	_, err = db.ExecContext(ctx, sqlInsertDocverToCache, barcode, docver)
+
+	//TODO: fix model
+	_, err = db.ExecContext(ctx, sqlInsertDocverIDToCache, barcode, docverID)
 	return
 }
 

@@ -214,6 +214,10 @@ type SaveDocReq struct {
 	Price       uint64 `json:"price"`
 }
 
+type SaveDocResp struct {
+	Barcodes []uint64 `json:"barcodes"`
+}
+
 // -----------------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------- DOCUMENTS ----------------------------------------------------------
 
@@ -236,6 +240,15 @@ type UpdateDocVerReq struct {
 	Publisher string `json:"publisher"`           //First or create
 	Author    string `json:"author"`              //First or create
 	Price     uint64 `json:"price"`               //
+}
+
+type AddBarcodeByDocverIDReq struct {
+	DocVerID         uint64 `json:"document_version_id"`
+	AddBarcodeNumber uint64 `json:"add_barcode_number"`
+}
+
+type AddBarcodeByDocverIDResp struct {
+	Barcodes []uint64 `json:"barcodes"`
 }
 
 // ------------------------------------------------------------------------------------------------------------------------------------

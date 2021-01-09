@@ -68,7 +68,7 @@ message Barcode {
     uint64 ID = 1 [(gogoproto.jsontag) = "barcode_id", (gogoproto.moretags) = "db:\"barcode_id\""];
     uint64 Status = 2 [(gogoproto.jsontag) = "status", (gogoproto.moretags) = "db:\"status\""];
     uint64 SaleBillID = 4 [(gogoproto.jsontag) = "sale_bill_id", (gogoproto.moretags) = "db:\"sale_bill_id\""];
-    string DocVer = 5 [(gogoproto.jsontag) = "doc_ver", (gogoproto.moretags) = "db:\"doc_ver\""];
+    uint64 DocVerID = 5 [(gogoproto.jsontag) = "document_version_id", (gogoproto.moretags) = "db:\"document_version_id\""];
     model.Time Created_at = 6 [(gogoproto.jsontag) = "created_at", (gogoproto.moretags) = "db:\"created_at\""];
 	model.Time Updated_at = 7 [(gogoproto.jsontag) = "updated_at", (gogoproto.moretags) = "db:\"updated_at\""];
 }

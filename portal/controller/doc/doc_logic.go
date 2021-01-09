@@ -893,6 +893,9 @@ func saveDocumentByBatch(c echo.Context, request interface{}) (statusCode int, d
 	fmt.Println("in saveDocumentByBatch")
 	req := request.(*portalModel.SaveDocReq)
 	ctx := c.Request().Context()
+	httpResp := &portalModel.SaveDocResp{
+		Barcodes: make([]uint64, req.Number),
+	}
 	lg = &model.LogFormat{
 		Source: c.Request().RemoteAddr,
 		Action: "saveDocumentByBatch",
@@ -961,14 +964,14 @@ func saveDocumentByBatch(c echo.Context, request interface{}) (statusCode int, d
 		AuthorID:        authorID,
 		Price:           req.Price,
 	}
-	docVer, err := cache.FirstOrCreateDocumentVersion(ctx, core.GetDB(), reqDocVer)
+	docVerID, err := cache.FirstOrCreateDocumentVersion(ctx, core.GetDB(), reqDocVer)
 	if err != nil {
 		statusCode, err = http.StatusInternalServerError, er
 		return
 	}
 
-	if docVer != 0 {
-		reqDocVer.DocVerID = docVer
+	if docVerID != 0 {
+		reqDocVer.DocVerID = docVerID
 	}
 
 	// SAVE BARCODES TO DOCMANAGER
@@ -984,7 +987,6 @@ func saveDocumentByBatch(c echo.Context, request interface{}) (statusCode int, d
 		saveBarcodes = make([]*docmanagerModel.SaveBarcodeReq, req.Number)
 	)
 
-	respBarcodeIDs := make([]uint64, req.Number)
 	for i := range saveBarcodes {
 		uuidBarcode, er := uuid.NewUUID()
 		if er != nil {
@@ -993,9 +995,9 @@ func saveDocumentByBatch(c echo.Context, request interface{}) (statusCode int, d
 		}
 		saveBarcodes[i] = &docmanagerModel.SaveBarcodeReq{
 			Barcode: &docmanagerModel.Barcode{
-				ID:     uint64(core.GetHash(uuidBarcode.String())),
-				DocVer: reqDocVer.DocumentVersion,
-				Status: model.BarcodeNormalStatus,
+				ID:       uint64(core.GetHash(uuidBarcode.String())),
+				DocVerID: docVerID,
+				Status:   model.BarcodeNormalStatus,
 			},
 		}
 
@@ -1011,16 +1013,16 @@ func saveDocumentByBatch(c echo.Context, request interface{}) (statusCode int, d
 			statusCode, err = http.StatusInternalServerError, fmt.Errorf("grpc Error")
 			return
 		}
-		respBarcodeIDs[i] = saveBarcodes[i].Barcode.ID
+		httpResp.Barcodes[i] = saveBarcodes[i].Barcode.ID
 
 		// Save to cache: Barcode - DocVer
-		if er := cache.SaveDocverToCache(ctx, core.GetDB(), saveBarcodes[i].Barcode.ID, saveBarcodes[i].Barcode.DocVer); err != nil {
+		if er := cache.SaveDocverIDToCache(ctx, core.GetDB(), saveBarcodes[i].Barcode.ID, saveBarcodes[i].Barcode.DocVerID); err != nil {
 			statusCode, err = http.StatusInternalServerError, er
 			return
 		}
 	}
 
-	return http.StatusOK, respBarcodeIDs, lg, false, nil
+	return http.StatusOK, httpResp, lg, false, nil
 }
 
 func selectAllFromBlackList(c echo.Context, request interface{}) (statusCode int, data interface{}, lg *model.LogFormat, logResponse bool, err error) {

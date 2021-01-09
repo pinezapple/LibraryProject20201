@@ -17,7 +17,7 @@ const (
 	sqlSelectAllDamagedBarcode   = "SELECT * FROM barcodes WHERE status = 3"
 	sqlSelectAllSellingBarcode   = "SELECT * FROM barcodes WHERE status = 4"
 	sqlSelectBarcodeByID         = "SELECT * FROM barcodes WHERE barcode_id = ?"
-	sqlInsertNewBarcode          = "INSERT INTO barcodes(barcode_id, document_version, status) VALUES (?,?,?,?)"
+	sqlInsertNewBarcode          = "INSERT INTO barcodes(barcode_id, document_version_id, status) VALUES (?,?,?,?)"
 	sqlUpdateBarcodeSaleBillID   = "UPDATE barcodes SET sale_bill_id = ? WHERE barcode_id = ?"
 	sqlUpdateBarcodeStatus       = "UPDATE barcodes SET status = ? WHERE barcode_id = ?"
 
@@ -33,7 +33,7 @@ const (
 
 	sqlSelectAllPayment            = "SELECT * FROM payments"
 	sqlSelectPaymentByID           = "SELECT * FROM payments WHERE payments_id = ?"
-	sqlInsertPayment               = "INSERT INTO payments(payments_id, librarian_id, reader_id, borrow_form_id, barcode_id, barcode_status, money) VALUES (?,?,?,?,?,?)"
+	sqlInsertPayment               = "INSERT INTO payments(payments_id, reader_id, borrow_form_id, barcode_id, barcode_status, money) VALUES (?,?,?,?,?)"
 	sqlSelectPaymentByBorrowFormID = "SELECT * FROM payments WHERE borrow_form_id = ?"
 )
 
@@ -117,7 +117,7 @@ func InsertBarcode(ctx context.Context, db *mssqlx.DBs, barcode *docmanagerModel
 		return core.ErrDBObjNull
 	}
 
-	_, err = db.ExecContext(ctx, sqlInsertNewBarcode, barcode.ID, barcode.DocVer, barcode.Status)
+	_, err = db.ExecContext(ctx, sqlInsertNewBarcode, barcode.ID, barcode.DocVerID, barcode.Status)
 	return
 }
 
@@ -346,7 +346,7 @@ func InsertBorrowForm(ctx context.Context, db *mssqlx.DBs, borrowForm *docmanage
 	return
 }
 
-func UpdateBorrowFormStatus(ctx context.Context, db *mssqlx.DBs, borrowFormID uint64, status int) (err error) {
+func UpdateBorrowFormStatus(ctx context.Context, db *mssqlx.DBs, borrowFormID uint64, status uint64) (err error) {
 	if db == nil {
 		return core.ErrDBObjNull
 	}
@@ -490,7 +490,7 @@ func InsertPayment(ctx context.Context, db *mssqlx.DBs, payment *docmanagerModel
 		return
 	}
 
-	_, err = db.Exec(sqlInsertPayment, payment.ID, payment.LibrarianID, payment.BorrowFormID, barcode, barcodestatus, money)
+	_, err = db.Exec(sqlInsertPayment, payment.ID, payment.BorrowFormID, barcode, barcodestatus, money)
 
 	return
 }

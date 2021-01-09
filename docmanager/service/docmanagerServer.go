@@ -181,6 +181,18 @@ func (d *docManagerSrv) SaveBorrowForm(ctx context.Context, req *docmanagerModel
 	return &docmanagerModel.SaveBorrowFormResp{Code: 0}, nil
 }
 
+func (d *docManagerSrv) UpdateBorrowFormStatus(ctx context.Context, req *docmanagerModel.UpdateBorrowFormStatusReq) (resp *docmanagerModel.UpdateBorrowFormStatusResp, err error) {
+	logger.LogInfo(d.lg, "RPC Req: Update Borrow form status")
+
+	if err := dao.UpdateBorrowFormStatus(ctx, core.GetDB(), req.BorrowFormID, req.Status); err != nil {
+		logger.LogErr(d.lg, err)
+		return &docmanagerModel.UpdateBorrowFormStatusResp{Code: 1, Message: err.Error()}, err
+	}
+
+	logger.LogInfo(d.lg, "RPC Resp: Update borrow form status OK")
+	return &docmanagerModel.UpdateBorrowFormStatusResp{Code: 0}, nil
+}
+
 // ---------------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------- PAYMENT ----------------------------------------------------------
 
