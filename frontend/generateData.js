@@ -133,13 +133,30 @@ module.exports = function(){
          })
         }
     }),
+    // vi pham detailed
+    detailed_violation_form: _.times(60, function(n){
+        return {
+            id: n,
+			user_name: faker.name.findName(),
+			violate_count: faker.random.number(7),
+            violated_books: [
+                {borrow_ID : faker.phone.phoneNumberFormat(),violation_time: faker.date.recent(),
+                    fee: faker.random.number({'min': 1000,'max': 20000 })},
+                {borrow_ID : faker.phone.phoneNumberFormat(),violation_time: faker.date.recent(),
+                    fee: faker.random.number({'min': 1000,'max': 20000 })},
+            ],
+            date: faker.date.recent(),
+            total_fee : faker.commerce.price()
+        };
+    }),
 // độc giả vi phạm
     violated_user: _.times(60, function (n) {
         return {
           user_id: faker.random.number(60),
           user_name: faker.name.findName(),
           violate_time: n,
+		  total_fee: faker.random.number({'min': 1000,'max': 20000 })
         };
       }),
-    }       
+    }     
 }
