@@ -99,6 +99,7 @@ func InitCore(shardNumber int) {
 	lg = logger.MustGet(ServiceName)
 
 	config.Store(&Config{
+		FinePerDay: 10000,
 		Database: configs.MysqlConnConfig{
 			Type:    "mysql",
 			Masters: []string{testDSN},
@@ -172,6 +173,7 @@ func GetLogger() (_lg *model.LogFormat) {
 
 // Config configuration of campaign
 type Config struct {
+	FinePerDay int64 `json:"FinePerDay"`
 	// Database configuration
 	Database configs.MysqlConnConfig `json:"Database"`
 	// WebServer configuration

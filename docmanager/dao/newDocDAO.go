@@ -283,6 +283,7 @@ func SelectAllUnreturnedBorrowForm(ctx context.Context, db *mssqlx.DBs) (result 
 		tmp := &docmanagerModel.BorrowForm{
 			ID:          tempResp[i].ID,
 			LibrarianID: tempResp[i].LibrarianID,
+			ReaderID:    tempResp[i].ReaderID,
 			Status:      tempResp[i].Status,
 			BarcodeID:   barcode,
 			StartTime:   tempResp[i].StartTime,
@@ -317,6 +318,7 @@ func SelectBorrowFormByID(ctx context.Context, db *mssqlx.DBs, borrowFormID uint
 	result = &docmanagerModel.BorrowForm{
 		ID:          tempResp.ID,
 		LibrarianID: tempResp.LibrarianID,
+		ReaderID:    tempResp.ReaderID,
 		Status:      tempResp.Status,
 		BarcodeID:   barcode,
 		StartTime:   tempResp.StartTime,
@@ -339,7 +341,7 @@ func InsertBorrowForm(ctx context.Context, db *mssqlx.DBs, borrowForm *docmanage
 		return
 	}
 
-	_, err = db.Exec(sqlInsertBorrowForm, borrowForm.ID, borrowForm.LibrarianID, barcode, borrowForm.Status, borrowForm.StartTime, borrowForm.EndTime)
+	_, err = db.Exec(sqlInsertBorrowForm, borrowForm.ID, borrowForm.LibrarianID, borrowForm.ReaderID, barcode, borrowForm.Status, borrowForm.StartTime, borrowForm.EndTime)
 
 	return
 }

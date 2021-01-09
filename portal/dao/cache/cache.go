@@ -22,7 +22,7 @@ const (
 	sqlSelectAllDocumentVersion  = "SELECT * FROM documents_version"
 	sqlSelectDocumentVersionByID = "SELECT * FROM documents_version WHERE documents_version = ?"
 	sqlFirstDocumentVersion      = "SELECT document_version FROM documents_version WHERE doc_id = ? AND version = ? AND doc_description = ? AND author_id = ? AND fee = ? AND price = ? LIMIT 1"
-	sqlInsertDocumentVersion     = "INSERT INTO documents_version(document_version, doc_id, version, doc_description, author_id, fee, price) VALUES (?,?,?,?,?,?,?)"
+	sqlInsertDocumentVersion     = "INSERT INTO documents_version(document_version, doc_id, version, doc_description, publisher, author_id, fee, price) VALUES (?,?,?,?,?,?,?,?)"
 
 	sqlSelectAllAuthor  = "SELECT * FROM authors"
 	sqlSelectAuthorByID = "SELECT * FROM authors WHERE author_id = ?"
@@ -31,6 +31,9 @@ const (
 
 	sqlSelectDocverFromCache = "SELECT document_version FROM barcode_cache WHERE barcode_id = ?"
 	sqlInsertDocverToCache   = "INSERT INTO barcode_cache(barcore_id, document_version) VALUES (?,?)"
+
+	sqlInsertBlackList           = "INSERT INTO black_list(user_id, borrow_form_id, money) VALUES (?,?,?)"
+	sqlSelectFromBlackListWithID = "SELECT * FROM black_list WHERE user_id = ?"
 )
 
 type IDocDAO interface {
@@ -193,7 +196,7 @@ func SaveDocumentVersion(ctx context.Context, db *mssqlx.DBs, docver *model.Docu
 		err = core.ErrDBObjNull
 		return
 	}
-	_, err = db.ExecContext(ctx, sqlInsertDocumentVersion, docver.DocumentVersion, docver.DocID, docver.Version, docver.DocDescription, docver.AuthorID, docver.Fee, docver.Price)
+	_, err = db.ExecContext(ctx, sqlInsertDocumentVersion, docver.DocumentVersion, docver.DocID, docver.Version, docver.DocDescription, docver.Publisher, docver.AuthorID, docver.Fee, docver.Price)
 	return
 }
 
@@ -263,6 +266,9 @@ func SaveAuthor(ctx context.Context, db *mssqlx.DBs, aut *model.AuthorDAOobj) (e
 	return
 }
 
+// --------------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------- CACHE -----------------------------------------------------------
+
 func SelectDocVerFromCacheByBarcode(ctx context.Context, db *mssqlx.DBs, barcodeID uint64) (docver string, err error) {
 	// Validate input
 	if db == nil {
@@ -281,5 +287,28 @@ func SaveDocverToCache(ctx context.Context, db *mssqlx.DBs, barcode uint64, docv
 		return
 	}
 	_, err = db.ExecContext(ctx, sqlInsertDocverToCache, barcode, docver)
+	return
+}
+
+// --------------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------- BLACK LIST ------------------------------------------------------
+func InsertIntoBlackList(ctx context.Context, db *mssqlx.DBs, userID, borrowFormID, money uint64) (err error) {
+	// Validate input
+	if db == nil {
+		err = core.ErrDBObjNull
+		return
+	}
+	_, err = db.ExecContext(ctx, sqlInsertBlackList, userID, borrowFormID, money)
+	return
+}
+
+func SelectFromBlackListByUserID(ctx context.Context, db *mssqlx.DBs, userID uint64) (result []*model.BlackListDAOobj, err error) {
+	// Validate input
+	if db == nil {
+		err = core.ErrDBObjNull
+		return
+	}
+	err = db.SelectContext(ctx, &result, sqlInsertBlackList, userID)
+
 	return
 }

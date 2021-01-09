@@ -57,3 +57,11 @@ func SaveDocumentByBatch(c echo.Context) (erro error) {
 func CreateBorrowForm(c echo.Context) (erro error) {
 	return controller.ExecHandler(c, &portalModel.CreateBorrowFormReq{}, createBorrowForm)
 }
+
+func SelectAllBlackList(c echo.Context) (erro error) {
+	return controller.ExecHandler(c, nil, selectAllFromBlackList)
+}
+func SelectBlackListByID(c echo.Context) (erro error) {
+	return controller.ExecHandler(c, &portalModel.SelectByUserIDReq{}, selectBlackListByUserID)
+
+}

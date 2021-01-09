@@ -9,6 +9,7 @@ create table document_version
 	`doc_id` bigint(20),
 	`version` bigint(20),
 	`doc_description` varchar(1000),
+	`publisher` varchar(1000),
 	`author_id` bigint(20),
 	`fee` bigint(20),
 	`price` bigint(20),
@@ -48,6 +49,21 @@ create table barcode_cache
   `barcode_id` bigint(20),
   `document_version` varchar(255)
 ) Engine=InnoDB;
+
+create table  
+(
+  `barcode_id` bigint(20),
+  `document_version` varchar(255)
+) Engine=InnoDB;
+
+create black_list 
+(
+  `user_id` bigint(20),
+  `borrow_form_id` bigint(20),
+  `total_money` varchar(255)
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) Engine=InnoDB;
+
 
 
 

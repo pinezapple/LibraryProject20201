@@ -3,12 +3,14 @@ package doc
 import (
 	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/google/uuid"
 	"github.com/labstack/echo"
 
 	"github.com/pinezapple/LibraryProject20201/portal/core"
 	"github.com/pinezapple/LibraryProject20201/portal/dao/cache"
+	"github.com/pinezapple/LibraryProject20201/portal/dao/database"
 	"github.com/pinezapple/LibraryProject20201/portal/microservice"
 	"github.com/pinezapple/LibraryProject20201/skeleton/model"
 	"github.com/pinezapple/LibraryProject20201/skeleton/model/docmanagerModel"
@@ -71,8 +73,10 @@ func selectAllBarcode(c echo.Context, request interface{}) (statusCode int, data
 				BarcodeID:   resp.Barcodes[j].ID,
 				Status:      resp.Barcodes[j].Status,
 				DocName:     doc.DocName,
+				DocID:       doc.DocID,
 				Version:     docver.Version,
 				Author:      aut.AuthorName,
+				Publisher:   docver.Publisher,
 				Fee:         docver.Fee,
 				Price:       docver.Price,
 				Category:    cat.CategoryName,
@@ -145,8 +149,10 @@ func selectAllBarcodeSelling(c echo.Context, request interface{}) (statusCode in
 				BarcodeID:   resp.Barcodes[j].ID,
 				Status:      resp.Barcodes[j].Status,
 				DocName:     doc.DocName,
+				DocID:       doc.DocID,
 				Version:     docver.Version,
 				Author:      aut.AuthorName,
+				Publisher:   docver.Publisher,
 				Fee:         docver.Fee,
 				Price:       docver.Price,
 				Category:    cat.CategoryName,
@@ -219,8 +225,10 @@ func selectAllBarcodeAvail(c echo.Context, request interface{}) (statusCode int,
 				BarcodeID:   resp.Barcodes[j].ID,
 				Status:      resp.Barcodes[j].Status,
 				DocName:     doc.DocName,
+				DocID:       doc.DocID,
 				Version:     docver.Version,
 				Author:      aut.AuthorName,
+				Publisher:   docver.Publisher,
 				Fee:         docver.Fee,
 				Price:       docver.Price,
 				Category:    cat.CategoryName,
@@ -293,8 +301,10 @@ func selectAllBarcodeDamaged(c echo.Context, request interface{}) (statusCode in
 				BarcodeID:   resp.Barcodes[j].ID,
 				Status:      resp.Barcodes[j].Status,
 				DocName:     doc.DocName,
+				DocID:       doc.DocID,
 				Version:     docver.Version,
 				Author:      aut.AuthorName,
+				Publisher:   docver.Publisher,
 				Fee:         docver.Fee,
 				Price:       docver.Price,
 				Category:    cat.CategoryName,
@@ -348,6 +358,7 @@ func selectAllSaleBill(c echo.Context, request interface{}) (statusCode int, dat
 				SaleBillID:  resp.SaleBills[j].ID,
 				LibrarianID: resp.SaleBills[j].LibrarianID,
 				TotalMoney:  price,
+				CreatedAt:   resp.SaleBills[j].CreatedAt,
 			}
 
 			finalResp = append(finalResp, tmp)
@@ -363,8 +374,8 @@ func selectAllPayment(c echo.Context, request interface{}) (statusCode int, data
 	// Log login info
 	lg = &model.LogFormat{Source: c.Request().RemoteAddr, Action: "Select all payment from shards", Data: ""}
 	shardNum := core.ShardNumber
-
 	shardService := microservice.GetDocmanagerShardServices()
+
 	if shardService == nil {
 		fmt.Println("nil shardService")
 		statusCode, err = http.StatusInternalServerError, fmt.Errorf("nil shardService")
@@ -393,7 +404,6 @@ func selectAllPayment(c echo.Context, request interface{}) (statusCode int, data
 			tmp := &portalModel.SelectAllPaymentResp{
 				PaymentID:    resp.Payments[j].ID,
 				BorrowFormID: resp.Payments[j].BorrowFormID,
-				LibrarianID:  resp.Payments[j].LibrarianID,
 				TotalMoney:   money,
 				CreatedAt:    resp.Payments[j].CreatedAt,
 			}
@@ -412,6 +422,16 @@ func selectAllBorrowForm(c echo.Context, request interface{}) (statusCode int, d
 	// Log login info
 	lg = &model.LogFormat{Source: c.Request().RemoteAddr, Action: "Select all borrow form", Data: ""}
 	shardNum := core.ShardNumber
+	conf := core.GetConfig()
+
+	db := core.GetDB()
+	if db == nil {
+		statusCode, err = http.StatusInternalServerError, fmt.Errorf("Database connection / Config not initialized")
+		return
+	}
+
+	// Select user by his username
+	userDAO := database.GetUserDAO()
 
 	shardService := microservice.GetDocmanagerShardServices()
 	if shardService == nil {
@@ -420,7 +440,7 @@ func selectAllBorrowForm(c echo.Context, request interface{}) (statusCode int, d
 		return
 	}
 
-	var finalResp []*docmanagerModel.BorrowForm
+	var finalResp []*portalModel.SelectAllBorrowFormElement
 
 	for i := 0; i < shardNum; i++ {
 		ser, ok := shardService[uint64(i)]
@@ -434,8 +454,44 @@ func selectAllBorrowForm(c echo.Context, request interface{}) (statusCode int, d
 			statusCode, err = http.StatusInternalServerError, fmt.Errorf("grpc Error")
 			return
 		}
+		for j := 0; j < len(resp.BorrowForms); j++ {
+			lib, er := userDAO.Select(ctx, db, resp.BorrowForms[j].LibrarianID)
+			if er != nil {
+				statusCode, err = http.StatusInternalServerError, er
+				return
 
-		finalResp = append(finalResp, resp.BorrowForms...)
+			}
+
+			user, er := userDAO.Select(ctx, db, resp.BorrowForms[j].ReaderID)
+			if er != nil {
+				statusCode, err = http.StatusInternalServerError, er
+				return
+
+			}
+
+			fine := (time.Now().Unix() - resp.BorrowForms[j].EndTime.Seconds) / 86400 * conf.FinePerDay
+			if fine < 0 {
+				fine = 0
+			}
+
+			tmp := &portalModel.SelectAllBorrowFormElement{
+				ID:            resp.BorrowForms[j].ID,
+				LibrarianID:   resp.BorrowForms[j].LibrarianID,
+				LibrarianName: lib.Name,
+				Status:        resp.BorrowForms[j].Status,
+				ReaderID:      resp.BorrowForms[j].ReaderID,
+				ReaderName:    user.Name,
+				BarcodeID:     resp.BorrowForms[j].BarcodeID,
+				StartTime:     resp.BorrowForms[j].StartTime,
+				EndTime:       resp.BorrowForms[j].EndTime,
+				Fine:          fine,
+				CreatedAt:     resp.BorrowForms[j].CreatedAt,
+				UpdatedAt:     resp.BorrowForms[j].UpdatedAt,
+			}
+
+			finalResp = append(finalResp, tmp)
+		}
+
 	}
 	data = finalResp
 
@@ -447,6 +503,13 @@ func selectAllUnreturnedBorrowForm(c echo.Context, request interface{}) (statusC
 	// Log login info
 	lg = &model.LogFormat{Source: c.Request().RemoteAddr, Action: "Select all unreturned borrow form", Data: ""}
 	shardNum := core.ShardNumber
+	conf := core.GetConfig()
+	db := core.GetDB()
+	if db == nil {
+		statusCode, err = http.StatusInternalServerError, fmt.Errorf("Database connection / Config not initialized")
+		return
+	}
+	userDAO := database.GetUserDAO()
 
 	shardService := microservice.GetDocmanagerShardServices()
 	if shardService == nil {
@@ -455,7 +518,7 @@ func selectAllUnreturnedBorrowForm(c echo.Context, request interface{}) (statusC
 		return
 	}
 
-	var finalResp []*docmanagerModel.BorrowForm
+	var finalResp []*portalModel.SelectAllBorrowFormElement
 
 	for i := 0; i < shardNum; i++ {
 		ser, ok := shardService[uint64(i)]
@@ -469,8 +532,44 @@ func selectAllUnreturnedBorrowForm(c echo.Context, request interface{}) (statusC
 			statusCode, err = http.StatusInternalServerError, fmt.Errorf("grpc Error")
 			return
 		}
+		for j := 0; j < len(resp.BorrowForms); j++ {
+			lib, er := userDAO.Select(ctx, db, resp.BorrowForms[j].LibrarianID)
+			if er != nil {
+				statusCode, err = http.StatusInternalServerError, er
+				return
 
-		finalResp = append(finalResp, resp.BorrowForms...)
+			}
+
+			user, er := userDAO.Select(ctx, db, resp.BorrowForms[j].ReaderID)
+			if er != nil {
+				statusCode, err = http.StatusInternalServerError, er
+				return
+
+			}
+
+			fine := (time.Now().Unix() - resp.BorrowForms[j].EndTime.Seconds) / 86400 * conf.FinePerDay
+			if fine < 0 {
+				fine = 0
+			}
+
+			tmp := &portalModel.SelectAllBorrowFormElement{
+				ID:            resp.BorrowForms[j].ID,
+				LibrarianID:   resp.BorrowForms[j].LibrarianID,
+				LibrarianName: lib.Name,
+				Status:        resp.BorrowForms[j].Status,
+				ReaderID:      resp.BorrowForms[j].ReaderID,
+				ReaderName:    user.Name,
+				BarcodeID:     resp.BorrowForms[j].BarcodeID,
+				StartTime:     resp.BorrowForms[j].StartTime,
+				EndTime:       resp.BorrowForms[j].EndTime,
+				Fine:          fine,
+				CreatedAt:     resp.BorrowForms[j].CreatedAt,
+				UpdatedAt:     resp.BorrowForms[j].UpdatedAt,
+			}
+
+			finalResp = append(finalResp, tmp)
+		}
+
 	}
 	data = finalResp
 
@@ -530,8 +629,10 @@ func selectBarcodeByID(c echo.Context, request interface{}) (statusCode int, dat
 		BarcodeID:   resp.Barcode.ID,
 		Status:      resp.Barcode.Status,
 		DocName:     doc.DocName,
+		DocID:       doc.DocID,
 		Version:     docver.Version,
 		Author:      aut.AuthorName,
+		Publisher:   docver.Publisher,
 		Fee:         docver.Fee,
 		Price:       docver.Price,
 		Category:    cat.CategoryName,
@@ -547,8 +648,13 @@ func selectBarcodeByID(c echo.Context, request interface{}) (statusCode int, dat
 func selectBorrowFormByID(c echo.Context, request interface{}) (statusCode int, data interface{}, lg *model.LogFormat, logResponse bool, err error) {
 	ctx := c.Request().Context()
 	req := request.(*portalModel.SelectBorrowFormByIDReq)
+	conf := core.GetConfig()
 	db := core.GetDB()
-	// Log login info
+	if db == nil {
+		statusCode, err = http.StatusInternalServerError, fmt.Errorf("Database connection / Config not initialized")
+		return
+	}
+	userDAO := database.GetUserDAO()
 	lg = &model.LogFormat{Source: c.Request().RemoteAddr, Action: "Select barcode by id", Data: ""}
 
 	shardService := microservice.GetDocmanagerShardServices()
@@ -570,6 +676,25 @@ func selectBorrowFormByID(c echo.Context, request interface{}) (statusCode int, 
 	if er != nil || resp.Code != 0 {
 		statusCode, err = http.StatusInternalServerError, fmt.Errorf("grpc Error")
 		return
+	}
+
+	fine := (time.Now().Unix() - resp.Borrowform.EndTime.Seconds) / 86400 * conf.FinePerDay
+	if fine < 0 {
+		fine = 0
+	}
+
+	lib, er := userDAO.Select(ctx, db, resp.Borrowform.LibrarianID)
+	if er != nil {
+		statusCode, err = http.StatusInternalServerError, er
+		return
+
+	}
+
+	user, er := userDAO.Select(ctx, db, resp.Borrowform.ReaderID)
+	if er != nil {
+		statusCode, err = http.StatusInternalServerError, er
+		return
+
 	}
 
 	var barcode []*portalModel.RespBarcodeOverview
@@ -608,12 +733,16 @@ func selectBorrowFormByID(c echo.Context, request interface{}) (statusCode int, 
 	}
 	// TODO: filter more information
 	data = &portalModel.SelectBorrowFormByIDResp{
-		BorrowFormID: resp.Borrowform.ID,
-		LibrarianID:  resp.Borrowform.LibrarianID,
-		Status:       resp.Borrowform.Status,
-		Barcodes:     barcode,
-		StartTime:    resp.Borrowform.StartTime,
-		EndTime:      resp.Borrowform.EndTime,
+		BorrowFormID:  resp.Borrowform.ID,
+		LibrarianID:   resp.Borrowform.LibrarianID,
+		LibrarianName: lib.Name,
+		ReaderID:      resp.Borrowform.ReaderID,
+		ReaderName:    user.Name,
+		Fine:          fine,
+		Status:        resp.Borrowform.Status,
+		Barcodes:      barcode,
+		StartTime:     resp.Borrowform.StartTime,
+		EndTime:       resp.Borrowform.EndTime,
 	}
 	return
 }
@@ -678,7 +807,6 @@ func selectPaymentByID(c echo.Context, request interface{}) (statusCode int, dat
 	data = &portalModel.SelectPaymentByIDResp{
 		PaymentID:    resp.Payment.ID,
 		BorrowFormID: resp.Payment.BorrowFormID,
-		LibrarianID:  resp.Payment.LibrarianID,
 		TotalMoney:   totalMoney,
 		Barcodes:     barcodes,
 	}
@@ -690,6 +818,7 @@ func selectSaleBillByID(c echo.Context, request interface{}) (statusCode int, da
 	ctx := c.Request().Context()
 	req := request.(*portalModel.SelectSaleBillByIDReq)
 	db := core.GetDB()
+	userDAO := database.GetUserDAO()
 	// Log login info
 	lg = &model.LogFormat{Source: c.Request().RemoteAddr, Action: "Select sale bill by id", Data: ""}
 
@@ -711,6 +840,13 @@ func selectSaleBillByID(c echo.Context, request interface{}) (statusCode int, da
 	if er != nil || resp.Code != 0 {
 		statusCode, err = http.StatusInternalServerError, fmt.Errorf("grpc Error")
 		return
+	}
+
+	lib, er := userDAO.Select(ctx, db, resp.SaleBill.LibrarianID)
+	if er != nil {
+		statusCode, err = http.StatusInternalServerError, er
+		return
+
 	}
 	var barcodes []*portalModel.SaleBillDetail
 	var totalMoney uint64
@@ -743,10 +879,11 @@ func selectSaleBillByID(c echo.Context, request interface{}) (statusCode int, da
 	}
 
 	data = &portalModel.SelectSaleBillByIDResp{
-		SaleBillID:  resp.SaleBill.ID,
-		LibrarianID: resp.SaleBill.LibrarianID,
-		TotalMoney:  totalMoney,
-		Barcodes:    barcodes,
+		SaleBillID:    resp.SaleBill.ID,
+		LibrarianID:   resp.SaleBill.LibrarianID,
+		LibrarianName: lib.Name,
+		TotalMoney:    totalMoney,
+		Barcodes:      barcodes,
 	}
 
 	return
@@ -874,4 +1011,64 @@ func saveDocumentByBatch(c echo.Context, request interface{}) (statusCode int, d
 	}
 
 	return http.StatusOK, respBarcodeIDs, lg, false, nil
+}
+
+func selectAllFromBlackList(c echo.Context, request interface{}) (statusCode int, data interface{}, lg *model.LogFormat, logResponse bool, err error) {
+	ctx := c.Request().Context()
+	db := core.GetDB()
+	userDAO := database.GetUserDAO()
+	// Log login info
+	lg = &model.LogFormat{Source: c.Request().RemoteAddr, Action: "Select all from blacklist", Data: ""}
+	var result []*portalModel.BlackListSelectAllElement
+
+	user, er := userDAO.SelectAllUserFromCache(ctx, db)
+	if er != nil {
+		statusCode, err = http.StatusInternalServerError, er
+		return
+	}
+
+	for i := 0; i < len(user); i++ {
+		f, er := cache.SelectFromBlackListByUserID(ctx, db, user[i].ID)
+		if er != nil {
+			fmt.Println(er)
+			statusCode, err = http.StatusInternalServerError, er
+			return
+		}
+		if len(f) > 0 {
+			var money uint64
+			for j := 0; j < len(f); j++ {
+				money += f[j].Money
+			}
+
+			tmp := &portalModel.BlackListSelectAllElement{
+				UserID: user[i].ID,
+				Count:  len(f),
+				Money:  money,
+			}
+			result = append(result, tmp)
+		} else {
+			continue
+		}
+	}
+
+	data = result
+	return http.StatusOK, data, lg, false, nil
+}
+
+func selectBlackListByUserID(c echo.Context, request interface{}) (statusCode int, data interface{}, lg *model.LogFormat, logResponse bool, err error) {
+	ctx := c.Request().Context()
+	req := request.(*portalModel.SelectByUserIDReq)
+	db := core.GetDB()
+	// Log login info
+	lg = &model.LogFormat{Source: c.Request().RemoteAddr, Action: "Select from blacklist by id", Data: ""}
+
+	f, er := cache.SelectFromBlackListByUserID(ctx, db, req.UserID)
+	if er != nil {
+		fmt.Println(er)
+		statusCode, err = http.StatusInternalServerError, er
+		return
+	}
+
+	data = f
+	return http.StatusOK, data, lg, false, nil
 }

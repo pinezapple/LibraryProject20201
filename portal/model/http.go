@@ -32,7 +32,9 @@ type BarcodeFrontEndResp struct {
 	BarcodeID   uint64      `json:"barcode_id"`
 	Status      uint64      `json:"status"`
 	DocName     string      `json:"doc_name"`
+	DocID       uint64      `json:"doc_id"`
 	Version     string      `json:"version"`
+	Publisher   string      `json:"publisher"`
 	Author      string      `json:"author"`
 	Fee         uint64      `json:"fee"`
 	Price       uint64      `json:"price"`
@@ -69,8 +71,23 @@ type SelectAllUnReturnBorrowFormResp struct {
 type SelectAllBorrowFormReq struct {
 }
 
+type SelectAllBorrowFormElement struct {
+	ID            uint64      `protobuf:"varint,1,opt,name=ID,proto3" json:"borrow_form_id" db:"borrow_form_id"`
+	LibrarianID   uint64      `protobuf:"varint,2,opt,name=LibrarianID,proto3" json:"librarian_id" db:"librarian_id"`
+	LibrarianName string      `protobuf:"varint,2,opt,name=LibrarianID,proto3" json:"librarian_name" db:"librarian_name"`
+	Status        uint64      `protobuf:"varint,3,opt,name=Status,proto3" json:"status" db:"status"`
+	ReaderID      uint64      `protobuf:"varint,4,opt,name=ReaderID,proto3" json:"reader_id" db:"reader_id"`
+	ReaderName    string      `protobuf:"varint,4,opt,name=ReaderID,proto3" json:"reader_name" db:"reader_name"`
+	BarcodeID     []uint64    `protobuf:"varint,5,rep,packed,name=BarcodeID,proto3" json:"barcode_id" db:"barcode_id"`
+	StartTime     *model.Time `protobuf:"bytes,6,opt,name=StartTime,proto3" json:"start_time" db:"start_time"`
+	EndTime       *model.Time `protobuf:"bytes,7,opt,name=EndTime,proto3" json:"end_time" db:"end_time"`
+	Fine          int64       `json:"fine"`
+	CreatedAt     *model.Time `protobuf:"bytes,8,opt,name=Created_at,json=CreatedAt,proto3" json:"created_at" db:"created_at"`
+	UpdatedAt     *model.Time `protobuf:"bytes,9,opt,name=Updated_at,json=UpdatedAt,proto3" json:"updated_at" db:"updated_at"`
+}
+
 type SelectAllBorrowFormResp struct {
-	BorrowForms []*docmanagerModel.BorrowForm `json:"borrow_forms"`
+	BorrowForms []*SelectAllBorrowFormElement `json:"borrow_forms"`
 }
 
 type SelectBorrowFormByIDReq struct {
@@ -78,12 +95,16 @@ type SelectBorrowFormByIDReq struct {
 }
 
 type SelectBorrowFormByIDResp struct {
-	BorrowFormID uint64                 `json:"borrow_form_id"`
-	LibrarianID  uint64                 `json:"librarian_id"`
-	Status       uint64                 `json:"status"`
-	Barcodes     []*RespBarcodeOverview `json:"barcodes"`
-	StartTime    *model.Time            `json:"start_time"`
-	EndTime      *model.Time            `json:"end_time"`
+	BorrowFormID  uint64                 `json:"borrow_form_id"`
+	LibrarianID   uint64                 `json:"librarian_id"`
+	LibrarianName string                 `protobuf:"varint,2,opt,name=LibrarianID,proto3" json:"librarian_name" db:"librarian_name"`
+	ReaderID      uint64                 `protobuf:"varint,4,opt,name=ReaderID,proto3" json:"reader_id" db:"reader_id"`
+	ReaderName    string                 `protobuf:"varint,4,opt,name=ReaderID,proto3" json:"reader_name" db:"reader_name"`
+	Status        uint64                 `json:"status"`
+	Fine          int64                  `json:"fine"`
+	Barcodes      []*RespBarcodeOverview `json:"barcodes"`
+	StartTime     *model.Time            `json:"start_time"`
+	EndTime       *model.Time            `json:"end_time"`
 }
 
 type CreateBorrowFormReq struct {
@@ -95,7 +116,6 @@ type CreateBorrowFormReq struct {
 
 type UpdateBorrowFormReq struct {
 	BorrowFormID  uint64 `json:"borrow_form_id"`
-	LibrarianID   uint64 `json:"librarian_id"`
 	Status        uint64 `json:"status"`
 	BarcodeUpdate []struct {
 		BarcodeID     uint64 `json:"barcode_id"`
@@ -139,9 +159,11 @@ type SelectPaymentByIDResp struct {
 // -------------------------------------------------------- SALE BILLS ----------------------------------------------------------
 
 type SelectAllSaleBillResp struct {
-	SaleBillID  uint64 `json:"sale_bill_id"`
-	LibrarianID uint64 `json:"librarian_id"`
-	TotalMoney  uint64 `json:"total_money"`
+	SaleBillID    uint64      `json:"sale_bill_id"`
+	LibrarianID   uint64      `json:"librarian_id"`
+	LibrarianName string      `json:"librian_name"`
+	TotalMoney    uint64      `json:"total_money"`
+	CreatedAt     *model.Time `json:"created_at"`
 }
 
 type SaleBillDetail struct {
@@ -155,10 +177,12 @@ type SelectSaleBillByIDReq struct {
 }
 
 type SelectSaleBillByIDResp struct {
-	SaleBillID  uint64            `json:"sale_bill_id"`
-	LibrarianID uint64            `json:"librarian_id"`
-	TotalMoney  uint64            `json:"total_money"`
-	Barcodes    []*SaleBillDetail `json:"barcodes"`
+	SaleBillID    uint64            `json:"sale_bill_id"`
+	LibrarianID   uint64            `json:"librarian_id"`
+	LibrarianName string            `json:"librian_name"`
+	TotalMoney    uint64            `json:"total_money"`
+	Barcodes      []*SaleBillDetail `json:"barcodes"`
+	CreatedAt     *model.Time       `json:"created_at"`
 }
 
 type CreateSaleBillReq struct {
@@ -188,4 +212,39 @@ type SaveDocReq struct {
 	Description string `json:"description"`
 	Number      uint64 `json:"number"`
 	Price       uint64 `json:"price"`
+}
+
+// -----------------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------- DOCUMENTS ----------------------------------------------------------
+
+//TODO: GetAllDocReq & Resp
+
+type UpdateDocReq struct {
+	DocID    uint64 `json:"document_id"`
+	DocName  string `json:"document_name"`
+	Category string `json:"category"` //First or create
+}
+
+// ------------------------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------- DOCUMENT VERSION ----------------------------------------------------------
+
+//TODO: GetAllDocVerReq & Resp
+
+type UpdateDocVerReq struct {
+	DocVer    string `json:"document_version"` // represent ID
+	Publisher string `json:"publisher"`        //First or create
+	Author    string `json:"author"`           //First or create
+	Price     uint64 `json:"price"`
+}
+
+// ------------------------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------- BLACK LIST----------------------------------------------------------
+type SelectByUserIDReq struct {
+	UserID uint64 `json:"user_id"`
+}
+
+type BlackListSelectAllElement struct {
+	UserID uint64 `json:"user_id" db:"user_id"`
+	Count  int    `json:"count" db:"count"`
+	Money  uint64 `json:"money" db:"money"`
 }
