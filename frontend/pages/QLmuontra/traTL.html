@@ -317,15 +317,14 @@
                             
                           </div>
                         </div>
-                        <div class="col">
+                        <!-- <div class="col">
                           <div class="form-group">
                             
                               <label class="form-control-label">Số ngày mượn</label>
                               <input class="form-control" placeholder="Số ngày mượn" id='duration' type="number" min="1" readonly>
                             
                           </div>
-                        </div>
-    
+                        </div>-->
                         <div class="col">
                           <div class="form-group">
                             
@@ -337,17 +336,44 @@
                                 </select>
                           </div>
                         </div>
-
-                        <div class="col">
+                        <!-- <div class="col">
                           <div class="form-group">
                             
                               <label class="form-control-label">Phí muộn (nếu có)</label>
                               <input class="form-control" placeholder="phí muộn" id='fee' type="number" min="1" readonly>
                             
                           </div>
-                        </div>
-    
+                        </div>-->
                       </div>
+                      <!-- return date info -->
+                      <div class="form-row" id="returnDate">
+                        <div class="col">
+                        <div class="form-group">
+                          
+                            <label class="form-control-label">Ngày mượn</label>
+                            <input class="form-control" placeholder="Số ngày mượn" id='startDate' readonly>
+                          
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="form-group">
+                          
+                            <label class="form-control-label">Ngày trả</label>
+                            <input class="form-control" placeholder="Số ngày mượn" id='endDate' readonly>
+                          
+                        </div>
+                      </div>
+                       <div class="col">
+                        <div class="form-group">
+                          
+                            <label class="form-control-label">Phí muộn (nếu có)</label>
+                            <input class="form-control" placeholder="phí muộn" id='fee' type="number" min="1" readonly>
+                          
+                        </div>
+                      </div>
+
+                      </div>
+
                       <!-- Document Info-->
                       <div class="col-lg-8">
                         <p class="mb-0">
@@ -440,7 +466,7 @@ let info = document.querySelector('#addDoc')
 let buttonSubmit = document.querySelector('#formButton')
 let total = document.querySelector('#total')
 
-
+// get all borrow form
 fetch (url,  {
   method: 'GET',
   credentials: "omit",
@@ -456,12 +482,12 @@ fetch (url,  {
       let data =[]
       // get borrow form data
     
-      let borrowId = `${form.id}`
+      let borrowId = `${form.borrow_form_id}`
       let readerId= `${form.reader_id}`
       let reader = `${form.reader}`
       let librarianId = `${form.librarian_id}`
       // let librarian = `${form.librarian}`
-      let status = `${form.borrow_status}`
+      let status = `${form.status}`
       let fee = `${form.fee}`
       let btn = '<button type="button" id="update" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-form">Chỉnh sửa</button>'
       
@@ -480,6 +506,7 @@ fetch (url,  {
   console.error('Error:', error);
   });
 
+// get borrow form by Id
 $('#datatable-basic tbody').on( 'click', 'button', function () {
         var data = table.row( $(this).parents('tr') ).data();
         let borrowId = data[0]
@@ -495,17 +522,20 @@ $('#datatable-basic tbody').on( 'click', 'button', function () {
   })
   .then(response => response.json())
   .then(obj =>{
-      let borrowFormId = obj.id
+      let borrowFormId = obj.borrow_form_id
       let readerId = obj.reader_id
-      let duration = obj.duration
-      let borrowStatus = obj.borrow_status
-      let fine = obj.fee
-      let docs = obj.barcode_update
+      let startDate = obj.start_time
+      let endDate = obj.end_time 
+      let borrowStatus = obj.status
+      let fine = obj.fee 
+      let docs = obj.barcodes
 
         // add value to input field
       $("#borrowId").val(borrowFormId)
       $("#userId").val(readerId)
-      $("#duration").val(duration)
+      // $("#duration").val(duration)
+      $("#startDate").val(startDate)
+      $("#endDate").val(endDate)
       $("#status").val(borrowStatus)
       $("#totalFine").val(fine)
       $("#fee").val(fine)
@@ -534,9 +564,9 @@ $('#datatable-basic tbody').on( 'click', 'button', function () {
         
         // add data 
         // formRow.querySelector("#docId").value = docs[i]["id_doc"]
-        formRow.querySelector("#barcode").value = docs[i]["barcode"]
+        formRow.querySelector("#barcode").value = docs[i]["barcode_id"]
         formRow.querySelector("#docName").value = docs[i]["doc_name"]
-        formRow.querySelector("#author").value = docs[i]["doc_author"]
+        formRow.querySelector("#author").value = docs[i]["author"]
         // formRow.querySelector("#docStatus").value = docs[i]["doc_status"]
       }
   })
@@ -585,7 +615,7 @@ $('#datatable-basic tbody').on( 'click', 'button', function () {
        'Content-Type': 'application/json',
       //  Authorization: "Bearer " + token,
       },
-      body:JSON.stringify({id: borrowId, status: borrowStatus, barcode_update:arr})
+      body:JSON.stringify({borrow_form_id: borrowId,librarian_id:librarianId ,status: borrowStatus, barcode_update:arr})
     }
     ).then((res) => res.json())
     .then(result => alert("Đã cập nhật trả tài liệu", result))

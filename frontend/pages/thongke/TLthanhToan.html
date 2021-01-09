@@ -444,10 +444,10 @@
        // get doc data
      
      
-       let idSale= `${doc.id_sale}`
-       let soldBy = `${doc.sold_by}`
-       let date = `${doc.date}`
-       let total = `${doc.total}`
+       let idSale= `${doc.sale_bill_id}`
+       let soldBy = `${doc.librarian_id}`
+       let date = `${doc.date}` // cần sửa
+       let total = `${doc.total_money}`
        let btn = '<button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#modal-form">Chi tiết</button>'
  
        data.push (idSale,soldBy,date,total,btn)
@@ -486,7 +486,7 @@ $('#datatable-buttons tbody').on( 'click', 'button', function () {
         var data = table.row( $(this).parents('tr') ).data();
         let saleId = data[0]
         let saleFormUrl = 'http://localhost:3000/detailed_sale_form/' + saleId
-        // window.location.replace('traTLchitiet.html?id='+borrowId)
+        
         fetch (saleFormUrl,  {
   method: 'GET',
   credentials: "omit",
@@ -497,10 +497,10 @@ $('#datatable-buttons tbody').on( 'click', 'button', function () {
   })
   .then(response => response.json())
   .then(obj =>{
-      let saleId = obj.id
+      let saleId = obj.sale_bill_id
       let librarianId = obj.librarian_id
-      let librarian = obj.librarian
-      let date = obj.date
+      let librarian = obj.librarian // cần sửa 
+      let date = obj.date // cần sửa
       let totalPrice = obj.total
       let docs = obj.barcodes
       
@@ -508,8 +508,8 @@ $('#datatable-buttons tbody').on( 'click', 'button', function () {
         // add value to input field
       $("#saleId").val(saleId)
       $("#librarianId").val(librarianId)
-      $("#date").val(date)
-      $("#librarian").val(librarian)
+      $("#date").val(date) // cần sửa
+      $("#librarian").val(librarian) // cần sửa
       $("#totalPrice").val(totalPrice)
 
         for (let i = 0; i < docs.length; i++){
@@ -521,23 +521,25 @@ $('#datatable-buttons tbody').on( 'click', 'button', function () {
         total.parentNode.insertBefore(formRow,total)
 
         // add input field
+
         // let inputDocId = range.createContextualFragment(docIdForm)
         // formRow.appendChild(inputDocId)
         let inputBarcode = range.createContextualFragment(barcodeForm)
         formRow.appendChild(inputBarcode)
         let inputDocName = range.createContextualFragment(docNameForm)
         formRow.appendChild(inputDocName)
-        let inputAuthor = range.createContextualFragment(authorForm)
-        formRow.appendChild(inputAuthor)
+        // let inputAuthor = range.createContextualFragment(authorForm)
+        // formRow.appendChild(inputAuthor)
         let inputPrice = range.createContextualFragment(salePrice)
         formRow.appendChild(inputPrice)
         
         // add data 
+        
         // formRow.querySelector("#docId").value = docs[i]["id_doc"]
         formRow.querySelector("#barcode").value = docs[i]["barcode"]
         formRow.querySelector("#docName").value = docs[i]["doc_name"]
-        formRow.querySelector("#author").value = docs[i]["doc_author"]
-        formRow.querySelector("#price").value = docs[i]["doc_price"]
+        // formRow.querySelector("#author").value = docs[i]["doc_author"]
+        formRow.querySelector("#price").value = docs[i]["money"]
       }
   })
   .catch(error => {

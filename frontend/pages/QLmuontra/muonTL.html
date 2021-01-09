@@ -524,13 +524,13 @@
 
       let data =[]
       // get doc data
-      let docId= `${doc.id}`
-      let barcode = `${doc.barcode}`
+      let docId= `${doc.id}` // cần sửa
+      let barcode = `${doc.barcode_id}`
       let docName = `${doc.doc_name}`
-      let author = `${doc.doc_author}`
+      let author = `${doc.author}`
       let type = `${doc.doc_type}`
-      let publisher = `${doc.doc_publisher}`
-      let edition = `${doc.doc_edition}`
+      let publisher = `${doc.doc_publisher}` // cần sửa
+      let edition = `${doc.version}`
       let btn = '<button type="button" id="add" class="btn btn-info btn-sm">Thêm</button>'
      
       data.push (docId,barcode,docName,author,type,edition,publisher,btn)

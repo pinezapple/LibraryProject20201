@@ -340,16 +340,16 @@
       // get doc data
     
     
-      let docId= `${doc.id}`
-      let barcode = `${doc.barcode}`
+      let docId= `${doc.id}` // cần sửa
+      let barcode = `${doc.barcode_id}`
       let docName = `${doc.doc_name}`
-      let author = `${doc.doc_author}`
-      let type = `${doc.doc_type}`
-      let publisher = `${doc.doc_publisher}`
-      let edition = `${doc.doc_edition}`
-      let price = `${doc.doc_price}`
+      let author = `${doc.author}`
+      let type = `${doc.category}`
+      let publisher = `${doc.doc_publisher}` // cần sửa
+      let edition = `${doc.version}`
+      let price = `${doc.price}`
       let date = `${doc.created_at}`
-      let status = `${doc.doc_status}`
+      let status = `${doc.status}`
       let statusData;
 
      if(status ==0){

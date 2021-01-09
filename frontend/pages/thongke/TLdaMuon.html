@@ -328,12 +328,12 @@
 
       let data =[]
       // get doc data
-      let borrowId = `${doc.borrow_id}`
-      let idUser= `${doc.id_user}`
-      let nameUser = `${doc.name_user}`
-      let status = `${doc.doc_status}`
-      let docDate = `${doc.doc_date}`
-      let fee = `${doc.fee}`
+      let borrowId = `${doc.borrow_form_id}`
+      let idUser= `${doc.reader_id}`
+      let nameUser = `${doc.name_user}` // cần sửa
+      let status = `${doc.status}`
+      let docDate = `${doc.end_time}`
+      let fee = `${doc.fee}` // cần sửa
 
       // replace number value of borrow form status
       let stage = status.toString()

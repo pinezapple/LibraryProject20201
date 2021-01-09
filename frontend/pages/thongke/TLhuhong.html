@@ -236,18 +236,22 @@
                <table class="table table-flush" id="datatable-buttons">
                  <thead class="thead-light">
                    <tr>
-                     <th>Mã tài liệu</th>
-                     <th>Mã vạch</th>
-                     <th>Tên tài liệu</th>
-                     <th>Ngày cập nhật</th>                  
+                    <th>Mã vạch</th>
+                    <th>Tên tài liệu</th>
+                    <th>Tác giả</th>
+                    <th>Thể loại</th>
+                    <th>Tái bản</th>
+                                 
                    </tr>
                  </thead>
                  <tfoot>
                    <tr>
-                     <th>Mã tài liệu</th>
-                     <th>Mã vạch</th>
-                     <th>Tên tài liệu</th>
-                     <th>Ngày cập nhật</th>  
+                    <th>Mã vạch</th>
+                    <th>Tên tài liệu</th>
+                    <th>Tác giả</th>
+                    <th>Thể loại</th>
+                    <th>Tái bản</th>
+                     
                    </tr>
                  </tfoot>
                </table>
@@ -325,12 +329,14 @@
        // get doc data
      
      
-       let idDoc= `${doc.id_doc}`
-       let barcode = `${doc.barcode}`
-       let docDate = `${doc.doc_date}`
+      //  let idDoc= `${doc.id_doc}`
+       let barcode = `${doc.barcode_id}`
        let docName = `${doc.doc_name}`
+       let author = `${doc.author}`
+       let category = `${doc.category}`
+       let version = `${doc.version}`
  
-       data.push (idDoc,barcode,docName,docDate)
+       data.push (barcode,docName,author,category,version)
  
  
        // add to table

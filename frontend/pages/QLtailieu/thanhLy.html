@@ -250,7 +250,7 @@
                        </div>
                      </div>
                     
-                     <div class="col-md-4 mb-3">
+                     <!-- <div class="col-md-4 mb-3">
                        <div class="form-group">
                          <div class="input-group input-group-merge">
                            <div class="input-group-prepend">
@@ -259,7 +259,7 @@
                            <input class="form-control" placeholder="Ngày thanh lý" id='date' type="date" required>
                          </div>
                        </div>
-                     </div>
+                     </div> -->
                    </div>
                    <!-- Document Info-->
                    <div class="col-lg-8">
@@ -293,26 +293,26 @@
              <table class="table table-flush " id="datatable-basic">
                <thead class="thead-light">
                  <tr>
-                   <th>Mã tài liệu</th>
+                   
                    <th>Mã vạch</th>
                    <th>Tên tài liệu</th>
                    <th>Tác giả</th>
                    <th>Thể loại</th>
                    <th>Tái bản</th>
-                   <th>NXB</th>
+                   
                    <th>Giá</th>
                    <th></th>
                  </tr>
                </thead>
                <tfoot>
                  <tr>
-                   <th>Mã tài liệu</th>
+                   
                    <th>Mã vạch</th>
                    <th>Tên tài liệu</th>
                    <th>Tác giả</th>
                    <th>Thể loại</th>
                    <th>Tái bản</th>
-                   <th>NXB</th>
+                   
                    <th>Giá</th>
                    <th></th>
                  </tr>
@@ -383,8 +383,8 @@
  
  
        // add input field
-       let inputDocId = range.createContextualFragment(docIdForm)
-       formRow.appendChild(inputDocId)
+      //  let inputDocId = range.createContextualFragment(docIdForm)
+      //  formRow.appendChild(inputDocId)
        let inputBarcode = range.createContextualFragment(barcodeForm)
        formRow.appendChild(inputBarcode)
        let inputPrice = range.createContextualFragment(priceForm)
@@ -395,9 +395,9 @@
        formRow.appendChild(inputButton)
  
        // add data 
-       formRow.querySelector("#docId").value = data[0]
+      //  formRow.querySelector("#docId").value = data[0]
        formRow.querySelector("#barcode").value = data[1]
-       formRow.querySelector("#price").value = data[7]
+       formRow.querySelector("#price").value = data[5]
  
      });
    
@@ -412,11 +412,11 @@
    function createSaleForm(){
      let barcodeIds = document.querySelectorAll('#barcode')
      let salePrice = document.querySelectorAll('#sale')
-     let librarian = document.getElementById('librarian').value
+     let librarian = parseInt(document.getElementById('librarian').value,10)
      let date = document.getElementById('date').value
      let arrayId =[]
       for (let i = 0; i < barcodeIds.length; i++) {
-       let obj = {"barcode": barcodeIds[i].value, "doc_price":salePrice[i].value}
+       let obj = {"barcode_id": parseInt(barcodeIds[i].value,10), "price":parseInt(salePrice[i].value,10)}
        arrayId.push(obj)
        }
      // console.log(arrayId)
@@ -429,7 +429,7 @@
         'Content-Type': 'application/json',
        //  Authorization: "Bearer " + token,
        },
-       body:JSON.stringify({id_librarian: librarian, docs:arrayId, date: date})
+       body:JSON.stringify({librarian_id: librarian, sale_barcode:arrayId})
       
    }
    ).then((res) => res.json())
@@ -460,17 +460,17 @@
  
        let data =[]
        // get doc data
-       let docId= `${doc.id}`
-       let barcode = `${doc.barcode}`
+      //  let docId= `${doc.id}`
+       let barcode = `${doc.barcode_id}`
        let docName = `${doc.doc_name}`
-       let author = `${doc.doc_author}`
-       let type = `${doc.doc_type}`
-       let publisher = `${doc.doc_publisher}`
-       let edition = `${doc.doc_edition}`
-       let price = `${doc.doc_price}`
+       let author = `${doc.author}`
+       let type = `${doc.category}`
+      //  let publisher = `${doc.doc_publisher}`
+       let edition = `${doc.version}`
+       let price = `${doc.price}`
        let btn = '<button type="button" id="add" class="btn btn-info btn-sm">Thêm</button>'
       
-       data.push (docId,barcode,docName,author,type,edition,publisher,price,btn)
+       data.push (barcode,docName,author,type,edition,price,btn)
        // add to table
        table.row.add(data).draw()
      })
