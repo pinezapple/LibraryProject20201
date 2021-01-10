@@ -14,7 +14,7 @@ var (
 	ErrCreatePaymentLengthNotMatch = fmt.Errorf("len barcodeID != len barcodeID != len barcodeStatus")
 )
 
-func createPayment(ctx context.Context, borrowFormID uint64, barcodeID []uint64, barcodeStatus []uint64, money []uint64) (err error) {
+func createPayment(ctx context.Context, borrowFormID uint64, librarianID uint64, readerID uint64, barcodeID []uint64, barcodeStatus []uint64, money []uint64, fine uint64) (err error) {
 	if len(barcodeID) != len(money) && len(barcodeID) != len(barcodeStatus) {
 		return ErrCreatePaymentLengthNotMatch
 	}
@@ -34,6 +34,8 @@ func createPayment(ctx context.Context, borrowFormID uint64, barcodeID []uint64,
 	rpcCreatePaymentreq := &docmanagerModel.SavePaymentReq{
 		Payment: &docmanagerModel.Payment{
 			ID:            uint64(core.GetHash(paymentUUID.String())),
+			LibrarianID:   librarianID,
+			ReaderID:      readerID,
 			BorrowFormID:  borrowFormID,
 			BarcodeID:     barcodeID,
 			BarcodeStatus: barcodeStatus,
