@@ -1079,13 +1079,11 @@ func selectBlackListByUserID(c echo.Context, request interface{}) (statusCode in
 
 	f, er := cache.SelectFromBlackListByUserID(ctx, db, req.UserID)
 	if er != nil {
-		fmt.Println(er)
 		statusCode, err = http.StatusInternalServerError, er
 		return
 	}
 	user, er := userDAO.Select(ctx, db, req.UserID)
 	if er != nil {
-		fmt.Println(er)
 		statusCode, err = http.StatusInternalServerError, er
 		return
 	}
@@ -1100,6 +1098,152 @@ func selectBlackListByUserID(c echo.Context, request interface{}) (statusCode in
 		Count:    len(f),
 		Money:    money,
 		Detail:   f,
+	}
+
+	data = result
+	return http.StatusOK, data, lg, false, nil
+}
+
+func selectAllDoc(c echo.Context, request interface{}) (statusCode int, data interface{}, lg *model.LogFormat, logResponse bool, err error) {
+	ctx := c.Request().Context()
+	db := core.GetDB()
+	// Log login info
+	lg = &model.LogFormat{Source: c.Request().RemoteAddr, Action: "Select all from doc", Data: ""}
+
+	doc, er := cache.SelectAllDocument(ctx, db)
+	if er != nil {
+		statusCode, err = http.StatusInternalServerError, er
+		return
+	}
+
+	var result []*portalModel.SelectAllDocumentElement
+
+	for i := 0; i < len(doc); i++ {
+		cat, er := cache.SelectCategoriesByID(ctx, db, doc[i].CategoryID)
+		if er != nil {
+			statusCode, err = http.StatusInternalServerError, er
+			return
+		}
+		tmp := &portalModel.SelectAllDocumentElement{
+			DocID:        doc[i].DocID,
+			DocName:      doc[i].DocName,
+			CategoryName: cat.CategoryName,
+			CreatedAt:    doc[i].CreatedAt,
+		}
+		result = append(result, tmp)
+	}
+	data = result
+
+	return http.StatusOK, data, lg, false, nil
+}
+
+func selectDocByID(c echo.Context, request interface{}) (statusCode int, data interface{}, lg *model.LogFormat, logResponse bool, err error) {
+	ctx := c.Request().Context()
+	db := core.GetDB()
+	req := request.(*portalModel.SelectDocByIDReq)
+	// Log login info
+	lg = &model.LogFormat{Source: c.Request().RemoteAddr, Action: "Select all from doc", Data: ""}
+
+	doc, er := cache.SelectDocumentByID(ctx, db, req.DocID)
+	if er != nil {
+		statusCode, err = http.StatusInternalServerError, er
+		return
+	}
+
+	cat, er := cache.SelectCategoriesByID(ctx, db, doc.CategoryID)
+	if er != nil {
+		statusCode, err = http.StatusInternalServerError, er
+		return
+	}
+	docvers, er := cache.SelectDocumentVersionByDocumentID(ctx, db, doc.DocID)
+	if er != nil {
+		statusCode, err = http.StatusInternalServerError, er
+		return
+	}
+	var dvs []*portalModel.DocverOverviewElement
+	for i := 0; i < len(docvers); i++ {
+		barcodeCount, er := cache.SelectCountBarcodeByDocverID(ctx, db, docvers[i].DocVerID)
+		if er != nil {
+			statusCode, err = http.StatusInternalServerError, er
+			return
+		}
+		aut, er := cache.SelectAuthorByID(ctx, db, docvers[i].AuthorID)
+		if er != nil {
+			statusCode, err = http.StatusInternalServerError, er
+			return
+		}
+		tmp := &portalModel.DocverOverviewElement{
+			DocVerID:   docvers[i].DocVerID,
+			DocVerName: docvers[i].DocumentVersion,
+			Publisher:  docvers[i].Publisher,
+			AuthorName: aut.AuthorName,
+			Count:      barcodeCount,
+			Price:      docvers[i].Price,
+		}
+		dvs = append(dvs, tmp)
+	}
+
+	result := &portalModel.SelectDocumentByID{
+		DocID:        req.DocID,
+		DocName:      doc.DocName,
+		CategoryName: cat.CategoryName,
+		CreatedAt:    doc.CreatedAt,
+		Docver:       dvs,
+	}
+
+	data = result
+	return http.StatusOK, data, lg, false, nil
+}
+
+func selectDocVerByID(c echo.Context, request interface{}) (statusCode int, data interface{}, lg *model.LogFormat, logResponse bool, err error) {
+	ctx := c.Request().Context()
+	db := core.GetDB()
+	req := request.(*portalModel.SelectDocVerByIDReq)
+	// Log login info
+	lg = &model.LogFormat{Source: c.Request().RemoteAddr, Action: "Select all from doc", Data: ""}
+
+	docver, er := cache.SelectDocumentVersionByID(ctx, db, req.DocVerID)
+	if er != nil {
+		statusCode, err = http.StatusInternalServerError, er
+		return
+	}
+
+	doc, er := cache.SelectDocumentByID(ctx, db, docver.DocID)
+	if er != nil {
+		statusCode, err = http.StatusInternalServerError, er
+		return
+	}
+
+	cat, er := cache.SelectCategoriesByID(ctx, db, doc.CategoryID)
+	if er != nil {
+		statusCode, err = http.StatusInternalServerError, er
+		return
+	}
+
+	aut, er := cache.SelectAuthorByID(ctx, db, docver.AuthorID)
+	if er != nil {
+		statusCode, err = http.StatusInternalServerError, er
+		return
+	}
+
+	barcodeCount, er := cache.SelectCountBarcodeByDocverID(ctx, db, docver.DocVerID)
+	if er != nil {
+		statusCode, err = http.StatusInternalServerError, er
+		return
+	}
+
+	result := &portalModel.SelectDocVerByIDResp{
+		DocID:        doc.DocID,
+		DocName:      doc.DocName,
+		CategoryName: cat.CategoryName,
+		DocVerID:     req.DocVerID,
+		DocVerName:   docver.DocumentVersion,
+		Publisher:    docver.Publisher,
+		AuthorName:   aut.AuthorName,
+		Count:        barcodeCount,
+		Price:        docver.Price,
+		Barcode:      nil, // fix this later
+		CreatedAt:    doc.CreatedAt,
 	}
 
 	data = result

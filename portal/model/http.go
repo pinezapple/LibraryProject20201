@@ -272,3 +272,55 @@ type BlackListSelectByIDResp struct {
 	Money    uint64             `json:"total_money" db:"total_money"`
 	Detail   []*BlackListDAOobj `json:"detail" db:"detail"`
 }
+
+// ------------------------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------- DOC ----------------------------------------------------------
+
+type SelectDocByIDReq struct {
+	DocID uint64 `json:"doc_id"`
+}
+
+type SelectDocVerByIDReq struct {
+	DocVerID uint64 `json:"document_version_id"`
+}
+
+type SelectAllDocumentElement struct {
+	DocID        uint64      `json:"doc_id" db:"doc_id"`
+	DocName      string      `json:"doc_name" db:"doc_name"`
+	CategoryName string      `json:"category_name" db:"category_name"`
+	CreatedAt    *model.Time `json:"created_at" db:"created_at"`
+}
+
+type SelectDocVerByIDResp struct {
+	DocID        uint64 `json:"doc_id" db:"doc_id"`
+	DocName      string `json:"doc_name" db:"doc_name"`
+	CategoryName string `json:"category_name" db:"category_name"`
+
+	DocVerID   uint64 `json:"document_version_id"`
+	DocVerName string `json:"document_version"`
+	Publisher  string `json:"publisher"`
+	AuthorName string `json:"author_name"`
+	Count      uint64 `json:"count"`
+	Price      uint64 `json:"price"`
+
+	Barcode []*docmanagerModel.Barcode `json:"barcode"`
+
+	CreatedAt *model.Time `json:"created_at" db:"created_at"`
+}
+
+type DocverOverviewElement struct {
+	DocVerID   uint64 `json:"document_version_id"`
+	DocVerName string `json:"document_version"`
+	Publisher  string `json:"publisher"`
+	AuthorName string `json:"author_name"`
+	Count      uint64 `json:"count"`
+	Price      uint64 `json:"price"`
+}
+
+type SelectDocumentByID struct {
+	DocID        uint64                   `json:"doc_id" db:"doc_id"`
+	DocName      string                   `json:"doc_name" db:"doc_name"`
+	CategoryName string                   `json:"category_name" db:"category_name"`
+	Docver       []*DocverOverviewElement `json:"doc_version"`
+	CreatedAt    *model.Time              `json:"created_at" db:"created_at"`
+}

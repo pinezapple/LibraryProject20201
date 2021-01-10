@@ -22,19 +22,22 @@ const (
 	sqlSelectCategoriesByID = "SELECT * FROM categories WHERE category_id = ?"
 	sqlInsertCategories     = "INSERT INTO categories(category_id, category_name, doc_description) VALUE (?,?,?)"
 
-	sqlSelectAllDocumentVersion  = "SELECT * FROM documents_version"
-	sqlSelectDocumentVersionByID = "SELECT * FROM documents_version WHERE document_version_id = ?"
-	sqlFirstDocumentVersion      = "SELECT document_version_id FROM documents_version WHERE doc_id = ? AND document_version = ? AND doc_description = ? AND author_id = ? AND fee = ? AND price = ? LIMIT 1"
-	sqlInsertDocumentVersion     = "INSERT INTO documents_version(document_version_id, document_version, doc_id, doc_description, publisher, author_id, fee, price) VALUES (?,?,?,?,?,?,?,?)"
-	sqlUpdateDocumentVersion     = "UPDATE documents_version SET document_version = ?, publisher = ?, author_id = ?, price = ? WHERE document_version_id = ?"
+	sqlSelectAllDocumentVersion     = "SELECT * FROM documents_version"
+	sqlSelectDocumentVersionByID    = "SELECT * FROM documents_version WHERE document_version_id = ?"
+	sqlSelectDocumentVersionByDocID = "SELECT * FROM documents_version WHERE doc_id = ?"
+
+	sqlFirstDocumentVersion  = "SELECT document_version_id FROM documents_version WHERE doc_id = ? AND document_version = ? AND doc_description = ? AND author_id = ? AND fee = ? AND price = ? LIMIT 1"
+	sqlInsertDocumentVersion = "INSERT INTO documents_version(document_version_id, document_version, doc_id, doc_description, publisher, author_id, fee, price) VALUES (?,?,?,?,?,?,?,?)"
+	sqlUpdateDocumentVersion = "UPDATE documents_version SET document_version = ?, publisher = ?, author_id = ?, price = ? WHERE document_version_id = ?"
 
 	sqlSelectAllAuthor  = "SELECT * FROM authors"
 	sqlSelectAuthorByID = "SELECT * FROM authors WHERE author_id = ?"
 	sqlSelectAuthorID   = "SELECT author_id FROM authors WHERE author_name = ?"
 	sqlInsertAuthor     = "INSERT INTO authors(author_id, author_name, description) VALUES (?,?,?)"
 
-	sqlSelectDocverIDFromCache = "SELECT document_version_id FROM barcode_cache WHERE barcode_id = ?"
-	sqlInsertDocverIDToCache   = "INSERT INTO barcode_cache(barcore_id, document_version_id) VALUES (?,?)"
+	sqlSelectDocverIDFromCache               = "SELECT document_version_id FROM barcode_cache WHERE barcode_id = ?"
+	sqlSelectCountBarcodeFromCacheByDocVerID = "SELECT COUNT(barcode_id) FROM barcode_cache WHERE document_version_id = ?"
+	sqlInsertDocverIDToCache                 = "INSERT INTO barcode_cache(barcore_id, document_version_id) VALUES (?,?)"
 
 	sqlInsertBlackList           = "INSERT INTO black_list(user_id, borrow_form_id, money) VALUES (?,?,?)"
 	sqlSelectFromBlackListWithID = "SELECT * FROM black_list WHERE user_id = ?"
@@ -225,6 +228,17 @@ func SelectAllDocumentVersion(ctx context.Context, db *mssqlx.DBs) (result []*mo
 	return
 }
 
+func SelectDocumentVersionByDocumentID(ctx context.Context, db *mssqlx.DBs, docid uint64) (result []*model.DocumentVersionDAOobj, err error) {
+	// Validate input
+	if db == nil {
+		err = core.ErrDBObjNull
+		return
+	}
+
+	err = db.SelectContext(ctx, &result, sqlSelectDocumentVersionByDocID, docid)
+	return
+}
+
 func SelectDocumentVersionByID(ctx context.Context, db *mssqlx.DBs, id uint64) (result *model.DocumentVersionDAOobj, err error) {
 	// Validate input
 	if db == nil {
@@ -367,6 +381,18 @@ func SelectDocVerIDFromCacheByBarcode(ctx context.Context, db *mssqlx.DBs, barco
 
 	//TODO: fix model
 	err = db.GetContext(ctx, &docverID, sqlSelectDocverIDFromCache, barcodeID)
+	return
+}
+
+func SelectCountBarcodeByDocverID(ctx context.Context, db *mssqlx.DBs, docverid uint64) (count uint64, err error) {
+	// Validate input
+	if db == nil {
+		err = core.ErrDBObjNull
+		return
+	}
+
+	//TODO: fix model
+	err = db.GetContext(ctx, &count, sqlSelectCountBarcodeFromCacheByDocVerID, docverid)
 	return
 }
 
