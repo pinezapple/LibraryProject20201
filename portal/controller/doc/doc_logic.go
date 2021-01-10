@@ -375,7 +375,9 @@ func selectAllPayment(c echo.Context, request interface{}) (statusCode int, data
 	lg = &model.LogFormat{Source: c.Request().RemoteAddr, Action: "Select all payment from shards", Data: ""}
 	shardNum := core.ShardNumber
 	shardService := microservice.GetDocmanagerShardServices()
+	db := core.GetDB()
 
+	userDAO := database.GetUserDAO()
 	if shardService == nil {
 		fmt.Println("nil shardService")
 		statusCode, err = http.StatusInternalServerError, fmt.Errorf("nil shardService")
@@ -398,14 +400,32 @@ func selectAllPayment(c echo.Context, request interface{}) (statusCode int, data
 		}
 		for j := 0; j < len(resp.Payments); j++ {
 			var money = resp.Payments[i].Fine
+			lib, er := userDAO.Select(ctx, db, resp.Payments[j].LibrarianID)
+			if er != nil {
+				statusCode, err = http.StatusInternalServerError, er
+				return
+
+			}
+
+			user, er := userDAO.Select(ctx, db, resp.Payments[j].ReaderID)
+			if er != nil {
+				statusCode, err = http.StatusInternalServerError, er
+				return
+
+			}
+
 			for k := 0; k < len(resp.Payments[j].Money); k++ {
 				money += resp.Payments[j].Money[k]
 			}
 			tmp := &portalModel.SelectAllPaymentResp{
-				PaymentID:    resp.Payments[j].ID,
-				BorrowFormID: resp.Payments[j].BorrowFormID,
-				TotalMoney:   money,
-				CreatedAt:    resp.Payments[j].CreatedAt,
+				PaymentID:     resp.Payments[j].ID,
+				BorrowFormID:  resp.Payments[j].BorrowFormID,
+				LibrarianID:   resp.Payments[j].LibrarianID,
+				LibrarianName: lib.Name,
+				ReaderID:      resp.Payments[j].ReaderID,
+				ReaderName:    user.Name,
+				TotalMoney:    money,
+				CreatedAt:     resp.Payments[j].CreatedAt,
 			}
 
 			finalResp = append(finalResp, tmp)
@@ -801,10 +821,11 @@ func selectPaymentByID(c echo.Context, request interface{}) (statusCode int, dat
 		}
 
 		tmp := &portalModel.RespBarcodePaymentOverview{
-			BarcodeID: resp.Payment.BarcodeID[i],
-			Status:    resp.Payment.BarcodeStatus[i],
-			DocName:   doc.DocName,
-			Money:     resp.Payment.Money[i],
+			BarcodeID:  resp.Payment.BarcodeID[i],
+			Status:     resp.Payment.BarcodeStatus[i],
+			DocName:    doc.DocName,
+			AuthorName: aut.AuthorName,
+			Money:      resp.Payment.Money[i],
 		}
 
 		totalMoney += resp.Payment.Money[i]
@@ -813,7 +834,10 @@ func selectPaymentByID(c echo.Context, request interface{}) (statusCode int, dat
 	data = &portalModel.SelectPaymentByIDResp{
 		PaymentID:    resp.Payment.ID,
 		BorrowFormID: resp.Payment.BorrowFormID,
+		ReaderID:     resp.Payment.ReaderID,
+		LibrarianID:  resp.Payment.LibrarianID,
 		TotalMoney:   totalMoney,
+		Fine:         resp.Payment.Fine,
 		Barcodes:     barcodes,
 	}
 

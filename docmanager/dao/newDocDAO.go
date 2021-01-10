@@ -408,6 +408,8 @@ func SelectAllPayment(ctx context.Context, db *mssqlx.DBs) (result []*docmanager
 		tmp := &docmanagerModel.Payment{
 			ID:            tempResp[i].ID,
 			BorrowFormID:  tempResp[i].BorrowFormID,
+			LibrarianID:   tempResp[i].LibrarianID,
+			ReaderID:      tempResp[i].ReaderID,
 			Fine:          tempResp[i].Fine,
 			BarcodeID:     barcode,
 			BarcodeStatus: barcodestatus,
@@ -449,6 +451,8 @@ func SelectPaymentByID(ctx context.Context, db *mssqlx.DBs, paymentsID uint64) (
 	result = &docmanagerModel.Payment{
 		ID:            tempResp.ID,
 		BorrowFormID:  tempResp.BorrowFormID,
+		LibrarianID:   tempResp.LibrarianID,
+		ReaderID:      tempResp.ReaderID,
 		Fine:          tempResp.Fine,
 		BarcodeID:     barcode,
 		BarcodeStatus: barcodestatus,
@@ -489,6 +493,9 @@ func SelectPaymentByBorrowFormID(ctx context.Context, db *mssqlx.DBs, borrowForm
 	result = &docmanagerModel.Payment{
 		ID:            tempResp.ID,
 		BorrowFormID:  tempResp.BorrowFormID,
+		LibrarianID:   tempResp.LibrarianID,
+		ReaderID:      tempResp.ReaderID,
+		Fine:          tempResp.Fine,
 		BarcodeID:     barcode,
 		BarcodeStatus: barcodestatus,
 		Money:         price,
@@ -517,7 +524,7 @@ func InsertPayment(ctx context.Context, db *mssqlx.DBs, payment *docmanagerModel
 		return
 	}
 
-	_, err = db.Exec(sqlInsertPayment, payment.ID, payment.BorrowFormID, payment.Fine, barcode, barcodestatus, money)
+	_, err = db.Exec(sqlInsertPayment, payment.ID, payment.BorrowFormID, payment.LibrarianID, payment.ReaderID, payment.Fine, barcode, barcodestatus, money)
 
 	return
 }

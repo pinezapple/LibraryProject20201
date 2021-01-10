@@ -131,24 +131,29 @@ type UpdateBorrowFormReq struct {
 		BarcodeStatus uint64 `json:"barcode_status"`
 		Fee           uint64 `json:"fee"`
 	} `json:"barcode_update"`
+	Fine uint64 `json:"fine"`
 }
 
 // ----------------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------- PAYMENTS ----------------------------------------------------------
 
 type SelectAllPaymentResp struct {
-	PaymentID    uint64      `json:"payment_id"`
-	BorrowFormID uint64      `json:"borrow_form_id"`
-	TotalMoney   uint64      `json:"total_money"`
-	LibrarianID  uint64      `json:"librarian_id"`
-	CreatedAt    *model.Time `json:"created_at"`
+	PaymentID     uint64      `json:"payment_id"`
+	BorrowFormID  uint64      `json:"borrow_form_id"`
+	TotalMoney    uint64      `json:"total_money"`
+	LibrarianID   uint64      `json:"librarian_id"`
+	LibrarianName string      `json:"librarian_name"`
+	ReaderID      uint64      `json:"reader_id"`
+	ReaderName    string      `json:"reader_name"`
+	CreatedAt     *model.Time `json:"created_at"`
 }
 
 type RespBarcodePaymentOverview struct {
-	BarcodeID uint64 `json:"barcode_id"`
-	Status    uint64 `json:"status"`
-	DocName   string `json:"doc_name"`
-	Money     uint64 `json:"money"`
+	BarcodeID  uint64 `json:"barcode_id"`
+	Status     uint64 `json:"status"`
+	DocName    string `json:"doc_name"`
+	AuthorName string `json:"author_name"`
+	Money      uint64 `json:"money"`
 }
 
 type SelectPaymentByIDReq struct {
@@ -160,7 +165,9 @@ type SelectPaymentByIDResp struct {
 	PaymentID    uint64                        `json:"payment_id"`
 	BorrowFormID uint64                        `json:"borrow_form_id"`
 	LibrarianID  uint64                        `json:"librarian_id"`
+	ReaderID     uint64                        `json:"reader_id"`
 	TotalMoney   uint64                        `json:"total_money"`
+	Fine         uint64                        `json:"fine"`
 	Barcodes     []*RespBarcodePaymentOverview `json:"barcodes"`
 }
 
@@ -258,6 +265,14 @@ type AddBarcodeByDocverIDReq struct {
 
 type AddBarcodeByDocverIDResp struct {
 	Barcodes []uint64 `json:"barcodes"`
+}
+
+type CreateDocVerReq struct {
+	DocID          uint64 `json:"document_id"`
+	Price          uint64 `json:"price"`
+	DocDescription string `json:"document_description"`
+	Publisher      string `json:"publisher"`
+	Author         string `json:"author"`
 }
 
 // ------------------------------------------------------------------------------------------------------------------------------------
