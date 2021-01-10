@@ -259,7 +259,16 @@ type SelectByUserIDReq struct {
 }
 
 type BlackListSelectAllElement struct {
-	UserID uint64 `json:"user_id" db:"user_id"`
-	Count  int    `json:"count" db:"count"`
-	Money  uint64 `json:"money" db:"money"`
+	UserID   uint64 `json:"user_id" db:"user_id"`
+	Username string `json:"username" db:"username"`
+	Count    int    `json:"count" db:"count"`
+	Money    uint64 `json:"total_money" db:"total_money"`
+}
+
+type BlackListSelectByIDResp struct {
+	UserID   uint64             `json:"user_id" db:"user_id"`
+	Username string             `json:"username" db:"username"`
+	Count    int                `json:"count" db:"count"`
+	Money    uint64             `json:"total_money" db:"total_money"`
+	Detail   []*BlackListDAOobj `json:"detail" db:"detail"`
 }

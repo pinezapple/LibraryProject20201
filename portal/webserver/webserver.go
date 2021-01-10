@@ -124,8 +124,8 @@ func initDocRouter(e *echo.Echo) {
 	h.POST("/detail", doc.SelectSaleBillByID)
 
 	k := e.Group("/blacklist")
-	h.POST("/all", doc.SelectAllBlackList)
-	h.POST("/detail", doc.SelectBlackListByID)
+	k.POST("/all", doc.SelectAllBlackList)
+	k.POST("/detail", doc.SelectBlackListByID)
 
 	/*
 		d.POST("/save", doc.SaveDoc)

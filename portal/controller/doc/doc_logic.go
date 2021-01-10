@@ -47,7 +47,7 @@ func selectAllBarcode(c echo.Context, request interface{}) (statusCode int, data
 		}
 
 		for j := 0; j < len(resp.Barcodes); j++ {
-			docver, er := cache.SelectDocumentVersionByID(ctx, db, resp.Barcodes[j].DocVer)
+			docver, er := cache.SelectDocumentVersionByID(ctx, db, resp.Barcodes[j].DocVerID)
 			if er != nil {
 				statusCode, err = http.StatusInternalServerError, er
 				return
@@ -123,7 +123,7 @@ func selectAllBarcodeSelling(c echo.Context, request interface{}) (statusCode in
 		}
 
 		for j := 0; j < len(resp.Barcodes); j++ {
-			docver, er := cache.SelectDocumentVersionByID(ctx, db, resp.Barcodes[j].DocVer)
+			docver, er := cache.SelectDocumentVersionByID(ctx, db, resp.Barcodes[j].DocVerID)
 			if er != nil {
 				statusCode, err = http.StatusInternalServerError, er
 				return
@@ -199,7 +199,7 @@ func selectAllBarcodeAvail(c echo.Context, request interface{}) (statusCode int,
 		}
 
 		for j := 0; j < len(resp.Barcodes); j++ {
-			docver, er := cache.SelectDocumentVersionByID(ctx, db, resp.Barcodes[j].DocVer)
+			docver, er := cache.SelectDocumentVersionByID(ctx, db, resp.Barcodes[j].DocVerID)
 			if er != nil {
 				statusCode, err = http.StatusInternalServerError, er
 				return
@@ -275,7 +275,7 @@ func selectAllBarcodeDamaged(c echo.Context, request interface{}) (statusCode in
 		}
 
 		for j := 0; j < len(resp.Barcodes); j++ {
-			docver, er := cache.SelectDocumentVersionByID(ctx, db, resp.Barcodes[j].DocVer)
+			docver, er := cache.SelectDocumentVersionByID(ctx, db, resp.Barcodes[j].DocVerID)
 			if er != nil {
 				statusCode, err = http.StatusInternalServerError, er
 				return
@@ -603,7 +603,7 @@ func selectBarcodeByID(c echo.Context, request interface{}) (statusCode int, dat
 		statusCode, err = http.StatusInternalServerError, fmt.Errorf("grpc Error")
 		return
 	}
-	docver, er := cache.SelectDocumentVersionByID(ctx, db, resp.Barcode.DocVer)
+	docver, er := cache.SelectDocumentVersionByID(ctx, db, resp.Barcode.DocVerID)
 	if er != nil {
 		statusCode, err = http.StatusInternalServerError, er
 		return
@@ -700,7 +700,7 @@ func selectBorrowFormByID(c echo.Context, request interface{}) (statusCode int, 
 	var barcode []*portalModel.RespBarcodeOverview
 
 	for i := 0; i < len(resp.Borrowform.BarcodeID); i++ {
-		docver, er := cache.SelectDocVerFromCacheByBarcode(ctx, db, resp.Borrowform.BarcodeID[i])
+		docver, er := cache.SelectDocVerIDFromCacheByBarcode(ctx, db, resp.Borrowform.BarcodeID[i])
 		if er != nil {
 			statusCode, err = http.StatusInternalServerError, er
 			return
@@ -778,7 +778,7 @@ func selectPaymentByID(c echo.Context, request interface{}) (statusCode int, dat
 	var totalMoney uint64
 
 	for i := 0; i < len(resp.Payment.BarcodeID); i++ {
-		docver, er := cache.SelectDocVerFromCacheByBarcode(ctx, db, resp.Payment.BarcodeID[i])
+		docver, er := cache.SelectDocVerIDFromCacheByBarcode(ctx, db, resp.Payment.BarcodeID[i])
 		if er != nil {
 			statusCode, err = http.StatusInternalServerError, er
 			return
@@ -852,7 +852,7 @@ func selectSaleBillByID(c echo.Context, request interface{}) (statusCode int, da
 	var totalMoney uint64
 
 	for i := 0; i < len(resp.SaleBill.BarcodeID); i++ {
-		docver, er := cache.SelectDocVerFromCacheByBarcode(ctx, db, resp.SaleBill.BarcodeID[i])
+		docver, er := cache.SelectDocVerIDFromCacheByBarcode(ctx, db, resp.SaleBill.BarcodeID[i])
 		if er != nil {
 			statusCode, err = http.StatusInternalServerError, er
 			return
@@ -1053,9 +1053,10 @@ func selectAllFromBlackList(c echo.Context, request interface{}) (statusCode int
 			}
 
 			tmp := &portalModel.BlackListSelectAllElement{
-				UserID: user[i].ID,
-				Count:  len(f),
-				Money:  money,
+				UserID:   user[i].ID,
+				Username: user[i].Name,
+				Count:    len(f),
+				Money:    money,
 			}
 			result = append(result, tmp)
 		} else {
@@ -1071,6 +1072,8 @@ func selectBlackListByUserID(c echo.Context, request interface{}) (statusCode in
 	ctx := c.Request().Context()
 	req := request.(*portalModel.SelectByUserIDReq)
 	db := core.GetDB()
+	userDAO := database.GetUserDAO()
+
 	// Log login info
 	lg = &model.LogFormat{Source: c.Request().RemoteAddr, Action: "Select from blacklist by id", Data: ""}
 
@@ -1080,7 +1083,25 @@ func selectBlackListByUserID(c echo.Context, request interface{}) (statusCode in
 		statusCode, err = http.StatusInternalServerError, er
 		return
 	}
+	user, er := userDAO.Select(ctx, db, req.UserID)
+	if er != nil {
+		fmt.Println(er)
+		statusCode, err = http.StatusInternalServerError, er
+		return
+	}
+	var money uint64
+	for j := 0; j < len(f); j++ {
+		money += f[j].Money
+	}
 
-	data = f
+	result := &portalModel.BlackListSelectByIDResp{
+		UserID:   req.UserID,
+		Username: user.Name,
+		Count:    len(f),
+		Money:    money,
+		Detail:   f,
+	}
+
+	data = result
 	return http.StatusOK, data, lg, false, nil
 }

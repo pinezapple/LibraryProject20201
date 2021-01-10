@@ -5,9 +5,9 @@ drop table if exists authors;
 
 create table document_version
 (
-	`document_version` varchar(255),
+	`document_version_id` bigint(20),
+	`document_version` varchar(1000),
 	`doc_id` bigint(20),
-	`version` bigint(20),
 	`doc_description` varchar(1000),
 	`publisher` varchar(1000),
 	`author_id` bigint(20),
@@ -53,7 +53,7 @@ create table barcode_cache
 create table  
 (
   `barcode_id` bigint(20),
-  `document_version` varchar(255)
+  `document_version` bigint(20)
 ) Engine=InnoDB;
 
 create black_list 

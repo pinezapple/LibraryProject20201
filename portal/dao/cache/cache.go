@@ -225,7 +225,7 @@ func SelectAllDocumentVersion(ctx context.Context, db *mssqlx.DBs) (result []*mo
 	return
 }
 
-func SelectDocumentVersionByID(ctx context.Context, db *mssqlx.DBs, id string) (result *model.DocumentVersionDAOobj, err error) {
+func SelectDocumentVersionByID(ctx context.Context, db *mssqlx.DBs, id uint64) (result *model.DocumentVersionDAOobj, err error) {
 	// Validate input
 	if db == nil {
 		err = core.ErrDBObjNull
