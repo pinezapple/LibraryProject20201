@@ -39,7 +39,11 @@ function loginRequest(user, pass) {
     .then((result) => {
       if (result.message == "login success") {
         var token = result.token.access_token;
+        var id = result.id;
+        var name = result.name;
         sessionStorage.setItem("token", token);
+        sessionStorage.setItem("id", token);
+        sessionStorage.setItem("name", token);
         window.location.href = "../../pages/dashboards/dashboard.html";
       } else if (result.message == "Invalid login details") {
         alert("Thông tin đăng nhập chưa đúng");

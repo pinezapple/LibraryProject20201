@@ -433,6 +433,7 @@
   <script src="../../assets/js/argon.js?v=1.1.0"></script>
   <!-- Demo JS - remove this in your project -->
   <script src="../../assets/js/demo.min.js"></script>
+  <script src="../../pages/js/loginValidation.js"></script>
   <!-- JS  -->
   <script>
     let borrowIDForm ='<div class="col"><div class="form-group"><label class="form-control-label">Mã phiếu mượn</label><input class="form-control" id="borrowID" placeholder="Mã phiếu mượn" type="text" disabled ></div></div>'
@@ -498,9 +499,9 @@
     
     
       let userID= `${doc.user_id}`
-      let userName = `${doc.user_name}`
-      let violateTime = `${doc.violate_time}`
-      let totalFee = `${doc.total_fee}`
+      let userName = `${doc.username}`
+      let violateTime = `${doc.count}`
+      let totalFee = `${doc.money}`
       let btn = '<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-form" id="edit">Chi tiết</button>'
 
       data.push (userID,userName,violateTime,totalFee, btn)
@@ -530,12 +531,11 @@
   })
   .then(response => response.json())
   .then(obj =>{
-      let userID = obj.id
-      let userName = obj.user_name
-      let violationCount = obj.violated_books.length
-      let totalFee = obj.total_fee
-      let docs = obj.violated_books
-      console.log(totalFee);
+      let userID = obj.user_id
+      let userName = obj.username
+      let violationCount = obj.count
+      let totalFee = obj.money
+      let docs = obj.detail
 
         // add value to input field
       $("#userID").val(userID)
