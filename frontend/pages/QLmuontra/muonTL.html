@@ -293,8 +293,8 @@
                   </div>
                   <!-- button -->
                 <div class="form-row" id="formButton">
-                  <button class="btn btn-primary" type="button" onclick="createBorrowForm()">Tạo phiếu</button>
-                  <button type="button" class="btn btn-danger" style = "float: right;" onclick="reset()">Hủy</button>
+                  <button id="makeFormButton" class="btn btn-primary" type="button" onclick="createBorrowForm()">Tạo phiếu</button>
+                  <button id="resetButton" type="button" class="btn btn-danger" style = "float: right;" onclick="reset()">Hủy</button>
                 </div>
                 
                 </form>
@@ -371,6 +371,28 @@
   <!-- Demo JS - remove this in your project -->
   <script src="../../assets/js/demo.min.js"></script>
   <script>
+      //Check if enough input
+  var count = 0;
+  function checkInput() {
+    var libarianID = $("#librarian").val();
+    var readerID = $("#reader").val();
+    var duration = $("#duration").val();
+    if (libarianID != "" && readerID != "" && duration != 0 && count!= 0) {
+      $("#makeFormButton").removeClass("disabled");
+      $("#makeFormButton").prop('disabled', false);
+    } else {
+      $("#makeFormButton").addClass("disabled");
+      $("#makeFormButton").prop('disabled', true);
+    }
+  }
+  setInterval(checkInput, 300);
+  
+  //reset button
+  $( "#resetButton" ).click(function() {
+      count = 0;
+      $(".newRow").remove();    
+    });
+
     var table = $('#datatable-basic').DataTable();
     let docIdForm ='<div class="col"><div class="form-group"><div class="input-group input-group-merge"><div class="input-group-prepend"> <span class="input-group-text"><i class="ni ni-book-bookmark"></i></span></div><input class="form-control" id="docId" placeholder="Mã tài liệu" type="text" disabled ></div></div></div> '
     let barcodeForm ='<div class="col"><div class="form-group"><div class="input-group input-group-merge"><div class="input-group-prepend"> <span class="input-group-text"><i class="fas fa-barcode"></i></span></div><input class="form-control" id="barcode" placeholder="Mã vạch" type="text" disabled ></div></div></div> '
@@ -399,7 +421,7 @@
      
       // append to form
       let formRow = document.createElement("div")
-      formRow.setAttribute('class','form-row')
+      formRow.setAttribute('class','form-row newRow')
       formRow.setAttribute('id','newRow')
       form.appendChild(formRow)
       buttonSubmit.parentNode.insertBefore(formRow,buttonSubmit)
