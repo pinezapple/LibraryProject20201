@@ -98,7 +98,10 @@
                     <a href="../../pages/QLtailieu/nhapTL.html" class="nav-link">Nhập tài liệu</a>
                   </li>
                   <li class="nav-item">
-                    <a href="../../pages/QLtailieu/thongTinTL.html" class="nav-link">Thông tin tài liệu</a>
+                    <a href="../../pages/QLtailieu/thongTinTaiLieu.html" class="nav-link">Thông tin tài liệu</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="../../pages/QLtailieu/thongTinTL.html" class="nav-link">Tài liệu hiện có</a>
                   </li>
                   <li class="nav-item">
                     <a href="../../pages/QLtailieu/thanhLy.html" class="nav-link">Thanh lý tài liệu</a>
@@ -268,7 +271,7 @@
                   </tr>
                 </tfoot>
                 <tbody>
-                <!-- <tr>
+                <tr>
                   <td>05</td>
                   <td>0129323</td>
                   <td>Tin học</td>
@@ -293,7 +296,7 @@
                     <td>10000</td>
                     <td><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-form" id="edit">Chỉnh sửa</button>
                       <button type="button" class="btn btn-danger btn-sm"  data-toggle="sweet-alert" id="delete" >Xóa</button></td>
-                  </tr> -->
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -359,31 +362,31 @@
                         <div class="form-group">
                       
                                 <label class="form-control-label">Tên tài liệu</label>
-                                <input class="form-control" id="docName" placeholder="Tên tài liệu" type="text" >
+                                <input class="form-control" id="docName" placeholder="Tên tài liệu" type="text" readonly>
 
                         </div>
                         <div class="form-group">
                         
                               <label class="form-control-label">Tác giả</label>
-                              <input class="form-control" id="author" placeholder="Tác giả" type="text">
+                              <input class="form-control" id="author" placeholder="Tác giả" type="text" readonly>
                         
                         </div>
                         <div class="form-group">
                         
                               <label class="form-control-label">Tái bản</label>
-                              <input class="form-control" id="edition" placeholder="Tái bản" type="text">
+                              <input class="form-control" id="edition" placeholder="Tái bản" type="text" readonly>
                         
                         </div>
                         <div class="form-group">
                         
                               <label class="form-control-label">Nhà xuất bản</label>
-                              <input class="form-control" id="publisher" placeholder="Nhà xuất bản" type="text">
+                              <input class="form-control" id="publisher" placeholder="Nhà xuất bản" type="text" readonly>
                          
                         </div>
                         <div class="form-group">
                          
                               <label class="form-control-label">Thể loại</label>
-                              <select class="form-control" id= "type" data-toggle="select" title="Thể loại" data-live-search="true" data-live-search-placeholder="Select">
+                              <select class="form-control" id= "type" data-toggle="select" title="Thể loại" data-live-search="true" data-live-search-placeholder="Select" readonly>
                                 <option>Giáo trình</option>
                                 <option>Tạp chí</option>
                                 <option>Sách tham khảo</option>
@@ -405,7 +408,7 @@
                         <div class="form-group">
                         
                             <label class="form-control-label">Giá tiền</label>
-                            <input class="form-control" id="price" placeholder="Giá" type="text">
+                            <input class="form-control" id="price" placeholder="Giá" type="text" readonly>
                         
                         </div> 
                                                   
@@ -470,15 +473,15 @@ fetch (url,
 
       let data =[]
       // get doc data
-      let docId= `${doc.id}`
-      let barcode = `${doc.barcode}`
+      let docId= `${doc.doc_id}`
+      let barcode = `${doc.barcode_id}`
       let docName = `${doc.doc_name}`
       let author = `${doc.doc_author}`
-      let type = `${doc.doc_type}`
-      let publisher = `${doc.doc_publisher}`
-      let edition = `${doc.doc_edition}`
-      let status = `${doc.doc_status}`
-      let price = `${doc.doc_price}`
+      let type = `${doc.category}`
+      let publisher = `${doc.publisher}`
+      let edition = `${doc.version}`
+      let status = `${doc.status}`
+      let price = `${doc.price}`
       let btn = '<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-form" id="edit">Chỉnh sửa</button><button type="button" class="btn btn-danger btn-sm"  data-toggle="sweet-alert" id="delete" >Xóa</button>'
       let statusData;
 
@@ -486,8 +489,10 @@ fetch (url,
       statusData = "Nguyên vẹn";
      }else if(status == 1){
       statusData = "Hư hỏng";
-     }else{
-      statusData ="Đang thanh lý";
+     }else if (status ==2 ){
+      statusData ="Làm mất";
+     } else if (status == 4){
+       statusData = "Đang thanh lý"
      }
     
       data.push (docId,barcode,docName,author,type,edition,publisher,statusData,price,btn)
@@ -524,8 +529,10 @@ fetch (url,
         status = "0";
      }else if(status == "Hư hỏng"){
       status = "1";
-     }else if(status == "Đang thanh lý"){
+     }else if(status == "Làm mất"){
       status = "2";
+     }else if(status == "Đang thanh lý"){
+      status = "4";
      }
 
       // add data to input field
@@ -542,6 +549,7 @@ fetch (url,
      
     });
 
+    // chỉnh sửa tình trạng barcode
     $("#submit").on('click',function(){
     
 
@@ -552,7 +560,7 @@ fetch (url,
     let type = document.getElementById('type').value;
     let publisher = document.getElementById('publisher').value;
     let edition = document.getElementById('edition').value;
-    let status = document.getElementById('status').value;
+    let status = parseInt(document.getElementById('status').value,10);
     let price = document.getElementById('price').value;
 
     let url = 'http://localhost:3000/documents/'
@@ -565,10 +573,10 @@ fetch (url,
              'Content-Type': 'application/json',
             //  Authorization: "Bearer " + token,
             },
-          body:JSON.stringify({doc_name:name, doc_author:author, doc_type:type, doc_publisher: publisher, doc_edition: edition,doc_status: status,doc_price:price})
+          body:JSON.stringify({barcode_id: barcode, status: status})
     }
      ).then((res) => res.json())
-     .then(result => alert("Đã sửa thông tin tài liệu", result))
+     .then(result => alert("Đã cập nhật trạng thái tài liệu", result))
      .then(result => location.reload() )
      .catch((err)=>{alert("Đã xảy ra lỗi",err); console.log(err)})
     //  location.reload();
@@ -585,7 +593,7 @@ fetch (url,
      
       // get data from table
       let data = table.row( $(this).parents('tr') ).data();
-      let barcode =  data[1]
+      let barcode =  parseInt(data[1],10)
       let url = 'http://localhost:3000/documents/'
 
       // sweet alert
@@ -608,7 +616,7 @@ fetch (url,
              'Content-Type': 'application/json',
             //  Authorization: "Bearer " + token,
             },
-            // body:JSON.stringify({id_doc:documentId})
+            body:JSON.stringify({barcode_id:barcode})
             })
         // remove data from table
         .then(result =>  table.row('.selected').remove().draw( false ))

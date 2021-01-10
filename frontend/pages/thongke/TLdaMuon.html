@@ -96,7 +96,10 @@
                     <a href="../../pages/QLtailieu/nhapTL.html" class="nav-link">Nhập tài liệu</a>
                   </li>
                   <li class="nav-item">
-                    <a href="../../pages/QLtailieu/thongTinTL.html" class="nav-link">Thông tin tài liệu</a>
+                    <a href="../../pages/QLtailieu/thongTinTaiLieu.html" class="nav-link">Thông tin tài liệu</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="../../pages/QLtailieu/thongTinTL.html" class="nav-link">Tài liệu hiện có</a>
                   </li>
                   <li class="nav-item">
                     <a href="../../pages/QLtailieu/thanhLy.html" class="nav-link">Thanh lý tài liệu</a>
@@ -330,10 +333,10 @@
       // get doc data
       let borrowId = `${doc.borrow_form_id}`
       let idUser= `${doc.reader_id}`
-      let nameUser = `${doc.name_user}` // cần sửa
+      let nameUser = `${doc.reader_name}` 
       let status = `${doc.status}`
       let docDate = `${doc.end_time}`
-      let fee = `${doc.fee}` // cần sửa
+      let fee = `${doc.fine}` 
 
       // replace number value of borrow form status
       let stage = status.toString()

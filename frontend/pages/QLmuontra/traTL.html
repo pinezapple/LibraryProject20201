@@ -96,7 +96,10 @@
                     <a href="../../pages/QLtailieu/nhapTL.html" class="nav-link">Nhập tài liệu</a>
                   </li>
                   <li class="nav-item">
-                    <a href="../../pages/QLtailieu/thongTinTL.html" class="nav-link">Thông tin tài liệu</a>
+                    <a href="../../pages/QLtailieu/thongTinTaiLieu.html" class="nav-link">Thông tin tài liệu</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="../../pages/QLtailieu/thongTinTL.html" class="nav-link">Tài liệu hiện có</a>
                   </li>
                   <li class="nav-item">
                     <a href="../../pages/QLtailieu/thanhLy.html" class="nav-link">Thanh lý tài liệu</a>
@@ -253,6 +256,14 @@
                   </tr>
                 </tfoot>
                 <tbody>
+                  <tr>
+                    <td>23</td>
+                    <td>09</td>
+                    <td>Trần văn B</td>
+                    <td>Quá hạn</td>
+                    <td>10000</td>
+                    <td><button type="button" id="update" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-form">Chỉnh sửa</button></td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -343,7 +354,7 @@
                               <input class="form-control" placeholder="phí muộn" id='fee' type="number" min="1" readonly>
                             
                           </div>
-                        </div>-->
+                        </div> -->
                       </div>
                       <!-- return date info -->
                       <div class="form-row" id="returnDate">
@@ -452,6 +463,9 @@ var table = $('#datatable-basic').DataTable();
 let arr = [{'0': "Đã trả"},{'1': "Đang mượn"},{'2':'Quá hạn'}]
 let url ='http://localhost:3000/returned_form/'
 
+let librarainStored = '2' // cần sửa
+// document.getElementById('librarianId').value = librarainId
+
 
 let docIdForm ='<div class="col"><div class="form-group"> <label class="form-control-label">Mã tài liệu</label><input class="form-control" id="docId" placeholder="Mã tài liệu" type="text" disabled ></div></div>'
 let barcodeForm ='<div class="col"><div class="form-group"><label class="form-control-label">Mã vạch</label><input class="form-control" id="barcode" placeholder="Mã vạch" type="text" disabled ></div></div>'
@@ -485,10 +499,10 @@ fetch (url,  {
       let borrowId = `${form.borrow_form_id}`
       let readerId= `${form.reader_id}`
       let reader = `${form.reader}`
-      let librarianId = `${form.librarian_id}`
+      // let librarianId = `${form.librarian_id}`
       // let librarian = `${form.librarian}`
       let status = `${form.status}`
-      let fee = `${form.fee}`
+      let fee = `${form.fine}`
       let btn = '<button type="button" id="update" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-form">Chỉnh sửa</button>'
       
       // replace number value of borrow form status
@@ -527,7 +541,7 @@ $('#datatable-basic tbody').on( 'click', 'button', function () {
       let startDate = obj.start_time
       let endDate = obj.end_time 
       let borrowStatus = obj.status
-      let fine = obj.fee 
+      let fine = obj.fine
       let docs = obj.barcodes
 
         // add value to input field
@@ -598,8 +612,13 @@ $('#datatable-basic tbody').on( 'click', 'button', function () {
      let borrowId = parseInt(document.getElementById('borrowId').value,10)
      let borrowStatus = parseInt(document.getElementById('status').value,10)
      let barcodeIds = document.querySelectorAll('#barcode')
+     let readerId = parseInt(document.getElementById('readerId').value,10)
+
+     let librarianId = parseInt(librarainStored) // cần sửa
+
      let docStatus = document.querySelectorAll('#docStatus')
      let fines = document.querySelectorAll('#fine')
+     let formFine = parseInt(document.getElementById('fee').value,10)
      let borrowFormUrl = 'http://localhost:3000/updated_borrow_form/' + borrowId
 
      for (i=0; i< barcodeIds.length; i++){
@@ -615,11 +634,14 @@ $('#datatable-basic tbody').on( 'click', 'button', function () {
        'Content-Type': 'application/json',
       //  Authorization: "Bearer " + token,
       },
-      body:JSON.stringify({borrow_form_id: borrowId,librarian_id:librarianId ,status: borrowStatus, barcode_update:arr})
+      body:JSON.stringify({borrow_form_id: borrowId ,status: borrowStatus, barcode_update:arr,fine:formFine, reader_id: readerId, librarian_id:librarianId})
     }
     ).then((res) => res.json())
-    .then(result => alert("Đã cập nhật trả tài liệu", result))
-    .then(result =>  window.location.replace('traTL.html'))
+    .then(result => {
+        alert("Đã cập nhật trả tài liệu", result)
+        location.reload()
+    })
+    // .then(result =>  window.location.replace('traTL.html'))
     .catch((err)=>{alert("Đã xảy ra lỗi",err); console.log(err)})
    }
 

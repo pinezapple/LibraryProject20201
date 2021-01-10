@@ -96,7 +96,10 @@
                     <a href="../../pages/QLtailieu/nhapTL.html" class="nav-link">Nhập tài liệu</a>
                   </li>
                   <li class="nav-item">
-                    <a href="../../pages/QLtailieu/thongTinTL.html" class="nav-link">Thông tin tài liệu</a>
+                    <a href="../../pages/QLtailieu/thongTinTaiLieu.html" class="nav-link">Thông tin tài liệu</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="../../pages/QLtailieu/thongTinTL.html" class="nav-link">Tài liệu hiện có</a>
                   </li>
                   <li class="nav-item">
                     <a href="../../pages/QLtailieu/thanhLy.html" class="nav-link">Thanh lý tài liệu</a>
@@ -287,51 +290,6 @@
                     </p>
                   </div>
                   <div class="form-row" id="addDoc">
-                    <!-- <div class="col-sm-6 col-md-3">
-                      <div class="form-group">
-                        <div class="input-group input-group-merge">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="ni ni-book-bookmark"></i></span>
-                          </div>
-                          <input class="form-control" id='docId' placeholder="Mã tài liệu" type="text" required readonly>
-                        </div>
-                      </div>
-                    </div> -->
-                  <!-- </div> -->
-                  <!-- <div class="form-row"> -->
-                    <!-- <div class="col-sm-6 col-md-3">
-                      <div class="form-group">
-                        <div class="input-group input-group-merge">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="ni ni-books"></i></span>
-                          </div>
-                          <input class="form-control" id="docName" placeholder="Tên tài liệu" type="text" disabled>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3">
-                      <div class="form-group">
-                        <div class="input-group input-group-merge">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-users"></i></span>
-                          </div>
-                          <input class="form-control" id="author" placeholder="Tác giả" type="text"  disabled>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3">
-                      <div class="form-group">
-                        <div class="input-group input-group-merge"> -->
-                          <!-- <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="ni ni-fat-remove"></i></span>
-                          </div> -->
-                          <!-- <button class="btn btn-icon btn-primary" type="button"> -->
-                            <!-- <span class="input-group-text"><i class="ni ni-fat-remove"></i></span> -->
-                            <!-- <span class="btn-inner--text">Xóa</span>
-                          </button>
-                        </div>
-                      </div>
-                    </div>  -->
                   </div>
                   <!-- button -->
                 <div class="form-row" id="formButton">
@@ -423,6 +381,10 @@
     let form = document.querySelector('#borrowForm')
     let info = document.querySelector('#addDoc')
     let buttonSubmit = document.querySelector('#formButton')
+
+    let librarianId = '2'; // cần sửa
+    document.getElementById('librarian').value = librarianId
+
     let url = 'http://localhost:3000/documents'
     let urlBorrow ='http://localhost:3000/borrow_form'
     
@@ -474,9 +436,9 @@
   function createBorrowForm(){
     let docIds = document.querySelectorAll('#docId')
     let barcodeIds = document.querySelectorAll('#barcode')
-    let duration = document.getElementById('duration').value
-    let reader = document.getElementById('reader').value
-    let librarian = document.getElementById('librarian').value
+    let duration = parseInt(document.getElementById('duration').value,10)
+    let reader = parseInt(document.getElementById('reader').value,10)
+    let librarian = parseInt(document.getElementById('librarian').value,10)
 
     let arrayId =[]
      for (let i = 0; i < barcodeIds.length; i++) {
@@ -497,8 +459,13 @@
      
   }
   ).then((res) => res.json())
-  .then(result => alert("Đã tạo phiếu mượn thành công", result))
-  .then(result => document.getElementById("borrowForm").reset())
+  .then(result => {
+      alert("Đã tạo phiếu mượn thành công")
+      document.getElementById("borrowForm").reset()
+     
+      
+  })
+  // .then(result => document.getElementById("borrowForm").reset())
   .catch((err)=>alert("Đã xảy ra lỗi",err))
 
   let div = document.querySelectorAll("#newRow")
@@ -524,12 +491,12 @@
 
       let data =[]
       // get doc data
-      let docId= `${doc.id}` // cần sửa
+      let docId= `${doc.doc_id}`
       let barcode = `${doc.barcode_id}`
       let docName = `${doc.doc_name}`
       let author = `${doc.author}`
       let type = `${doc.doc_type}`
-      let publisher = `${doc.doc_publisher}` // cần sửa
+      let publisher = `${doc.publisher}`
       let edition = `${doc.version}`
       let btn = '<button type="button" id="add" class="btn btn-info btn-sm">Thêm</button>'
      

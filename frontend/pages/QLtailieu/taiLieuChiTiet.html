@@ -96,7 +96,10 @@
                     <a href="../../pages/QLtailieu/nhapTL.html" class="nav-link">Nhập tài liệu</a>
                   </li>
                   <li class="nav-item">
-                    <a href="../../pages/QLtailieu/thongTinTL.html" class="nav-link">Thông tin tài liệu</a>
+                    <a href="../../pages/QLtailieu/thongTinTaiLieu.html" class="nav-link">Thông tin tài liệu</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="../../pages/QLtailieu/thongTinTL.html" class="nav-link">Tài liệu hiện có</a>
                   </li>
                   <li class="nav-item">
                     <a href="../../pages/QLtailieu/thanhLy.html" class="nav-link">Thanh lý tài liệu</a>
@@ -214,7 +217,7 @@
               <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                 <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                   <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-                  <li class="breadcrumb-item"><a href="#">Quản lý tài liệu</a></li>
+                  <li class="breadcrumb-item"><a href="thongTinTaiLieu.html">Quản lý tài liệu</a></li>
                   <li class="breadcrumb-item active" aria-current="page">Chi tiết tài liệu</li>
                 </ol>
               </nav>
@@ -236,12 +239,6 @@
               </div>
               <!-- Card body -->
               <div class="card-body">
-                <div class="col-lg-8">
-                  <p class="mb-0">
-                    Thông tin chi tiết
-                    <br /><br />
-                  </p>
-                </div>
                 <form id='docForm'>
                 <!-- input groups with icon -->
                   <div class="form-row" id="docInfo">
@@ -274,6 +271,7 @@
                   <!-- button -->
                 <div class="form-row" id="formButton">
                   <button class="btn btn-primary" type="button" onclick="createBorrowForm()">Lưu</button>
+                  <button type="button" class="btn btn-danger" style="position: absolute; right: 1.5rem;" onclick="location.reload()">Hủy</button>
                 </div>
                 
                 </form>
@@ -472,42 +470,39 @@
   .then(docList =>{
     docList.forEach(doc =>{
 
-      let data =[]
+      
       // get doc data
       // let docId= `${doc.document_version}` 
       let docName = `${doc.doc_name}` 
-      let type = `${doc.category}`
+      let type = `${doc.category_name}`
+      let versions = `${doc.doc_version}`
+
+      // get all version
+      let versionId = version[0]["document_version_id"]
+      let versionNumber = version[0]["document_version"]
+      let publisher = version[0]["publisher"]
+      let author = version[0]["author_name"]
+      let quantity = version[0]["count"]
+      let price = version[0]["price"]
+      let btn = '<button type="button" class="btn btn-secondary btn-sm" id="detail" >Chi tiết</button>'
      
-      data.push (docId,docName,type)
+      
       // add to form
       // document.getElementById('docId').value = docId
       document.getElementById('docName').value = docName
       document.getElementById('type').value = type
+
+      // add to table
+      let data =[]
+      data.push (versionId,versionNumber,publisher,author,quantity,price,btn)
+      table.row.add(data).draw()
+
     })
   })
   .catch(error => {
   console.error('Error:', error);
   });
 
-
-    
-  // add data to edit modal
-  $('#datatable-basic tbody').on( 'click', 'button', function (event) {
-      // event prevent
-      event.preventDefault()
-     
-      // get data from table
-      let data = table.row( $(this).parents('tr') ).data();
-      
-      // add data 
-      document.querySelector("#versionIdEdit").value = data[0]
-      document.querySelector("#versionEdit").value = data[1]
-      document.querySelector("#publisherEdit").value = data[2]
-      // document.querySelector("#quantityEdit").value = data[4]
-      document.querySelector("#authorEdit").value = data[3]
-      document.querySelector("#priceEdit").value = data[5]
-
-    });
   
     // redirect link
     $('#datatable-basic tbody').on( 'click', '#detail', function (event) {
@@ -517,7 +512,7 @@
       // get data from table
       let data = table.row( $(this).parents('tr') ).data();
       let versionId = data[0]
-      let redirectUrl = 'taiLieuChiTiet.html?id='+versionId
+      let redirectUrl = 'taiBanChiTiet.html?id='+versionId
       // redirect 
       window.location.replace(redirectUrl)
 
@@ -555,8 +550,15 @@
   
   }
 
-// fetch version data for table
-  fetch (docUrl,
+
+  // update document 
+  function updateDoc(){
+    let docId = parseInt(document.querySelector('#docId').value,10)
+    let docName = document.getElementById('docName').value
+    let type = document.getElementById('type').value
+    
+
+    fetch(docUrl, //cần sửa lại
   {
     method: 'POST',
     credentials: "omit",
@@ -564,30 +566,17 @@
        'Content-Type': 'application/json',
       //  Authorization: "Bearer " + token,
       },
-  })
-  .then(response => response.json())
-  .then(docList =>{
-    docList.forEach(doc =>{
-
-      let data =[]
-      // get doc data
-      let version= `${doc.document_version}` 
-      let author = `${doc.author}`
-      let publisher = `${doc.publisher}` 
-      let quantity = `${doc.number}` // cân sửa
-      let price = `${doc.price}` 
-      let btn = '<button type="button" class="btn btn-secondary btn-sm" id="detail" >Chi tiết</button>'
+      body:JSON.stringify({document_id: docId, document_name: docName, category:type})
      
-      data.push (version,publisher,author,quantity,price,btn)
-      // add to table
-      table.row.add(data).draw()
-    })
-  })
-  .catch(error => {
-  console.error('Error:', error);
-  });
+  }
+  ).then((res) => res.json())
+  .then(result => alert("Đã lưu thành công", result))
+  .then(result => location.reload())
+  .catch((err)=>alert("Đã xảy ra lỗi",err))
 
   
+  
+  }
 
 
   </script>

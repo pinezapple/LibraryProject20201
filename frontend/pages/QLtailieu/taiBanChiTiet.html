@@ -31,6 +31,8 @@
   <link rel="stylesheet" href="../../assets/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="../../assets/vendor/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css">
   <link rel="stylesheet" href="../../assets/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css">
+  <link rel="stylesheet" href="../../assets/vendor/animate.css/animate.min.css">
+  <link rel="stylesheet" href="../../assets/vendor/sweetalert2/dist/sweetalert2.min.css">
   <!-- Argon CSS -->
   <link rel="stylesheet" href="../../assets/css/argon.css?v=1.1.0" type="text/css">
 </head>
@@ -96,7 +98,10 @@
                     <a href="../../pages/QLtailieu/nhapTL.html" class="nav-link">Nhập tài liệu</a>
                   </li>
                   <li class="nav-item">
-                    <a href="../../pages/QLtailieu/thongTinTL.html" class="nav-link">Thông tin tài liệu</a>
+                    <a href="../../pages/QLtailieu/thongTinTaiLieu.html" class="nav-link">Thông tin tài liệu</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="../../pages/QLtailieu/thongTinTL.html" class="nav-link">Tài liệu hiện có</a>
                   </li>
                   <li class="nav-item">
                     <a href="../../pages/QLtailieu/thanhLy.html" class="nav-link">Thanh lý tài liệu</a>
@@ -204,12 +209,12 @@
         <div class="header-body">
           <div class="row align-items-center py-4">
             <div class="col-lg-6 col-7">
-              <h6 class="h2 text-white d-inline-block mb-0">Thông tin chi tiết tài liệu</h6>
+              <h6 class="h2 text-white d-inline-block mb-0">Thông tin chi tiết tái bản</h6>
               <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                 <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                   <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-                  <li class="breadcrumb-item"><a href="#">Quản lý tài liệu</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Chi tiết tài liệu</li>
+                  <li class="breadcrumb-item"><a href="thongTinTaiLieu.html">Quản lý tài liệu</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Chi tiết tái bản</li>
                 </ol>
               </nav>
             </div>
@@ -226,7 +231,7 @@
             <div class="card">
               <!-- Card header -->
               <div class="card-header">
-                <h3 class="mb-0">Thông tin chi tiết tài liệu</h3>
+                <h3 class="mb-0">Thông tin chi tiết tái bản</h3>
               </div>
               <!-- Card body -->
               <div class="card-body">
@@ -309,7 +314,7 @@
                 <!-- button -->
                 <div class="form-row" id="formButton">
                   <button class="btn btn-primary" type="button" onclick="saveVersion()" >Lưu</button>
-                  <button type="button" class="btn btn-danger" style="position: absolute; right: 3rem;" onclick="location.reload()">Hủy</button>
+                  <button type="button" class="btn btn-danger" style="position: absolute; right: 1.5rem;" onclick="location.reload()">Hủy</button>
                 </div>
                 </form>
               </div>
@@ -347,6 +352,7 @@
                   <td>23123</td>
                   <td>Nguyên vẹn</td>
                   <td><button type="button" id="edit" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-form-edit">Chỉnh sửa</button>
+                    <button type="button" class="btn btn-danger btn-sm"  data-toggle="sweet-alert" id="delete" >Xóa</button>
                   </td>
                 </tr>
               </tbody>
@@ -474,6 +480,9 @@
   <script src="../../assets/vendor/datatables.net-buttons/js/buttons.flash.min.js"></script>
   <script src="../../assets/vendor/datatables.net-buttons/js/buttons.print.min.js"></script>
   <script src="../../assets/vendor/datatables.net-select/js/dataTables.select.min.js"></script>
+  <script src="../../assets/vendor/sweetalert2/dist/sweetalert2.min.js"></script>
+  <script src="../../assets/vendor/bootstrap-notify/bootstrap-notify.min.js"></script>
+  <script src='//cdn.datatables.net/plug-ins/1.10.22/api/column().title().js'></script>
 
   <!-- Argon JS -->
   <script src="../../assets/js/argon.js?v=1.1.0"></script>
@@ -512,13 +521,14 @@
       // get doc data
       let docId= `${doc.document_id}` 
       let docName = `${doc.doc_name}` 
-      let type = `${doc.category}`
-      let version = `${doc.version}`
-      let publisher = `${doc.publisher}` // chưa có
-      let author = `${doc.author}`
-      let quantity =`${doc.number}` // chưa có
+      let type = `${doc.category_name}`
+      let versionId = `${doc.document_version_id}`
+      let version = `${doc.document_version}`
+      let publisher = `${doc.publisher}` 
+      let author = `${doc.author_name}`
+      let quantity =`${doc.count}`
       let price =`${doc.price}` 
-
+      let barcodes = `${doc.barcode}` 
      
       // add to form
       document.getElementById('docId').value = docId
@@ -529,7 +539,21 @@
       document.getElementById('author').value = author
       document.getElementById('quantity').value = quantity
       document.getElementById('price').value = price
-      
+
+      // get all barcode
+      let data = []
+      let barcode = barcode[0]["barcode_id"]
+      let status = barcode[0]["status"] // return a number
+
+      // replace number value of barcode status
+      let stage = status.toString()
+      let barcodeStatus = arr[stage][status]
+
+      let btn = '<button type="button" id="edit" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-form-edit">Chỉnh sửa</button><button type="button" class="btn btn-danger btn-sm"  data-toggle="sweet-alert" id="delete" >Xóa</button>'
+     
+      data.push (barcode,barcodeStatus,btn)
+      // add to table
+      table.row.add(data).draw()
     })
   })
   .catch(error => {
@@ -540,7 +564,7 @@
 
     
   // add data to edit modal
-  $('#datatable-basic tbody').on( 'click', 'button', function (event) {
+  $('#datatable-basic tbody').on( 'click', '#edit', function (event) {
       // event prevent
       event.preventDefault()
      
@@ -566,7 +590,7 @@
              'Content-Type': 'application/json',
             //  Authorization: "Bearer " + token,
             },
-          body:JSON.stringify({barcode: barcode, status: status}) // cần sửa
+          body:JSON.stringify({barcode: barcode, status: status}) 
     }
      ).then((res) => res.json())
      .then(result => alert("Đã sửa thông tin tài liệu", result))
@@ -634,41 +658,54 @@
 
   }
 
-
-// fetch data for table
-// cần sửa
-  fetch (versionUrl,
-  {
-    method: 'POST',
-    credentials: "omit",
-    headers: {
-       'Content-Type': 'application/json',
-      //  Authorization: "Bearer " + token,
-      },
-  })
-  .then(response => response.json())
-  .then(docList =>{
-    docList.forEach(doc =>{
-
-      let data =[]
-      // get doc data
-      let barcode= `${doc.barcode}` 
-      let status = `${doc.status}` // returns a number
-
-      // replace number value of barcode status
-      let stage = status.toString()
-      let barcodeStatus = arr[stage][status]
-
-      let btn = '<button type="button" id="edit" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-form-edit">Chỉnh sửa</button>'
+  // delete barcode
+  
+  $('#datatable-basic tbody').on( 'click', '#delete', function (event) {
+      // event prevent
+      event.preventDefault()
      
-      data.push (barcode,barcodeStatus,btn)
-      // add to table
-      table.row.add(data).draw()
+      // get data from table
+      let data = table.row( $(this).parents('tr') ).data();
+      let barcode =  parseInt(data[1],10)
+      let url = 'http://localhost:3000/documents/'
+
+      // sweet alert
+      swal({
+      title: 'Bạn có chắc chắn muốn xóa tài liệu này?',
+      text: "Bạn sẽ không thể làm lại",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Xóa tài liệu'
+    }).then((result) => {
+      if (result.value) {
+        // delete in db
+        fetch( url + barcode,
+        {
+          method: 'DELETE',
+          credentials: "omit",
+          headers: {
+             'Content-Type': 'application/json',
+            //  Authorization: "Bearer " + token,
+            },
+            body:JSON.stringify({barcode_id:barcode})
+            })
+        // remove data from table
+        .then(result =>  table.row('.selected').remove().draw( false ))
+        // show alert
+        .then(result =>  swal({
+          title:'Đã xóa',
+          text:'Tài liệu đã được xóa',
+          type:'success'
+        }))
+        .catch(error => console.log(error))
+      }
     })
-  })
-  .catch(error => {
-  console.error('Error:', error);
+
   });
+
+
 
   
   

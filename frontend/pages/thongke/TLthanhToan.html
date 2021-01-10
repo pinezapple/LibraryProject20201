@@ -96,8 +96,11 @@
                      <a href="../../pages/QLtailieu/nhapTL.html" class="nav-link">Nhập tài liệu</a>
                    </li>
                    <li class="nav-item">
-                     <a href="../../pages/QLtailieu/thongTinTL.html" class="nav-link">Thông tin tài liệu</a>
-                   </li>
+                    <a href="../../pages/QLtailieu/thongTinTaiLieu.html" class="nav-link">Thông tin tài liệu</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="../../pages/QLtailieu/thongTinTL.html" class="nav-link">Tài liệu hiện có</a>
+                  </li>
                    <li class="nav-item">
                     <a href="../../pages/QLtailieu/thanhLy.html" class="nav-link">Thanh lý tài liệu</a>
                   </li>
@@ -445,8 +448,8 @@
      
      
        let idSale= `${doc.sale_bill_id}`
-       let soldBy = `${doc.librarian_id}`
-       let date = `${doc.date}` // cần sửa
+       let soldBy = `${doc.librarian_name}`
+       let date = `${doc.created_at}` 
        let total = `${doc.total_money}`
        let btn = '<button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#modal-form">Chi tiết</button>'
  
@@ -499,17 +502,17 @@ $('#datatable-buttons tbody').on( 'click', 'button', function () {
   .then(obj =>{
       let saleId = obj.sale_bill_id
       let librarianId = obj.librarian_id
-      let librarian = obj.librarian // cần sửa 
-      let date = obj.date // cần sửa
-      let totalPrice = obj.total
+      let librarian = obj.librarian_name  
+      let date = obj.created_at
+      let totalPrice = obj.total_money
       let docs = obj.barcodes
       
 
         // add value to input field
       $("#saleId").val(saleId)
       $("#librarianId").val(librarianId)
-      $("#date").val(date) // cần sửa
-      $("#librarian").val(librarian) // cần sửa
+      $("#date").val(date) 
+      $("#librarian").val(librarian) 
       $("#totalPrice").val(totalPrice)
 
         for (let i = 0; i < docs.length; i++){
