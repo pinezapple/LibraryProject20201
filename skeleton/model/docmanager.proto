@@ -22,6 +22,7 @@ service Docmanager {
     rpc SelectAllAvailableBarcode (SelectAllAvailableBarcodeReq) returns (SelectAllAvailableBarcodeResp);
     rpc SelectAllSellingBarcode (SelectAllSellingBarcodeReq) returns (SelectAllSellingBarcodeResp);
     rpc SelectAllDamageBarcode (SelectAllDamageBarcodeReq) returns (SelectAllDamageBarcodeResp);
+    rpc SelectAllBarcodeByDocVerID (SelectAllBarcodeByDocVerIDReq) returns (SelectAllBarcodeByDocVerIDResp);
     rpc SelectBarcodeByID (SelectBarcodeByIDReq) returns (SelectBarcodeByIDResp);
     rpc SaveBarcode (SaveBarcodeReq) returns (SaveBarcodeResp);
     rpc UpdateBarcode (UpdateBarcodeReq) returns (UpdateBarcodeResp);
@@ -143,6 +144,16 @@ message SelectAllDamageBarcodeResp {
     int32 Code = 1;
     string Message = 2;
     repeated Barcode Barcodes = 3 [(gogoproto.nullable) = true];
+}
+
+message SelectAllBarcodeByDocVerIDReq {
+    uint64 DocVerID = 1;
+}
+
+message SelectAllBarcodeByDocVerIDResp {
+    int32 Code = 1;
+    string Message = 2;
+    repeated Barcode Barcode = 3 [(gogoproto.nullable) = true]; 
 }
 
 message SelectBarcodeByIDReq {
