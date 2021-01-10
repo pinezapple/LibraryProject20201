@@ -70,11 +70,11 @@ func selectAllBarcode(c echo.Context, request interface{}) (statusCode int, data
 			}
 
 			tmp := &portalModel.BarcodeFrontEndResp{
-				BarcodeID: resp.Barcodes[j].ID,
-				Status:    resp.Barcodes[j].Status,
-				DocName:   doc.DocName,
-				DocID:     doc.DocID,
-				// Version:     docver.Version,
+				BarcodeID:   resp.Barcodes[j].ID,
+				Status:      resp.Barcodes[j].Status,
+				DocName:     doc.DocName,
+				DocID:       doc.DocID,
+				Version:     docver.DocumentVersion,
 				Author:      aut.AuthorName,
 				Publisher:   docver.Publisher,
 				Fee:         docver.Fee,
@@ -146,11 +146,11 @@ func selectAllBarcodeSelling(c echo.Context, request interface{}) (statusCode in
 			}
 
 			tmp := &portalModel.BarcodeFrontEndResp{
-				BarcodeID: resp.Barcodes[j].ID,
-				Status:    resp.Barcodes[j].Status,
-				DocName:   doc.DocName,
-				DocID:     doc.DocID,
-				// Version:     docver.Version,
+				BarcodeID:   resp.Barcodes[j].ID,
+				Status:      resp.Barcodes[j].Status,
+				DocName:     doc.DocName,
+				DocID:       doc.DocID,
+				Version:     docver.DocumentVersion,
 				Author:      aut.AuthorName,
 				Publisher:   docver.Publisher,
 				Fee:         docver.Fee,
@@ -222,11 +222,11 @@ func selectAllBarcodeAvail(c echo.Context, request interface{}) (statusCode int,
 			}
 
 			tmp := &portalModel.BarcodeFrontEndResp{
-				BarcodeID: resp.Barcodes[j].ID,
-				Status:    resp.Barcodes[j].Status,
-				DocName:   doc.DocName,
-				DocID:     doc.DocID,
-				// Version:     docver.Version,
+				BarcodeID:   resp.Barcodes[j].ID,
+				Status:      resp.Barcodes[j].Status,
+				DocName:     doc.DocName,
+				DocID:       doc.DocID,
+				Version:     docver.DocumentVersion,
 				Author:      aut.AuthorName,
 				Publisher:   docver.Publisher,
 				Fee:         docver.Fee,
@@ -298,11 +298,11 @@ func selectAllBarcodeDamaged(c echo.Context, request interface{}) (statusCode in
 			}
 
 			tmp := &portalModel.BarcodeFrontEndResp{
-				BarcodeID: resp.Barcodes[j].ID,
-				Status:    resp.Barcodes[j].Status,
-				DocName:   doc.DocName,
-				DocID:     doc.DocID,
-				// Version:     docver.Version,
+				BarcodeID:   resp.Barcodes[j].ID,
+				Status:      resp.Barcodes[j].Status,
+				DocName:     doc.DocName,
+				DocID:       doc.DocID,
+				Version:     docver.DocumentVersion,
 				Author:      aut.AuthorName,
 				Publisher:   docver.Publisher,
 				Fee:         docver.Fee,
