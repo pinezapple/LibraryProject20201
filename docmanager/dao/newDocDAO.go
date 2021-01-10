@@ -20,6 +20,7 @@ const (
 	sqlInsertNewBarcode          = "INSERT INTO barcodes(barcode_id, document_version_id, status) VALUES (?,?,?,?)"
 	sqlUpdateBarcodeSaleBillID   = "UPDATE barcodes SET sale_bill_id = ? WHERE barcode_id = ?"
 	sqlUpdateBarcodeStatus       = "UPDATE barcodes SET status = ? WHERE barcode_id = ?"
+	sqlDeleteBarcodeByID         = "DELETE FROM barcodes WHERE barcode_id = ?"
 
 	sqlSelectAllSaleBill  = "SELECT * FROM sale_bill"
 	sqlSelectSaleBillByID = "SELECT * FROM sale_bill WHERE sale_bill_id = ?"
@@ -44,6 +45,7 @@ type IDocDAO interface {
 	InsertBarcode(ctx context.Context, db *mssqlx.DBs, barcode *docmanagerModel.Barcode) (err error)
 	UpdateBarcodeSaleBill(ctx context.Context, db *mssqlx.DBs, barcodeID, saleBillID uint64) (err error)
 	UpdateBarcodeStatus(ctx context.Context, db *mssqlx.DBs, barcodeID uint64, status int) (err error)
+	DeleteBarcodeByID(ctx context.Context, db *mssqlx.DBs, barcodeID uint64) (err error)
 
 	SelectAllSaleBill(ctx context.Context, db *mssqlx.DBs) (result []*docmanagerModel.SaleBill, err error)
 	SelectSaleBillByID(ctx context.Context, db *mssqlx.DBs, saleBillID uint64) (result *docmanagerModel.SaleBill, err error)
@@ -119,6 +121,19 @@ func InsertBarcode(ctx context.Context, db *mssqlx.DBs, barcode *docmanagerModel
 
 	_, err = db.ExecContext(ctx, sqlInsertNewBarcode, barcode.ID, barcode.DocVerID, barcode.Status)
 	return
+}
+
+func DeleteBarcodeByID(ctx context.Context, db *mssqlx.DBs, barcodeID uint64) (err error) {
+	if db == nil {
+		return core.ErrDBObjNull
+	}
+
+	_, err = db.ExecContext(ctx, sqlDeleteBarcodeByID, barcodeID)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 // -----------------------------------------------------------------------------------------------------------------------------

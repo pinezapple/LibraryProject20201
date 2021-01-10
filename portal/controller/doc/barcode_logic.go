@@ -19,38 +19,8 @@ var (
 	ErrUpdateBarcodeLengthNotMatch = errors.New("len barcodes != len barCodestatus")
 )
 
-func updateBarcodeStatus(c echo.Context, request interface{}) (statusCode int, data interface{}, lg *model.LogFormat, logResponse bool, err error) {
-	var (
-		ctx     = c.Request().Context()
-		httpReq = request.(*portalModel.UpdateBarcodeStatus)
-	)
-	lg = &model.LogFormat{
-		Source: c.Request().RemoteAddr,
-		Action: "update Barcode Status",
-	}
-
-	//rpc
-	rpcUpdateBarcodeStatusReq := &docmanagerModel.UpdateBarcodeReq{
-		Barcode: &docmanagerModel.Barcode{
-			ID:     httpReq.BarcodeID,
-			Status: httpReq.Status,
-		},
-	}
-
-	ser, er := getDocMangerServiceByUint64(httpReq.BarcodeID)
-	if er != nil {
-		statusCode, err = http.StatusInternalServerError, er
-		return
-	}
-
-	rpcUpdateBarcodeStatusResp, er := ser.Docmanager.UpdateBarcode(ctx, rpcUpdateBarcodeStatusReq)
-	if er != nil || rpcUpdateBarcodeStatusResp.Code != 0 {
-		statusCode, err = http.StatusInternalServerError, er
-		return
-	}
-
-	return http.StatusOK, nil, lg, false, nil
-}
+// -------------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------- UTILS ----------------------------------------------------------
 
 func updateBarcodeStatusByBatch(ctx context.Context, barcodeID []uint64, barcodeStatus []uint64) (err error) {
 	if len(barcodeID) != len(barcodeStatus) {
@@ -86,4 +56,70 @@ func updateBarcodeStatusByBatch(ctx context.Context, barcodeID []uint64, barcode
 	}
 
 	return nil
+}
+
+// ------------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------- HTTP ----------------------------------------------------------
+
+func updateBarcodeStatus(c echo.Context, request interface{}) (statusCode int, data interface{}, lg *model.LogFormat, logResponse bool, err error) {
+	var (
+		ctx     = c.Request().Context()
+		httpReq = request.(*portalModel.UpdateBarcodeStatus)
+	)
+	lg = &model.LogFormat{
+		Source: c.Request().RemoteAddr,
+		Action: "update Barcode Status",
+	}
+
+	//rpc
+	rpcUpdateBarcodeStatusReq := &docmanagerModel.UpdateBarcodeReq{
+		Barcode: &docmanagerModel.Barcode{
+			ID:     httpReq.BarcodeID,
+			Status: httpReq.Status,
+		},
+	}
+
+	ser, er := getDocMangerServiceByUint64(httpReq.BarcodeID)
+	if er != nil {
+		statusCode, err = http.StatusInternalServerError, er
+		return
+	}
+
+	rpcUpdateBarcodeStatusResp, er := ser.Docmanager.UpdateBarcode(ctx, rpcUpdateBarcodeStatusReq)
+	if er != nil || rpcUpdateBarcodeStatusResp.Code != 0 {
+		statusCode, err = http.StatusInternalServerError, er
+		return
+	}
+
+	return http.StatusOK, nil, lg, false, nil
+}
+
+func deleteBarcodeByID(c echo.Context, request interface{}) (statusCode int, data interface{}, lg *model.LogFormat, logResponse bool, err error) {
+	var (
+		ctx     = c.Request().Context()
+		httpReq = request.(*portalModel.DeleteBarCodeByIDReq)
+	)
+	lg = &model.LogFormat{
+		Source: c.Request().RemoteAddr,
+		Action: "delete Barcode By ID",
+	}
+
+	// rpc
+	rpcDeleteBarcodeByIDReq := &docmanagerModel.DeleteBarcodeReq{
+		BarcodeID: httpReq.BarcodeID,
+	}
+
+	ser, er := getDocMangerServiceByUint64(httpReq.BarcodeID)
+	if er != nil {
+		statusCode, err = http.StatusInternalServerError, er
+		return
+	}
+
+	rpcDeleteBarcodeByIDResp, er := ser.Docmanager.DeleteBarcode(ctx, rpcDeleteBarcodeByIDReq)
+	if er != nil || rpcDeleteBarcodeByIDResp.Code != 0 {
+		statusCode, err = http.StatusInternalServerError, er
+		return
+	}
+
+	return http.StatusOK, nil, lg, false, nil
 }

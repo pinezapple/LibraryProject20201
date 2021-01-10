@@ -25,7 +25,7 @@ service Docmanager {
     rpc SelectBarcodeByID (SelectBarcodeByIDReq) returns (SelectBarcodeByIDResp);
     rpc SaveBarcode (SaveBarcodeReq) returns (SaveBarcodeResp);
     rpc UpdateBarcode (UpdateBarcodeReq) returns (UpdateBarcodeResp);
-    // rpc DeleteBarcode (DeleteBarcodeReq) returns (DeleteBarcodeResp);
+    rpc DeleteBarcode (DeleteBarcodeReq) returns (DeleteBarcodeResp);
 
     rpc SelectAllBorrowForm (SelectAllBorrowFormReq) returns (SelectAllBorrowFormResp);
     rpc SelectAllUnReturnBorrowForm (SelectAllUnReturnBorrowFormReq) returns (SelectAllUnReturnBorrowFormResp);

@@ -122,6 +122,19 @@ func (d *docManagerSrv) UpdateBarcode(ctx context.Context, req *docmanagerModel.
 	return &docmanagerModel.UpdateBarcodeResp{Code: 0}, nil
 }
 
+func (d *docManagerSrv) DeleteBarcode(ctx context.Context, req *docmanagerModel.DeleteBarcodeReq) (resp *docmanagerModel.DeleteBarcodeResp, err error) {
+	logger.LogInfo(d.lg, "RPC Req: Delete Barcode")
+
+	if err = dao.DeleteBarcodeByID(ctx, core.GetDB(), req.BarcodeID); err != nil {
+		logger.LogErr(d.lg, err)
+		return &docmanagerModel.DeleteBarcodeResp{Code: 1, Message: err.Error()}, err
+	}
+
+	logger.LogInfo(d.lg, "RPC Resp: Delete Barcode OK")
+
+	return &docmanagerModel.DeleteBarcodeResp{Code: 0}, nil
+}
+
 // -------------------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------- Borrow form ----------------------------------------------------------
 
