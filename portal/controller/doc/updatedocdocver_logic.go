@@ -74,7 +74,7 @@ func updateDocument(c echo.Context, request interface{}) (statusCode int, data i
 // ------------------------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------- DOCUMENT VERSION ----------------------------------------------------------
 
-func UpdateDocumentVersion(c echo.Context, request interface{}) (statusCode int, data interface{}, lg *model.LogFormat, logResponse bool, err error) {
+func updateDocumentVersion(c echo.Context, request interface{}) (statusCode int, data interface{}, lg *model.LogFormat, logResponse bool, err error) {
 	var (
 		ctx = c.Request().Context()
 		req = request.(*portalModel.UpdateDocVerReq)
@@ -101,7 +101,7 @@ func UpdateDocumentVersion(c echo.Context, request interface{}) (statusCode int,
 	return http.StatusOK, nil, lg, false, nil
 }
 
-func AddBarcodeByDocVerID(c echo.Context, request interface{}) (statusCode int, data interface{}, lg *model.LogFormat, logResponse bool, err error) {
+func addBarcodeByDocVerID(c echo.Context, request interface{}) (statusCode int, data interface{}, lg *model.LogFormat, logResponse bool, err error) {
 	var (
 		ctx  = c.Request().Context()
 		req  = request.(*portalModel.AddBarcodeByDocverIDReq)
@@ -151,4 +151,48 @@ func AddBarcodeByDocVerID(c echo.Context, request interface{}) (statusCode int, 
 	}
 
 	return http.StatusOK, resp, lg, false, nil
+}
+
+func saveDocVer(c echo.Context, request interface{}) (statusCode int, data interface{}, lg *model.LogFormat, logResponse bool, err error) {
+	var (
+		ctx     = c.Request().Context()
+		httpReq = request.(*portalModel.CreateDocVerReq)
+	)
+
+	lg = &model.LogFormat{
+		Source: c.Request().RemoteAddr,
+		Action: "Add Barcode By DocVer ID",
+	}
+
+	// check author
+	authUUID, er := uuid.NewUUID()
+	if er != nil {
+		statusCode, err = http.StatusInternalServerError, er
+		return
+	}
+	authID, er := cache.FirstOrCreateAuthor(ctx, core.GetDB(), httpReq.Author, uint64(core.GetHash(authUUID.String())))
+	if er != nil {
+		statusCode, err = http.StatusInternalServerError, er
+		return
+	}
+	// save docver
+	docVerUUID, er := uuid.NewUUID()
+	if er != nil {
+		statusCode, err = http.StatusInternalServerError, er
+		return
+	}
+	newDocVer := &portalModel.DocumentVersionDAOobj{
+		DocVerID:       uint64(core.GetHash(docVerUUID.String())),
+		DocID:          httpReq.DocID,
+		Publisher:      httpReq.Publisher,
+		AuthorID:       authID,
+		Price:          httpReq.Price,
+		DocDescription: httpReq.DocDescription,
+	}
+	if er = cache.SaveDocumentVersion(ctx, core.GetDB(), newDocVer); er != nil {
+		statusCode, err = http.StatusInternalServerError, er
+		return
+	}
+
+	return http.StatusOK, nil, lg, false, nil
 }

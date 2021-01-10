@@ -131,6 +131,7 @@ type UpdateBorrowFormReq struct {
 		BarcodeStatus uint64 `json:"barcode_status"`
 		Fee           uint64 `json:"fee"`
 	} `json:"barcode_update"`
+	Fine uint64 `json:"fine"`
 }
 
 // ----------------------------------------------------------------------------------------------------------------------------
@@ -258,6 +259,14 @@ type AddBarcodeByDocverIDReq struct {
 
 type AddBarcodeByDocverIDResp struct {
 	Barcodes []uint64 `json:"barcodes"`
+}
+
+type CreateDocVerReq struct {
+	DocID          uint64 `json:"document_id"`
+	Price          uint64 `json:"price"`
+	DocDescription string `json:"document_description"`
+	Publisher      string `json:"publisher"`
+	Author         string `json:"author"`
 }
 
 // ------------------------------------------------------------------------------------------------------------------------------------
