@@ -397,7 +397,7 @@ func selectAllPayment(c echo.Context, request interface{}) (statusCode int, data
 			return
 		}
 		for j := 0; j < len(resp.Payments); j++ {
-			var money uint64
+			var money = resp.Payments[i].Fine
 			for k := 0; k < len(resp.Payments[j].Money); k++ {
 				money += resp.Payments[j].Money[k]
 			}
@@ -775,7 +775,7 @@ func selectPaymentByID(c echo.Context, request interface{}) (statusCode int, dat
 	}
 
 	var barcodes []*portalModel.RespBarcodePaymentOverview
-	var totalMoney uint64
+	var totalMoney = resp.Payment.Fine
 
 	for i := 0; i < len(resp.Payment.BarcodeID); i++ {
 		docver, er := cache.SelectDocVerIDFromCacheByBarcode(ctx, db, resp.Payment.BarcodeID[i])
@@ -794,6 +794,12 @@ func selectPaymentByID(c echo.Context, request interface{}) (statusCode int, dat
 			statusCode, err = http.StatusInternalServerError, er
 			return
 		}
+		aut, er := cache.SelectAuthorByID(ctx, db, docversion.AuthorID)
+		if er != nil {
+			statusCode, err = http.StatusInternalServerError, er
+			return
+		}
+
 		tmp := &portalModel.RespBarcodePaymentOverview{
 			BarcodeID: resp.Payment.BarcodeID[i],
 			Status:    resp.Payment.BarcodeStatus[i],
@@ -1198,6 +1204,7 @@ func selectDocByID(c echo.Context, request interface{}) (statusCode int, data in
 func selectDocVerByID(c echo.Context, request interface{}) (statusCode int, data interface{}, lg *model.LogFormat, logResponse bool, err error) {
 	ctx := c.Request().Context()
 	db := core.GetDB()
+	shardnum := core.ShardNumber
 	req := request.(*portalModel.SelectDocVerByIDReq)
 	// Log login info
 	lg = &model.LogFormat{Source: c.Request().RemoteAddr, Action: "Select all from doc", Data: ""}
@@ -1231,6 +1238,28 @@ func selectDocVerByID(c echo.Context, request interface{}) (statusCode int, data
 		statusCode, err = http.StatusInternalServerError, er
 		return
 	}
+	shardService := microservice.GetDocmanagerShardServices()
+	if shardService == nil {
+		fmt.Println("nil shardService")
+		statusCode, err = http.StatusInternalServerError, fmt.Errorf("nil shardService")
+		return
+	}
+
+	var barcodes []*docmanagerModel.Barcode
+	for i := 0; i < shardnum; i++ {
+		ser, ok := shardService[uint64(i)]
+		if !ok {
+			fmt.Println("nil shardID")
+			statusCode, err = http.StatusInternalServerError, fmt.Errorf("no shard id")
+			return
+		}
+		resp, er := ser.Docmanager.SelectAllBarcodeByDocVerID(ctx, &docmanagerModel.SelectAllBarcodeByDocVerIDReq{DocVerID: req.DocVerID})
+		if er != nil || resp.Code != 0 {
+			statusCode, err = http.StatusInternalServerError, fmt.Errorf("grpc Error")
+			return
+		}
+		barcodes = append(barcodes, resp.Barcode...)
+	}
 
 	result := &portalModel.SelectDocVerByIDResp{
 		DocID:        doc.DocID,
@@ -1242,7 +1271,7 @@ func selectDocVerByID(c echo.Context, request interface{}) (statusCode int, data
 		AuthorName:   aut.AuthorName,
 		Count:        barcodeCount,
 		Price:        docver.Price,
-		Barcode:      nil, // fix this later
+		Barcode:      barcodes,
 		CreatedAt:    doc.CreatedAt,
 	}
 

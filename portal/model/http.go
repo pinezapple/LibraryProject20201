@@ -58,6 +58,15 @@ type SelectAllDamageBarcodesResp struct {
 	Barcodes []*RespBarcodeOverview `json:"barcodes"`
 }
 
+type UpdateBarcodeStatus struct {
+	BarcodeID uint64 `json:"barcode_id"`
+	Status    uint64 `json:"status"`
+}
+
+type DeleteBarCodeByIDReq struct {
+	BarcodeID uint64 `json:"barcode_id"`
+}
+
 // --------------------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------- BORROW FORMS ----------------------------------------------------------
 

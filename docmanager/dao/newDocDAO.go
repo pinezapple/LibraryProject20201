@@ -17,9 +17,11 @@ const (
 	sqlSelectAllDamagedBarcode   = "SELECT * FROM barcodes WHERE status = 3"
 	sqlSelectAllSellingBarcode   = "SELECT * FROM barcodes WHERE status = 4"
 	sqlSelectBarcodeByID         = "SELECT * FROM barcodes WHERE barcode_id = ?"
+	sqlSelectBarcodeByDocVerID   = "SELECT * FROM barcodes WHERE documents_version_id= ?"
 	sqlInsertNewBarcode          = "INSERT INTO barcodes(barcode_id, document_version_id, status) VALUES (?,?,?,?)"
 	sqlUpdateBarcodeSaleBillID   = "UPDATE barcodes SET sale_bill_id = ? WHERE barcode_id = ?"
 	sqlUpdateBarcodeStatus       = "UPDATE barcodes SET status = ? WHERE barcode_id = ?"
+	sqlDeleteBarcodeByID         = "DELETE FROM barcodes WHERE barcode_id = ?"
 
 	sqlSelectAllSaleBill  = "SELECT * FROM sale_bill"
 	sqlSelectSaleBillByID = "SELECT * FROM sale_bill WHERE sale_bill_id = ?"
@@ -33,7 +35,7 @@ const (
 
 	sqlSelectAllPayment            = "SELECT * FROM payments"
 	sqlSelectPaymentByID           = "SELECT * FROM payments WHERE payments_id = ?"
-	sqlInsertPayment               = "INSERT INTO payments(payments_id, reader_id, borrow_form_id, barcode_id, barcode_status, money) VALUES (?,?,?,?,?)"
+	sqlInsertPayment               = "INSERT INTO payments(payments_id, borrow_form_id, librarian_id, reader_id, fine, barcode_id, barcode_status, money) VALUES (?,?,?,?,?)"
 	sqlSelectPaymentByBorrowFormID = "SELECT * FROM payments WHERE borrow_form_id = ?"
 )
 
@@ -44,6 +46,7 @@ type IDocDAO interface {
 	InsertBarcode(ctx context.Context, db *mssqlx.DBs, barcode *docmanagerModel.Barcode) (err error)
 	UpdateBarcodeSaleBill(ctx context.Context, db *mssqlx.DBs, barcodeID, saleBillID uint64) (err error)
 	UpdateBarcodeStatus(ctx context.Context, db *mssqlx.DBs, barcodeID uint64, status int) (err error)
+	DeleteBarcodeByID(ctx context.Context, db *mssqlx.DBs, barcodeID uint64) (err error)
 
 	SelectAllSaleBill(ctx context.Context, db *mssqlx.DBs) (result []*docmanagerModel.SaleBill, err error)
 	SelectSaleBillByID(ctx context.Context, db *mssqlx.DBs, saleBillID uint64) (result *docmanagerModel.SaleBill, err error)
@@ -72,6 +75,15 @@ func SelectAllBarcode(ctx context.Context, db *mssqlx.DBs) (result []*docmanager
 	}
 
 	err = db.SelectContext(ctx, &result, sqlSelectAllBarcode)
+	return
+}
+
+func SelectBarcodeByDocVerID(ctx context.Context, db *mssqlx.DBs, docver uint64) (result []*docmanagerModel.Barcode, err error) {
+	if db == nil {
+		return nil, core.ErrDBObjNull
+	}
+
+	err = db.SelectContext(ctx, &result, sqlSelectBarcodeByDocVerID, docver)
 	return
 }
 
@@ -119,6 +131,19 @@ func InsertBarcode(ctx context.Context, db *mssqlx.DBs, barcode *docmanagerModel
 
 	_, err = db.ExecContext(ctx, sqlInsertNewBarcode, barcode.ID, barcode.DocVerID, barcode.Status)
 	return
+}
+
+func DeleteBarcodeByID(ctx context.Context, db *mssqlx.DBs, barcodeID uint64) (err error) {
+	if db == nil {
+		return core.ErrDBObjNull
+	}
+
+	_, err = db.ExecContext(ctx, sqlDeleteBarcodeByID, barcodeID)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 // -----------------------------------------------------------------------------------------------------------------------------
@@ -383,6 +408,7 @@ func SelectAllPayment(ctx context.Context, db *mssqlx.DBs) (result []*docmanager
 		tmp := &docmanagerModel.Payment{
 			ID:            tempResp[i].ID,
 			BorrowFormID:  tempResp[i].BorrowFormID,
+			Fine:          tempResp[i].Fine,
 			BarcodeID:     barcode,
 			BarcodeStatus: barcodestatus,
 			Money:         price,
@@ -423,6 +449,7 @@ func SelectPaymentByID(ctx context.Context, db *mssqlx.DBs, paymentsID uint64) (
 	result = &docmanagerModel.Payment{
 		ID:            tempResp.ID,
 		BorrowFormID:  tempResp.BorrowFormID,
+		Fine:          tempResp.Fine,
 		BarcodeID:     barcode,
 		BarcodeStatus: barcodestatus,
 		Money:         price,
@@ -490,7 +517,7 @@ func InsertPayment(ctx context.Context, db *mssqlx.DBs, payment *docmanagerModel
 		return
 	}
 
-	_, err = db.Exec(sqlInsertPayment, payment.ID, payment.BorrowFormID, barcode, barcodestatus, money)
+	_, err = db.Exec(sqlInsertPayment, payment.ID, payment.BorrowFormID, payment.Fine, barcode, barcodestatus, money)
 
 	return
 }
