@@ -76,11 +76,12 @@ message Barcode {
 message Payment {
     uint64 ID = 1 [(gogoproto.jsontag) = "payment_id", (gogoproto.moretags) = "db:\"payment_id\""];
     uint64 BorrowFormID = 2 [(gogoproto.jsontag) = "borrow_form_id", (gogoproto.moretags) = "db:\"borrow_form_id\""];
-    repeated uint64 BarcodeID = 3 [(gogoproto.jsontag) = "barcode_id", (gogoproto.moretags) = "db:\"barcode_id\""];
-    repeated uint64 BarcodeStatus = 4 [(gogoproto.jsontag) = "barcode_status", (gogoproto.moretags) = "db:\"barcode_status\""];
-    repeated uint64 Money = 5 [(gogoproto.jsontag) = "money", (gogoproto.moretags) = "db:\"money\""];
-    model.Time Created_at = 6 [(gogoproto.jsontag) = "created_at", (gogoproto.moretags) = "db:\"created_at\""];
-	model.Time Updated_at = 7 [(gogoproto.jsontag) = "updated_at", (gogoproto.moretags) = "db:\"updated_at\""];
+    uint64 Fine = 3 [(gogoproto.jsontag) = "fine", (gogoproto.moretags) = "db:\"fine\""];
+    repeated uint64 BarcodeID = 4 [(gogoproto.jsontag) = "barcode_id", (gogoproto.moretags) = "db:\"barcode_id\""];
+    repeated uint64 BarcodeStatus = 5 [(gogoproto.jsontag) = "barcode_status", (gogoproto.moretags) = "db:\"barcode_status\""];
+    repeated uint64 Money = 6 [(gogoproto.jsontag) = "money", (gogoproto.moretags) = "db:\"money\""];
+    model.Time Created_at = 7 [(gogoproto.jsontag) = "created_at", (gogoproto.moretags) = "db:\"created_at\""];
+	model.Time Updated_at = 8 [(gogoproto.jsontag) = "updated_at", (gogoproto.moretags) = "db:\"updated_at\""];
 }
 
 message BorrowForm {
