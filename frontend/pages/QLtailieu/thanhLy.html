@@ -403,7 +403,7 @@
        // get data from table
        let data = table.row( $(this).parents('tr') ).data();
        
-       count++;
+       
       
        // append to form
        let formRow = document.createElement("div")
@@ -427,14 +427,14 @@
  
        // add data 
       //  formRow.querySelector("#docId").value = data[0]
-       formRow.querySelector("#barcode").value = data[1]
-       formRow.querySelector("#price").value = data[5]
+       formRow.querySelector("#barcode").value = data[0]
+       formRow.querySelector("#price").value = data[6]
  
      });
    
    // remove from borrow form
    $(document).on('click', '#delete', function(e) {
-     count--;
+     
     e.preventDefault();
     $(this).closest('#newRow').remove();
     return false;

@@ -504,11 +504,17 @@
       let status = `${form.status}` //return a number
       let fee = `${form.fine}` 
       let btn ='<button type="button" id="add" class="btn btn-secondary btn-sm"  data-toggle="modal" data-target="#modal-form">Chi tiết</button>'
-      
+      let borrowStatus;
       // replace number value of borrow form status
-      let stage = status.toString()
-      let borrowStatus = arr[stage][status]
-
+      // let stage = status.toString()
+      // let borrowStatus = arr[stage][status]
+      if(status ==0){
+        borrowStatus = "Đã trả";
+     }else if(status == 1){
+      borrowStatus = "Đang mượn";
+     }else if (status ==2 ){
+      borrowStatus ="Quá hạn";
+     } 
       // push to array
       data.push (borrowId,readerId,reader,librarian,borrowStatus,fee,btn)
 
