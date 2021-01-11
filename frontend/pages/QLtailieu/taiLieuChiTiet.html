@@ -523,6 +523,7 @@
   
   // save new document version 
   function saveNewVersion(){
+    let docId = parseInt(document.getElementById('docId').value,10)
     let version = document.querySelector('#versionAdd').value
     let publisher = document.getElementById('publisherAdd').value
     let author = document.getElementById('authorAdd').value
@@ -539,7 +540,7 @@
        'Content-Type': 'application/json',
       //  Authorization: "Bearer " + token,
       },
-      body:JSON.stringify({document_version: version, publisher: publisher, author:author, price: price, number: quantity})
+      body:JSON.stringify({document_id: docId ,document_version: version, publisher: publisher, author:author, price: price, number: quantity})
      
   }
   ).then((res) => res.json())

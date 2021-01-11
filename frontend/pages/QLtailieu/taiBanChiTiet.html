@@ -610,7 +610,7 @@
              'Content-Type': 'application/json',
             //  Authorization: "Bearer " + token,
             },
-          body:JSON.stringify({barcode: barcode, status: status}) 
+          body:JSON.stringify({barcode_id: barcode, status: status}) 
     }
      ).then((res) => res.json())
      .then(result => alert("Đã sửa thông tin tài liệu", result))
