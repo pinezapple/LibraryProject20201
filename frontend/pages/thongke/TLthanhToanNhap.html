@@ -327,7 +327,7 @@
   $(document).ready(function() {
   let arr = [{'0': "Nguyên vẹn"},{'1': "Hư hỏng"},{'2':'Làm mất'},{'3':'Đang mượn'},{'4':'Đang thanh lý'},{'5':'Đã thanh lý'}]
   var table = $('#datatable-buttons').DataTable();
-  let url ='http://localhost:3000/documents'
+  let url ='http://localhost:11001/barcode/avail'
 
   fetch (url,  {
   method: 'POST',
