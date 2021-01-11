@@ -540,8 +540,8 @@ $('#datatable-basic tbody').on( 'click', 'button', function () {
   .then(obj =>{
       let borrowFormId = obj.borrow_form_id
       let readerId = obj.reader_id
-      let startDate = obj.start_time
-      let endDate = obj.end_time 
+      let startDate = new Date(obj.start_time.seconds*1000) 
+      let endDate = new Date(obj.end_time.seconds*1000)  
       let borrowStatus = obj.status
       let fine = obj.fine
       let docs = obj.barcodes

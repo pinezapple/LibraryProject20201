@@ -336,8 +336,7 @@
       let idUser= `${doc.reader_id}`
       let nameUser = `${doc.reader_name}` 
       let status = `${doc.status}`
-      let seconds = `${doc.end_time.seconds}`
-      let date = new Date(seconds *1000)
+      let docDate = `${new Date(doc.end_time.seconds*1000)}`
       
       let fee = `${doc.fine}` 
 

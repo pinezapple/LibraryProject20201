@@ -537,7 +537,7 @@ $('#datatable-basic tbody').on( 'click', 'button', function () {
   .then(response => response.json())
   .then(obj =>{
       let paymentId = obj.payment_id
-      let paymentDate = obj.created_at // cần sửa
+      let paymentDate = new Date(obj.created_at.seconds*1000)
       let borrowFormId = obj.borrow_form_id
       let readerId = obj.reader_id
       let startDate = obj.start_time
