@@ -35,6 +35,7 @@ func (d *docManagerSrv) SelectAllBarcodeByDocVerID(ctx context.Context, req *doc
 	logger.LogInfo(d.lg, "RPC Req: Select all barcode")
 
 	barcodes, err := dao.SelectBarcodeByDocVerID(ctx, core.GetDB(), req.DocVerID)
+	fmt.Println(barcodes)
 	if err != nil {
 		logger.LogErr(d.lg, err)
 		return &docmanagerModel.SelectAllBarcodeByDocVerIDResp{Code: 1, Message: err.Error()}, err

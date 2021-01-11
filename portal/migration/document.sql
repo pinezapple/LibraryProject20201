@@ -2,7 +2,7 @@ drop table if exists documents;
 drop table if exists document_version;
 drop table if exists categories;
 drop table if exists authors;
-drop table if exists blacklist;
+drop table if exists black_list;
 drop table if exists barcode_cache;
 
 create table document_version

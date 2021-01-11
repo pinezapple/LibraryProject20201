@@ -336,7 +336,9 @@
       let idUser= `${doc.reader_id}`
       let nameUser = `${doc.reader_name}` 
       let status = `${doc.status}`
-      let docDate = `${doc.end_time}`
+      let seconds = `${doc.end_time.seconds}`
+      let date = new Date(seconds *1000)
+      
       let fee = `${doc.fine}` 
 
       // replace number value of borrow form status

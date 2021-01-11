@@ -1235,7 +1235,7 @@ func selectDocVerByID(c echo.Context, request interface{}) (statusCode int, data
 	shardnum := core.ShardNumber
 	req := request.(*portalModel.SelectDocVerByIDReq)
 	// Log login info
-	lg = &model.LogFormat{Source: c.Request().RemoteAddr, Action: "Select all from doc", Data: ""}
+	lg = &model.LogFormat{Source: c.Request().RemoteAddr, Action: "Select all barcode by docver ID", Data: ""}
 
 	docver, er := cache.SelectDocumentVersionByID(ctx, db, req.DocVerID)
 	if er != nil {
