@@ -450,8 +450,9 @@
     let search_params = url.searchParams; 
     let docId = search_params.get('id')
     
-    let docUrl = 'http://localhost:3000/returned_form/'+docId
-    let docVerUrl = ''
+    let docUrl = 'localhost:11001/doc/detail'
+    let docVerUrlUpdate = 'localhost:11001/documentversion/update'
+    let docVerUrlCreate = 'ocalhost:11001/documentversion/create'
     
     document.getElementById('docId').value = docId
     
@@ -466,6 +467,7 @@
        'Content-Type': 'application/json',
       //  Authorization: "Bearer " + token,
       },
+      body:JSON.stringify({doc_id: parseInt(docId)})
   })
   .then(response => response.json())
   .then(docList =>{
@@ -531,7 +533,7 @@
 
     
 
-    fetch(docVerUrl, //cần sửa lại
+    fetch(docVerUrlCreate, //cần sửa lại
   {
     method: 'POST',
     credentials: "omit",
@@ -557,9 +559,9 @@
     let docId = parseInt(document.querySelector('#docId').value,10)
     let docName = document.getElementById('docName').value
     let type = document.getElementById('type').value
-    
+    let updateDocUrl ='localhost:11001/document/update'
 
-    fetch(docUrl, //cần sửa lại
+    fetch(updateDocUrl, //cần sửa lại
   {
     method: 'POST',
     credentials: "omit",

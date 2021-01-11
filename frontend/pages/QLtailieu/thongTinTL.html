@@ -564,7 +564,7 @@ fetch (url,
     let status = parseInt(document.getElementById('status').value,10);
     let price = document.getElementById('price').value;
 
-    let url = 'http://localhost:3000/documents/'
+    let url = 'http://localhost:11001/barcode/avail'
 
       fetch(url + barcode, 
         {
@@ -595,7 +595,7 @@ fetch (url,
       // get data from table
       let data = table.row( $(this).parents('tr') ).data();
       let barcode =  parseInt(data[1],10)
-      let url = 'http://localhost:3000/documents/'
+      let url = 'localhost:11001/barcode/delete'
 
       // sweet alert
       swal({

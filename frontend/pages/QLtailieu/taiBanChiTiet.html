@@ -500,9 +500,9 @@
     let versionId = search_params.get('id')
     document.getElementById('versionId').value = versionId
 
-    let versionUrl = 'http://localhost:3000/returned_form/'+docId
-    let barcodeUrl = ''
-
+    let versionUrl = 'localhost:11001/dover/detail'
+    let barcodeUrlCreate = 'localhost:11001/documentversion/addbarcode'
+    let VersionUrlUpdate = 'localhost:11001/documentversion/update'
 
   // fetch document version data for form
    // cần sửa
@@ -514,6 +514,7 @@
        'Content-Type': 'application/json',
       //  Authorization: "Bearer " + token,
       },
+      body: JSON.stringify({document_version_id:parseInt(versionId)})
   })
   .then(response => response.json())
   .then(docList =>{
@@ -571,19 +572,34 @@
      
       // get data from table
       let data = table.row( $(this).parents('tr') ).data();
+      let status = data[1]
+      if(status =="Nguyên vẹn"){
+        status = "0";
+     }else if(status == "Hư hỏng"){
+      status = "1";
+     }else if(status == "Làm mất"){
+      status = "2";
+     }else if(status == "Đang mượn"){
+      status = "3";
+     }else if(status == "Đang thanh lý"){
+      status = "4";
+     }else if(status == "Đã thanh lý"){
+      status = "5";
+     }
       
       // add data to form
       document.querySelector("#barcode").value = data[0]
-      document.querySelector("#status").value = data[1]
+      document.querySelector("#status").value = status
     });
 
+    // update barcode
     $("#submit").on('click',function(){  
     let barcode = parseInt(document.getElementById('barcode').value,10);
     let status = parseInt(document.getElementById('status').value,10);
 
-    let url = 'http://localhost:3000/documents/'
+    let url = 'http://localhost:11001/barcode/update'
 
-      fetch(url + barcode, 
+      fetch(url, 
         {
           method: 'PUT',
           credentials: "omit",
@@ -605,14 +621,15 @@
       document.querySelector("#versionIdMore").value = versionId
     })
 
+    // add new barcode
     function addBarcode(){
       
       let id = parseInt(document.getElementById('versionIdMore').value,10)
       let quantity = parseInt(document.getElementById('quantityEditMore').value,10)
 
-      console.log(id,quantity)
+      // console.log(id,quantity)
 
-      fetch(barcodeUrl, //cần sửa lại
+      fetch(barcodeUrlCreate,
     {
     method: 'POST',
     credentials: "omit",
@@ -641,7 +658,7 @@
 
     
 
-    fetch(barcodeUrl, //cần sửa lại
+    fetch(VersionUrlUpdate, //cần sửa lại
   {
     method: 'POST',
     credentials: "omit",
@@ -668,7 +685,7 @@
       // get data from table
       let data = table.row( $(this).parents('tr') ).data();
       let barcode =  parseInt(data[1],10)
-      let url = 'http://localhost:3000/documents/'
+      let url = 'http://localhost:11001/barcode/delete'
 
       // sweet alert
       swal({

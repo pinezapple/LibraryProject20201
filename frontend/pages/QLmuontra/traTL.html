@@ -462,7 +462,7 @@
   <script>
 var table = $('#datatable-basic').DataTable();
 let arr = [{'0': "Đã trả"},{'1': "Đang mượn"},{'2':'Quá hạn'}]
-let url ='http://localhost:3000/returned_form/'
+let url ='http://localhost:11001/borrow/unreturned'
 
 let librarainStored = '2' // cần sửa
 // document.getElementById('librarianId').value = librarainId
@@ -524,8 +524,8 @@ fetch (url,  {
 // get borrow form by Id
 $('#datatable-basic tbody').on( 'click', 'button', function () {
         var data = table.row( $(this).parents('tr') ).data();
-        let borrowId = data[0]
-        let borrowFormUrl = 'http://localhost:3000/returned_form/' + borrowId
+        let borrowId = parseInt(data[0],10)
+        let borrowFormUrl = 'http://localhost:11001/borrow/detail/' 
         // window.location.replace('traTLchitiet.html?id='+borrowId)
         fetch (borrowFormUrl,  {
   method: 'POST',
@@ -534,6 +534,7 @@ $('#datatable-basic tbody').on( 'click', 'button', function () {
      'Content-Type': 'application/json',
     //  Authorization: "Bearer " + token,
     },
+    body:JSON.stringify({borrow_form_id:borrowId})
   })
   .then(response => response.json())
   .then(obj =>{
@@ -620,7 +621,7 @@ $('#datatable-basic tbody').on( 'click', 'button', function () {
      let docStatus = document.querySelectorAll('#docStatus')
      let fines = document.querySelectorAll('#fine')
      let formFine = parseInt(document.getElementById('fee').value,10)
-     let borrowFormUrl = 'http://localhost:3000/updated_borrow_form/' + borrowId
+     let borrowFormUrl = 'http://localhost:11001/borrow/update' 
 
      for (i=0; i< barcodeIds.length; i++){
        let doc = {"barcode_id": parseInt(barcodeIds[i].value,10), "barcode_status": parseInt(docStatus[i].value,10), "fee": parseInt(fines[i].value,10)}
