@@ -94,5 +94,5 @@ func login(c echo.Context, request interface{}) (statusCode int, data interface{
 	*/
 
 	fmt.Println(t)
-	return http.StatusOK, t, lg, false, nil
+	return http.StatusOK, user.ID, lg, false, nil
 }
