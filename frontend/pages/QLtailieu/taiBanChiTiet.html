@@ -543,13 +543,10 @@
       document.getElementById('price').value = price
 
       // get all barcode
+      for (let i = 0; i< barcodes.length; i++){
       let data = []
-<<<<<<< HEAD
-      let barcode = barcodes[0]["barcode_id"]
-=======
-      let barcodeId = barcodes[0]["barcode_id"]
->>>>>>> 52f845cf82ac2fd3d5ef33576dbc9e9334efedf3
-      let status = barcodes[0]["status"] // return a number
+      let barcodeId = barcodes[i]["barcode_id"]
+      let status = barcodes[i]["status"] // return a number
 
       // replace number value of barcode status
       let stage = status.toString()
@@ -560,6 +557,8 @@
       data.push (barcodeId,barcodeStatus,btn)
       // add to table
       table.row.add(data).draw()
+      }
+      
     
   })
   .catch(error => {

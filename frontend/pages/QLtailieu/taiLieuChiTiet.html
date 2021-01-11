@@ -479,26 +479,26 @@
       let version = doc.doc_version
 
       // get all version
-      let versionId = version[0]["document_version_id"]
-      let versionNumber = version[0]["document_version"]
-      let publisher = version[0]["publisher"]
-      let author = version[0]["author_name"]
-      let quantity = version[0]["count"]
-      let price = version[0]["price"]
-      let btn = '<button type="button" class="btn btn-secondary btn-sm" id="detail" >Chi tiết</button>'
-     
+      for (let i=0; i<version.length;i++){
+        let versionId = version[i]["document_version_id"]
+        let versionNumber = version[i]["document_version"]
+        let publisher = version[i]["publisher"]
+        let author = version[i]["author_name"]
+        let quantity = version[i]["count"]
+        let price = version[i]["price"]
+        let btn = '<button type="button" class="btn btn-secondary btn-sm" id="detail" >Chi tiết</button>'
+
+         // add to table
+        let data =[]
+        data.push (versionId,versionNumber,publisher,author,quantity,price,btn)
+        table.row.add(data).draw()
+
+      }
       
       // add to form
       // document.getElementById('docId').value = docId
       document.getElementById('docName').value = docName
       document.getElementById('type').value = type
-
-      // add to table
-      let data =[]
-      data.push (versionId,versionNumber,publisher,author,quantity,price,btn)
-      table.row.add(data).draw()
-
-    
   })
   .catch(error => {
   console.error('Error:', error);
