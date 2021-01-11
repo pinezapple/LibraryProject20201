@@ -17,34 +17,21 @@ setInterval(checkInput, 300);
 
 //Login request
 function loginRequest(user, pass) {
-  var myHeaders = new Headers();
-  myHeaders.append("Content-Type", "text/plain");
-
-  var raw =
-    '{\n  "username":"'+
-    user +
-    '",\n  "password":"'+
-    pass +
-    '"\n   \n}';
-
-  var requestOptions = {
-    method: "POST",
-    headers: myHeaders,
-    body: raw,
-    redirect: "follow",
-  };
-
-  fetch("http://localhost:11001/p/login", requestOptions)
-    .then((response) => response.json())
-    .then((result) => {
-        var user_id = result.user_id;        
-        sessionStorage.setItem("id", user_id);
-        window.location.href = "../../pages/dashboards/dashboard.html";
+  fetch('http://localhost:11001/p/login',{
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({username:user,password:pass})
+    }).then(response => response.json())
+    .then(res =>{
+      var user_id = result.user_id;        
+      sessionStorage.setItem("id", user_id);
+      window.location.href = "../../pages/dashboards/dashboard.html";
     })
-    .catch((error) => {
-      console.log("Không kết nối được tới máy chủ", error);
-      alert("Không kết nối được tới máy chủ");
-    });
+    .catch(error => {
+        alert("Something went wrong, please check your username or password", error)
+        });
 }
 
 $("#loginButton").on("click", function () {

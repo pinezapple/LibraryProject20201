@@ -7,4 +7,9 @@ else{
     alert("Vui lòng đăng nhập để truy cập trang!");
     window.location.href = "../../pages/account/login.html";
 }
+
+function logout(){
+  localStorage.removeItem('token')
+  window.location.href = "../../pages/account/login.html";
+}
 });
