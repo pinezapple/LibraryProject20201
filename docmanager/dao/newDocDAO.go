@@ -18,7 +18,7 @@ const (
 	sqlSelectAllSellingBarcode   = "SELECT * FROM barcodes WHERE status = 4"
 	sqlSelectBarcodeByID         = "SELECT * FROM barcodes WHERE barcode_id = ?"
 	sqlSelectBarcodeByDocVerID   = "SELECT * FROM barcodes WHERE documents_version_id= ?"
-	sqlInsertNewBarcode          = "INSERT INTO barcodes(barcode_id, document_version_id, status) VALUES (?,?,?,?)"
+	sqlInsertNewBarcode          = "INSERT INTO barcodes(barcode_id, document_version_id, status) VALUES (?,?,?)"
 	sqlUpdateBarcodeSaleBillID   = "UPDATE barcodes SET sale_bill_id = ? WHERE barcode_id = ?"
 	sqlUpdateBarcodeStatus       = "UPDATE barcodes SET status = ? WHERE barcode_id = ?"
 	sqlDeleteBarcodeByID         = "DELETE FROM barcodes WHERE barcode_id = ?"
@@ -30,12 +30,12 @@ const (
 	sqlSelectAllBorrowForm           = "SELECT * FROM borrow_form"
 	sqlSelectAllUnreturnedBorrowForm = "SELECT * FROM borrow_form WHERE status <> 3"
 	sqlSelectBorrowFormByID          = "SELECT * FROM borrow_form WHERE borrow_form_id = ?"
-	sqlInsertBorrowForm              = "INSERT INTO borrow_form(borrow_form_id, librarian_id, reader_id, barcode_id, status, borrow_start_time, borrow_end_time) VALUES (?,?,?,?,?,?)"
+	sqlInsertBorrowForm              = "INSERT INTO borrow_form(borrow_form_id, librarian_id, reader_id, barcode_id, status, borrow_start_time, borrow_end_time) VALUES (?,?,?,?,?,?,?)"
 	sqlUpdateBorrowFormStatus        = "UPDATE borrow_form SET status = ? WHERE borrow_form_id = ?"
 
 	sqlSelectAllPayment            = "SELECT * FROM payments"
 	sqlSelectPaymentByID           = "SELECT * FROM payments WHERE payments_id = ?"
-	sqlInsertPayment               = "INSERT INTO payments(payments_id, borrow_form_id, librarian_id, reader_id, fine, barcode_id, barcode_status, money) VALUES (?,?,?,?,?)"
+	sqlInsertPayment               = "INSERT INTO payments(payment_id, borrow_form_id, librarian_id, reader_id, fine, barcode_id, barcode_status, money) VALUES (?,?,?,?,?,?,?,?)"
 	sqlSelectPaymentByBorrowFormID = "SELECT * FROM payments WHERE borrow_form_id = ?"
 )
 

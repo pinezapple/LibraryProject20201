@@ -995,11 +995,14 @@ func saveDocumentByBatch(c echo.Context, request interface{}) (statusCode int, d
 		AuthorID:        authorID,
 		Price:           req.Price,
 	}
-	docVerID, err := cache.FirstOrCreateDocumentVersion(ctx, core.GetDB(), reqDocVer)
-	if err != nil {
+	docVerID, er := cache.FirstOrCreateDocumentVersion(ctx, core.GetDB(), reqDocVer)
+	if er != nil {
 		statusCode, err = http.StatusInternalServerError, er
 		return
 	}
+	fmt.Println(docVerID)
+
+	fmt.Println(req.Number)
 
 	if docVerID != 0 {
 		reqDocVer.DocVerID = docVerID
@@ -1047,7 +1050,7 @@ func saveDocumentByBatch(c echo.Context, request interface{}) (statusCode int, d
 		httpResp.Barcodes[i] = saveBarcodes[i].Barcode.ID
 
 		// Save to cache: Barcode - DocVer
-		if er := cache.SaveDocverIDToCache(ctx, core.GetDB(), saveBarcodes[i].Barcode.ID, saveBarcodes[i].Barcode.DocVerID); err != nil {
+		if er := cache.SaveDocverIDToCache(ctx, core.GetDB(), saveBarcodes[i].Barcode.ID, saveBarcodes[i].Barcode.DocVerID); er != nil {
 			statusCode, err = http.StatusInternalServerError, er
 			return
 		}

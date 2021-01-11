@@ -14,7 +14,7 @@ const (
 	sqlSelectAllDocument  = "SELECT * FROM documents"
 	sqlSelectDocumentByID = "SELECT * FROM documents WHERE doc_id = ?"
 	sqlFirstDocumentID    = "SELECT doc_id FROM documents WHERE doc_name = ? AND category_id = ? LIMIT 1"
-	sqlInsertDocument     = "INSERT INTO documents(doc_id, doc_name, category_id) VALUES (?,?)"
+	sqlInsertDocument     = "INSERT INTO documents(doc_id, doc_name, category_id) VALUES (?,?,?)"
 	sqlUpdateDocumentByID = "UPDATE documents SET doc_name = ?, category_id = ? WHERE doc_id = ?"
 
 	sqlSelectAllCategories  = "SELECT * FROM categories"
@@ -22,13 +22,13 @@ const (
 	sqlSelectCategoriesByID = "SELECT * FROM categories WHERE category_id = ?"
 	sqlInsertCategories     = "INSERT INTO categories(category_id, category_name, doc_description) VALUE (?,?,?)"
 
-	sqlSelectAllDocumentVersion     = "SELECT * FROM documents_version"
-	sqlSelectDocumentVersionByID    = "SELECT * FROM documents_version WHERE document_version_id = ?"
-	sqlSelectDocumentVersionByDocID = "SELECT * FROM documents_version WHERE doc_id = ?"
+	sqlSelectAllDocumentVersion     = "SELECT * FROM document_version"
+	sqlSelectDocumentVersionByID    = "SELECT * FROM document_version WHERE document_version_id = ?"
+	sqlSelectDocumentVersionByDocID = "SELECT * FROM document_version WHERE doc_id = ?"
 
-	sqlFirstDocumentVersion  = "SELECT document_version_id FROM documents_version WHERE doc_id = ? AND document_version = ? AND doc_description = ? AND author_id = ? AND fee = ? AND price = ? LIMIT 1"
-	sqlInsertDocumentVersion = "INSERT INTO documents_version(document_version_id, document_version, doc_id, doc_description, publisher, author_id, fee, price) VALUES (?,?,?,?,?,?,?,?)"
-	sqlUpdateDocumentVersion = "UPDATE documents_version SET document_version = ?, publisher = ?, author_id = ?, price = ? WHERE document_version_id = ?"
+	sqlFirstDocumentVersion  = "SELECT document_version_id FROM document_version WHERE doc_id = ? AND document_version = ? AND doc_description = ? AND author_id = ? AND fee = ? AND price = ? LIMIT 1"
+	sqlInsertDocumentVersion = "INSERT INTO document_version(document_version_id, document_version, doc_id, doc_description, publisher, author_id, fee, price) VALUES (?,?,?,?,?,?,?,?)"
+	sqlUpdateDocumentVersion = "UPDATE document_version SET document_version = ?, publisher = ?, author_id = ?, price = ? WHERE document_version_id = ?"
 
 	sqlSelectAllAuthor  = "SELECT * FROM authors"
 	sqlSelectAuthorByID = "SELECT * FROM authors WHERE author_id = ?"
@@ -37,7 +37,7 @@ const (
 
 	sqlSelectDocverIDFromCache               = "SELECT document_version_id FROM barcode_cache WHERE barcode_id = ?"
 	sqlSelectCountBarcodeFromCacheByDocVerID = "SELECT COUNT(barcode_id) FROM barcode_cache WHERE document_version_id = ?"
-	sqlInsertDocverIDToCache                 = "INSERT INTO barcode_cache(barcore_id, document_version_id) VALUES (?,?)"
+	sqlInsertDocverIDToCache                 = "INSERT INTO barcode_cache(barcode_id, document_version_id) VALUES (?,?)"
 
 	sqlInsertBlackList           = "INSERT INTO black_list(user_id, borrow_form_id, money) VALUES (?,?,?)"
 	sqlSelectFromBlackListWithID = "SELECT * FROM black_list WHERE user_id = ?"
@@ -109,11 +109,12 @@ func SaveDocument(ctx context.Context, db *mssqlx.DBs, doc *model.DocumentsDAOob
 }
 
 func FirstOrCreateDocument(ctx context.Context, db *mssqlx.DBs, doc *model.DocumentsDAOobj) (docID uint64, err error) {
+	docID = 0
 	if db == nil {
 		return 0, core.ErrDBObjNull
 	}
 
-	if err = db.GetContext(ctx, &docID, sqlFirstDocumentID, doc.DocName, doc.CategoryID); err != nil {
+	if err = db.GetContext(ctx, &docID, sqlFirstDocumentID, doc.DocName, doc.CategoryID); err != nil && !errors.Is(err, sql.ErrNoRows) {
 		return 0, err
 	}
 
@@ -121,6 +122,7 @@ func FirstOrCreateDocument(ctx context.Context, db *mssqlx.DBs, doc *model.Docum
 		if _, err = db.ExecContext(ctx, sqlInsertDocument, doc.DocID, doc.DocName, doc.CategoryID); err != nil {
 			return 0, err
 		}
+		return doc.DocID, nil
 	}
 
 	return docID, nil
@@ -268,7 +270,7 @@ func UpdateDocumentVersion(ctx context.Context, db *mssqlx.DBs, docVerID uint64,
 		return
 	}
 
-	if _, err = db.ExecContext(ctx, sqlUpdateDocumentVersion, docVerID, documentVersion, publisher, authorID, price); err != nil {
+	if _, err = db.ExecContext(ctx, sqlUpdateDocumentVersion, documentVersion, publisher, authorID, price, docVerID); err != nil {
 		return err
 	}
 
@@ -276,9 +278,11 @@ func UpdateDocumentVersion(ctx context.Context, db *mssqlx.DBs, docVerID uint64,
 }
 
 func FirstOrCreateDocumentVersion(ctx context.Context, db *mssqlx.DBs, docver *model.DocumentVersionDAOobj) (docVerID uint64, err error) {
+	docVerID = 0
 	if db == nil {
 		return 0, core.ErrDBObjNull
 	}
+
 	// doc_id, version, doc_description, author_id, fee, price
 	if err = db.GetContext(ctx, &docVerID, sqlFirstDocumentVersion, docver.DocID, docver.DocumentVersion, docver.DocDescription, docver.AuthorID, docver.Fee, docver.Price); err != nil && !errors.Is(err, sql.ErrNoRows) {
 		return 0, err
@@ -286,9 +290,10 @@ func FirstOrCreateDocumentVersion(ctx context.Context, db *mssqlx.DBs, docver *m
 
 	if docVerID == 0 {
 		// INSERT INTO documents_version(document_version_id, document_version, doc_id, doc_description, publisher, author_id, fee, price) VALUES (?,?,?,?,?,?,?,?)
-		if _, err = db.Exec(sqlInsertDocumentVersion, docver.DocVerID, docver.DocumentVersion, docver.DocID, docver.DocDescription, docver.AuthorID, docver.Fee, docver.Price); err != nil {
+		if _, err := db.Exec(sqlInsertDocumentVersion, docver.DocVerID, docver.DocumentVersion, docver.DocID, docver.DocDescription, docver.Publisher, docver.AuthorID, docver.Fee, docver.Price); err != nil {
 			return 0, err
 		}
+		return docver.DocVerID, nil
 	}
 
 	return docVerID, nil

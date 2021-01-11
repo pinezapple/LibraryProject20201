@@ -182,12 +182,13 @@ func saveDocVer(c echo.Context, request interface{}) (statusCode int, data inter
 		return
 	}
 	newDocVer := &portalModel.DocumentVersionDAOobj{
-		DocVerID:       uint64(core.GetHash(docVerUUID.String())),
-		DocID:          httpReq.DocID,
-		Publisher:      httpReq.Publisher,
-		AuthorID:       authID,
-		Price:          httpReq.Price,
-		DocDescription: httpReq.DocDescription,
+		DocVerID:        uint64(core.GetHash(docVerUUID.String())),
+		DocumentVersion: httpReq.DocVersion,
+		DocID:           httpReq.DocID,
+		Publisher:       httpReq.Publisher,
+		AuthorID:        authID,
+		Price:           httpReq.Price,
+		DocDescription:  httpReq.DocDescription,
 	}
 	if er = cache.SaveDocumentVersion(ctx, core.GetDB(), newDocVer); er != nil {
 		statusCode, err = http.StatusInternalServerError, er

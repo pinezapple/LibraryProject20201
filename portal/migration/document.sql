@@ -2,6 +2,8 @@ drop table if exists documents;
 drop table if exists document_version;
 drop table if exists categories;
 drop table if exists authors;
+drop table if exists blacklist;
+drop table if exists barcode_cache;
 
 create table document_version
 (
@@ -47,20 +49,14 @@ create table authors
 create table barcode_cache
 (
   `barcode_id` bigint(20),
-  `document_version` varchar(255)
+  `document_version_id` bigint(20)
 ) Engine=InnoDB;
 
-create table  
-(
-  `barcode_id` bigint(20),
-  `document_version` bigint(20)
-) Engine=InnoDB;
-
-create black_list 
+create table black_list 
 (
   `user_id` bigint(20),
   `borrow_form_id` bigint(20),
-  `total_money` varchar(255)
+  `total_money` varchar(255),
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) Engine=InnoDB;
 

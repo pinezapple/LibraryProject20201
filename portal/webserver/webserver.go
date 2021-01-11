@@ -115,6 +115,7 @@ func initDocRouter(e *echo.Echo) {
 	}
 
 	d := e.Group("/barcode")
+	d.POST("/all", doc.SelectAllBarcode)
 	d.POST("/avail", doc.SelectAllAvailableBarcode)
 	d.POST("/selling", doc.SelectAllSellingBarcode)
 	d.POST("/damaged", doc.SelectAllDamagedBarcode)

@@ -5,7 +5,7 @@ drop table if exists payments;
 
 CREATE TABLE `barcodes` (
   `barcode_id` bigint(20),
-  `documents_version_id` bigint(20),
+  `document_version_id` bigint(20),
   `status` bigint(20),
   `sale_bill_id` bigint(20), 
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -39,7 +39,8 @@ CREATE TABLE `payments` (
 
 CREATE TABLE `sale_bill` (
   `sale_bill_id` bigint(20),
+  `librarian_id` bigint(20),
   `barcode_id` BLOB,
-  `price` BLOB,
+  `sale_price` BLOB,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) Engine=InnoDB;

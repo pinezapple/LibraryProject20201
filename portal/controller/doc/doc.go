@@ -6,6 +6,10 @@ import (
 	portalModel "github.com/pinezapple/LibraryProject20201/portal/model"
 )
 
+func SelectAllBarcode(c echo.Context) (erro error) {
+	return controller.ExecHandler(c, nil, selectAllBarcode)
+}
+
 func SelectAllAvailableBarcode(c echo.Context) (erro error) {
 	return controller.ExecHandler(c, nil, selectAllBarcodeAvail)
 }

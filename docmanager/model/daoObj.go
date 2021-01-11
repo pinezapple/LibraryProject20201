@@ -8,8 +8,8 @@ type BorrowFormDAOobj struct {
 	Status      uint64      `protobuf:"varint,3,opt,name=Status,proto3" json:"status" db:"status"`
 	ReaderID    uint64      `protobuf:"varint,4,opt,name=ReaderID,proto3" json:"reader_id" db:"reader_id"`
 	BarcodeID   []byte      `protobuf:"varint,5,rep,packed,name=BarcodeID,proto3" json:"barcode_id" db:"barcode_id"`
-	StartTime   *model.Time `protobuf:"bytes,6,opt,name=StartTime,proto3" json:"start_time" db:"start_time"`
-	EndTime     *model.Time `protobuf:"bytes,7,opt,name=EndTime,proto3" json:"end_time" db:"end_time"`
+	StartTime   *model.Time `protobuf:"bytes,6,opt,name=StartTime,proto3" json:"borrow_start_time" db:"borrow_start_time"`
+	EndTime     *model.Time `protobuf:"bytes,7,opt,name=EndTime,proto3" json:"borrow_end_time" db:"borrow_end_time"`
 	CreatedAt   *model.Time `protobuf:"bytes,8,opt,name=Created_at,json=CreatedAt,proto3" json:"created_at" db:"created_at"`
 	UpdatedAt   *model.Time `protobuf:"bytes,9,opt,name=Updated_at,json=UpdatedAt,proto3" json:"updated_at" db:"updated_at"`
 }
