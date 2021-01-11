@@ -450,9 +450,9 @@
     let search_params = url.searchParams; 
     let docId = search_params.get('id')
     
-    let docUrl = 'localhost:11001/doc/detail'
-    let docVerUrlUpdate = 'localhost:11001/documentversion/update'
-    let docVerUrlCreate = 'localhost:11001/documentversion/create'
+    let docUrl = 'http://localhost:11001/doc/detail'
+    let docVerUrlUpdate = 'http://localhost:11001/documentversion/update'
+    let docVerUrlCreate = 'http://localhost:11001/documentversion/create'
     
     document.getElementById('docId').value = docId
     
@@ -559,7 +559,7 @@
     let docId = parseInt(document.querySelector('#docId').value,10)
     let docName = document.getElementById('docName').value
     let type = document.getElementById('type').value
-    let updateDocUrl ='localhost:11001/document/update'
+    let updateDocUrl ='http://localhost:11001/document/update'
 
     fetch(updateDocUrl, //cần sửa lại
   {

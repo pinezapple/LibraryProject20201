@@ -595,7 +595,7 @@ fetch (url,
       // get data from table
       let data = table.row( $(this).parents('tr') ).data();
       let barcode =  parseInt(data[1],10)
-      let url = 'localhost:11001/barcode/delete'
+      let url = 'http://localhost:11001/barcode/delete'
 
       // sweet alert
       swal({
