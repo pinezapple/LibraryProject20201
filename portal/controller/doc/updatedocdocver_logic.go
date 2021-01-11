@@ -195,5 +195,38 @@ func saveDocVer(c echo.Context, request interface{}) (statusCode int, data inter
 		return
 	}
 
+	for i := uint64(0); i < httpReq.Number; i++ {
+		barcodeUUID, er := uuid.NewUUID()
+		if er != nil {
+			statusCode, err = http.StatusInternalServerError, er
+			return
+		}
+		rpcSaveBarcodeReq := &docmanagerModel.SaveBarcodeReq{
+			Barcode: &docmanagerModel.Barcode{
+				ID:       uint64(core.GetHash(barcodeUUID.String())),
+				DocVerID: newDocVer.DocVerID,
+				Status:   model.BarcodeNormalStatus,
+			},
+		}
+
+		ser, er := getDocMangerServiceByUint64(rpcSaveBarcodeReq.Barcode.ID)
+		if er != nil {
+			statusCode, err = http.StatusInternalServerError, er
+			return
+		}
+
+		rpcSaveBarcodeResp, er := ser.Docmanager.SaveBarcode(ctx, rpcSaveBarcodeReq)
+		if er != nil || rpcSaveBarcodeResp.Code != 0 {
+			statusCode, err = http.StatusInternalServerError, er
+			return
+		}
+		// Save to cache: Barcode - DocVer
+		if er := cache.SaveDocverIDToCache(ctx, core.GetDB(), rpcSaveBarcodeReq.Barcode.ID, rpcSaveBarcodeReq.Barcode.DocVerID); er != nil {
+			statusCode, err = http.StatusInternalServerError, er
+			return
+		}
+
+	}
+
 	return http.StatusOK, nil, lg, false, nil
 }
