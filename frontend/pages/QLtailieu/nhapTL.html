@@ -237,6 +237,12 @@
               <div class="card-body">
                 <form id='newDoc'>
                   <!-- Input groups with icon -->
+                  <div class="col-lg-8">
+                    <h3 class="heading mb-0">
+                      Thông tin tài liệu
+                      <br /><br />
+                    </h3>
+                  </div>
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
@@ -248,20 +254,6 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <div class="input-group input-group-merge">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-users"></i></span>
-                          </div>
-                          <input class="form-control" id="author" placeholder="Tác giả" type="text" required>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                 
-                  <!-- Input groups with icon -->
-                  <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
                         <div class="input-group input-group-merge">
@@ -278,21 +270,18 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <div class="input-group input-group-merge">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="ni ni-folder-17"></i></span>
-                          </div>
-                          <input class="form-control" id = "publisher" placeholder="Nhà xuất bản" type="text" required>
-                        </div>
-                      </div>
-                    </div>
+                  </div>
+                 
+                  <!-- Input groups with icon -->
+                  <div class="col-lg-8">
+                    <h3 class="heading mb-0">
+                      Thông tin tái bản
+                      <br /><br />
+                    </h3>
                   </div>
 
-                  <!-- Input -->
                   <div class="row">
-                    <div class="col-md-6">
+                    <div class="col">
                       <div class="form-group">
                         <div class="input-group input-group-merge">
                           <div class="input-group-prepend">
@@ -302,7 +291,34 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col-md-6">
+
+                    <div class='col'>
+                    <div class="form-group">
+                      <div class="input-group input-group-merge">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text"><i class="fas fa-users"></i></span>
+                        </div>
+                        <input class="form-control" id="author" placeholder="Tác giả" type="text" required>
+                      </div>
+                    </div>
+                  </div>
+                    
+                    <div class="col">
+                      <div class="form-group">
+                        <div class="input-group input-group-merge">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="ni ni-folder-17"></i></span>
+                          </div>
+                          <input class="form-control" id = "publisher" placeholder="Nhà xuất bản" type="text" required>
+                        </div>
+                      </div>
+                    </div>
+                  <!-- </div> -->
+
+                  <!-- Input -->
+                  <!-- <div class="row"> -->
+                    
+                    <div class="col">
                       <div class="form-group">
                         <div class="input-group input-group-merge">
                           <div class="input-group-prepend">
@@ -312,11 +328,11 @@
                         </div>
                       </div>
                     </div>
-                  </div>
+                  <!-- </div> -->
 
                   <!-- Input -->
-                  <div class="row">
-                    <div class="col-md-6">
+                  <!-- <div class="row"> -->
+                    <div class="col">
                       <div class="form-group">
                         <div class="input-group input-group-merge">
                           <div class="input-group-prepend">
@@ -377,7 +393,32 @@
   <script src="../../assets/js/argon.js?v=1.1.0"></script>
   <!-- Demo JS - remove this in your project -->
   <script src="../../assets/js/demo.min.js"></script>
+  <script src="../../pages/js/loginValidation.js"></script>
   <script>
+
+        //Check if enough input
+  var count = 0;
+  function checkInput() {
+    var docName = $("#docName").val();
+    var type = $("#type").val();
+    var edition = $("#edition").val();
+    var author = $("#author").val();
+    var publisher = $("#publisher").val();
+    var quantity = $("#quantity").val();
+    var price = $("#price").val();
+
+    if (docName != "" && type != "" && edition != 0 && author != 0 && publisher != 0 && quantity != 0 && price != 0) {
+      $("#submit").removeClass("disabled");
+      $("#submit").prop('disabled', false);
+    } else {
+      $("#submit").addClass("disabled");
+      $("#submit").prop('disabled', true);
+    }
+  }
+  setInterval(checkInput, 300);
+  
+
+
     document.getElementById('newDoc').addEventListener('submit', newDoc);
 
     $("#submit").on('click',function(){
@@ -394,7 +435,7 @@
 
     
 
-    let url = 'http://localhost:3000/documents'
+    let url = 'http://localhost:11001/document/create'
 
     fetch(url, 
     {
@@ -404,7 +445,7 @@
         'Content-Type': 'application/json',
         // Authorization: "Bearer " + token,
         },
-      body:JSON.stringify({doc_name:docName, doc_author:author, doc_type:type, doc_publisher: publisher,doc_edition: edition, doc_price: price})
+      body:JSON.stringify({doc_name:docName, author:author, category:type, publisher: publisher,version: edition, price: price, number:quantity})
       }).then((res) => res.json())
     .then(result => alert("Đã thêm tài liệu", result))
     .catch((err)=>alert("Đã xảy ra lỗi, xin hãy nhập lại",err))

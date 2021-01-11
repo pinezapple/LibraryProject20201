@@ -96,7 +96,10 @@
                     <a href="../../pages/QLtailieu/nhapTL.html" class="nav-link">Nhập tài liệu</a>
                   </li>
                   <li class="nav-item">
-                    <a href="../../pages/QLtailieu/thongTinTL.html" class="nav-link">Thông tin tài liệu</a>
+                    <a href="../../pages/QLtailieu/thongTinTaiLieu.html" class="nav-link">Thông tin tài liệu</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="../../pages/QLtailieu/thongTinTL.html" class="nav-link">Tài liệu hiện có</a>
                   </li>
                   <li class="nav-item">
                     <a href="../../pages/QLtailieu/thanhLy.html" class="nav-link">Thanh lý tài liệu</a>
@@ -234,6 +237,7 @@
               <table class="table table-flush" id="datatable-basic">
                 <thead class="thead-light">
                   <tr>
+                    <th>Mã thanh toán</th>
                     <th>Mã phiếu mượn</th>
                     <th>Mã độc giả</th>
                     <th>Độc Giả</th>
@@ -245,6 +249,7 @@
                 </thead>
                 <tfoot>
                   <tr>
+                    <th>Mã thanh toán</th>
                     <th>Mã phiếu mượn</th>
                     <th>Mã độc giả</th>
                     <th>Độc Giả</th>
@@ -254,6 +259,18 @@
                     <th></th>
                   </tr>
                 </tfoot>
+                <tbody>
+                  <tr>
+                    <td>23</td>
+                    <td>12</td>
+                    <td>09</td>
+                    <td>Trần văn B</td>
+                    <td>Nguyễn Thị A</td>
+                    <td>Quá hạn</td>
+                    <td>100000</td>
+                    <td><button type="button" id="add" class="btn btn-secondary btn-sm"  data-toggle="modal" data-target="#modal-form">Chi tiết</button></td>
+                  </tr>
+                </tbody>
               </table>
             </div>
           </div>
@@ -287,6 +304,139 @@
       </footer>
     </div>
   </div>
+
+  <!-- Modal trả tài liệu -->
+<!--* Modal header *-->
+<!--* Modal body *-->
+<!--* Modal footer *-->
+<!--* Modal init *-->
+<div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
+  <div class="modal-dialog modal- modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="modal-title-default">Thông tin phiếu mượn</h6>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body p-0">
+              <div class="card bg-secondary border-0 mb-0">
+                <div class="card-body px-lg-5 py-lg-5">
+                    <form role="form" id='borrowForm'>
+                      <div class="form-row" id="paymentInfo">
+                        <div class="col">
+                          <div class="form-group">
+                            <label class="form-control-label">Mã thanh toán</label>
+                            <input type="text" class="form-control" id="paymentId" placeholder="Mã thanh toán" readonly>
+                          </div>
+                        </div>
+                        <div class="col">
+                          <div class="form-group">
+                            <label class="form-control-label">Ngày khởi tạo</label>
+                            <input type="text" class="form-control" id="paymentDate" placeholder="Ngày khởi tạo" readonly>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-row" id="personalInfo">
+                        <div class="col">
+                          <div class="form-group">
+                            <label class="form-control-label">Mã phiếu mượn</label>
+                            <input type="text" class="form-control" id="borrowId" placeholder="Mã phiếu mượn" readonly>
+                          </div>
+                        </div>
+                        <div class="col">
+                          <div class="form-group">
+                            <label class="form-control-label">Mã độc giả</label>
+                            <input type="text" class="form-control" id="userId" placeholder="Mã độc giả" readonly>
+                          </div>
+                        </div>
+                        <!-- <div class="col">
+                          <div class="form-group">
+                            
+                              <label class="form-control-label">Số ngày mượn</label>
+                              <input class="form-control" placeholder="Số ngày mượn" id='duration' type="number" min="1" readonly>
+                            
+                          </div>
+                        </div>-->
+                        <div class="col">
+                          <div class="form-group">
+                            
+                                <label class="form-control-label">Tình trạng mượn</label>
+                                <select class="form-control" id= "status" data-toggle="select" title="Tình trạng mượn" data-live-search="true" data-live-search-placeholder="Select" disabled>
+                                  <option value="0">Đã trả</option>
+                                  <option value="1">Đang mượn</option>
+                                  <option value="2">Quá hạn</option>
+                                </select>
+                          </div>
+
+                        </div>
+                      </div>
+
+                      <div class="form-row" id="returnDate">
+                        <div class="col">
+                        <div class="form-group">
+                          
+                            <label class="form-control-label">Ngày mượn</label>
+                            <input class="form-control" placeholder="Số ngày mượn" id='startDate' readonly>
+                          
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="form-group">
+                          
+                            <label class="form-control-label">Ngày trả</label>
+                            <input class="form-control" placeholder="Số ngày mượn" id='endDate' readonly>
+                          
+                        </div>
+                      </div>
+                       
+
+                      </div>
+
+
+                      <!-- Document Info-->
+                      <div class="col-lg-8">
+                        <p class="mb-0">
+                          Thông tin tài liệu
+                          <br /><br />
+                        </p>
+                      </div>
+                      <div class="form-row" id="addDoc">
+                      </div>
+    
+                      <!-- Tổng cộng -->
+                     
+                      <div class='form-row', id='total'>
+                        <div class="col-lg-8">
+                          <p class="mb-0">
+                            Tổng cộng
+                            <br /><br />
+                          </p>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                          <div class="form-group">
+                            <div class="input-group mb-3">
+                              <input type="text" class="form-control" placeholder="Tổng tiền" id='totalFine' disabled>
+                            </div>
+                            
+                          </div>
+                        </div>
+                        
+                      </div>
+    
+                      <!-- button -->
+                    <div class="form-row" id="formButton">
+                      <!-- <button type="button" class="btn btn-primary" style="position: absolute; right: 3rem;" data-dismiss="modal">Đóng</button> -->
+                    </div>
+                    </form>
+                </div>
+             </div> 
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
   
   <!-- Argon Scripts -->
   <!-- Core -->
@@ -308,16 +458,31 @@
   <script src="../../assets/js/argon.js?v=1.1.0"></script>
   <!-- Demo JS - remove this in your project -->
   <script src="../../assets/js/demo.min.js"></script>
+  <script src="../../pages/js/loginValidation.js"></script>
 </body>
 
 <script>
   var table = $('#datatable-basic').DataTable();
   let arr = [{'0': "Đã trả"},{'1': "Đang mượn"},{'2':'Quá hạn'}]
-  let url ='http://localhost:3000/returned_form/'
+  let url ='http://localhost:11001/payment/all'
 
-  // fetch data
+  let docIdForm ='<div class="col"><div class="form-group"> <label class="form-control-label">Mã tài liệu</label><input class="form-control" id="docId" placeholder="Mã tài liệu" type="text" disabled ></div></div>'
+  let barcodeForm ='<div class="col"><div class="form-group"><label class="form-control-label">Mã vạch</label><input class="form-control" id="barcode" placeholder="Mã vạch" type="text" disabled ></div></div>'
+  let docNameForm ='<div class="col"><div class="form-group"><label class="form-control-label">Tên tài liệu</label><input class="form-control" id="docName" placeholder="Tên tài liệu" type="text" disabled></div></div>'
+  let authorForm ='<div class="col"><div class="form-group"><label class="form-control-label">Tác giả</label><input class="form-control" id="author" placeholder="Tác giả" type="text" disabled ></div></div> '
+  let docStatus = ' <div class="col"><div class="form-group"><label class="form-control-label">Tình trạng tài liệu</label><select class="form-control" id= "docStatus" data-toggle="select" title="Tình trạng tài liệu" data-live-search="true" data-live-search-placeholder="Select"  disabled ><option value="0">Nguyên vẹn</option><option value="1">Hư hỏng</option><option value="2">Làm mất</option></select></div></div>'
+  let fineDoc = ' <div class="col"><div class="form-group"><label class="form-control-label">Phí</label><input class="form-control" id="fine" placeholder="Tiền phạt" value="0" type="number" disabled ></div></div>'
+
+  let range = document.createRange()
+  let form = document.querySelector('#borrowForm')
+  let info = document.querySelector('#addDoc')
+  let buttonSubmit = document.querySelector('#formButton')
+  let total = document.querySelector('#total')
+
+  // fetch data for table
+  // cần sửa
   fetch (url,  {
-  method: 'GET',
+  method: 'POST',
   credentials: "omit",
   headers: {
      'Content-Type': 'application/json',
@@ -331,14 +496,14 @@
      
       let data =[]
       // get all borrow form data
-    
-      let borrowId = `${form.id}`
-      let readerId= `${form.id_reader}`
-      let reader = `${form.reader}`
-      let librarian = `${form.librarian}`
-      let status = `${form.borrow_status}` //return a number
-      let fee = `${form.fee}`
-      let btn ='<button type="button" id="add" class="btn btn-secondary btn-sm">Chi tiết</button>'
+      let paymentId = `${form.payment_id}`
+      let borrowId = `${form.borrow_form_id}`
+      let readerId= `${form.reader_id}`
+      let reader = `${form.reader_name}` 
+      let librarian = `${form.librarian_name}` 
+      let status = `${form.status}` //return a number
+      let fee = `${form.fine}` 
+      let btn ='<button type="button" id="add" class="btn btn-secondary btn-sm"  data-toggle="modal" data-target="#modal-form">Chi tiết</button>'
       
       // replace number value of borrow form status
       let stage = status.toString()
@@ -355,34 +520,86 @@
   console.error('Error:', error);
   });
 
-  $(document).ready(function() {  
-  if ( $.fn.dataTable.isDataTable( '#datatable-basic' ) ) {
-    table = $('#datatable-basic').DataTable();
-  }
-  else {
-    table = $('#datatable-basic').DataTable( {
-      orderCellsTop: true,
-      fixedHeader: true
-    } );
-  }
-  // Setup - add a text input to each footer cell
-  $('#datatable-basic thead tr').clone().appendTo( '#datatable-basic thead' );
+$('#datatable-basic tbody').on( 'click', 'button', function () {
+        var data = table.row( $(this).parents('tr') ).data();
+        let paymentId = parseInt(data[0],10)
+        let borrowFormUrl = 'http://localhost:11001/payment/detail' 
+        // window.location.replace('traTLchitiet.html?id='+borrowId)
+        fetch (borrowFormUrl,  {
+  method: 'POST',
+  credentials: "omit",
+  headers: {
+     'Content-Type': 'application/json',
+    //  Authorization: "Bearer " + token,
+    },
+    body:JSON.stringify({payment_id:paymentId})
+  })
+  .then(response => response.json())
+  .then(obj =>{
+      let paymentId = obj.payment_id
+      let paymentDate = obj.created_at // cần sửa
+      let borrowFormId = obj.borrow_form_id
+      let readerId = obj.reader_id
+      let startDate = obj.start_time
+      let endDate = obj.end_time
+      let borrowStatus = obj.status
+      let fine = obj.fine 
+      let docs = obj.barcodes
+      
 
-  $('#datatable-basic thead tr:eq(1) th').each( function (i) {
-      var title = $(this).text();
-      // var abc = this
-      $(this).html( '<input type="text" placeholder="Tìm '+title+'" />' )
+        // add value to input field
+      $("#paymentId").val(paymentId)
+      $("#paymentDate").val(paymentDate)
+      $("#borrowId").val(borrowFormId)
+      $("#userId").val(readerId)
+      $("#startDate").val(startDate)
+      $("#endDate").val(endDate)
+      $("#status").val(borrowStatus)
+      $("#totalFine").val(fine)
 
-      $( 'input', this ).on( 'keyup change', function () {
-          if ( table.column(i).search() !== this.value ) {
-              table
-                  .column(i)
-                  .search( this.value )
-                  .draw();
-          }
-      } );
-  } );
-} );
+        for (let i = 0; i < docs.length; i++){
+        
+        let formRow = document.createElement("div")
+        formRow.setAttribute('class','form-row')
+        formRow.setAttribute('id','newRow')
+        form.appendChild(formRow)
+        total.parentNode.insertBefore(formRow,total)
+
+        // add input field
+        // let inputDocId = range.createContextualFragment(docIdForm)
+        // formRow.appendChild(inputDocId)
+        let inputBarcode = range.createContextualFragment(barcodeForm)
+        formRow.appendChild(inputBarcode)
+        let inputDocName = range.createContextualFragment(docNameForm)
+        formRow.appendChild(inputDocName)
+        let inputAuthor = range.createContextualFragment(authorForm)
+        formRow.appendChild(inputAuthor)
+        let inputDocStatus = range.createContextualFragment(docStatus)
+        formRow.appendChild(inputDocStatus)
+        let inputFine = range.createContextualFragment(fineDoc)
+        formRow.appendChild(inputFine)
+        
+        // add data 
+        // formRow.querySelector("#docId").value = docs[i]["id_doc"]
+        formRow.querySelector("#barcode").value = docs[i]["barcode_id"]
+        formRow.querySelector("#docName").value = docs[i]["doc_name"]
+        formRow.querySelector("#author").value = docs[i]["author_name"]
+        formRow.querySelector("#docStatus").value = docs[i]["status"]
+        formRow.querySelector("#fine").value = docs[i]["money"]
+      }
+  })
+  .catch(error => {
+  console.error('Error:', error);
+  });
+    });
+    
+    $("#modal-form").on('hide.bs.modal', function(){
+      let div = document.querySelectorAll("#newRow")
+      for (let j=0; j< div.length;j++){
+     div[j].remove()
+    }
+  });
+
 
 </script>
 

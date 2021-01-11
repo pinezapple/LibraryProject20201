@@ -96,7 +96,10 @@
                     <a href="../../pages/QLtailieu/nhapTL.html" class="nav-link">Nhập tài liệu</a>
                   </li>
                   <li class="nav-item">
-                    <a href="../../pages/QLtailieu/thongTinTL.html" class="nav-link">Thông tin tài liệu</a>
+                    <a href="../../pages/QLtailieu/thongTinTaiLieu.html" class="nav-link">Thông tin tài liệu</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="../../pages/QLtailieu/thongTinTL.html" class="nav-link">Tài liệu hiện có</a>
                   </li>
                   <li class="nav-item">
                     <a href="../../pages/QLtailieu/thanhLy.html" class="nav-link">Thanh lý tài liệu</a>
@@ -309,12 +312,14 @@
   
   <!-- Demo JS - remove this in your project -->
   <script src="../../assets/js/demo.min.js"></script>
+  <script src="../../pages/js/loginValidation.js"></script>
   <script>
-     var table = $('#datatable-buttons').DataTable();
-    let url ='http://localhost:3000/doc_returned'
+    var table = $('#datatable-buttons').DataTable();
+    let arr = [{'0': "Đã trả"},{'1': "Đang mượn"},{'2':'Quá hạn'}]
+    let url ='http://localhost:11001/borrow/unreturned'
     fetch (url,
   {
-    method: 'GET',
+    method: 'POST',
     credentials: "omit",
     headers: {
        'Content-Type': 'application/json',
@@ -327,14 +332,18 @@
 
       let data =[]
       // get doc data
-      let borrowId = `${doc.borrow_id}`
-      let idUser= `${doc.id_user}`
-      let nameUser = `${doc.name_user}`
-      let docStatus = `${doc.doc_status}`
-      let docDate = `${doc.doc_date}`
-      let fee = `${doc.fee}`
+      let borrowId = `${doc.borrow_form_id}`
+      let idUser= `${doc.reader_id}`
+      let nameUser = `${doc.reader_name}` 
+      let status = `${doc.status}`
+      let docDate = `${doc.end_time}`
+      let fee = `${doc.fine}` 
+
+      // replace number value of borrow form status
+      let stage = status.toString()
+      let borrowStatus = arr[stage][status]
      
-      data.push (borrowId,idUser,nameUser,docStatus,docDate,fee)
+      data.push (borrowId,idUser,nameUser,borrowStatus,docDate,fee)
       // add to table
       table.row.add(data).draw()
     })

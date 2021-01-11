@@ -363,6 +363,7 @@
  
   <!-- Demo JS - remove this in your project -->
   <script src="../../assets/js/demo.min.js"></script>
+  <script src="../../pages/js/loginValidation.js"></script>
   <script>
     let docIdForm ='<div class="col"><div class="form-group"> <label class="form-control-label">Mã tài liệu</label><input class="form-control" id="docId" placeholder="Mã tài liệu" type="text" disabled ></div></div>'
     let barcodeForm ='<div class="col"><div class="form-group"><label class="form-control-label">Mã vạch</label><input class="form-control" id="barcode" placeholder="Mã vạch" type="text" disabled ></div></div>'
@@ -386,7 +387,7 @@
     let data =[]
 
     fetch (borrowFormUrl,  {
-  method: 'GET',
+  method: 'POST',
   credentials: "omit",
   headers: {
      'Content-Type': 'application/json',

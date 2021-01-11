@@ -96,7 +96,10 @@
                     <a href="../../pages/QLtailieu/nhapTL.html" class="nav-link">Nhập tài liệu</a>
                   </li>
                   <li class="nav-item">
-                    <a href="../../pages/QLtailieu/thongTinTL.html" class="nav-link">Thông tin tài liệu</a>
+                    <a href="../../pages/QLtailieu/thongTinTaiLieu.html" class="nav-link">Thông tin tài liệu</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="../../pages/QLtailieu/thongTinTL.html" class="nav-link">Tài liệu hiện có</a>
                   </li>
                   <li class="nav-item">
                     <a href="../../pages/QLtailieu/thanhLy.html" class="nav-link">Thanh toán tài liệu</a>
@@ -319,13 +322,15 @@
   <script src="../../assets/js/argon.js?v=1.1.0"></script>
   <!-- Demo JS - remove this in your project -->
   <script src="../../assets/js/demo.min.js"></script>
+  <script src="../../pages/js/loginValidation.js"></script>
   <script>
-    $(document).ready(function() {
+  $(document).ready(function() {
+  let arr = [{'0': "Nguyên vẹn"},{'1': "Hư hỏng"},{'2':'Làm mất'},{'3':'Đang mượn'},{'4':'Đang thanh lý'},{'5':'Đã thanh lý'}]
   var table = $('#datatable-buttons').DataTable();
-  let url ='http://localhost:3000/documents'
+  let url ='http://localhost:11001/barcode/avail'
 
   fetch (url,  {
-  method: 'GET',
+  method: 'POST',
   credentials: "omit",
   headers: {
      'Content-Type': 'application/json',
@@ -340,18 +345,21 @@
       // get doc data
     
     
-      let docId= `${doc.id}`
-      let barcode = `${doc.barcode}`
+      let docId= `${doc.doc_id}` 
+      let barcode = `${doc.barcode_id}`
       let docName = `${doc.doc_name}`
-      let author = `${doc.doc_author}`
-      let type = `${doc.doc_type}`
-      let publisher = `${doc.doc_publisher}`
-      let edition = `${doc.doc_edition}`
-      let price = `${doc.doc_price}`
+      let author = `${doc.author}`
+      let type = `${doc.category}`
+      let publisher = `${doc.publisher}` 
+      let edition = `${doc.version}`
+      let price = `${doc.price}`
       let date = `${doc.created_at}`
-      let status = `${doc.doc_status}`
+      let status = `${doc.status}`
+      
+      let stage = status.toString()
+      let statusData = arr[stage][status]
 
-      data.push (docId,barcode,docName,author,edition,type,publisher,date,status,price)
+      data.push (docId,barcode,docName,author,edition,type,publisher,date,statusData,price)
 
       // add to table
       table.row.add(data).draw()

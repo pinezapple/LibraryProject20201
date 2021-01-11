@@ -67,7 +67,7 @@
                </a>
              </li>
              <li class="nav-item">
-               <a class="nav-link active" href="#navbar-forms" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-forms">
+               <a class="nav-link " href="#navbar-forms" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-forms">
                  <i class="ni ni-single-copy-04 text-pink"></i>
                  <span class="nav-link-text">Quản lý mượn trả</span>
                </a>
@@ -86,7 +86,7 @@
                </div>
              </li>
              <li class="nav-item">
-               <a class="nav-link" href="#navbar-components" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-forms">
+               <a class="nav-link active" href="#navbar-components" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-forms">
                  <i class="ni ni-books text-info"></i>
                  <span class="nav-link-text">Quản lý tài liệu</span>
                </a>
@@ -96,8 +96,11 @@
                      <a href="../../pages/QLtailieu/nhapTL.html" class="nav-link">Nhập tài liệu</a>
                    </li>
                    <li class="nav-item">
-                     <a href="../../pages/QLtailieu/thongTinTL.html" class="nav-link">Thông tin tài liệu</a>
-                   </li>
+                    <a href="../../pages/QLtailieu/thongTinTaiLieu.html" class="nav-link">Thông tin tài liệu</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="../../pages/QLtailieu/thongTinTL.html" class="nav-link">Tài liệu hiện có</a>
+                  </li>
                    <li class="nav-item">
                     <a href="../../pages/QLtailieu/thanhLy.html" class="nav-link">Thanh lý tài liệu</a>
                   </li>
@@ -232,7 +235,7 @@
                <div class="card-body">
                  <div class="col-lg-8">
                    <p class="mb-0">
-                     Thông tin chi tiết
+                     Thông tin người thanh lý
                      <br /><br />
                    </p>
                  </div>
@@ -250,7 +253,7 @@
                        </div>
                      </div>
                     
-                     <div class="col-md-4 mb-3">
+                     <!-- <div class="col-md-4 mb-3">
                        <div class="form-group">
                          <div class="input-group input-group-merge">
                            <div class="input-group-prepend">
@@ -259,7 +262,7 @@
                            <input class="form-control" placeholder="Ngày thanh lý" id='date' type="date" required>
                          </div>
                        </div>
-                     </div>
+                     </div> -->
                    </div>
                    <!-- Document Info-->
                    <div class="col-lg-8">
@@ -272,8 +275,8 @@
                    </div>
                    <!-- button -->
                  <div class="form-row" id="formButton">
-                   <button class="btn btn-primary" type="button" onclick="createSaleForm()">Tạo phiếu</button>
-                   <button type="button" class="btn btn-danger" style = "float: right;" onclick="reset()">Hủy</button>
+                   <button id="makeFormButton" class="btn btn-primary" type="button" onclick="createSaleForm()">Tạo phiếu</button>
+                   <button id="resetButton" type="button" class="btn btn-danger" style = "float: right;" onclick="reset()">Hủy</button>
                  </div>
                  
                  </form>
@@ -293,7 +296,7 @@
              <table class="table table-flush " id="datatable-basic">
                <thead class="thead-light">
                  <tr>
-                   <th>Mã tài liệu</th>
+                   
                    <th>Mã vạch</th>
                    <th>Tên tài liệu</th>
                    <th>Tác giả</th>
@@ -306,7 +309,7 @@
                </thead>
                <tfoot>
                  <tr>
-                   <th>Mã tài liệu</th>
+                   
                    <th>Mã vạch</th>
                    <th>Tên tài liệu</th>
                    <th>Tác giả</th>
@@ -351,19 +354,46 @@
    
    <!-- Demo JS - remove this in your project -->
    <script src="../../assets/js/demo.min.js"></script>
+   <script src="../../pages/js/loginValidation.js"></script>
    <script>
+           //Check if enough input
+  var count = 0;
+  function checkInput() {
+    var libarianID = $("#librarian").val();
+    if (libarianID != "" && count!= 0) {
+      $("#makeFormButton").removeClass("disabled");
+      $("#makeFormButton").prop('disabled', false);
+    } else {
+      $("#makeFormButton").addClass("disabled");
+      $("#makeFormButton").prop('disabled', true);
+    }
+  }
+  setInterval(checkInput, 300);
+  
+  //reset button
+    $( "#resetButton" ).click(function() {
+      count = 0;
+      $(".newRow").remove();    
+    });
+
      var table = $('#datatable-basic').DataTable();
+     
      let docIdForm ='<div class="col"><div class="form-group"><div class="input-group input-group-merge"><div class="input-group-prepend"> <span class="input-group-text"><i class="ni ni-book-bookmark"></i></span></div><input class="form-control" id="docId" placeholder="Mã tài liệu" type="text" disabled ></div></div></div> '
      let barcodeForm ='<div class="col"><div class="form-group"><div class="input-group input-group-merge"><div class="input-group-prepend"> <span class="input-group-text"><i class="fas fa-barcode"></i></span></div><input class="form-control" id="barcode" placeholder="Mã vạch" type="text" disabled ></div></div></div> '
      let priceForm ='<div class="col"><div class="form-group"><div class="input-group input-group-merge"><div class="input-group-prepend"> <span class="input-group-text"><i class="ni ni-money-coins"></i></span></div><input class="form-control" id="price" placeholder="Giá sách" type="text" disabled ></div></div></div> '
      let buttonForm ='<div class="col"><div class="form-group"><div class="input-group input-group-merge"><button class="btn btn-icon btn-primary" type="button" id="delete"><span class="btn-inner--text">Xóa</span></button></div></div></div> '
      let salePrice = ' <div class="col"><div class="form-group"><input class="form-control" id="sale" placeholder="Tiền thanh lý" value="0" type="number"></div></div>'
+     
      let range = document.createRange()
      let form = document.querySelector('#saleForm')
      let info = document.querySelector('#addDoc')
      let buttonSubmit = document.querySelector('#formButton')
-     let url = 'http://localhost:3000/documents'
-     let urlSale ='http://localhost:3000/sale_form'
+     
+     let librarainStored = '2'; // cần sửa 
+     document.getElementById('librarian').value = librarainStored
+
+     let url = 'http://localhost:11001/barcode/selling'
+     let urlSale ='http://localhost:11001/salebill/create'
      
    
    $('#datatable-basic tbody').on( 'click', 'button', function (event) {
@@ -373,18 +403,19 @@
        // get data from table
        let data = table.row( $(this).parents('tr') ).data();
        
+       count++;
       
        // append to form
        let formRow = document.createElement("div")
-       formRow.setAttribute('class','form-row')
+       formRow.setAttribute('class','form-row newRow')
        formRow.setAttribute('id','newRow')
        form.appendChild(formRow)
        buttonSubmit.parentNode.insertBefore(formRow,buttonSubmit)
  
  
        // add input field
-       let inputDocId = range.createContextualFragment(docIdForm)
-       formRow.appendChild(inputDocId)
+      //  let inputDocId = range.createContextualFragment(docIdForm)
+      //  formRow.appendChild(inputDocId)
        let inputBarcode = range.createContextualFragment(barcodeForm)
        formRow.appendChild(inputBarcode)
        let inputPrice = range.createContextualFragment(priceForm)
@@ -395,14 +426,15 @@
        formRow.appendChild(inputButton)
  
        // add data 
-       formRow.querySelector("#docId").value = data[0]
+      //  formRow.querySelector("#docId").value = data[0]
        formRow.querySelector("#barcode").value = data[1]
-       formRow.querySelector("#price").value = data[7]
+       formRow.querySelector("#price").value = data[5]
  
      });
    
    // remove from borrow form
    $(document).on('click', '#delete', function(e) {
+     count--;
     e.preventDefault();
     $(this).closest('#newRow').remove();
     return false;
@@ -412,11 +444,11 @@
    function createSaleForm(){
      let barcodeIds = document.querySelectorAll('#barcode')
      let salePrice = document.querySelectorAll('#sale')
-     let librarian = document.getElementById('librarian').value
-     let date = document.getElementById('date').value
+     let librarian = parseInt(document.getElementById('librarian').value,10)
+     
      let arrayId =[]
       for (let i = 0; i < barcodeIds.length; i++) {
-       let obj = {"barcode": barcodeIds[i].value, "doc_price":salePrice[i].value}
+       let obj = {"barcode_id": parseInt(barcodeIds[i].value,10), "price":parseInt(salePrice[i].value,10)}
        arrayId.push(obj)
        }
      // console.log(arrayId)
@@ -429,12 +461,15 @@
         'Content-Type': 'application/json',
        //  Authorization: "Bearer " + token,
        },
-       body:JSON.stringify({id_librarian: librarian, docs:arrayId, date: date})
+       body:JSON.stringify({librarian_id: librarian, sale_barcode:arrayId})
       
    }
    ).then((res) => res.json())
-   .then(result => alert("Đã tạo phiếu thanh lý thành công", result))
-   .then(result => document.getElementById("saleForm").reset())
+   .then(result => {
+      alert("Đã tạo phiếu thanh lý thành công")
+      document.getElementById("saleForm").reset()
+    })
+  //  .then(result => document.getElementById("saleForm").reset())
    .catch((err)=>alert("Đã xảy ra lỗi",err))
  
    let div = document.querySelectorAll("#newRow")
@@ -447,7 +482,7 @@
  // fetch data 
    fetch (url,
    {
-     method: 'GET',
+     method: 'POST',
      credentials: "omit",
      headers: {
         'Content-Type': 'application/json',
@@ -460,17 +495,17 @@
  
        let data =[]
        // get doc data
-       let docId= `${doc.id}`
-       let barcode = `${doc.barcode}`
+      //  let docId= `${doc.id}`
+       let barcode = `${doc.barcode_id}`
        let docName = `${doc.doc_name}`
-       let author = `${doc.doc_author}`
-       let type = `${doc.doc_type}`
+       let author = `${doc.author}`
+       let type = `${doc.category}`
        let publisher = `${doc.doc_publisher}`
-       let edition = `${doc.doc_edition}`
-       let price = `${doc.doc_price}`
+       let edition = `${doc.version}`
+       let price = `${doc.price}`
        let btn = '<button type="button" id="add" class="btn btn-info btn-sm">Thêm</button>'
       
-       data.push (docId,barcode,docName,author,type,edition,publisher,price,btn)
+       data.push (barcode,docName,author,type,edition,publisher,price,btn)
        // add to table
        table.row.add(data).draw()
      })

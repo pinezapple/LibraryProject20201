@@ -96,8 +96,11 @@
                      <a href="../../pages/QLtailieu/nhapTL.html" class="nav-link">Nhập tài liệu</a>
                    </li>
                    <li class="nav-item">
-                     <a href="../../pages/QLtailieu/thongTinTL.html" class="nav-link">Thông tin tài liệu</a>
-                   </li>
+                    <a href="../../pages/QLtailieu/thongTinTaiLieu.html" class="nav-link">Thông tin tài liệu</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="../../pages/QLtailieu/thongTinTL.html" class="nav-link">Tài liệu hiện có</a>
+                  </li>
                    <li class="nav-item">
                     <a href="../../pages/QLtailieu/thanhLy.html" class="nav-link">Thanh lý tài liệu</a>
                   </li>
@@ -236,18 +239,22 @@
                <table class="table table-flush" id="datatable-buttons">
                  <thead class="thead-light">
                    <tr>
-                     <th>Mã tài liệu</th>
-                     <th>Mã vạch</th>
-                     <th>Tên tài liệu</th>
-                     <th>Ngày cập nhật</th>                  
+                    <th>Mã vạch</th>
+                    <th>Tên tài liệu</th>
+                    <th>Tác giả</th>
+                    <th>Thể loại</th>
+                    <th>Tái bản</th>
+                                 
                    </tr>
                  </thead>
                  <tfoot>
                    <tr>
-                     <th>Mã tài liệu</th>
-                     <th>Mã vạch</th>
-                     <th>Tên tài liệu</th>
-                     <th>Ngày cập nhật</th>  
+                    <th>Mã vạch</th>
+                    <th>Tên tài liệu</th>
+                    <th>Tác giả</th>
+                    <th>Thể loại</th>
+                    <th>Tái bản</th>
+                     
                    </tr>
                  </tfoot>
                </table>
@@ -306,11 +313,12 @@
    <script src="../../assets/js/argon.js?v=1.1.0"></script>
    <!-- Demo JS - remove this in your project -->
    <script src="../../assets/js/demo.min.js"></script>
+   <script src="../../pages/js/loginValidation.js"></script>
    <script>
-     let url ='http://localhost:3000/doc_bad'
+     let url ='http://localhost:11001/barcode/damaged'
      let table = $('#datatable-buttons').DataTable();
      fetch (url,  {
-   method: 'GET',
+   method: 'POST',
    credentials: "omit",
    headers: {
       'Content-Type': 'application/json',
@@ -325,12 +333,14 @@
        // get doc data
      
      
-       let idDoc= `${doc.id_doc}`
-       let barcode = `${doc.barcode}`
-       let docDate = `${doc.doc_date}`
+      // let idDoc= `${doc.doc_id}`
+       let barcode = `${doc.barcode_id}`
        let docName = `${doc.doc_name}`
+       let author = `${doc.author}`
+       let category = `${doc.category}`
+       let version = `${doc.version}`
  
-       data.push (idDoc,barcode,docName,docDate)
+       data.push (barcode,docName,author,category,version)
  
  
        // add to table

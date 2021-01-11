@@ -19,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
   <meta name="author" content="Creative Tim">
-  <title>Độc giả vi phạm</title>
+  <title>Thông tin tài liệu</title>
   <!-- Favicon -->
   <link rel="icon" href="../../assets/img/brand/favicon.png" type="image/png">
   <!-- Fonts -->
@@ -31,6 +31,8 @@
   <link rel="stylesheet" href="../../assets/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="../../assets/vendor/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css">
   <link rel="stylesheet" href="../../assets/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css">
+  <link rel="stylesheet" href="../../assets/vendor/animate.css/animate.min.css">
+  <link rel="stylesheet" href="../../assets/vendor/sweetalert2/dist/sweetalert2.min.css">
   <!-- Argon CSS -->
   <link rel="stylesheet" href="../../assets/css/argon.css?v=1.1.0" type="text/css">
 </head>
@@ -86,7 +88,7 @@
               </div>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#navbar-components" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-forms">
+              <a class="nav-link active" href="#navbar-components" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-forms">
                 <i class="ni ni-books text-info"></i>
                 <span class="nav-link-text">Quản lý tài liệu</span>
               </a>
@@ -108,7 +110,7 @@
               </div>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="#navbar-tables" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-tables">
+              <a class="nav-link" href="#navbar-tables" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-tables">
                 <i class="ni ni-align-left-2 text-default"></i>
                 <span class="nav-link-text">Thống kê</span>
               </a>
@@ -146,14 +148,14 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <!-- Search form -->
           <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">
-            <div class="form-group mb-0">
-              <!-- <div class="input-group input-group-alternative input-group-merge">
+            <!-- <div class="form-group mb-0">
+              <div class="input-group input-group-alternative input-group-merge">
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="fas fa-search"></i></span>
                 </div>
                 <input class="form-control" placeholder="Search" type="text">
-              </div> -->
-            </div>
+              </div>
+            </div> -->
             <button type="button" class="close" data-action="search-close" data-target="#navbar-search-main" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
@@ -209,12 +211,12 @@
         <div class="header-body">
           <div class="row align-items-center py-4">
             <div class="col-lg-6 col-7">
-              <h6 class="h2 text-white d-inline-block mb-0">Thống kê độc giả vi phạm</h6>
+              <h6 class="h2 text-white d-inline-block mb-0">Thông tin tài liệu</h6>
               <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                 <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                   <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-                  <li class="breadcrumb-item"><a href="#">Thống kê</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Độc giả vi phạm</li>
+                  <li class="breadcrumb-item"><a href="thongTinTaiLieu.html">Quản lý tài liệu</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Thông tin tài liệu</li>
                 </ol>
               </nav>
             </div>
@@ -231,66 +233,32 @@
           <div class="card">
             <!-- Card header -->
             <div class="card-header">
-              <h3 class="mb-0">Độc giả vi phạm</h3>
+              <h3 class="mb-0">Thông tin tài liệu</h3>
             </div>
             <div class="table-responsive py-4">
-              <table class="table table-flush" id="datatable-buttons">
+              <table class="table table-flush" id="datatable-basic">
+                <!-- <div class="col text-center">
+                  <div class="btn-group">
+                    <button type="button" id="add" class="btn btn-outline-primary">Add</button>
+                  </div>
+                </div> -->
                 <thead class="thead-light">
                   <tr>
-                    <th>Mã độc giả</th>
-                    <th>Tên độc giả</th>
-                    <th>Số lần vi phạm</th>
-                    <th>Tổng tiền</th>
+                    <th>Mã tài liệu</th>
+                    <th>Tên tài liệu</th>
+                    <th>Thể loại</th>
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tfoot>
                   <tr>
-                    <th>Mã độc giả</th>
-                    <th>Tên độc giả</th>
-                    <th>Số lần vi phạm</th>
-                    <th>Tổng tiền</th>
+                    <th>Mã tài liệu</th>
+                    <th>Tên tài liệu</th>
+                    <th>Thể loại</th>
                     <th>Action</th>
                   </tr>
                 </tfoot>
-                <tbody>
-                  <!-- <tr>
-                    <td>01</td>
-                    <td>Nguyễn Văn A</td>
-                    <td>01</td>
-                    <td>Quá hạn</td>
-                    <td>Còn nguyên vẹn</td>
-                    <td>10000</td>
-                    
-                  </tr>
-                  <tr>
-                    <td>02</td>
-                    <td>Lê Vân</td>
-                    <td>02</td>
-                    <td>Đúng hạn</td>
-                    <td>Hư hỏng</td>
-                    <td>10000</td>
-                    
-                  </tr>
-                  <tr>
-                    <td>03</td>
-                    <td>Nguyễn B</td>
-                    <td>03</td>
-                    <td>Quá hạn</td>
-                    <td>Hư hỏng</td>
-                    <td>20000</td>
-                    
-                  </tr>
-                  <tr>
-                    <td>04</td>
-                    <td>Phan Thành</td>
-                    <td>04</td>
-                    <td>Quá hạn</td>
-                    <td>Còn nguyên vẹn</td>
-                    <td>1000</td>
-                    
-                  </tr> -->
-                </tbody>
+               
               </table>
             </div>
           </div>
@@ -324,94 +292,7 @@
       </footer>
     </div>
   </div>
-  <!-- Modal phiếu thanh lý -->
-<!--* Modal header *-->
-<!--* Modal body *-->
-<!--* Modal footer *-->
-<!--* Modal init *-->
-<div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
-  <div class="modal-dialog modal- modal-dialog-centered modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h6 class="modal-title" id="modal-title-default">Thông tin độc giả vi phạm</h6>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body p-0">
-              <div class="card bg-secondary border-0 mb-0">
-                <div class="card-body px-lg-5 py-lg-5">
-                    <form role="form" id='violationForm'>
-                      <div class="col-lg-8">
-                        <p class="mb-0">
-                          Thông tin độc giả
-                          <br /><br />
-                        </p>
-                      </div>
-                      <div class="form-row" id="saleInfo">
-                        <div class="col">
-                          <div class="form-group">
-                            <label class="form-control-label">Mã độc giả</label>
-                            <input type="text" class="form-control" id="userID" placeholder="Mã độc giả" readonly>
-                          </div>
-                        </div>
-                        <div class="col">
-                          <div class="form-group">
-                            <label class="form-control-label">Tên độc giả</label>
-                            <input type="text" class="form-control" id="userName" placeholder="Tên độc giả" readonly>
-                          </div>
-                        </div>
-                        <div class="col">
-                          <div class="form-group">
-                            <label class="form-control-label">Số lần vi phạm</label>
-                            <input type="text" class="form-control" id="violationCount" placeholder="Số lần vi phạm" readonly>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <!-- Document Info-->
-                      <div class="col-lg-8">
-                        <p class="mb-0">
-                          Thông tin tài liệu
-                          <br /><br />
-                        </p>
-                      </div>
-                      <div class="form-row" id="borrowDoc">
-                      </div>
-    
-                      <!-- Tổng cộng -->
-                     
-                      <div class='form-row', id='total'>
-                        <div class="col-lg-8">
-                          <p class="mb-0">
-                            Tổng cộng tiền phải nộp
-                            <br /><br />
-                          </p>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                          <div class="form-group">
-                            <div class="input-group mb-3">
-                              <input type="text" class="form-control" placeholder="Tổng tiền" id='totalFee' disabled>
-                            </div>
-                            
-                          </div>
-                        </div>
-                        
-                      </div>
-    
-                      <!-- button -->
-                    <div class="form-row" id="formButton">
-                      <!-- <button type="button" class="btn btn-primary" style="position: absolute; right: 3rem;" data-dismiss="modal">Đóng</button> -->
-                    </div>
-                    </form>
-                </div>
-             </div> 
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+
   <!-- Argon Scripts -->
   <!-- Core -->
   <script src="../../assets/vendor/jquery/dist/jquery.min.js"></script>
@@ -428,42 +309,76 @@
   <script src="../../assets/vendor/datatables.net-buttons/js/buttons.flash.min.js"></script>
   <script src="../../assets/vendor/datatables.net-buttons/js/buttons.print.min.js"></script>
   <script src="../../assets/vendor/datatables.net-select/js/dataTables.select.min.js"></script>
-  <script src ="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js'></script>
+  <script src="../../assets/vendor/sweetalert2/dist/sweetalert2.min.js"></script>
+  <script src="../../assets/vendor/bootstrap-notify/bootstrap-notify.min.js"></script>
   <script src='//cdn.datatables.net/plug-ins/1.10.22/api/column().title().js'></script>
   <!-- Argon JS -->
   <script src="../../assets/js/argon.js?v=1.1.0"></script>
   <!-- Demo JS - remove this in your project -->
   <script src="../../assets/js/demo.min.js"></script>
   <script src="../../pages/js/loginValidation.js"></script>
-  <!-- JS  -->
   <script>
-    let borrowIDForm ='<div class="col"><div class="form-group"><label class="form-control-label">Mã phiếu mượn</label><input class="form-control" id="borrowID" placeholder="Mã phiếu mượn" type="text" disabled ></div></div>'
-    let violationTimeForm ='<div class="col"><div class="form-group"><label class="form-control-label">Thời gian vi phạm</label><input class="form-control" id="violationTime" placeholder="Thời gian vi phạm" type="text" disabled></div></div>'
-    let feeForm ='<div class="col"><div class="form-group"><label class="form-control-label">Số tiền</label><input class="form-control" id="fee" placeholder="Số tiền" type="text" disabled ></div></div> '
-    
-    let range = document.createRange()
-    let form = document.querySelector('#violationForm')
-    let info = document.querySelector('#borrowDoc')
-    let buttonSubmit = document.querySelector('#formButton')
-    let total = document.querySelector('#total')
+// get data for table
+let url ="http://localhost:11001/doc/all"
+fetch (url,
+  {
+    method: 'POST',
+    credentials: "omit",
+    headers: {
+       'Content-Type': 'application/json',
+      //  Authorization: "Bearer " + token,
+      },
+  })
+  .then(response => response.json())
+  .then(docList =>{
+    docList.forEach(doc =>{
 
-    $(document).ready(function() {
-  var table = $('#datatable-buttons').DataTable();
-  if ( $.fn.dataTable.isDataTable( '#datatable-buttons' ) ) {
-    table = $('#datatable-buttons').DataTable();
-  }
-  else {
-    table = $('#datatable-buttons').DataTable( {
+      let data =[]
+      // get doc data
+      let docId= `${doc.doc_id}` 
+      let docName = `${doc.doc_name}`
+      let type = `${doc.category_name}`
+      let btn = '<button type="button" class="btn btn-secondary btn-sm" id="detail">Chi tiết</button>'
+      
+      data.push (docId,docName,type,btn)
+      // add to table
+      table.row.add(data).draw()
+    })
+  })
+  .catch(error => {
+  console.error('Error:', error);
+  });
+
+// redirect
+
+  $('#datatable-basic tbody').on( 'click', '#edit', function (event) {
+      // event prevent
+      event.preventDefault()
+     
+      // get data from table
+      let data = table.row( $(this).parents('tr') ).data();
+      let docId =  data[0];
+      // redirect page
+      let newUrl = 'taiLieuChiTiet.html?id=' + docId
+      window.location.replace(newUrl)
+    });
+
+// add search box 
+
+$(document).ready(function() {
+  if ( $.fn.dataTable.isDataTable( '#datatable-basic' ) ) {
+    table = $('#datatable-basic').DataTable();
+}
+else {
+    table = $('#datatable-basic').DataTable( {
       orderCellsTop: true,
       fixedHeader: true
     } );
-  }
+}
     // Setup - add a text input to each footer cell
-    $('#datatable-buttons thead tr').clone().appendTo( '#datatable-buttons thead' );
+    $('#datatable-basic thead tr').clone().appendTo( '#datatable-basic thead' );
 
-    $('#datatable-buttons thead tr:eq(1) th').each( function (i) {
+    $('#datatable-basic thead tr:eq(1) th').each( function (i) {
         var title = $(this).text();
         // var abc = this
         $(this).html( '<input type="text" placeholder="Tìm '+title+'" />' )
@@ -477,113 +392,7 @@
             }
         } );
     } );
-
-
-
-  })
-  </script>
-  <script>
-    let url ='http://localhost:11001/blacklist/all'
-    let table = $('#datatable-buttons').DataTable();
-    fetch (url,  {
-  method: 'GET',
-  credentials: "omit",
-  headers: {
-     'Content-Type': 'application/json',
-    //  Authorization: "Bearer " + token,
-    },
-  })
-  .then(response => response.json())
-  .then(docList =>{
-    docList.forEach(doc =>{
-
-      let data =[]
-      // get doc data
-    
-    
-      let userID= `${doc.user_id}`
-      let userName = `${doc.username}`
-      let violateTime = `${doc.count}`
-      let totalFee = `${doc.money}`
-      let btn = '<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-form" id="edit">Chi tiết</button>'
-
-      data.push (userID,userName,violateTime,totalFee, btn)
-
-
-      // add to table
-      table.row.add(data).draw()
-    })
-  })
-  .catch(error => {
-  console.error('Error:', error);
-  });
-
-  //modal click
-  $('#datatable-buttons tbody').on( 'click', 'button', function () {
-        var data = table.row( $(this).parents('tr') ).data();
-        let userID = data[0]
-        let saleFormUrl = 'http://localhost:11001/blacklist/detail/'
-        // window.location.replace('traTLchitiet.html?id='+borrowId)
-        fetch (saleFormUrl,  {
-  method: 'POST',
-  credentials: "omit",
-  headers: {
-     'Content-Type': 'application/json',
-    //  Authorization: "Bearer " + token,
-    },
-  body:JSON.stringify({user_id:userID})
-            
-  })
-  .then(response => response.json())
-  .then(obj =>{
-      let userID = obj.user_id
-      let userName = obj.username
-      let violationCount = obj.count
-      let totalFee = obj.money
-      let docs = obj.detail
-
-        // add value to input field
-      $("#userID").val(userID)
-      $("#userName").val(userName)
-      $("#violationCount").val(violationCount)
-      $("#totalFee").val(totalFee)
-
-        for (let i = 0; i < docs.length; i++){
-        
-        let formRow = document.createElement("div")
-        formRow.setAttribute('class','form-row')
-        formRow.setAttribute('id','newRow')
-        form.appendChild(formRow)
-        total.parentNode.insertBefore(formRow,total)
-
-        // add input field
-        // let inputDocId = range.createContextualFragment(docIdForm)
-        // formRow.appendChild(inputDocId)
-        let inputBorrowID = range.createContextualFragment(borrowIDForm)
-        formRow.appendChild(inputBorrowID)
-        let inputViolationTime = range.createContextualFragment(violationTimeForm)
-        formRow.appendChild(inputViolationTime)
-        let inputFee = range.createContextualFragment(feeForm)
-        formRow.appendChild(inputFee)
-        
-        // add data 
-        // formRow.querySelector("#docId").value = docs[i]["id_doc"]
-        formRow.querySelector("#borrowID").value = docs[i]["borrow_ID"]
-        formRow.querySelector("#violationTime").value = docs[i]["violation_time"]
-        formRow.querySelector("#fee").value = docs[i]["fee"]
-      }
-  })
-  .catch(error => {
-  console.error('Error:', error);
-  });
-    });
-    
-    $("#modal-form").on('hide.bs.modal', function(){
-      let div = document.querySelectorAll("#newRow")
-      for (let j=0; j< div.length;j++){
-     div[j].remove()
-    }
-  });
+} );
 
 
   </script>
