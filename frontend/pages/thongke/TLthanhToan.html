@@ -430,7 +430,7 @@
     let total = document.querySelector('#total')
 
 
-     let url ='http://localhost:3000/doc_bad'
+     let url ='http://localhost:11001/salebill/all'
      let table = $('#datatable-buttons').DataTable();
      fetch (url,  {
    method: 'GET',
@@ -489,7 +489,7 @@
 $('#datatable-buttons tbody').on( 'click', 'button', function () {
         var data = table.row( $(this).parents('tr') ).data();
         let saleId = data[0]
-        let saleFormUrl = 'http://localhost:3000/detailed_sale_form/' + saleId
+        let saleFormUrl = 'http://localhost:11001/salebill/detail'
         
         fetch (saleFormUrl,  {
   method: 'POST',
@@ -498,6 +498,7 @@ $('#datatable-buttons tbody').on( 'click', 'button', function () {
      'Content-Type': 'application/json',
     //  Authorization: "Bearer " + token,
     },
+    body:JSON.stringify({sale_bill_id:saleId})
   })
   .then(response => response.json())
   .then(obj =>{

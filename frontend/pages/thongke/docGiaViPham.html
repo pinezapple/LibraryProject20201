@@ -483,7 +483,7 @@
   })
   </script>
   <script>
-    let url ='http://localhost:3000/violated_user'
+    let url ='http://localhost:11001/blacklist/all'
     let table = $('#datatable-buttons').DataTable();
     fetch (url,  {
   method: 'GET',
@@ -522,15 +522,17 @@
   $('#datatable-buttons tbody').on( 'click', 'button', function () {
         var data = table.row( $(this).parents('tr') ).data();
         let userID = data[0]
-        let saleFormUrl = 'http://localhost:3000/detailed_violation_form/' + userID
+        let saleFormUrl = 'http://localhost:11001/blacklist/detail/'
         // window.location.replace('traTLchitiet.html?id='+borrowId)
         fetch (saleFormUrl,  {
-  method: 'GET',
+  method: 'POST',
   credentials: "omit",
   headers: {
      'Content-Type': 'application/json',
     //  Authorization: "Bearer " + token,
     },
+  body:JSON.stringify({user_id:userID})
+            
   })
   .then(response => response.json())
   .then(obj =>{
