@@ -351,13 +351,13 @@ fetch (url,
 
 // redirect
 
-  $('#datatable-basic tbody').on( 'click', '#edit', function (event) {
+  $('#datatable-basic tbody').on( 'click', '#detail', function (event) {
       // event prevent
       event.preventDefault()
      
       // get data from table
       let data = table.row( $(this).parents('tr') ).data();
-      let docId =  data[0];
+      let docId =  parseInt(data[0]);
       // redirect page
       let newUrl = 'taiLieuChiTiet.html?id=' + docId
       window.location.replace(newUrl)

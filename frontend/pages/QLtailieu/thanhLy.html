@@ -357,24 +357,24 @@
    <script src="../../pages/js/loginValidation.js"></script>
    <script>
            //Check if enough input
-  var count = 0;
-  function checkInput() {
-    var libarianID = $("#librarian").val();
-    if (libarianID != "" && count!= 0) {
-      $("#makeFormButton").removeClass("disabled");
-      $("#makeFormButton").prop('disabled', false);
-    } else {
-      $("#makeFormButton").addClass("disabled");
-      $("#makeFormButton").prop('disabled', true);
-    }
-  }
-  setInterval(checkInput, 300);
+  // var count = 0;
+  // function checkInput() {
+  //   var libarianID = $("#librarian").val();
+  //   if (libarianID != "" && count!= 0) {
+  //     $("#makeFormButton").removeClass("disabled");
+  //     $("#makeFormButton").prop('disabled', false);
+  //   } else {
+  //     $("#makeFormButton").addClass("disabled");
+  //     $("#makeFormButton").prop('disabled', true);
+  //   }
+  // }
+  // setInterval(checkInput, 300);
   
-  //reset button
-    $( "#resetButton" ).click(function() {
-      count = 0;
-      $(".newRow").remove();    
-    });
+  // //reset button
+  //   $( "#resetButton" ).click(function() {
+  //     count = 0;
+  //     $(".newRow").remove();    
+  //   });
 
      var table = $('#datatable-basic').DataTable();
      

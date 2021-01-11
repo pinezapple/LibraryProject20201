@@ -347,7 +347,7 @@
                   <th></th>
                 </tr>
               </tfoot>
-              <tbody>
+              <!-- <tbody>
                 <tr>
                   <td>23123</td>
                   <td>Nguyên vẹn</td>
@@ -355,7 +355,7 @@
                     <button type="button" class="btn btn-danger btn-sm"  data-toggle="sweet-alert" id="delete" >Xóa</button>
                   </td>
                 </tr>
-              </tbody>
+              </tbody> -->
             </table>
           </div>
         </div>
@@ -500,9 +500,9 @@
     let versionId = search_params.get('id')
     document.getElementById('versionId').value = versionId
 
-    let versionUrl = 'localhost:11001/dover/detail'
-    let barcodeUrlCreate = 'localhost:11001/documentversion/addbarcode'
-    let VersionUrlUpdate = 'localhost:11001/documentversion/update'
+    let versionUrl = 'http://localhost:11001/dover/detail'
+    let barcodeUrlCreate = 'http://localhost:11001/documentversion/addbarcode'
+    let VersionUrlUpdate = 'http://localhost:11001/documentversion/update'
 
   // fetch document version data for form
    // cần sửa
@@ -601,7 +601,7 @@
 
       fetch(url, 
         {
-          method: 'PUT',
+          method: 'POST',
           credentials: "omit",
           headers: {
              'Content-Type': 'application/json',
