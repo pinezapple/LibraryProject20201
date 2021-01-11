@@ -21,9 +21,9 @@ function loginRequest(user, pass) {
   myHeaders.append("Content-Type", "text/plain");
 
   var raw =
-    '{\n  "username" : "' +
+    '{\n  "username":"'+
     user +
-    '",\n  "password" : "' +
+    '",\n  "password":"'+
     pass +
     '"\n   \n}';
 
@@ -34,24 +34,12 @@ function loginRequest(user, pass) {
     redirect: "follow",
   };
 
-  fetch("http://25.43.134.201:8080/user/login", requestOptions)
+  fetch("http://localhost:11001/p/login", requestOptions)
     .then((response) => response.json())
     .then((result) => {
-      if (result.message == "login success") {
-        var token = result.token.access_token;
-        var id = result.id;
-        var name = result.name;
-        sessionStorage.setItem("token", token);
-        sessionStorage.setItem("id", token);
-        sessionStorage.setItem("name", token);
+        var user_id = result.user_id;        
+        sessionStorage.setItem("id", user_id);
         window.location.href = "../../pages/dashboards/dashboard.html";
-      } else if (result.message == "Invalid login details") {
-        alert("Thông tin đăng nhập chưa đúng");
-      } else if (result.message == "Invalid form") {
-        alert("Thông tin điền chưa hợp lệ!");
-      } else {
-        return;
-      }
     })
     .catch((error) => {
       console.log("Không kết nối được tới máy chủ", error);
