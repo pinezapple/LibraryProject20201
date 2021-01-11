@@ -118,7 +118,7 @@
                     <a href="../../pages/thongke/TLdaMuon.html" class="nav-link">Phiếu mượn</a>
                   </li>
                   <li class="nav-item">
-                    <a href="../../pages/thongke/TLthanhtoan.html" class="nav-link">Phiếu thanh lý</a>
+                    <a href="../../pages/thongke/TLthanhToan.html" class="nav-link">Phiếu thanh lý</a>
                   </li>
                   <li class="nav-item">
                     <a href="../../pages/thongke/TLthanhToanNhap.html" class="nav-link">Tài liệu nhập</a>
@@ -465,7 +465,7 @@
 
     let arrayId =[]
      for (let i = 0; i < barcodeIds.length; i++) {
-      let obj = {"barcode": barcodeIds[i].value}
+      let obj = {"barcode": parseInt(barcodeIds[i].value)}
       arrayId.push(obj)
       }
     // console.log(arrayId)
@@ -484,9 +484,7 @@
   ).then((res) => res.json())
   .then(result => {
       alert("Đã tạo phiếu mượn thành công")
-      document.getElementById("borrowForm").reset()
-     
-      
+      document.getElementById("borrowForm").reset() 
   })
   // .then(result => document.getElementById("borrowForm").reset())
   .catch((err)=>alert("Đã xảy ra lỗi",err))
@@ -518,7 +516,7 @@
       let barcode = `${doc.barcode_id}`
       let docName = `${doc.doc_name}`
       let author = `${doc.author}`
-      let type = `${doc.doc_type}`
+      let type = `${doc.category}`
       let publisher = `${doc.publisher}`
       let edition = `${doc.version}`
       let btn = '<button type="button" id="add" class="btn btn-info btn-sm">Thêm</button>'

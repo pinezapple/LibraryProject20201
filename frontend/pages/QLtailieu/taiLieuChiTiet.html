@@ -118,7 +118,7 @@
                     <a href="../../pages/thongke/TLdaMuon.html" class="nav-link">Phiếu mượn</a>
                   </li>
                   <li class="nav-item">
-                    <a href="../../pages/thongke/TLthanhtoan.html" class="nav-link">Phiếu thanh lý</a>
+                    <a href="../../pages/thongke/TLthanhToan.html" class="nav-link">Phiếu thanh lý</a>
                   </li>
                   <li class="nav-item">
                     <a href="../../pages/thongke/TLthanhToanNhap.html" class="nav-link">Tài liệu nhập</a>
@@ -470,15 +470,13 @@
       body:JSON.stringify({doc_id: parseInt(docId)})
   })
   .then(response => response.json())
-  .then(docList =>{
-    docList.forEach(doc =>{
-
-      
+  .then(doc =>{
+          
       // get doc data
       // let docId= `${doc.document_version}` 
-      let docName = `${doc.doc_name}` 
-      let type = `${doc.category_name}`
-      let versions = `${doc.doc_version}`
+      let docName = doc.doc_name 
+      let type = doc.category_name
+      let versions = doc.doc_version
 
       // get all version
       let versionId = version[0]["document_version_id"]
@@ -500,7 +498,7 @@
       data.push (versionId,versionNumber,publisher,author,quantity,price,btn)
       table.row.add(data).draw()
 
-    })
+    
   })
   .catch(error => {
   console.error('Error:', error);
