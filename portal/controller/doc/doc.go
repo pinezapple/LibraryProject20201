@@ -50,14 +50,6 @@ func SelectSaleBillByID(c echo.Context) (erro error) {
 	return controller.ExecHandler(c, &portalModel.SelectSaleBillByIDReq{}, selectSaleBillByID)
 }
 
-func SaveDocumentByBatch(c echo.Context) (erro error) {
-	return controller.ExecHandler(c, &portalModel.SaveDocReq{}, saveDocumentByBatch)
-}
-
-func CreateBorrowForm(c echo.Context) (erro error) {
-	return controller.ExecHandler(c, &portalModel.CreateBorrowFormReq{}, createBorrowForm)
-}
-
 func SelectAllBlackList(c echo.Context) (erro error) {
 	return controller.ExecHandler(c, nil, selectAllFromBlackList)
 }
