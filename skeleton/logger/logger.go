@@ -20,7 +20,7 @@ func LogInfo(lg *model.LogFormat, message string) {
 		return
 	}
 
-	lg.Action = message
+	lg.Action = lg.Action + " " + message
 	js, _ := json.Marshal(lg)
 	log.Infof("%s", js)
 }
