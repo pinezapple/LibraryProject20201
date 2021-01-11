@@ -809,6 +809,7 @@ func selectPaymentByID(c echo.Context, request interface{}) (statusCode int, dat
 		BorrowFormID: resp.Payment.BorrowFormID,
 		TotalMoney:   totalMoney,
 		Barcodes:     barcodes,
+		CreatedAt:    resp.Payment.CreatedAt,
 	}
 
 	return

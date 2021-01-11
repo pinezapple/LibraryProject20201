@@ -165,6 +165,7 @@ type SelectPaymentByIDResp struct {
 	LibrarianID  uint64                        `json:"librarian_id"`
 	TotalMoney   uint64                        `json:"total_money"`
 	Barcodes     []*RespBarcodePaymentOverview `json:"barcodes"`
+	CreatedAt    *model.Time                   `json:"created_at"`
 }
 
 // ------------------------------------------------------------------------------------------------------------------------------
