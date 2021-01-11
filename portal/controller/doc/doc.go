@@ -63,5 +63,16 @@ func SelectAllBlackList(c echo.Context) (erro error) {
 }
 func SelectBlackListByID(c echo.Context) (erro error) {
 	return controller.ExecHandler(c, &portalModel.SelectByUserIDReq{}, selectBlackListByUserID)
+}
 
+func SelectAllDoc(c echo.Context) (erro error) {
+	return controller.ExecHandler(c, nil, selectAllDoc)
+}
+
+func SelectDocByID(c echo.Context) (erro error) {
+	return controller.ExecHandler(c, &portalModel.SelectDocByIDReq{}, selectDocByID)
+}
+
+func SelectDocVerByID(c echo.Context) (erro error) {
+	return controller.ExecHandler(c, &portalModel.SelectDocVerByIDReq{}, selectDocVerByID)
 }

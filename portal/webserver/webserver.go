@@ -127,6 +127,12 @@ func initDocRouter(e *echo.Echo) {
 	k.POST("/all", doc.SelectAllBlackList)
 	k.POST("/detail", doc.SelectBlackListByID)
 
+	l := e.Group("/doc")
+	l.POST("/all", doc.SelectAllDoc)
+	l.POST("/detail", doc.SelectDocByID)
+
+	e.POST("/docver/detail", doc.SelectDocVerByID)
+
 	/*
 		d.POST("/save", doc.SaveDoc)
 		d.POST("/delete", doc.DelDoc)
