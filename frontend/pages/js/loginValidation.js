@@ -9,7 +9,7 @@ else{
 }
 
 function logout(){
-  localStorage.removeItem('token')
+  localStorage.removeItem('id')
   window.location.href = "../../pages/account/login.html";
 }
 });
