@@ -17,7 +17,7 @@ const (
 	sqlSelectAllDamagedBarcode   = "SELECT * FROM barcodes WHERE status = 3"
 	sqlSelectAllSellingBarcode   = "SELECT * FROM barcodes WHERE status = 4"
 	sqlSelectBarcodeByID         = "SELECT * FROM barcodes WHERE barcode_id = ?"
-	sqlSelectBarcodeByDocVerID   = "SELECT * FROM barcodes WHERE documents_version_id= ?"
+	sqlSelectBarcodeByDocVerID   = "SELECT * FROM barcodes WHERE document_version_id= ?"
 	sqlInsertNewBarcode          = "INSERT INTO barcodes(barcode_id, document_version_id, status) VALUES (?,?,?)"
 	sqlUpdateBarcodeSaleBillID   = "UPDATE barcodes SET sale_bill_id = ? WHERE barcode_id = ?"
 	sqlUpdateBarcodeStatus       = "UPDATE barcodes SET status = ? WHERE barcode_id = ?"

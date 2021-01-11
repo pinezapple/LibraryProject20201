@@ -500,7 +500,7 @@
     let versionId = search_params.get('id')
     document.getElementById('versionId').value = versionId
 
-    let versionUrl = 'http://localhost:11001/dover/detail'
+    let versionUrl = 'http://localhost:11001/docver/detail'
     let barcodeUrlCreate = 'http://localhost:11001/documentversion/addbarcode'
     let VersionUrlUpdate = 'http://localhost:11001/documentversion/update'
 
@@ -544,8 +544,8 @@
 
       // get all barcode
       let data = []
-      let barcode = barcode[0]["barcode_id"]
-      let status = barcode[0]["status"] // return a number
+      let barcodeId = barcodes[0]["barcode_id"]
+      let status = barcodes[0]["status"] // return a number
 
       // replace number value of barcode status
       let stage = status.toString()
@@ -553,7 +553,7 @@
 
       let btn = '<button type="button" id="edit" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-form-edit">Chỉnh sửa</button><button type="button" class="btn btn-danger btn-sm"  data-toggle="sweet-alert" id="delete" >Xóa</button>'
      
-      data.push (barcode,barcodeStatus,btn)
+      data.push (barcodeId,barcodeStatus,btn)
       // add to table
       table.row.add(data).draw()
     

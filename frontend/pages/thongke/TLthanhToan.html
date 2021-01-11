@@ -433,7 +433,7 @@
      let url ='http://localhost:11001/salebill/all'
      let table = $('#datatable-buttons').DataTable();
      fetch (url,  {
-   method: 'GET',
+   method: 'POST',
    credentials: "omit",
    headers: {
       'Content-Type': 'application/json',
@@ -450,7 +450,8 @@
      
        let idSale= `${doc.sale_bill_id}`
        let soldBy = `${doc.librarian_name}`
-       let date = `${doc.created_at}` 
+       let seconds = `${doc.created_at.seconds}`
+       let date = new Date(seconds *1000)
        let total = `${doc.total_money}`
        let btn = '<button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#modal-form">Chi tiết</button>'
  
