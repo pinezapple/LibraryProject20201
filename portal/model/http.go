@@ -273,6 +273,7 @@ type AddBarcodeByDocverIDResp struct {
 type CreateDocVerReq struct {
 	DocID          uint64 `json:"document_id"`
 	Price          uint64 `json:"price"`
+	Number         uint64 `json:"number"`
 	DocVersion     string `json:"document_version"`
 	DocDescription string `json:"document_description"`
 	Publisher      string `json:"publisher"`
