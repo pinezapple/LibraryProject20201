@@ -458,7 +458,7 @@
   <script>
 // get data
 
-let url ="http://localhost:3000/documents"
+let url ="http://localhost:11001/barcode/avail"
 fetch (url,
   {
     method: 'GET',
@@ -564,11 +564,11 @@ fetch (url,
     let status = parseInt(document.getElementById('status').value,10);
     let price = document.getElementById('price').value;
 
-    let url = 'http://localhost:11001/barcode/avail'
+    let url = 'http://localhost:11001/barcode/update'
 
       fetch(url + barcode, 
         {
-          method: 'PUT',
+          method: 'POST',
           credentials: "omit",
           headers: {
              'Content-Type': 'application/json',

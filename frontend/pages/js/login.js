@@ -35,8 +35,11 @@ function loginRequest(user, pass) {
 }
 
 $("#loginButton").on("click", function () {
-  let username = $("#username").val();
+  let username = $("#email").val();
   let password = $("#password").val();
+
+  console.log(username);
+  console.log(password);
 
   loginRequest(username, password);
 });
