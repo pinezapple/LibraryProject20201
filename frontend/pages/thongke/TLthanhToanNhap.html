@@ -353,8 +353,7 @@
       let publisher = `${doc.publisher}` 
       let edition = `${doc.version}`
       let price = `${doc.price}`
-      let seconds = `${doc.created_at.seconds}`
-      let date = new Date(seconds *1000)
+      let date = `${new Date(doc.created_at.seconds*1000)}`
       let status = `${doc.status}`
       
       let stage = status.toString()
