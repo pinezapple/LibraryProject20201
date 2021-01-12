@@ -461,7 +461,7 @@
   <script src="../../pages/js/loginValidation.js"></script>
   <script>
 var table = $('#datatable-basic').DataTable();
-let arr = [{'0': "Đã trả"},{'1': "Đang mượn"},{'2':'Quá hạn'}]
+
 let url ='http://localhost:11001/borrow/unreturned'
 
 let librarainStored = '1' // cần sửa
@@ -508,7 +508,14 @@ fetch (url,  {
       let btn = '<button type="button" id="update" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-form">Chỉnh sửa</button>'
       
       // replace number value of borrow form status
-      let stage = status.toString()
+      status = status.toString();
+      if(status == "0"){
+        borrowStatus = "Đã trả";
+     }else if(status == "1"){
+      borrowStatus = "Đang mượn";
+     }else if (status =="2" ){
+      borrowStatus ="Quá hạn";
+     }
       let borrowStatus = arr[stage][status]
       
       // push to array
