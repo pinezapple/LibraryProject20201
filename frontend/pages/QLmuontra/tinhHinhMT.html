@@ -505,12 +505,15 @@
       // replace number value of borrow form status
       // let stage = status.toString()
       // let borrowStatus = arr[stage][status]
-      if(status == 0){
+      status = status.toString();
+      if(status == "0"){
         borrowStatus = "Đã trả";
-     }else if(status == 1){
+     }else if(status == "1"){
       borrowStatus = "Đang mượn";
-     }else if (status ==2 ){
+     }else if (status =="2" ){
       borrowStatus ="Quá hạn";
+     }else if (status =="3" ){
+      borrowStatus ="Trả muộn";
      } 
       // push to array
       data.push (paymentId,borrowId,readerId,reader,librarian,0,fee,btn)
