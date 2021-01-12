@@ -372,7 +372,7 @@
                         </div>
                       </div>
 
-                      <div class="form-row" id="returnDate">
+                      <!-- <div class="form-row" id="returnDate">
                         <div class="col">
                         <div class="form-group">
                           
@@ -391,7 +391,7 @@
                       </div>
                        
 
-                      </div>
+                      </div> -->
 
 
                       <!-- Document Info-->
@@ -546,10 +546,10 @@ $('#datatable-basic tbody').on( 'click', 'button', function () {
       let paymentDate = new Date(obj.created_at.seconds*1000)
       let borrowFormId = obj.borrow_form_id
       let readerId = obj.reader_id
-      let startDate = obj.start_time
-      let endDate = obj.end_time
+      // let startDate = obj.start_time
+      // let endDate = obj.end_time
       let borrowStatus = obj.status
-      let fine = obj.fine 
+      let fine = obj.total_money 
       let docs = obj.barcodes
       
 
@@ -558,8 +558,8 @@ $('#datatable-basic tbody').on( 'click', 'button', function () {
       $("#paymentDate").val(paymentDate)
       $("#borrowId").val(borrowFormId)
       $("#userId").val(readerId)
-      $("#startDate").val(startDate)
-      $("#endDate").val(endDate)
+      // $("#startDate").val(startDate)
+      // $("#endDate").val(endDate)
       $("#status").val(borrowStatus)
       $("#totalFine").val(fine)
 
