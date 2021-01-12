@@ -330,12 +330,12 @@
                             <input type="text" class="form-control" id="paymentId" placeholder="Mã thanh toán" readonly>
                           </div>
                         </div>
-                        <div class="col">
+                        <!-- <div class="col">
                           <div class="form-group">
                             <label class="form-control-label">Ngày khởi tạo</label>
                             <input type="text" class="form-control" id="paymentDate" placeholder="Ngày khởi tạo" readonly>
                           </div>
-                        </div>
+                        </div> -->
                       </div>
                       <div class="form-row" id="personalInfo">
                         <div class="col">
@@ -361,12 +361,9 @@
                         <div class="col">
                           <div class="form-group">
                             
-                                <label class="form-control-label">Tình trạng mượn</label>
-                                <select class="form-control" id= "status" data-toggle="select" title="Tình trạng mượn" data-live-search="true" data-live-search-placeholder="Select" disabled>
-                                  <option value="0">Đã trả</option>
-                                  <option value="1">Đang mượn</option>
-                                  <option value="2">Quá hạn</option>
-                                </select>
+                                <label class="form-control-label">Phí muộn</label>
+                                <input class="form-control" placeholder="Phí muộn" id='borrowStatus' type="number" min="1" readonly>
+
                           </div>
 
                         </div>
@@ -516,7 +513,7 @@
       borrowStatus ="Quá hạn";
      } 
       // push to array
-      data.push (borrowId,paymentId,readerId,reader,librarian,0,fee,btn)
+      data.push (paymentId,borrowId,readerId,reader,librarian,0,fee,btn)
 
       // add to table
       table.row.add(data).draw()
@@ -543,24 +540,24 @@ $('#datatable-basic tbody').on( 'click', 'button', function () {
   .then(response => response.json())
   .then(obj =>{
       let paymentId = obj.payment_id
-      let paymentDate = new Date(obj.created_at.seconds*1000)
+      //let paymentDate = new Date(obj.created_at.seconds*1000)
       let borrowFormId = obj.borrow_form_id
       let readerId = obj.reader_id
       // let startDate = obj.start_time
       // let endDate = obj.end_time
-      let borrowStatus = obj.status
+      let borrowStatus = obj.fine
       let fine = obj.total_money 
       let docs = obj.barcodes
+      console.log(obj)
       
-
         // add value to input field
       $("#paymentId").val(paymentId)
-      $("#paymentDate").val(paymentDate)
+      //$("#paymentDate").val(paymentDate)
       $("#borrowId").val(borrowFormId)
       $("#userId").val(readerId)
       // $("#startDate").val(startDate)
       // $("#endDate").val(endDate)
-      $("#status").val(borrowStatus)
+      $("#borrowStatus").val(borrowStatus)
       $("#totalFine").val(fine)
 
         for (let i = 0; i < docs.length; i++){

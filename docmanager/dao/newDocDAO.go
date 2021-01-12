@@ -34,7 +34,7 @@ const (
 	sqlUpdateBorrowFormStatus        = "UPDATE borrow_form SET status = ? WHERE borrow_form_id = ?"
 
 	sqlSelectAllPayment            = "SELECT * FROM payments"
-	sqlSelectPaymentByID           = "SELECT * FROM payments WHERE payments_id = ?"
+	sqlSelectPaymentByID           = "SELECT * FROM payments WHERE payment_id = ?"
 	sqlInsertPayment               = "INSERT INTO payments(payment_id, borrow_form_id, librarian_id, reader_id, fine, barcode_id, barcode_status, money) VALUES (?,?,?,?,?,?,?,?)"
 	sqlSelectPaymentByBorrowFormID = "SELECT * FROM payments WHERE borrow_form_id = ?"
 )
