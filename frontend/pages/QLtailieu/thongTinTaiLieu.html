@@ -120,7 +120,7 @@
                     <a href="../../pages/thongke/TLdaMuon.html" class="nav-link">Phiếu mượn</a>
                   </li>
                   <li class="nav-item">
-                    <a href="../../pages/thongke/TLthanhtoan.html" class="nav-link">Phiếu thanh lý</a>
+                    <a href="../../pages/thongke/TLthanhToan.html" class="nav-link">Phiếu thanh lý</a>
                   </li>
                   <li class="nav-item">
                     <a href="../../pages/thongke/TLthanhToanNhap.html" class="nav-link">Tài liệu nhập</a>
@@ -351,13 +351,13 @@ fetch (url,
 
 // redirect
 
-  $('#datatable-basic tbody').on( 'click', '#edit', function (event) {
+  $('#datatable-basic tbody').on( 'click', '#detail', function (event) {
       // event prevent
       event.preventDefault()
      
       // get data from table
       let data = table.row( $(this).parents('tr') ).data();
-      let docId =  data[0];
+      let docId =  parseInt(data[0]);
       // redirect page
       let newUrl = 'taiLieuChiTiet.html?id=' + docId
       window.location.replace(newUrl)

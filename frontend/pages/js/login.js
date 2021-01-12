@@ -17,12 +17,18 @@ setInterval(checkInput, 300);
 
 //Login request
 function loginRequest(user, pass) {
+  var raw =
+      '{\n  "username":"' +
+      user +
+      '",\n  "password":"' +
+      pass +
+      '"\n}';
   fetch('http://localhost:11001/p/login',{
         method: 'POST',
         headers: {
         'Content-Type': 'application/json'
         },
-        body: JSON.stringify({username:user,password:pass})
+        body: raw
     }).then(response => response.json())
     .then(res =>{
       var user_id = result.user_id;        
@@ -35,8 +41,11 @@ function loginRequest(user, pass) {
 }
 
 $("#loginButton").on("click", function () {
-  let username = $("#username").val();
+  let username = $("#email").val();
   let password = $("#password").val();
+
+  console.log(username);
+  console.log(password);
 
   loginRequest(username, password);
 });

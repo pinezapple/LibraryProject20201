@@ -118,7 +118,7 @@
                     <a href="../../pages/thongke/TLdaMuon.html" class="nav-link">Phiếu mượn</a>
                   </li>
                   <li class="nav-item">
-                    <a href="../../pages/thongke/TLthanhtoan.html" class="nav-link">Phiếu thanh lý</a>
+                    <a href="../../pages/thongke/TLthanhToan.html" class="nav-link">Phiếu thanh lý</a>
                   </li>
                   <li class="nav-item">
                     <a href="../../pages/thongke/TLthanhToanNhap.html" class="nav-link">Tài liệu nhập</a>
@@ -353,7 +353,7 @@
       let publisher = `${doc.publisher}` 
       let edition = `${doc.version}`
       let price = `${doc.price}`
-      let date = `${doc.created_at}`
+      let date = `${new Date(doc.created_at.seconds*1000)}`
       let status = `${doc.status}`
       
       let stage = status.toString()

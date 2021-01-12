@@ -35,6 +35,7 @@ func (d *docManagerSrv) SelectAllBarcodeByDocVerID(ctx context.Context, req *doc
 	logger.LogInfo(d.lg, "RPC Req: Select all barcode")
 
 	barcodes, err := dao.SelectBarcodeByDocVerID(ctx, core.GetDB(), req.DocVerID)
+	fmt.Println(barcodes)
 	if err != nil {
 		logger.LogErr(d.lg, err)
 		return &docmanagerModel.SelectAllBarcodeByDocVerIDResp{Code: 1, Message: err.Error()}, err
@@ -48,7 +49,7 @@ func (d *docManagerSrv) SelectAllAvailableBarcode(ctx context.Context, req *docm
 	logger.LogInfo(d.lg, "RPC Req: Select all available barcode")
 
 	//FIXME: add functions
-	barcodes, err := dao.SelectAllBarcode(ctx, core.GetDB())
+	barcodes, err := dao.SelectAllAvailableBarcode(ctx, core.GetDB())
 	if err != nil {
 		logger.LogErr(d.lg, err)
 		return &docmanagerModel.SelectAllAvailableBarcodeResp{Code: 1, Message: err.Error()}, err

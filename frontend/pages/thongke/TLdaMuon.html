@@ -118,7 +118,7 @@
                     <a href="../../pages/thongke/TLdaMuon.html" class="nav-link">Phiếu mượn</a>
                   </li>
                   <li class="nav-item">
-                    <a href="../../pages/thongke/TLthanhtoan.html" class="nav-link">Phiếu thanh lý</a>
+                    <a href="../../pages/thongke/TLthanhToan.html" class="nav-link">Phiếu thanh lý</a>
                   </li>
                   <li class="nav-item">
                     <a href="../../pages/thongke/TLthanhToanNhap.html" class="nav-link">Tài liệu nhập</a>
@@ -316,7 +316,7 @@
   <script>
     var table = $('#datatable-buttons').DataTable();
     let arr = [{'0': "Đã trả"},{'1': "Đang mượn"},{'2':'Quá hạn'}]
-    let url ='http://localhost:11001/borrow/unreturned'
+    let url ='http://localhost:11001/borrow/all'
     fetch (url,
   {
     method: 'POST',
@@ -336,7 +336,8 @@
       let idUser= `${doc.reader_id}`
       let nameUser = `${doc.reader_name}` 
       let status = `${doc.status}`
-      let docDate = `${doc.end_time}`
+      let docDate = `${new Date(doc.end_time.seconds*1000)}`
+      
       let fee = `${doc.fine}` 
 
       // replace number value of borrow form status

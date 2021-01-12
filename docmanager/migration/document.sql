@@ -6,8 +6,8 @@ drop table if exists payments;
 CREATE TABLE `barcodes` (
   `barcode_id` bigint(20),
   `document_version_id` bigint(20),
-  `status` bigint(20),
-  `sale_bill_id` bigint(20), 
+  `status` bigint(20) DEFAULT 0,
+  `sale_bill_id` bigint(20) DEFAULT 0, 
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) Engine=InnoDB;
@@ -17,7 +17,7 @@ CREATE TABLE `borrow_form` (
   `librarian_id` bigint(20),
   `reader_id` bigint(20),
   `barcode_id` BLOB,
-  `status` bigint(20),
+  `status` bigint(20) DEFAULT 1,
   `borrow_start_time` timestamp DEFAULT CURRENT_TIMESTAMP,
   `borrow_end_time` timestamp,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,

@@ -31,6 +31,6 @@ type SaleBillDAOobj struct {
 	ID          uint64      `protobuf:"varint,1,opt,name=ID,proto3" json:"sale_bill_id" db:"sale_bill_id"`
 	LibrarianID uint64      `protobuf:"varint,2,opt,name=LibrarianID,proto3" json:"librarian_id" db:"librarian_id"`
 	BarcodeId   []byte      `protobuf:"varint,2,rep,packed,name=barcode_id,json=barcodeId,proto3" json:"barcode_id" db:"barcode_id"`
-	Price       []byte      `protobuf:"varint,3,rep,packed,name=price,proto3" json:"price" db:"price"`
+	Price       []byte      `protobuf:"varint,3,rep,packed,name=sale_price,proto3" json:"sale_price" db:"sale_price"`
 	CreatedAt   *model.Time `protobuf:"bytes,4,opt,name=Created_at,json=CreatedAt,proto3" json:"created_at" db:"created_at"`
 }

@@ -174,7 +174,7 @@ func selectAllBarcodeAvail(c echo.Context, request interface{}) (statusCode int,
 	ctx := c.Request().Context()
 	// Log login info
 	db := core.GetDB()
-	lg = &model.LogFormat{Source: c.Request().RemoteAddr, Action: "Select all damaged barcode from shards", Data: ""}
+	lg = &model.LogFormat{Source: c.Request().RemoteAddr, Action: "Select all avail barcode from shards", Data: ""}
 	shardNum := core.ShardNumber
 
 	shardService := microservice.GetDocmanagerShardServices()
@@ -327,6 +327,8 @@ func selectAllSaleBill(c echo.Context, request interface{}) (statusCode int, dat
 	// Log login info
 	lg = &model.LogFormat{Source: c.Request().RemoteAddr, Action: "Select all Sale bill from shards", Data: ""}
 	shardNum := core.ShardNumber
+	db := core.GetDB()
+	userDAO := database.GetUserDAO()
 
 	shardService := microservice.GetDocmanagerShardServices()
 	if shardService == nil {
@@ -354,11 +356,16 @@ func selectAllSaleBill(c echo.Context, request interface{}) (statusCode int, dat
 			for k := 0; k < len(resp.SaleBills[j].Price); k++ {
 				price += resp.SaleBills[j].Price[j]
 			}
+
+			//fmt.Println(resp.SaleBills[j].LibrarianID)
+			lib, _ := userDAO.Select(ctx, db, resp.SaleBills[j].LibrarianID)
+
 			tmp := &portalModel.SelectAllSaleBillResp{
-				SaleBillID:  resp.SaleBills[j].ID,
-				LibrarianID: resp.SaleBills[j].LibrarianID,
-				TotalMoney:  price,
-				CreatedAt:   resp.SaleBills[j].CreatedAt,
+				SaleBillID:    resp.SaleBills[j].ID,
+				LibrarianID:   resp.SaleBills[j].LibrarianID,
+				LibrarianName: lib.Name,
+				TotalMoney:    price,
+				CreatedAt:     resp.SaleBills[j].CreatedAt,
 			}
 
 			finalResp = append(finalResp, tmp)
@@ -404,7 +411,6 @@ func selectAllPayment(c echo.Context, request interface{}) (statusCode int, data
 			if er != nil {
 				statusCode, err = http.StatusInternalServerError, er
 				return
-
 			}
 
 			user, er := userDAO.Select(ctx, db, resp.Payments[j].ReaderID)
@@ -479,7 +485,6 @@ func selectAllBorrowForm(c echo.Context, request interface{}) (statusCode int, d
 			if er != nil {
 				statusCode, err = http.StatusInternalServerError, er
 				return
-
 			}
 
 			user, er := userDAO.Select(ctx, db, resp.BorrowForms[j].ReaderID)
@@ -568,8 +573,13 @@ func selectAllUnreturnedBorrowForm(c echo.Context, request interface{}) (statusC
 			}
 
 			fine := (time.Now().Unix() - resp.BorrowForms[j].EndTime.Seconds) / 86400 * conf.FinePerDay
-			if fine < 0 {
+			fmt.Println(time.Now().Unix())
+			fmt.Println(resp.BorrowForms[j].EndTime.Seconds)
+			fmt.Println(fine)
+			if fine <= 0 {
 				fine = 0
+			} else {
+				resp.BorrowForms[j].Status = 2
 			}
 
 			tmp := &portalModel.SelectAllBorrowFormElement{
@@ -991,6 +1001,7 @@ func saveDocumentByBatch(c echo.Context, request interface{}) (statusCode int, d
 		DocVerID:        uint64(core.GetHash(uuidDocVersion.String())),
 		DocumentVersion: req.Version,
 		DocID:           reqDoc.DocID,
+		Publisher:       req.Publisher,
 		DocDescription:  req.Description,
 		AuthorID:        authorID,
 		Price:           req.Price,
@@ -1235,7 +1246,7 @@ func selectDocVerByID(c echo.Context, request interface{}) (statusCode int, data
 	shardnum := core.ShardNumber
 	req := request.(*portalModel.SelectDocVerByIDReq)
 	// Log login info
-	lg = &model.LogFormat{Source: c.Request().RemoteAddr, Action: "Select all from doc", Data: ""}
+	lg = &model.LogFormat{Source: c.Request().RemoteAddr, Action: "Select all barcode by docver ID", Data: ""}
 
 	docver, er := cache.SelectDocumentVersionByID(ctx, db, req.DocVerID)
 	if er != nil {

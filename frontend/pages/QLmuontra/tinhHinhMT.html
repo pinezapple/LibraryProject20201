@@ -118,7 +118,7 @@
                     <a href="../../pages/thongke/TLdaMuon.html" class="nav-link">Phiếu mượn</a>
                   </li>
                   <li class="nav-item">
-                    <a href="../../pages/thongke/TLthanhtoan.html" class="nav-link">Phiếu thanh lý</a>
+                    <a href="../../pages/thongke/TLthanhToan.html" class="nav-link">Phiếu thanh lý</a>
                   </li>
                   <li class="nav-item">
                     <a href="../../pages/thongke/TLthanhToanNhap.html" class="nav-link">Tài liệu nhập</a>
@@ -259,7 +259,7 @@
                     <th></th>
                   </tr>
                 </tfoot>
-                <tbody>
+                <!-- <tbody>
                   <tr>
                     <td>23</td>
                     <td>12</td>
@@ -270,7 +270,7 @@
                     <td>100000</td>
                     <td><button type="button" id="add" class="btn btn-secondary btn-sm"  data-toggle="modal" data-target="#modal-form">Chi tiết</button></td>
                   </tr>
-                </tbody>
+                </tbody> -->
               </table>
             </div>
           </div>
@@ -330,12 +330,12 @@
                             <input type="text" class="form-control" id="paymentId" placeholder="Mã thanh toán" readonly>
                           </div>
                         </div>
-                        <div class="col">
+                        <!-- <div class="col">
                           <div class="form-group">
                             <label class="form-control-label">Ngày khởi tạo</label>
                             <input type="text" class="form-control" id="paymentDate" placeholder="Ngày khởi tạo" readonly>
                           </div>
-                        </div>
+                        </div> -->
                       </div>
                       <div class="form-row" id="personalInfo">
                         <div class="col">
@@ -361,18 +361,15 @@
                         <div class="col">
                           <div class="form-group">
                             
-                                <label class="form-control-label">Tình trạng mượn</label>
-                                <select class="form-control" id= "status" data-toggle="select" title="Tình trạng mượn" data-live-search="true" data-live-search-placeholder="Select" disabled>
-                                  <option value="0">Đã trả</option>
-                                  <option value="1">Đang mượn</option>
-                                  <option value="2">Quá hạn</option>
-                                </select>
+                                <label class="form-control-label">Phí muộn</label>
+                                <input class="form-control" placeholder="Phí muộn" id='borrowStatus' type="number" min="1" readonly>
+
                           </div>
 
                         </div>
                       </div>
 
-                      <div class="form-row" id="returnDate">
+                      <!-- <div class="form-row" id="returnDate">
                         <div class="col">
                         <div class="form-group">
                           
@@ -391,7 +388,7 @@
                       </div>
                        
 
-                      </div>
+                      </div> -->
 
 
                       <!-- Document Info-->
@@ -502,15 +499,21 @@
       let reader = `${form.reader_name}` 
       let librarian = `${form.librarian_name}` 
       let status = `${form.status}` //return a number
-      let fee = `${form.fine}` 
+      let fee = `${form.total_money}` 
       let btn ='<button type="button" id="add" class="btn btn-secondary btn-sm"  data-toggle="modal" data-target="#modal-form">Chi tiết</button>'
-      
+      let borrowStatus;
       // replace number value of borrow form status
-      let stage = status.toString()
-      let borrowStatus = arr[stage][status]
-
+      // let stage = status.toString()
+      // let borrowStatus = arr[stage][status]
+      if(status ==0){
+        borrowStatus = "Đã trả";
+     }else if(status == 1){
+      borrowStatus = "Đang mượn";
+     }else if (status ==2 ){
+      borrowStatus ="Quá hạn";
+     } 
       // push to array
-      data.push (borrowId,readerId,reader,librarian,borrowStatus,fee,btn)
+      data.push (paymentId,borrowId,readerId,reader,librarian,0,fee,btn)
 
       // add to table
       table.row.add(data).draw()
@@ -537,24 +540,24 @@ $('#datatable-basic tbody').on( 'click', 'button', function () {
   .then(response => response.json())
   .then(obj =>{
       let paymentId = obj.payment_id
-      let paymentDate = obj.created_at // cần sửa
+      //let paymentDate = new Date(obj.created_at.seconds*1000)
       let borrowFormId = obj.borrow_form_id
       let readerId = obj.reader_id
-      let startDate = obj.start_time
-      let endDate = obj.end_time
-      let borrowStatus = obj.status
-      let fine = obj.fine 
+      // let startDate = obj.start_time
+      // let endDate = obj.end_time
+      let borrowStatus = obj.fine
+      let fine = obj.total_money 
       let docs = obj.barcodes
+      console.log(obj)
       
-
         // add value to input field
       $("#paymentId").val(paymentId)
-      $("#paymentDate").val(paymentDate)
+      //$("#paymentDate").val(paymentDate)
       $("#borrowId").val(borrowFormId)
       $("#userId").val(readerId)
-      $("#startDate").val(startDate)
-      $("#endDate").val(endDate)
-      $("#status").val(borrowStatus)
+      // $("#startDate").val(startDate)
+      // $("#endDate").val(endDate)
+      $("#borrowStatus").val(borrowStatus)
       $("#totalFine").val(fine)
 
         for (let i = 0; i < docs.length; i++){

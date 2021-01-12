@@ -19,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
   <meta name="author" content="Creative Tim">
-  <title>Thông tin tài liệu</title>
+  <title>Tài liệu hiện có</title>
   <!-- Favicon -->
   <link rel="icon" href="../../assets/img/brand/favicon.png" type="image/png">
   <!-- Fonts -->
@@ -270,7 +270,7 @@
                     <th>Action</th>
                   </tr>
                 </tfoot>
-                <tbody>
+                <!-- <tbody>
                 <tr>
                   <td>05</td>
                   <td>0129323</td>
@@ -297,7 +297,7 @@
                     <td><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-form" id="edit">Chỉnh sửa</button>
                       <button type="button" class="btn btn-danger btn-sm"  data-toggle="sweet-alert" id="delete" >Xóa</button></td>
                   </tr>
-                </tbody>
+                </tbody> -->
               </table>
             </div>
           </div>
@@ -458,10 +458,11 @@
   <script>
 // get data
 
-let url ="http://localhost:3000/documents"
+let url ="http://localhost:11001/barcode/avail"
+
 fetch (url,
   {
-    method: 'GET',
+    method: 'POST',
     credentials: "omit",
     headers: {
        'Content-Type': 'application/json',
@@ -477,7 +478,7 @@ fetch (url,
       let docId= `${doc.doc_id}`
       let barcode = `${doc.barcode_id}`
       let docName = `${doc.doc_name}`
-      let author = `${doc.doc_author}`
+      let author = `${doc.author}`
       let type = `${doc.category}`
       let publisher = `${doc.publisher}`
       let edition = `${doc.version}`
@@ -564,11 +565,11 @@ fetch (url,
     let status = parseInt(document.getElementById('status').value,10);
     let price = document.getElementById('price').value;
 
-    let url = 'http://localhost:11001/barcode/avail'
+    let urlUpdate = 'http://localhost:11001/barcode/update'
 
-      fetch(url + barcode, 
+      fetch(urlUpdate , 
         {
-          method: 'PUT',
+          method: 'POST',
           credentials: "omit",
           headers: {
              'Content-Type': 'application/json',
@@ -595,7 +596,7 @@ fetch (url,
       // get data from table
       let data = table.row( $(this).parents('tr') ).data();
       let barcode =  parseInt(data[1],10)
-      let url = 'localhost:11001/barcode/delete'
+      let urlDel = 'http://localhost:11001/barcode/delete'
 
       // sweet alert
       swal({
@@ -609,9 +610,9 @@ fetch (url,
     }).then((result) => {
       if (result.value) {
         // delete in db
-        fetch( url + barcode,
+        fetch( urlDel,
         {
-          method: 'DELETE',
+          method: 'POST',
           credentials: "omit",
           headers: {
              'Content-Type': 'application/json',

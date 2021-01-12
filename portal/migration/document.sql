@@ -2,7 +2,7 @@ drop table if exists documents;
 drop table if exists document_version;
 drop table if exists categories;
 drop table if exists authors;
-drop table if exists blacklist;
+drop table if exists black_list;
 drop table if exists barcode_cache;
 
 create table document_version
@@ -56,7 +56,7 @@ create table black_list
 (
   `user_id` bigint(20),
   `borrow_form_id` bigint(20),
-  `total_money` varchar(255),
+  `money` varchar(255),
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) Engine=InnoDB;
 
