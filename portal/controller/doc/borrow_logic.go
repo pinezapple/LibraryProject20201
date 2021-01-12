@@ -75,7 +75,7 @@ func createBorrowForm(c echo.Context, request interface{}) (statusCode int, data
 	for i := range barcodeUpdateBorrowStatus {
 		barcodeUpdateBorrowStatus[i] = model.BarcodeBorrowingStatus
 	}
-	if er := updateBarcodeStatusByBatch(ctx, req.Barcodes, barcodeUpdateBorrowStatus); er != nil {
+	if er := updateBarcodeStatusByBatch(ctx, req.Barcodes, barcodeUpdateBorrowStatus, 0); er != nil {
 		statusCode, err = http.StatusInternalServerError, er
 		return
 	}
@@ -139,7 +139,7 @@ func updateBorrowForm(c echo.Context, request interface{}) (statusCode int, data
 		totalFee += req.BarcodeUpdate[i].Fee
 	}
 
-	if er := updateBarcodeStatusByBatch(ctx, barcodeID, barcodeStatus); er != nil {
+	if er := updateBarcodeStatusByBatch(ctx, barcodeID, barcodeStatus, 0); er != nil {
 		statusCode, err = http.StatusInternalServerError, er
 		return
 	}

@@ -22,7 +22,7 @@ var (
 // -------------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------- UTILS ----------------------------------------------------------
 
-func updateBarcodeStatusByBatch(ctx context.Context, barcodeID []uint64, barcodeStatus []uint64) (err error) {
+func updateBarcodeStatusByBatch(ctx context.Context, barcodeID []uint64, barcodeStatus []uint64, salebillID uint64) (err error) {
 	if len(barcodeID) != len(barcodeStatus) {
 		return ErrUpdateBarcodeLengthNotMatch
 	}
@@ -37,6 +37,10 @@ func updateBarcodeStatusByBatch(ctx context.Context, barcodeID []uint64, barcode
 			ID:     0,
 			Status: 0,
 		},
+	}
+
+	if salebillID != 0 {
+		templateUpdateBarcodeReq.Barcode.SaleBillID = salebillID
 	}
 
 	for barcodeIndex := range barcodeID {
