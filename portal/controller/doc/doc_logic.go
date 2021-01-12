@@ -409,7 +409,7 @@ func selectAllPayment(c echo.Context, request interface{}) (statusCode int, data
 			var money = resp.Payments[i].Fine
 			var stat uint64
 			if money > 0 {
-				stat = 4
+				stat = 3
 			} else {
 				stat = 0
 			}
@@ -883,7 +883,7 @@ func selectPaymentByID(c echo.Context, request interface{}) (statusCode int, dat
 	var totalMoney = resp.Payment.Fine
 	var stat uint64
 	if totalMoney > 0 {
-		stat = 4
+		stat = 3
 	} else {
 		stat = 0
 	}

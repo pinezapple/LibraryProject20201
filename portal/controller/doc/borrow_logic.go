@@ -95,7 +95,7 @@ func updateBorrowForm(c echo.Context, request interface{}) (statusCode int, data
 	}
 
 	if req.Fine != 0 {
-		req.Status = 4
+		req.Status = 3
 	} else {
 		req.Status = 0
 	}
