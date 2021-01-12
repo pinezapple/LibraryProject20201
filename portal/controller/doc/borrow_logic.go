@@ -94,6 +94,12 @@ func updateBorrowForm(c echo.Context, request interface{}) (statusCode int, data
 		Action: "update borrow form",
 	}
 
+	if req.Fine != 0 {
+		req.Status = 4
+	} else {
+		req.Status = 0
+	}
+
 	// create request
 	rpcUpdateBorrowFormReq := &docmanagerModel.UpdateBorrowFormStatusReq{
 		BorrowFormID: req.BorrowFormID,

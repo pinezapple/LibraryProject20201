@@ -407,6 +407,12 @@ func selectAllPayment(c echo.Context, request interface{}) (statusCode int, data
 		}
 		for j := 0; j < len(resp.Payments); j++ {
 			var money = resp.Payments[i].Fine
+			var stat uint64
+			if money > 0 {
+				stat = 4
+			} else {
+				stat = 0
+			}
 			lib, er := userDAO.Select(ctx, db, resp.Payments[j].LibrarianID)
 			if er != nil {
 				statusCode, err = http.StatusInternalServerError, er
@@ -423,11 +429,13 @@ func selectAllPayment(c echo.Context, request interface{}) (statusCode int, data
 			for k := 0; k < len(resp.Payments[j].Money); k++ {
 				money += resp.Payments[j].Money[k]
 			}
+
 			tmp := &portalModel.SelectAllPaymentResp{
 				PaymentID:     resp.Payments[j].ID,
 				BorrowFormID:  resp.Payments[j].BorrowFormID,
 				LibrarianID:   resp.Payments[j].LibrarianID,
 				LibrarianName: lib.Name,
+				Status:        stat,
 				ReaderID:      resp.Payments[j].ReaderID,
 				ReaderName:    user.Name,
 				TotalMoney:    money,
@@ -873,6 +881,12 @@ func selectPaymentByID(c echo.Context, request interface{}) (statusCode int, dat
 
 	var barcodes []*portalModel.RespBarcodePaymentOverview
 	var totalMoney = resp.Payment.Fine
+	var stat uint64
+	if totalMoney > 0 {
+		stat = 4
+	} else {
+		stat = 0
+	}
 
 	for i := 0; i < len(resp.Payment.BarcodeID); i++ {
 		docver, er := cache.SelectDocVerIDFromCacheByBarcode(ctx, db, resp.Payment.BarcodeID[i])
@@ -915,6 +929,7 @@ func selectPaymentByID(c echo.Context, request interface{}) (statusCode int, dat
 		LibrarianID:  resp.Payment.LibrarianID,
 		TotalMoney:   totalMoney,
 		Fine:         resp.Payment.Fine,
+		Status:       stat,
 		Barcodes:     barcodes,
 		CreatedAt:    resp.Payment.CreatedAt,
 	}

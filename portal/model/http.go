@@ -143,6 +143,7 @@ type SelectAllPaymentResp struct {
 	PaymentID     uint64      `json:"payment_id"`
 	BorrowFormID  uint64      `json:"borrow_form_id"`
 	TotalMoney    uint64      `json:"total_money"`
+	Status        uint64      `json:"status"`
 	LibrarianID   uint64      `json:"librarian_id"`
 	LibrarianName string      `json:"librarian_name"`
 	ReaderID      uint64      `json:"reader_id"`
@@ -170,6 +171,7 @@ type SelectPaymentByIDResp struct {
 	ReaderID     uint64                        `json:"reader_id"`
 	TotalMoney   uint64                        `json:"total_money"`
 	Fine         uint64                        `json:"fine"`
+	Status       uint64                        `json:"status"`
 	Barcodes     []*RespBarcodePaymentOverview `json:"barcodes"`
 	CreatedAt    *model.Time                   `json:"created_at"`
 }
