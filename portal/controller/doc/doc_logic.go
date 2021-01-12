@@ -443,6 +443,73 @@ func selectAllPayment(c echo.Context, request interface{}) (statusCode int, data
 	return
 }
 
+func selectPaymentWithFine(c echo.Context, request interface{}) (statusCode int, data interface{}, lg *model.LogFormat, logResponse bool, err error) {
+	ctx := c.Request().Context()
+	// Log login info
+	lg = &model.LogFormat{Source: c.Request().RemoteAddr, Action: "Select payment with fine from shards", Data: ""}
+	shardNum := core.ShardNumber
+	shardService := microservice.GetDocmanagerShardServices()
+	db := core.GetDB()
+
+	userDAO := database.GetUserDAO()
+	if shardService == nil {
+		fmt.Println("nil shardService")
+		statusCode, err = http.StatusInternalServerError, fmt.Errorf("nil shardService")
+		return
+	}
+
+	var finalResp []*portalModel.SelectAllPaymentResp
+
+	for i := 0; i < shardNum; i++ {
+		ser, ok := shardService[uint64(i)]
+		if !ok {
+			fmt.Println("nil shardID")
+			statusCode, err = http.StatusInternalServerError, fmt.Errorf("no shard id")
+			return
+		}
+		resp, er := ser.Docmanager.SelectPaymentWithFine(ctx, &docmanagerModel.SelectPaymentWithFineReq{})
+		if er != nil || resp.Code != 0 {
+			statusCode, err = http.StatusInternalServerError, fmt.Errorf("grpc Error")
+			return
+		}
+		for j := 0; j < len(resp.Payment); j++ {
+			var money = resp.Payment[i].Fine
+			lib, er := userDAO.Select(ctx, db, resp.Payment[j].LibrarianID)
+			if er != nil {
+				statusCode, err = http.StatusInternalServerError, er
+				return
+			}
+
+			user, er := userDAO.Select(ctx, db, resp.Payment[j].ReaderID)
+			if er != nil {
+				statusCode, err = http.StatusInternalServerError, er
+				return
+
+			}
+
+			for k := 0; k < len(resp.Payment[j].Money); k++ {
+				money += resp.Payment[j].Money[k]
+			}
+			tmp := &portalModel.SelectAllPaymentResp{
+				PaymentID:     resp.Payment[j].ID,
+				BorrowFormID:  resp.Payment[j].BorrowFormID,
+				LibrarianID:   resp.Payment[j].LibrarianID,
+				LibrarianName: lib.Name,
+				ReaderID:      resp.Payment[j].ReaderID,
+				ReaderName:    user.Name,
+				TotalMoney:    money,
+				CreatedAt:     resp.Payment[j].CreatedAt,
+			}
+
+			finalResp = append(finalResp, tmp)
+		}
+
+	}
+	data = finalResp
+
+	return
+}
+
 func selectAllBorrowForm(c echo.Context, request interface{}) (statusCode int, data interface{}, lg *model.LogFormat, logResponse bool, err error) {
 	ctx := c.Request().Context()
 	// Log login info

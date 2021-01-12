@@ -236,6 +236,19 @@ func (d *docManagerSrv) SelectAllPayment(ctx context.Context, req *docmanagerMod
 	return &docmanagerModel.SelectAllPaymentResp{Code: 0, Payments: payments}, nil
 }
 
+func (d *docManagerSrv) SelectPaymentWithFine(ctx context.Context, req *docmanagerModel.SelectPaymentWithFineReq) (resp *docmanagerModel.SelectPaymentWithFineResp, err error) {
+	logger.LogInfo(d.lg, "RPC Req: Select all payment")
+
+	payments, err := dao.SelectPaymentWithFine(ctx, core.GetDB())
+	if err != nil {
+		logger.LogErr(d.lg, err)
+		return &docmanagerModel.SelectPaymentWithFineResp{Code: 1, Message: err.Error()}, err
+	}
+
+	logger.LogInfo(d.lg, "RPC Resp: Select all payment OK")
+	return &docmanagerModel.SelectPaymentWithFineResp{Code: 0, Payment: payments}, nil
+}
+
 func (d *docManagerSrv) SelectPaymentByID(ctx context.Context, req *docmanagerModel.SelectPaymentByIDReq) (resp *docmanagerModel.SelectPaymentByIDResp, err error) {
 	logger.LogInfo(d.lg, "RPC Req: Select payment by id")
 

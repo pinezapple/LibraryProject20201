@@ -34,6 +34,10 @@ func SelectAllPayment(c echo.Context) (erro error) {
 	return controller.ExecHandler(c, nil, selectAllPayment)
 }
 
+func SelectPaymentWithFine(c echo.Context) (erro error) {
+	return controller.ExecHandler(c, nil, selectPaymentWithFine)
+}
+
 func SelectAllSaleBill(c echo.Context) (erro error) {
 	return controller.ExecHandler(c, nil, selectAllSaleBill)
 }

@@ -38,6 +38,7 @@ service Docmanager {
     rpc SelectAllPayment (SelectAllPaymentReq) returns (SelectAllPaymentResp);
     rpc SelectPaymentByID (SelectPaymentByIDReq) returns (SelectPaymentByIDResp);
     rpc SelectPaymentByBorrowFormID (SelectPaymentByBorrowFormIDReq) returns (SelectPaymentByBorrowFormIDResp);
+    rpc SelectPaymentWithFine (SelectPaymentWithFineReq) returns (SelectPaymentWithFineResp);
     rpc SavePayment (SavePaymentReq) returns (SavePaymentResp);
 
     rpc SelectAllSaleBill (SelectAllSaleBillReq) returns (SelectAllSaleBillResp);
@@ -284,6 +285,16 @@ message SelectPaymentByBorrowFormIDResp {
     int32 Code = 1;
     string Message = 2;
     Payment Payment = 3 [(gogoproto.nullable) = true];
+}
+
+message SelectPaymentWithFineReq {
+
+}
+
+message SelectPaymentWithFineResp {
+    int32 Code = 1;
+    string Message = 2;
+    repeated Payment Payment = 3 [(gogoproto.nullable) = true];
 }
 
 message SavePaymentReq {

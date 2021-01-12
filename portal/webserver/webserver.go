@@ -133,6 +133,7 @@ func initDocRouter(e *echo.Echo) {
 
 	g := e.Group("/payment")
 	g.POST("/all", doc.SelectAllPayment)
+	g.POST("/fined", doc.SelectPaymentWithFine)
 	g.POST("/detail", doc.SelectPaymentByID)
 
 	h := e.Group("/salebill")
