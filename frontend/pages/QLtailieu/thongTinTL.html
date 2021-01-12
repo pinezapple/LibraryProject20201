@@ -251,7 +251,7 @@
                     <th>Thể loại</th>
                     <th>Tái bản</th>
                     <th>NXB</th>
-                    <th>Tình trạng</th>
+                    <!-- <th>Tình trạng</th> -->
                     <th>Giá</th>
                     <th>Action</th>
                   </tr>
@@ -265,7 +265,7 @@
                     <th>Thể loại</th>
                     <th>Tái bản</th>
                     <th>NXB</th>
-                    <th>Tình trạng</th>
+                    <!-- <th>Tình trạng</th> -->
                     <th>Giá</th>
                     <th>Action</th>
                   </tr>
@@ -487,17 +487,17 @@ fetch (url,
       let btn = '<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-form" id="edit">Chỉnh sửa</button><button type="button" class="btn btn-danger btn-sm"  data-toggle="sweet-alert" id="delete" >Xóa</button>'
       let statusData;
 
-     if(status ==0){
-      statusData = "Nguyên vẹn";
-     }else if(status == 1){
-      statusData = "Hư hỏng";
-     }else if (status ==2 ){
-      statusData ="Làm mất";
-     } else if (status == 4){
-       statusData = "Đang thanh lý"
-     }
+    //  if(status ==0){
+    //   statusData = "Nguyên vẹn";
+    //  }else if(status == 1){
+    //   statusData = "Hư hỏng";
+    //  }else if (status ==2 ){
+    //   statusData ="Làm mất";
+    //  } else if (status == 4){
+    //    statusData = "Đang thanh lý"
+    //  }
     
-      data.push (docId,barcode,docName,author,type,edition,publisher,statusData,price,btn)
+      data.push (docId,barcode,docName,author,type,edition,publisher,price,btn)
       // add to table
       table.row.add(data).draw()
     })
@@ -523,8 +523,8 @@ fetch (url,
       let type = data[4];
       let edition = data[5];
       let publisher = data[6];
-      let status = data[7];
-      let price = data[8];
+      let status = '0';
+      let price = data[7];
       
       
       if(status =="Nguyên vẹn"){

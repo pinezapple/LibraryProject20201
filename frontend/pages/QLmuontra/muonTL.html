@@ -294,7 +294,7 @@
                   <!-- button -->
                 <div class="form-row" id="formButton">
                   <button id="makeFormButton" class="btn btn-primary" type="button" onclick="createBorrowForm()">Tạo phiếu</button>
-                  <button id="resetButton" type="button" class="btn btn-danger" style = "float: right;" onclick="reset()">Hủy</button>
+                  <button id="resetButton" type="button" class="btn btn-danger" style = "float: right;" onclick ="location.reload()">Hủy</button>
                 </div>
                 
                 </form>
@@ -484,7 +484,8 @@
   ).then((res) => res.json())
   .then(result => {
       alert("Đã tạo phiếu mượn thành công")
-      document.getElementById("borrowForm").reset() 
+      //document.getElementById("borrowForm").reset() 
+      location.reload()
   })
   // .then(result => document.getElementById("borrowForm").reset())
   .catch((err)=>alert("Đã xảy ra lỗi",err))

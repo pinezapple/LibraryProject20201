@@ -248,7 +248,7 @@
                            <div class="input-group-prepend">
                              <span class="input-group-text"><i class="fas fa-id-card-alt"></i></span>
                            </div>
-                           <input class="form-control" id='librarian' placeholder="Mã thủ thư" type="text" required>
+                           <input class="form-control" id='librarian' placeholder="Mã thủ thư" type="text" readonly>
                          </div>
                        </div>
                      </div>
@@ -467,7 +467,8 @@
    ).then((res) => res.json())
    .then(result => {
       alert("Đã tạo phiếu thanh lý thành công")
-      document.getElementById("saleForm").reset()
+      //document.getElementById("saleForm").reset()
+      location.reload()
     })
   //  .then(result => document.getElementById("saleForm").reset())
    .catch((err)=>alert("Đã xảy ra lỗi",err))

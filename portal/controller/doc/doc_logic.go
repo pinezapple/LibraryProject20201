@@ -351,10 +351,11 @@ func selectAllSaleBill(c echo.Context, request interface{}) (statusCode int, dat
 			statusCode, err = http.StatusInternalServerError, fmt.Errorf("grpc Error")
 			return
 		}
+		fmt.Println(resp)
 		for j := 0; j < len(resp.SaleBills); j++ {
 			var price uint64
 			for k := 0; k < len(resp.SaleBills[j].Price); k++ {
-				price += resp.SaleBills[j].Price[j]
+				price += resp.SaleBills[j].Price[k]
 			}
 
 			//fmt.Println(resp.SaleBills[j].LibrarianID)
