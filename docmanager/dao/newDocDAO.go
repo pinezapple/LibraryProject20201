@@ -35,6 +35,7 @@ const (
 
 	sqlSelectAllPayment            = "SELECT * FROM payments"
 	sqlSelectPaymentByID           = "SELECT * FROM payments WHERE payment_id = ?"
+	sqlSelectPaymentWithFine       = "SELECT * FROM payments WHERE fine <> 0"
 	sqlInsertPayment               = "INSERT INTO payments(payment_id, borrow_form_id, librarian_id, reader_id, fine, barcode_id, barcode_status, money) VALUES (?,?,?,?,?,?,?,?)"
 	sqlSelectPaymentByBorrowFormID = "SELECT * FROM payments WHERE borrow_form_id = ?"
 )
@@ -370,7 +371,7 @@ func InsertBorrowForm(ctx context.Context, db *mssqlx.DBs, borrowForm *docmanage
 		return
 	}
 
-	_, err = db.Exec(sqlInsertBorrowForm, borrowForm.ID, borrowForm.LibrarianID, borrowForm.ReaderID, barcode, borrowForm.Status, borrowForm.StartTime, borrowForm.EndTime)
+	_, err = db.Exec(sqlInsertBorrowForm, borrowForm.ID, borrowForm.LibrarianID, borrowForm.ReaderID, barcode, 1, borrowForm.StartTime, borrowForm.EndTime)
 
 	return
 }
@@ -394,6 +395,45 @@ func SelectAllPayment(ctx context.Context, db *mssqlx.DBs) (result []*docmanager
 
 	var tempResp []*model.PaymentDAOobj
 	err = db.SelectContext(ctx, &tempResp, sqlSelectAllPayment)
+	for i := 0; i < len(tempResp); i++ {
+		var barcode, barcodestatus, price []uint64
+
+		err = json.Unmarshal(tempResp[i].BarcodeID, &barcode)
+		if err != nil {
+			return nil, err
+		}
+		err = json.Unmarshal(tempResp[i].BarcodeStatus, &barcodestatus)
+		if err != nil {
+			return nil, err
+		}
+		err = json.Unmarshal(tempResp[i].Money, &price)
+		if err != nil {
+			return nil, err
+		}
+		tmp := &docmanagerModel.Payment{
+			ID:            tempResp[i].ID,
+			BorrowFormID:  tempResp[i].BorrowFormID,
+			LibrarianID:   tempResp[i].LibrarianID,
+			ReaderID:      tempResp[i].ReaderID,
+			Fine:          tempResp[i].Fine,
+			BarcodeID:     barcode,
+			BarcodeStatus: barcodestatus,
+			Money:         price,
+			CreatedAt:     tempResp[i].CreatedAt,
+			UpdatedAt:     tempResp[i].UpdatedAt,
+		}
+		result = append(result, tmp)
+	}
+	return
+}
+
+func SelectPaymentWithFine(ctx context.Context, db *mssqlx.DBs) (result []*docmanagerModel.Payment, err error) {
+	if db == nil {
+		return nil, core.ErrDBObjNull
+	}
+
+	var tempResp []*model.PaymentDAOobj
+	err = db.SelectContext(ctx, &tempResp, sqlSelectPaymentWithFine)
 	for i := 0; i < len(tempResp); i++ {
 		var barcode, barcodestatus, price []uint64
 
