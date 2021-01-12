@@ -28,7 +28,7 @@ const (
 	sqlInsertSaleBill     = "INSERT INTO sale_bill(sale_bill_id, librarian_id,barcode_id, sale_price) VALUES (?,?,?,?)"
 
 	sqlSelectAllBorrowForm           = "SELECT * FROM borrow_form"
-	sqlSelectAllUnreturnedBorrowForm = "SELECT * FROM borrow_form WHERE status <> 0"
+	sqlSelectAllUnreturnedBorrowForm = "SELECT * FROM borrow_form WHERE status <> 0 and status <> 3"
 	sqlSelectBorrowFormByID          = "SELECT * FROM borrow_form WHERE borrow_form_id = ?"
 	sqlInsertBorrowForm              = "INSERT INTO borrow_form(borrow_form_id, librarian_id, reader_id, barcode_id, status, borrow_start_time, borrow_end_time) VALUES (?,?,?,?,?,?,?)"
 	sqlUpdateBorrowFormStatus        = "UPDATE borrow_form SET status = ? WHERE borrow_form_id = ?"

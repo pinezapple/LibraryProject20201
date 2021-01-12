@@ -504,7 +504,7 @@
       let userID= `${doc.user_id}`
       let userName = `${doc.username}`
       let violateTime = `${doc.count}`
-      let totalFee = `${doc.money}`
+      let totalFee = `${doc.total_money}`
       let btn = '<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-form" id="edit">Chi tiết</button>'
 
       data.push (userID,userName,violateTime,totalFee, btn)
@@ -521,8 +521,8 @@
   //modal click
   $('#datatable-buttons tbody').on( 'click', 'button', function () {
         var data = table.row( $(this).parents('tr') ).data();
-        let userID = data[0]
-        let saleFormUrl = 'http://localhost:11001/blacklist/detail/'
+        let userID = parseInt(data[0],10)
+        let saleFormUrl = 'http://localhost:11001/blacklist/detail'
         // window.location.replace('traTLchitiet.html?id='+borrowId)
         fetch (saleFormUrl,  {
   method: 'POST',
@@ -539,7 +539,8 @@
       let userID = obj.user_id
       let userName = obj.username
       let violationCount = obj.count
-      let totalFee = obj.money
+      let totalFee = obj.total_money
+      console.log(obj)
       let docs = obj.detail
 
         // add value to input field
@@ -568,9 +569,9 @@
         
         // add data 
         // formRow.querySelector("#docId").value = docs[i]["id_doc"]
-        formRow.querySelector("#borrowID").value = docs[i]["borrow_ID"]
-        formRow.querySelector("#violationTime").value = docs[i]["violation_time"]
-        formRow.querySelector("#fee").value = docs[i]["fee"]
+        formRow.querySelector("#borrowID").value = docs[i]["borrow_form_id"]
+        formRow.querySelector("#violationTime").value = new Date(docs[i]["created_at"].seconds*1000)
+        formRow.querySelector("#fee").value = docs[i]["money"]
       }
   })
   .catch(error => {

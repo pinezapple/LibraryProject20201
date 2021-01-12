@@ -432,7 +432,7 @@ func SelectFromBlackListByUserID(ctx context.Context, db *mssqlx.DBs, userID uin
 		err = core.ErrDBObjNull
 		return
 	}
-	err = db.SelectContext(ctx, &result, sqlInsertBlackList, userID)
+	err = db.SelectContext(ctx, &result, sqlSelectFromBlackListWithID, userID)
 
 	return
 }

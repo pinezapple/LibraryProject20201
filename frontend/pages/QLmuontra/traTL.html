@@ -507,6 +507,7 @@ fetch (url,  {
       let fee = `${form.fine}`
       let btn = '<button type="button" id="update" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-form">Chỉnh sửa</button>'
       
+      let borrowStatus = ""
       // replace number value of borrow form status
       status = status.toString();
       if(status == "0"){
@@ -516,7 +517,6 @@ fetch (url,  {
      }else if (status =="2" ){
       borrowStatus ="Quá hạn";
      }
-      let borrowStatus = arr[stage][status]
       
       // push to array
       data.push (borrowId,readerId,reader,borrowStatus,fee,btn)
