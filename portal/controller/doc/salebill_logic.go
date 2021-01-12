@@ -75,7 +75,7 @@ func saveSaleBill(c echo.Context, request interface{}) (statusCode int, data int
 		return
 	}
 
-	if er := updateBarcodeStatusByBatch(ctx, barcodeIDs, barcodeStatus); er != nil {
+	if er := updateBarcodeStatusByBatch(ctx, barcodeIDs, barcodeStatus, rpcCreateSaleBillReq.SaleBill.ID); er != nil {
 		statusCode, err = http.StatusInternalServerError, fmt.Errorf("grpc Error")
 		return
 	}
