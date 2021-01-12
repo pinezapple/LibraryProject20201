@@ -687,7 +687,7 @@
      
       // get data from table
       let data = table.row( $(this).parents('tr') ).data();
-      let barcode =  parseInt(data[1],10)
+      let barcode =  parseInt(data[0],10)
       let url = 'http://localhost:11001/barcode/delete'
 
       // sweet alert

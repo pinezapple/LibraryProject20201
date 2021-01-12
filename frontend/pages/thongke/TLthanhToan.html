@@ -240,7 +240,7 @@
                  <thead class="thead-light">
                    <tr>
                      <th>Mã phiếu</th>
-                     <th>Người thanh lý</th>
+                     <th>Mã Người thanh lý</th>
                      <th>Ngày thanh lý</th>
                      <th>Tổng tiền</th>     
                      <th>Action</th>             
@@ -249,7 +249,7 @@
                  <tfoot>
                    <tr>
                      <th>Mã phiếu</th>
-                     <th>Người thanh lý</th>
+                     <th>Mã Người thanh lý</th>
                      <th>Ngày thanh lý</th>
                      <th>Tổng tiền</th>
                      <th>Action</th>
@@ -447,9 +447,9 @@
        let data =[]
        // get doc data
      
-     
+       console.log(doc)
        let idSale= `${doc.sale_bill_id}`
-       let soldBy = `${doc.librarian_name}`
+       let soldBy = `${doc.librarian_id}`
        let date = `${new Date(doc.created_at.seconds*1000)}` 
        let total = `${doc.total_money}`
        let btn = '<button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#modal-form">Chi tiết</button>'
@@ -488,7 +488,7 @@
  
 $('#datatable-buttons tbody').on( 'click', 'button', function () {
         var data = table.row( $(this).parents('tr') ).data();
-        let saleId = data[0]
+        let saleId = parseInt(data[0],10)
         let saleFormUrl = 'http://localhost:11001/salebill/detail'
         
         fetch (saleFormUrl,  {
@@ -502,10 +502,11 @@ $('#datatable-buttons tbody').on( 'click', 'button', function () {
   })
   .then(response => response.json())
   .then(obj =>{
+      console.log(obj)
       let saleId = obj.sale_bill_id
       let librarianId = obj.librarian_id
-      let librarian = obj.librarian_name  
-      let date = obj.created_at
+      let librarian = obj.librian_name  
+      let date = new Date(obj.created_at*1000)
       let totalPrice = obj.total_money
       let docs = obj.barcodes
       
@@ -541,7 +542,7 @@ $('#datatable-buttons tbody').on( 'click', 'button', function () {
         // add data 
         
         // formRow.querySelector("#docId").value = docs[i]["id_doc"]
-        formRow.querySelector("#barcode").value = docs[i]["barcode"]
+        formRow.querySelector("#barcode").value = docs[i]["barcode_id"]
         formRow.querySelector("#docName").value = docs[i]["doc_name"]
         // formRow.querySelector("#author").value = docs[i]["doc_author"]
         formRow.querySelector("#price").value = docs[i]["money"]

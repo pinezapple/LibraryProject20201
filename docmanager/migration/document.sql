@@ -17,7 +17,7 @@ CREATE TABLE `borrow_form` (
   `librarian_id` bigint(20),
   `reader_id` bigint(20),
   `barcode_id` BLOB,
-  `status` bigint(20),
+  `status` bigint(20) DEFAULT 1,
   `borrow_start_time` timestamp DEFAULT CURRENT_TIMESTAMP,
   `borrow_end_time` timestamp,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,

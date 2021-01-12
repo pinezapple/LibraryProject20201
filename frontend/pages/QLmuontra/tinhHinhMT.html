@@ -502,7 +502,7 @@
       let reader = `${form.reader_name}` 
       let librarian = `${form.librarian_name}` 
       let status = `${form.status}` //return a number
-      let fee = `${form.fine}` 
+      let fee = `${form.total_money}` 
       let btn ='<button type="button" id="add" class="btn btn-secondary btn-sm"  data-toggle="modal" data-target="#modal-form">Chi tiết</button>'
       let borrowStatus;
       // replace number value of borrow form status
@@ -516,7 +516,7 @@
       borrowStatus ="Quá hạn";
      } 
       // push to array
-      data.push (borrowId,readerId,reader,librarian,borrowStatus,fee,btn)
+      data.push (borrowId,paymentId,readerId,reader,librarian,0,fee,btn)
 
       // add to table
       table.row.add(data).draw()

@@ -49,7 +49,7 @@ func (d *docManagerSrv) SelectAllAvailableBarcode(ctx context.Context, req *docm
 	logger.LogInfo(d.lg, "RPC Req: Select all available barcode")
 
 	//FIXME: add functions
-	barcodes, err := dao.SelectAllBarcode(ctx, core.GetDB())
+	barcodes, err := dao.SelectAllAvailableBarcode(ctx, core.GetDB())
 	if err != nil {
 		logger.LogErr(d.lg, err)
 		return &docmanagerModel.SelectAllAvailableBarcodeResp{Code: 1, Message: err.Error()}, err

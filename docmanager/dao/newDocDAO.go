@@ -14,7 +14,7 @@ import (
 const (
 	sqlSelectAllBarcode          = "SELECT * FROM barcodes"
 	sqlSelectAllAvailableBarcode = "SELECT * FROM barcodes WHERE status = 0"
-	sqlSelectAllDamagedBarcode   = "SELECT * FROM barcodes WHERE status = 3"
+	sqlSelectAllDamagedBarcode   = "SELECT * FROM barcodes WHERE status = 1"
 	sqlSelectAllSellingBarcode   = "SELECT * FROM barcodes WHERE status = 4"
 	sqlSelectBarcodeByID         = "SELECT * FROM barcodes WHERE barcode_id = ?"
 	sqlSelectBarcodeByDocVerID   = "SELECT * FROM barcodes WHERE document_version_id= ?"
@@ -28,7 +28,7 @@ const (
 	sqlInsertSaleBill     = "INSERT INTO sale_bill(sale_bill_id, librarian_id,barcode_id, sale_price) VALUES (?,?,?,?)"
 
 	sqlSelectAllBorrowForm           = "SELECT * FROM borrow_form"
-	sqlSelectAllUnreturnedBorrowForm = "SELECT * FROM borrow_form WHERE status <> 3"
+	sqlSelectAllUnreturnedBorrowForm = "SELECT * FROM borrow_form WHERE status <> 0"
 	sqlSelectBorrowFormByID          = "SELECT * FROM borrow_form WHERE borrow_form_id = ?"
 	sqlInsertBorrowForm              = "INSERT INTO borrow_form(borrow_form_id, librarian_id, reader_id, barcode_id, status, borrow_start_time, borrow_end_time) VALUES (?,?,?,?,?,?,?)"
 	sqlUpdateBorrowFormStatus        = "UPDATE borrow_form SET status = ? WHERE borrow_form_id = ?"
@@ -191,10 +191,11 @@ func SelectAllSaleBill(ctx context.Context, db *mssqlx.DBs) (result []*docmanage
 		}
 
 		tmp := &docmanagerModel.SaleBill{
-			ID:        tempResp[i].ID,
-			BarcodeID: barcode,
-			Price:     price,
-			CreatedAt: tempResp[i].CreatedAt,
+			ID:          tempResp[i].ID,
+			LibrarianID: tempResp[i].LibrarianID,
+			BarcodeID:   barcode,
+			Price:       price,
+			CreatedAt:   tempResp[i].CreatedAt,
 		}
 		result = append(result, tmp)
 	}
@@ -224,11 +225,13 @@ func SelectSaleBillByID(ctx context.Context, db *mssqlx.DBs, saleBillID uint64) 
 	}
 
 	result = &docmanagerModel.SaleBill{
-		ID:        tempResp.ID,
-		BarcodeID: barcode,
-		Price:     price,
-		CreatedAt: tempResp.CreatedAt,
+		ID:          tempResp.ID,
+		LibrarianID: tempResp.LibrarianID,
+		BarcodeID:   barcode,
+		Price:       price,
+		CreatedAt:   tempResp.CreatedAt,
 	}
+	//fmt.Println(result)
 
 	return
 }
@@ -274,6 +277,7 @@ func SelectAllBorrowForm(ctx context.Context, db *mssqlx.DBs) (result []*docmana
 		tmp := &docmanagerModel.BorrowForm{
 			ID:          tempResp[i].ID,
 			LibrarianID: tempResp[i].LibrarianID,
+			ReaderID:    tempResp[i].ReaderID,
 			Status:      tempResp[i].Status,
 			BarcodeID:   barcode,
 			StartTime:   tempResp[i].StartTime,
