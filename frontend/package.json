@@ -12,7 +12,7 @@
         "gulp": "^3.9.1",
         "gulp-autoprefixer": "^5.0.0",
         "gulp-clean-css": "^3.9.4",
-        "gulp-imagemin": "^4.1.0",
+        "gulp-imagemin": "^8.0.0",
         "gulp-sass": "^3.2.1",
         "gulp-util": "^3.0.8",
         "del": "^3.0.0",
